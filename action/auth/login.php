@@ -1,17 +1,22 @@
 <?php
-    require_once __DIR__."/../../backheader.php";
+session_start();
+// include_once __DIR__ . "/../../backheader.php";
 
+$db = new mysqli('localhost', 'root', '', 'u20_db');
+$db->set_charset("utf8");
+if (!$db) {
+    die("데이터베이스 연결실패" . mysqli_connect_error());
+}
 
-
-    if (!isset($_POST['id']) || $_POST['id'] == "") {
-        mysqli_close($db);
-        echo '<script>alert("아이디를 입력하세요");history.back();</script>';
-        exit;
-    } else if (!isset($_POST['pw']) || $_POST['pw'] == "") {
-        mysqli_close($db);
-        echo '<script>alert("비밀번호를 입력하세요");history.back();</script>';
-        exit;
-    } else {
+if (!isset($_POST['id']) || $_POST['id'] == "") {
+    mysqli_close($db);
+    echo '<script>alert("아이디를 입력하세요");history.back();</script>';
+    exit;
+} else if (!isset($_POST['pw']) || $_POST['pw'] == "") {
+    mysqli_close($db);
+    echo '<script>alert("비밀번호를 입력하세요");history.back();</script>';
+    exit;
+} else {
 
     $id = trim($_POST['id']);
     $pw = trim($_POST['pw']);
@@ -22,10 +27,10 @@
 
     $adminsql = " SELECT * FROM list_admin WHERE admin_account = '" . $id . "';";
     $adminrow = $db->query($adminsql);
-    
+
     $judgesql = " SELECT * FROM list_judge WHERE judge_account = '" . $id . "';";
     $judgerow = $db->query($judgesql);
-    
+
 
     if (($admindata = mysqli_fetch_array($adminrow)) && (hash('sha256', $pw) == $admindata['admin_password'])) {
 
@@ -34,19 +39,16 @@
         $stmt->bind_param("ssss", $currentDate, $ip_add, $session, $id);
         $stmt->execute();
 
-        logInsert($db, $id, $activity, '');
+        // logInsert($db, $id, $activity, '');
         mysqli_close($db);
         $_SESSION['Id'] = $id;
         $_SESSION['Session'] = $session;
-        
+
         echo "<script>alert('로그인되었습니다.'); location.href='../../index.php';</script>";
         exit;
-            
     } else {
         mysqli_close($db);
         echo "<script>alert('아이디 혹은 비밀번호를 확인하세요.'); history.back();</script>";
-        exit;	
+        exit;
     }
-
-
-    }
+}

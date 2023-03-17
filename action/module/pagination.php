@@ -39,7 +39,7 @@ function Get_Pagenation($write_pages, $page_size, $cur_page, $total_count, $add 
 	if ($total_page > 1) {
 		for ($k = $start_page; $k <= $end_page; $k++) {
 			if ($cur_page != $k)
-				$str .= '<li class="page_item page_number"><a href="' . $url . $k . $add . '" data-dt-idx="'. $k . '"><em class="page_link">' . $k . '</em></a></li>' . PHP_EOL;
+				$str .= '<li class="page_item page_number"><a href="' . $url . $k . $add . '" data-dt-idx="' . $k . '"><em class="page_link">' . $k . '</em></a></li>' . PHP_EOL;
 			else
 				$str .= '<li class="page_item page_number"><a href="#" data-dt-idx="' . $k . '"><em class="page_link clicked">' . $k . '</em></a></li>' . PHP_EOL;
 		}

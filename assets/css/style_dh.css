@@ -1,0 +1,158 @@
+/* 국가 및 선수 랭킹 index 페이지  */
+
+.box_table {
+  width: 100%;
+  background: white;
+}
+
+.table_head {
+  background: #545454;
+  line-height: 20px;
+  font-weight: 500;
+  width: 100%;
+  color: white;
+}
+
+.table_head > tr > th {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+/*  참가자 관리 작성 부분 선수진*/
+.entry_table {
+  font-size: 14px;
+}
+
+/* 결과지 10종 경기 */
+.result_table {
+  background: var(--colorBackground);
+  position: relative;
+}
+
+.result_table > tr > th {
+  padding: 2rem 0;
+  border: 1px solid var(--colorBorder);
+  text-align: center;
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+.result_tableBTN {
+  height: 50%;
+  font-size: 12px;
+  color: white;
+  display: block;
+  padding: 6px;
+  border: 0;
+  border-radius: 5px;
+  margin: 6px auto;
+}
+
+.De_tbody > tr > td {
+  padding: 0.5rem 0;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid var(--colorBorder);
+}
+
+.table_tbody > tr > td {
+  padding: 2rem 0;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+}
+
+.De_tbody > tr > td > input {
+  text-align: center;
+  border: 0;
+  background: transparent;
+  width: 100%;
+  font-size: 12px;
+  outline: 0;
+}
+
+.input_table > tr > td {
+  padding: 0.5rem 0;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid var(--colorBorder);
+}
+
+.input_table > tr > td > input {
+  text-align: center;
+  padding: 0.5rem 0;
+  border: 0;
+  background: transparent;
+  width: 100%;
+  font-size: 12px;
+}
+
+/* 계정 관리 table */
+.table_UserID {
+  width: 100%;
+}
+
+.table_UserID > tbody > tr > td {
+  text-align: left;
+}
+
+.table_UserID > tbody > tr > td > div {
+  display: flex;
+}
+
+/* 높이뛰기 상세보기*/
+.high_jump_table > tr > td {
+  padding: 2rem 0;
+  border: 1px solid var(--colorBorder);
+  text-align: center;
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+/* 높이뛰기 끝 */
+
+.time_row > span {
+  margin: 0 0.5rem !important;
+}
+
+.time_row > span:nth-child(1) {
+  margin: 0 1rem 0 0 !important;
+}
+
+.time_row > div {
+  width: 80%;
+  align-items: center;
+}
+
+.time_row > div > input {
+  width: 80px;
+  align-items: center;
+  margin: 0 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  /* 테이블 선수진 */
+  .entry_table {
+    font-size: 10px;
+  }
+
+  /* 10종 경기 테이블 */
+  .result_tableBTN {
+    height: 50%;
+    color: white;
+    display: block;
+    padding: 3px;
+    border: 0;
+    border-radius: 5px;
+    margin: 3px auto;
+    font-size: 10px;
+  }
+
+  .result_table > tr > th {
+    font-size: 10px;
+  }
+
+  .De_tbody > tr > td > input {
+    font-size: 10px;
+  }
+}

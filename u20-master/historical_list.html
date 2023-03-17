@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/xeicon.min.css">
+  <link rel="stylesheet" href="/assets/css/swiper.min.css">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style_dh.css">
+  <title>역대기록 목록</title>
+</head>
+
+<body>
+  <!-- header -->
+  <div class="headerWrapper">
+    <header class="headerBody">
+      <div class="headerBodyLayout">
+        <div class="headerBodyArea">
+          <h1 class="logo"><a href="/index.html">예천U20</a></h1>
+          <div class="gnbMask menuhide">
+            <div class="gnbsied">
+              <div class="gnb">
+                <ul class="gnbList">
+                  <li class="gnbItem">
+                    <div>
+                      <span>
+                        <i class="xi-user menu_red"></i>
+                        <i class="xi-group"></i>
+                        참가자 관리
+                        <i class="xi-angle-up"></i>
+                      </span>
+                      <i class="xi-man"></i>
+                      <i class="xi-run"></i>
+                    </div>
+                    <div class="gnbDetailMenuList">
+                      <ul>
+                        <li><a href="/athlete_list.html">선수 목록</a></li>
+                        <li><a href="/coach_list.html">코치 목록</a></li>
+                        <li><a href="/referee_list.html">심판 목록</a></li>
+                        <li><a href="/director_list.html">임원 목록</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="gnbItem">
+                    <div>
+                      <span>
+                        <i class="xi-run menu_Orange"></i>
+                        <i class="xi-bicycle"></i>
+                        경기 관리
+                        <i class="xi-angle-up"></i>
+                      </span>
+                      <i class="xi-man"></i>
+                      <i class="xi-run"></i>
+                    </div>
+                    <div class="gnbDetailMenuList">
+                      <ul>
+                        <li><a href="/match_list.html">경기 목록</a></li>
+                        <li><a href="/country_list.html">국가 목록</a></li>
+                        <li><a href="/schedule_list.html">일정목록</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="gnbItem">
+                    <div>
+                      <span>
+                        <i class="xi-timer-o menu_yellow"></i>
+                        <i class="xi-alarm-clock-o"></i>
+                        기록 관리
+                        <i class="xi-angle-up"></i>
+                      </span>
+                      <i class="xi-man"></i>
+                      <i class="xi-run"></i>
+                    </div>
+                    <div class="gnbDetailMenuList">
+                      <ul>
+                        <li><a href="/record_list.html">경기결과 목록</a></li>
+                        <li><a class="menu_blue" href="/historical_list.html">역대기록 목록</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="gnbItem">
+                    <div>
+                      <span>
+                        <i class="xi-paper-o menu_green"></i>
+                        <i class="xi-equalizer-thin"></i>
+                        통계 관리
+                        <i class="xi-angle-up"></i>
+                      </span>
+                      <i class="xi-man"></i>
+                      <i class="xi-run"></i>
+                    </div>
+                    <div class="gnbDetailMenuList">
+                      <ul>
+                        <li><a href="/player_ranking.html">선수별 순위보기</a></li>
+                        <li><a href="/best_player.html">신기록 경기기록</a></li>
+                        <li><a href="/match_standings.html">경기별 순위보기</a></li>
+                        <li><a href="/match_medals.html">경기별 메달보기</a></li>
+                        <li><a href="/country_rank.html">국가별 순위보기</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="gnbItem">
+                    <div>
+                      <span>
+                        <i class="xi-key menu_blue"></i>
+                        <i class="xi-security"></i>
+                        계정 관리
+                        <i class="xi-angle-up"></i>
+                      </span>
+                      <i class="xi-man"></i>
+                      <i class="xi-run"></i>
+                    </div>
+                    <div class="gnbDetailMenuList">
+                      <ul>
+                        <li><a href="/account_mypage.html">계정 정보</a></li>
+                        <li><a href="/account_change_pw.html">비빌번호 변경</a></li>
+                        <li><a href="/account_signup.html">계정 생성</a></li>
+                        <li><a href="/account_list.html">계정 목록</a></li>
+                        <li><a href="/log_list.html">로그 목록</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="gnbMask_right">
+
+            </div>
+          </div>
+          <div class="UserPage">
+            <a href="/account_mypage.html"><i class="xi-profile xi-1x"></i>
+              <p>마이페이지</p>
+            </a>
+            <a href="/login.html"><i class="xi-power-off xi-1x"></i>
+              <p>로그아웃</p>
+            </a>
+            <button type="button" class="menuBtn" type="button"><i class="xi-bars"></i></button>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+  <div class="top">
+    <div id="js-scroll"><i class="xi-arrow-up topBtn"></i></div>
+  </div>
+
+  <!-- rank -->
+  <div class="Area">
+    <div class="Wrapper TopWrapper">
+      <div class="MainRank coachList defaultList">
+        <div class="MainRank_tit">
+          <h1>역대기록 목록<i class="xi-timer-o timer"></i></h1>
+        </div>
+        <div class="searchArea">
+          <form class="searchForm">
+            <div class="selectArea defaultSelectArea">
+              <div class="defaultSelectBox">
+                <select title="대회선택" name="historicalTitle">
+                  <option value="non" hidden>대회 선택</option>
+                  <option value="non">전체</option>
+                  <option value="Indianapolis, IN (USA)">Indianapolis, IN (USA)</option>
+                  <option value="Olympic Stadium, Jamsil, Seoul (KOR)">Olympic Stadium, Jamsil, Seoul (KOR)</option>
+                  <option value="Bruce Stadium, Canberra (AUS)">Bruce Stadium, Canberra (AUS)</option>
+                  <option value="München (GER)">München (GER)</option>
+                  <option value="Stade Louis II, Monaco (MON)">Stade Louis II, Monaco (MON)</option>
+                  <option value="Beijing (CHN)">Beijing (CHN)</option>
+                  <option value="Estadio de Atletismo del Turia, Valencia (ESP)">Estadio de Atletismo del Turia,
+                    Valencia (ESP)
+                  </option>
+                  <option value="Hayward Field, Eugene, OR (USA)">Hayward Field, Eugene, OR (USA)</option>
+                  <option value="Seattle, WA (USA)">Seattle, WA (USA)</option>
+                  <option value="Olympic Stadium, London (GBR)">Olympic Stadium, London (GBR)</option>
+                  <option value="Khalifa International Stadium, Doha (QAT)">Khalifa International Stadium, Doha (QAT)
+                  </option>
+                  <option value="Dresden (GER)">Dresden (GER)</option>
+                  <option value="National Stadium, Tokyo (JPN)">National Stadium, Tokyo (JPN)</option>
+                  <option value="Letzigrund, Zürich (SUI)">Letzigrund, Zürich (SUI)</option>
+                  <option value="Shanghai (CHN)">Shanghai (CHN)</option>
+                  <option value="tadio Olimpico, Roma (ITA)">tadio Olimpico, Roma (ITA)</option>
+                  <option value="Bergen (NOR)">Bergen (NOR)</option>
+                  <option value="Joensuu (FIN)">Joensuu (FIN)</option>
+                  <option value="Fayetteville, AR (USA)">Fayetteville, AR (USA)</option>
+                  <option value="Zweibrücken (GER)">Zweibrücken (GER)</option>
+                  <option value="Bratislava (TCH)">Bratislava (TCH)</option>
+                  <option value="SIAC Homebush, Sydney (AUS)">SIAC Homebush, Sydney (AUS)</option>
+                  <option value="Orimattila (FIN)">Orimattila (FIN)</option>
+                  <option value="Berlin (GER)">Berlin (GER)</option>
+                  <option value="Kaarlen kenttä, Vaasa (FIN)">Kaarlen kenttä, Vaasa (FIN)</option>
+                  <option value="Edmonton (CAN)">Edmonton (CAN)</option>
+                  <option value="Moi International Sports Centre, Kasarani, Nairobi (KEN)">Moi International Sports
+                    Centre, Kasarani,
+                    Nairobi (KEN)</option>
+                  <option value="Stadio Zecchini, Grosseto (ITA)">Stadio Zecchini, Grosseto (ITA)</option>
+                  <option value="Pascual Guerrero Stadium, Cali (COL)">Pascual Guerrero Stadium, Cali (COL)</option>
+                  <option value="Paris (FRA)">Paris (FRA)</option>
+                  <option value="Luzern (SUI)">Luzern (SUI)</option>
+                  <option value="Hypo-Meeting, Götzis (AUT)">Hypo-Meeting, Götzis (AUT)</option>
+                  <option value="Estádio Olímpico, Rio de Janeiro (BRA)">Estádio Olímpico, Rio de Janeiro (BRA)</option>
+                  <option value="Boudewijnstadion, Bruxelles (BEL)">Boudewijnstadion, Bruxelles (BEL)</option>
+                  <option value="Jinan (CHN)">Jinan (CHN)</option>
+                  <option value="Nanjing (CHN)">Nanjing (CHN)</option>
+                  <option value="Bishkek (KGZ)">Bishkek (KGZ)</option>
+                  <option value="Changsha (CHN)">Changsha (CHN)</option>
+                  <option value="Chengdu (CHN)">Chengdu (CHN)</option>
+                  <option value="Stade de France, Paris-St-Denis (FRA)">Stade de France, Paris-St-Denis (FRA)</option>
+                  <option value="Shanxi Sports Center Stadium, Taiyuan (CHN)">Shanxi Sports Center Stadium, Taiyuan
+                    (CHN)</option>
+                  <option value="Chaoyang Sport Center, Beijing (CHN)">Chaoyang Sport Center, Beijing (CHN)</option>
+                  <option value="Olympiastadion, Berlin (GER)">Olympiastadion, Berlin (GER)</option>
+                  <option value="Stadio Olimpico, Roma (ITA) ">Stadio Olimpico, Roma (ITA) </option>
+                  <option value="Stade Pierre Paul Bernard, Talence (FRA)">Stade Pierre Paul Bernard, Talence (FRA)
+                  </option>
+                  <option value="Juntendo University Stadium, Inzai (JPN)">Juntendo University Stadium, Inzai (JPN)
+                  </option>
+                  <option value="Gottlieb-Daimler Stadion, Stuttgart (GER)">Gottlieb-Daimler Stadion, Stuttgart (GER)
+                  </option>
+                  <option value="Bruxelles (BEL)">Bruxelles (BEL)</option>
+                  <option value="Deveti Septemvri Stadium, Plovdiv (BUL) ">Deveti Septemvri Stadium, Plovdiv (BUL)
+                  </option>
+                  <option value="Cheboksary (RUS)">Cheboksary (RUS)</option>
+                  <option value="Erfurt (GER)">Erfurt (GER)</option>
+                  <option value="Auckland (NZL) ">Auckland (NZL) </option>
+                  <option value="Halle (GER) ">Halle (GER) </option>
+                  <option value="Estadio Olímpico, Barcelona (ESP)">Estadio Olímpico, Barcelona (ESP)</option>
+                  <option value="Zdzislaw Krzyszkowiak Stadium, Bydgoszcz (POL)">Zdzislaw Krzyszkowiak Stadium,
+                    Bydgoszcz (POL)
+                  </option>
+                  <option value="Grosseto (ITA)">Grosseto (ITA)</option>
+                  <option value="Moskva (RUS)">Moskva (RUS)</option>
+                  <option value="Trujillo (PER)">Trujillo (PER)</option>
+                  <option value="National Stadium, Beijing (CHN)">National Stadium, Beijing (CHN)</option>
+                  <option value="Stade Olympique de la Pontaise, Lausanne (SUI)">Stade Olympique de la Pontaise,
+                    Lausanne (SUI)
+                  </option>
+                  <option value="Stade Charléty, Paris (FRA)">Stade Charléty, Paris (FRA)</option>
+                  <option value="Olympic Stadium, Athina (GRE)">Olympic Stadium, Athina (GRE)</option>
+                  <option value="Hiroshima (JPN)">Hiroshima (JPN)</option>
+                  <option value="Central Stadium, Almaty (KAZ)">Central Stadium, Almaty (KAZ)</option>
+                  <option value="La Chaux-de-Fonds (SUI)">La Chaux-de-Fonds (SUI)</option>
+                  <option value="Stadio Guidobaldi, Rieti (ITA)">Stadio Guidobaldi, Rieti (ITA)</option>
+                  <option value="Blankers-Koen Stadion, Hengelo (NED) ">Blankers-Koen Stadion, Hengelo (NED) </option>
+                  <option value="Tottori (JPN)">Tottori (JPN)</option>
+                  <option value="Nagoya (JPN)">Nagoya (JPN)</option>
+                  <option value="New Delhi (IND)">New Delhi (IND)</option>
+                  <option value="Bhubaneshwar (IND) ">Bhubaneshwar (IND) </option>
+                  <option value="Hefei (CHN)">Hefei (CHN)</option>
+                  <option value="Shijiazhuang (CHN)">Shijiazhuang (CHN)</option>
+                  <option value="Doha (QAT)">Doha (QAT)</option>
+                  <option value="Nagano (JPN)">Nagano (JPN)</option>
+                  <option value="Tokyo (JPN) ">Tokyo (JPN) </option>
+                </select>
+              </div>
+              <div class="defaultSelectBox">
+                <select title="참가경기" name="athleteAttendanceGame">
+                  <option value="non" hidden>참가경기</option>
+                  <option value="non">전체</option>
+                  <optgroup label="트랙경기">
+                    <option value="10000m">10000m</option>
+                    <option value="100m">100m</option>
+                    <option value="100mh">100m 허들</option>
+                    <option value="110mh">110m 허들</option>
+                    <option value="1500m">1500m</option>
+                    <option value="200m">200m</option>
+                    <option value="3000m">3000m</option>
+                    <option value="3000mSC">3000m 장애물</option>
+                    <option value="400m">400m</option>
+                    <option value="400mh">400m 허들</option>
+                    <option value="4x100mR">4x100 릴레이</option>
+                    <option value="4x400mR">4x400 릴레이</option>
+                    <option value="5000m">5000m</option>
+                    <option value="800m">800m</option>
+                    <option value="racewalk">경보</option>
+                  </optgroup>
+                  <optgroup label="종합경기">
+                    <option value="decathlon">10종경기(남)</option>
+                    <option value="heptathlon">7종경기(여)</option>
+                  </optgroup>
+                  <optgroup label="필드경기">
+                    <option value="discusthrow">원반던지기</option>
+                    <option value="hammerthrow">해머던지기</option>
+                    <option value="highjump">높이뛰기</option>
+                    <option value="javelinthrow">창던지기</option>
+                    <option value="longjump">멀리뛰기</option>
+                    <option value="polevault">장대 높이뛰기</option>
+                    <option value="shotput">투포환</option>
+                    <option value="triplejump">세단뛰기</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="search">
+                <button class="SearchBtn" type="submit"><i class="xi-search"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="MainRank-list">
+          <div class="Ranklist_tit historical_tit">
+            <ul>
+              <li>
+                <p>기록 구분</p>
+                <p>이름</p>
+                <p>대회</p>
+                <p>종목</p>
+                <p>기록</p>
+                <p>기록일자</p>
+                <p>소속</p>
+              </li>
+            </ul>
+          </div>
+          <span class="Ranklist_result historical_item">
+            <ul>
+              <li>
+                <p>세계신기록</p>
+                <p>Florence GRIFFITH-JOYNER</p>
+                <p>Olympic Stadium, Jamsil, Seoul (KOR)</p>
+                <p>200m</p>
+                <p>41:37.9h</p>
+                <p>1988-09-29 </p>
+                <p>USA</p>
+              </li>
+            </ul>
+          </span>
+          <span class="Ranklist_result historical_item">
+            <ul class="Ranklist_Background">
+              <li>
+                <p>아시아U20신기록</p>
+                <p>Florence GRIFFITH-JOYNER</p>
+                <p>Khalifa International Stadium, Doha (QAT)</p>
+                <p>200m</p>
+                <p>21.34</p>
+                <p>1988-09-29 </p>
+                <p>USA</p>
+              </li>
+            </ul>
+          </span>
+        </div>
+        <div class="playerRegistrationBtnArea">
+          <div class="ExcelBtn IDBtn">
+            <button type="button" class="defaultBtn BIG_btn2 excel_Print">엑셀 출력</button>
+          </div>
+        </div>
+        <div class="page">
+          <ul class="pagination">
+            <li class="page_item"><a href="#"><i class="xi-angle-left-min xi-2x"></i></a></li>
+            <li class="page_item page_number"><a href="#" data-dt-idx="1"><em class="page_link clicked">1</em></a></li>
+            <li class="page_item page_number"><a href="#" data-dt-idx="2"><em class="page_link">2</em></a>
+            </li>
+            <li class="page_item page_number"><a href="#" data-dt-idx="3"><em class="page_link">3</em></a>
+            </li>
+            <li class="page_item page_number"><a href="#" data-dt-idx="4"><em class="page_link">4</em></a>
+            </li>
+            <li class="page_item page_number"><a href="#" data-dt-idx="5"><em class="page_link">5</em></a>
+            </li>
+            <li class="page_item"><a href="#"><i class="xi-angle-right-min xi-2x"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/main_dh.js"></script>
+</body>
+
+</html>

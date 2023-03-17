@@ -1,0 +1,9 @@
+wind: -1.1m
+1. rane1 9.93
+2. rane3 10.04
+3. rane8 10.12
+4. rane2 10.15
+5. rane6 10.21
+6. rane4 10.21
+7. rane5 10.52
+DNS rane7

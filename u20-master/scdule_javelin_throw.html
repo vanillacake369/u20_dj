@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/xeicon.min.css">
+  <link rel="stylesheet" href="/assets/css/swiper.min.css">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style_dh.css">
+  <title>창 던지기</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="athlete">
+      <div class="profile_logo">
+        <img src="/assets/images/logo.png">
+      </div>
+      <div class="UserProfile">
+        <p class="UserProfile_tit tit_left_blue">
+          창 던지기
+        </p>
+        <form action="">
+          <div class="UserProfile_modify UserProfile_input thorw_main">
+            <div>
+              <ul class="UserDesc throwDesc">
+                <li class="row input_row throw_row">
+                  <span>경기 이름</span>
+                  <input type="text" placeholder="경기 종목 코드를 입력해주세요" value="창 던지기">
+                </li>
+                <li class="row input_row throw_row">
+                  <span>라운드</span>
+                  <input type="text" placeholder="경기 이름을 입력해주세요" value="예선">
+                </li>
+                <li class="row input_row throw_row">
+                  <span>심판 이름</span>
+                  <input type="text" placeholder="라운드을 입력하세요" value="권산">
+                </li>
+                <li class="row input_row throw_row">
+                  <span>용 기구</span>
+                  <input type="text" placeholder="장소을 입력하세요" value="1KG">
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="Thorw_result">
+            <div>
+              <h1 class="throw_tit tit_left_green">결과</h1>
+            </div>
+            <div class="throw_list">
+              <ul>
+                <li>
+                  <p>등수</p>
+                </li>
+                <li>
+                  <p>순서</p>
+                </li>
+                <li>
+                  <p>이름</p>
+                </li>
+                <li>
+                  <p>1차시기</p>
+                </li>
+                <li>
+                  <p>2차시기</p>
+                </li>
+                <li>
+                  <p>3차시기</p>
+                </li>
+                <li>
+                  <p>4차시기</p>
+                </li>
+                <li>
+                  <p>5차시기</p>
+                </li>
+                <li>
+                  <p>6차시기</p>
+                </li>
+                <li>
+                  <p>기록</p>
+                </li>
+                <li>
+                  <p>비고</p>
+                </li>
+                <li>
+                  <p>신기록</p>
+                </li>
+              </ul>
+            </div>
+            <div class="throw_item">
+              <ul>
+                <li>
+                  <input type="number" name="rank[]" class="input_text" id="rank" value="" min="1" max="12" required="">
+                </li>
+                <li>
+                  <input type="number" name="rain[]" class="input_text" value="1" min="1" max="12" required=""
+                    readonly="">
+                </li>
+                <li>
+                  <span>Nadezhda Dubo</span>
+                </li>
+                <li>
+                  <input placeholder="경기 결과" type="text" name="gameresult1[]" class="input_text" value="36.77"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text" value="-"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <select title="신기록" name="record">
+                    <option>해당없음</option>
+                    <option>대회신기록</option>
+                    <option>아시아신기록</option>
+                    <option>아시아U20신기록</option>
+                    <option>세계U20신기록</option>
+                    <option>세계신기록</option>
+                  </select>
+                </li>
+              </ul>
+              <ul class="Ranklist_Background result_background">
+                <li>
+                  <input type="number" name="rank[]" class="input_text" id="rank" value="" min="1" max="12" required="">
+                </li>
+                <li>
+                  <input type="number" name="rain[]" class="input_text" value="1" min="1" max="12" required=""
+                    readonly="">
+                </li>
+                <li><span>Masatora Kawanori</span>
+                </li>
+                <li>
+                  <input placeholder="경기 결과" type="text" name="gameresult1[]" class="input_text" value="86.77"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text" value="-"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <select title="신기록" name="record">
+                    <option>해당없음</option>
+                    <option>대회신기록</option>
+                    <option>아시아신기록</option>
+                    <option>아시아U20신기록</option>
+                    <option>세계U20신기록</option>
+                    <option>세계신기록</option>
+                  </select>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <input type="number" name="rank[]" class="input_text" id="rank" value="" min="1" max="12" required="">
+                </li>
+                <li>
+                  <input type="number" name="rain[]" class="input_text" value="1" min="1" max="12" required=""
+                    readonly="">
+                </li>
+                <li><span>Mudha Alshammary</span>
+                </li>
+                <li>
+                  <input placeholder="경기 결과" type="text" name="gameresult1[]" class="input_text" value="76.77"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text" value="-"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <select title="신기록" name="record">
+                    <option>해당없음</option>
+                    <option>대회신기록</option>
+                    <option>아시아신기록</option>
+                    <option>아시아U20신기록</option>
+                    <option>세계U20신기록</option>
+                    <option>세계신기록</option>
+                  </select>
+                </li>
+              </ul>
+              <ul class="Ranklist_Background result_background">
+                <li>
+                  <input type="number" name="rank[]" class="input_text" id="rank" value="" min="1" max="12" required="">
+                </li>
+                <li>
+                  <input type="number" name="rain[]" class="input_text" value="1" min="1" max="12" required=""
+                    readonly="">
+                </li>
+                <li>
+                  <span>Khushnoza Shavkaro</span>
+                </li>
+                <li>
+                  <input placeholder="경기 결과" type="text" name="gameresult1[]" class="input_text" value="66.77"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text" value="-"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <select title="신기록" name="record">
+                    <option>해당없음</option>
+                    <option>대회신기록</option>
+                    <option>아시아신기록</option>
+                    <option>아시아U20신기록</option>
+                    <option>세계U20신기록</option>
+                    <option>세계신기록</option>
+                  </select>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <input type="number" name="rank[]" class="input_text" id="rank" value="" min="1" max="12" required="">
+                </li>
+                <li>
+                  <input type="number" name="rain[]" class="input_text" value="1" min="1" max="12" required=""
+                    readonly="">
+                </li>
+                <li>
+                  <span>Obaid Mohamed Nahith</span>
+                </li>
+                <li>
+                  <input placeholder="경기 결과" type="text" name="gameresult1[]" class="input_text" value="56.77"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text" value="-"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <select title="신기록" name="record">
+                    <option>해당없음</option>
+                    <option>대회신기록</option>
+                    <option>아시아신기록</option>
+                    <option>아시아U20신기록</option>
+                    <option>세계U20신기록</option>
+                    <option>세계신기록</option>
+                  </select>
+                </li>
+              </ul>
+              <ul class="Ranklist_Background result_background">
+                <li>
+                  <input type="number" name="rank[]" class="input_text" id="rank" value="" min="1" max="12" required="">
+                </li>
+                <li>
+                  <input type="number" name="rain[]" class="input_text" value="1" min="1" max="12" required=""
+                    readonly="">
+                </li>
+                <li><span>
+                    Saif Saaeed Shaheen
+                  </span>
+                </li>
+                <li>
+                  <input placeholder="경기 결과" type="text" name="gameresult1[]" class="input_text" value="46.77"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text" value="-"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <select title="신기록" name="record">
+                    <option>해당없음</option>
+                    <option>대회신기록</option>
+                    <option>아시아신기록</option>
+                    <option>아시아U20신기록</option>
+                    <option>세계U20신기록</option>
+                    <option>세계신기록</option>
+                  </select>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <input type="number" name="rank[]" class="input_text" id="rank" value="" min="1" max="12" required="">
+                </li>
+                <li>
+                  <input type="number" name="rain[]" class="input_text" value="1" min="1" max="12" required=""
+                    readonly="">
+                </li>
+                <li><span>
+                    Zaidatul Husniah
+                  </span>
+                </li>
+                <li>
+                  <input placeholder="경기 결과" type="text" name="gameresult1[]" class="input_text" value="96.77"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input class="score_item" type="text" maxlength="5" value="15.15" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text" value="-"
+                    maxlength="5" required="" onkeyup="field1Format(this)">
+                </li>
+                <li>
+                  <input type="text">
+                </li>
+                <li>
+                  <select title="신기록" name="record">
+                    <option>해당없음</option>
+                    <option>대회신기록</option>
+                    <option>아시아신기록</option>
+                    <option>아시아U20신기록</option>
+                    <option>세계U20신기록</option>
+                    <option>세계신기록</option>
+                  </select>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="modify_Btn input_Btn result_Btn">
+            <button class=" BTN_Red" type="submit">순서 재 정렬</button>
+            <button class=" BTN_Blue" type="submit">등록하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

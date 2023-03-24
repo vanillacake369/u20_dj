@@ -69,7 +69,7 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($coach_country_dic as $key => $value) {
-                                        echo '<option value="' . $key . '" ' . $isCountrySelected[$key] . '>' . $key . '</option>';
+                                        echo '<option value="' . $value . '" ' . $isCountrySelected[$key] . '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -114,8 +114,7 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($coach_duty_dic as $key) {
-                                        $duty = ($key == 'h') ? '헤드 코치' : '서브 코치';
-                                        echo '<option value="' . $key . '" ' . $isDutySelected[$key] . '>' . $duty . '</option>';
+                                        echo '<option value="' . $key . '" ' . $isDutySelected[$key] . '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>

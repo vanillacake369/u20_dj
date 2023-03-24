@@ -55,7 +55,7 @@ if ($month_dic[$_POST["coach_birth_month"]] < $_POST["coach_birth_day"]) {
     exit;
 }
 
-if ($_FILES['coach_imgFile']["size"] == 0) {
+if ($_FILES['main_photo']["size"] == 0) {
 
     $sql = "UPDATE list_coach SET 
         coach_name=?,
@@ -90,8 +90,45 @@ if ($_FILES['coach_imgFile']["size"] == 0) {
     $stmt->execute();
 } else { //이미지를 수정했을 경우
 
-    $coach_profile = str_replace(' ', '', $coach_profile);
-    $coach_profile = Img_Upload($_FILES['coach_imgFile'], "coach_img", $profile);
+    $coach_image = '';
+
+    if ($_FILES['main_photo']['name']) {
+        $upload_dir = '../../assets/img/coach_img/';
+    
+        if (!is_dir($upload_dir))
+            mkdir($upload_dir, 0777);
+    
+        //for ($i = 0; $i < count($_FILES['main_photo']['name']); $i++) {
+            $FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
+            $myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
+    
+            if ($FileExt != "jpg" && $FileExt != "gif" && $FileExt != "jpeg" && $FileExt != "png" && $FileExt != "JPG" && $FileExt != "GIF" && $FileExt != "JPEG" && $FileExt != "PNG") {
+                AlertBox("[오류] 올바른 이미지 확장자가 아닙니다.", 'back', '');
+                exit;
+            }
+            if (move_uploaded_file($_FILES['main_photo']['tmp_name'], $upload_dir . $myFile)) {
+                $image_photo = new Image($upload_dir . $myFile);
+    
+                if ($image_photo->getWidth() < 10 || $image_photo->getHeight() < 10) {
+                    AlertBox("[오류] 올바른 이미지가 아닙니다.", 'back', '');
+                    exit;
+                }
+    
+                if ($image_photo->getWidth() > 2000)
+                    $image_photo->resizeToWidth(2000);
+    
+                $image_photo->save($upload_dir . $myFile);
+                $coach_photo = str_replace("../../assets/img/coach_img/", "", $upload_dir) . $myFile;
+    
+                $coach_image = $coach_photo;
+            } else {
+                AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
+                exit;
+            //}
+        }
+    } else {
+        $coach_image = 'profile.jpg';
+    }
 
     $sql = "UPDATE list_coach SET 
         coach_name=?,
@@ -121,7 +158,7 @@ if ($_FILES['coach_imgFile']["size"] == 0) {
         $coach_sector,
         // $coach_schedule,
         // $coach_attendance,
-        $coach_profile,
+        $coach_image,
         $coach_id
     );
     $stmt->execute();

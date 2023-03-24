@@ -56,7 +56,7 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
                 <p class="UserProfile_tit tit_left_blue">
                     코치 정보
                 </p>
-                <form action="">
+                <form action="./action/module/coach_update.php" method="post" class="form" enctype="multipart/form-data">
                     <div class="UserProfile_modify coachArea Participant_img ptp_img">
                         <div>
                             <img src="<?php echo "./assets/img/coach_img/" . $row["coach_profile"] ?>" alt="avatar">
@@ -76,7 +76,7 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
                                 </li>
                                 <li class="row">
                                     <span>성</span>
-                                    <input type="text" name="coach_second_name" id="coach_name" value="<?= $firstName ?>" />
+                                    <input type="text" name="coach_first_name" id="coach_name" value="<?= $firstName ?>" />
                                 </li>
                                 <li class="row modify_input">
                                     <span>국가</span>
@@ -124,7 +124,7 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
                                 </li>
                                 <li class="row">
                                     <span>이미지 변경</span>
-                                    <input type="file" name="coach_imgFile" />
+                                    <input type="file" name="main_photo" />
                                 </li>
                                 <li class="row full_width">
                                     <span class="full_span">출입가능구역</span>

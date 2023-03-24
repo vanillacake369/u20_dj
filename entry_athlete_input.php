@@ -145,7 +145,7 @@ if (!authCheck($db, "authEntrysRead")) {
                             <div class="modify_enter modify_tit_color" id="sb-section">
                                 <p class="tit_left_red">SB</p>
                                 <ul class="modify_checkList" id="sb-input">
-                                    <select name="athlete_sb_sports" required>
+                                    <select name="athlete_sb_sports" id="sb-sports-select">
                                         <?php
                                         // key($sport_dic) : sports_code
                                         // current($sport_dic) : sports_name
@@ -157,11 +157,12 @@ if (!authCheck($db, "authEntrysRead")) {
                                         reset($sport_dic);
                                         ?>
                                     </select>
-                                    <input type="number" name="athlete_sb" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" required />
+                                    <input type="number" name="athlete_sb" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" />
+                                    <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button>
                                 </ul>
                             </div>
                             <div class="filed_BTN2">
-                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button>
+                                <!-- <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button> -->
                                 <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-sb"><i class="xi-plus"></i></button>
                             </div>
                         </div>
@@ -169,7 +170,7 @@ if (!authCheck($db, "authEntrysRead")) {
                             <div class="modify_enter" id="pb-section">
                                 <p class="tit_left_green">PB</p>
                                 <ul class="modify_checkList" id="pb-input">
-                                    <select name="athlete_pb_sports" required>
+                                    <select name="athlete_pb_sports" id="pb-sports-select">
                                         <?php
                                         // key($sport_dic) : sports_code
                                         // current($sport_dic) : sports_name
@@ -181,11 +182,12 @@ if (!authCheck($db, "authEntrysRead")) {
                                         reset($sport_dic);
                                         ?>
                                     </select>
-                                    <input type="number" name="athlete_pb" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" required />
+                                    <input type="number" name="athlete_pb" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" />
+                                    <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
                                 </ul>
                             </div>
                             <div class="filed_BTN2">
-                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
+                                <!-- <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button> -->
                                 <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-pb"><i class="xi-plus"></i></button>
                             </div>
                         </div>
@@ -194,7 +196,6 @@ if (!authCheck($db, "authEntrysRead")) {
                             $(document).ready(function() {
                                 $('#add-sb').click(function() {
                                     var list = $('#sb-input').clone(); // Make a copy of the <ul> element
-                                    console.log(list);
                                     $('#sb-section').append(list); // Append the copy to the body of the document
                                 });
                             });
@@ -202,20 +203,19 @@ if (!authCheck($db, "authEntrysRead")) {
                             $(document).ready(function() {
                                 $('#add-pb').click(function() {
                                     var list = $('#pb-input').clone(); // Make a copy of the <ul> element
-                                    console.log(list);
                                     $('#pb-section').append(list); // Append the copy to the body of the document
                                 });
                             });
-                            // sb 추가 버튼 @author 임지훈 @vanillacake369
+                            // sb 삭제 버튼 @author 임지훈 @vanillacake369
                             $(document).ready(function() {
-                                $('#delete-sb').click(function() {
-                                    $(this).siblings('ul').empty(); // Remove all child elements of the <ul> element
+                                $(document).on("click", '#delete-sb', function() {
+                                    $(this).parent().remove();
                                 });
                             });
                             // pb 삭제 버튼 @author 임지훈 @vanillacake369
                             $(document).ready(function() {
-                                $('#delete-pb').click(function() {
-                                    $('ul').empty(); // Remove all child elements of the <ul> element
+                                $(document).on("click", '#delete-pb', function() {
+                                    $(this).parent().remove();
                                 });
                             });
                         </script>

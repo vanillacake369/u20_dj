@@ -145,12 +145,12 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                                                 <input type="hidden" name="group[]" id="group[]" value="<?php echo $i ?>">
                                                 <input type="hidden" name="order[]" id="order[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>">
                                                 <!-- 순서 :: record_order -->
-                                                <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled>
+                                                <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled="disabled">
                                             </td>
                                             <td>
                                                 <!-- 선수 id :: record_athlete_id-->
                                                 <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
-                                                <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
+                                                <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>" readonly>
                                             </td>
                                         </tr>
                                     </tbody>

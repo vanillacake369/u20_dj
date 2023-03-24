@@ -165,10 +165,6 @@ function processFile(file) {
                                 <h1 class="tit_padding tit_left_green">결과</h1>
                                 <div>
                                 <?php
-                                    if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
-                                    } else {
-                                        echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
-                                    }
                                     if ($rows['record_state'] != 'y') {
                                         echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
                                     }
@@ -298,13 +294,7 @@ function processFile(file) {
                         value="<?php echo ($rows['schedule_memo']??null)?>" maxlength=" 100" />
                     <div class="modify_Btn input_Btn result_Btn">
                     <?php
-                        if ($rows["schedule_status"] != "y") {
-                        echo '<div class="signup_submit" style="width:49%;>
-                                        <button type="submit" class="BTN_Red full_width" name="addtempresult"
-                                            formaction="../action/record/track_relay_result_insert.php">
-                                            <span>임시저장</span>
-                                        </button>
-                                    </div>';
+                        if ($rows["record_state"] != "y") {
                         echo '<div class="signup_submit" style="width:49%;">
                                     <button type="submit" class="BTN_Blue full_width" name="addresult"
                                         formaction="../action/record/track_relay_result_insert.php">

@@ -117,25 +117,25 @@ if ($hasSearched) {
     // 날짜
     $uri_array["schedule_date"] = $searchValue["schedule_date"];
     array_push($bindarray, "%" . $searchValue["schedule_date"] . "%");
-    array_push($keyword, "record_end like ?");
+    array_push($keyword, "record_end like ? ");
   }
   if ($hasSearchedGender) {
     // 성별
     $uri_array["schedule_gender"] = $searchValue["schedule_gender"];
     array_push($bindarray, $_GET["schedule_gender"]);
-    array_push($keyword, "schedule_gender=?");
+    array_push($keyword, "schedule_gender=? ");
   }
   if ($hasSearchedCategory) {
     // 카테고리
     $uri_array["sports_category"] = $searchValue["sports_category"];
     array_push($bindarray, $_GET["sports_category"]);
-    array_push($keyword, "sports_category=?");
+    array_push($keyword, "sports_category=? ");
   }
   if ($hasSearchedSports) {
     // 종목
     $uri_array["schedule_sports"] = $searchValue["schedule_sports"];
     array_push($bindarray, $_GET["schedule_sports"]);
-    array_push($keyword, "schedule_sports=?");
+    array_push($keyword, "schedule_sports=? ");
   }
 
   for ($i = 0; $i < count($keyword); $i++) {

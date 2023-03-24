@@ -291,7 +291,7 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                                     if ($gold == end($Goldname)) {
                                         echo htmlspecialchars(trim($gold));
                                     } else {
-                                        echo htmlspecialchars(trim($gold)) . ',' . "<br>";
+                                        echo htmlspecialchars(trim($gold)) . "<br>";
                                     }
                                 }
                             } else {
@@ -318,7 +318,7 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                                     if ($silver == end($Silvername)) {
                                         echo htmlspecialchars(trim($silver));
                                     } else {
-                                        echo htmlspecialchars(trim($silver)) . ',' . "<br>";
+                                        echo htmlspecialchars(trim($silver)) . "<br>";
                                     }
                                 }
                             } else {
@@ -346,7 +346,7 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                                     if ($Bronze == end($Bronzename)) {
                                         echo htmlspecialchars(trim($Bronze));
                                     } else {
-                                        echo htmlspecialchars(trim($Bronze)) . ',' . "<br>";
+                                        echo htmlspecialchars(trim($Bronze)) . "<br>";
                                     }
                                 }
                             } else {

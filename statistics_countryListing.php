@@ -278,7 +278,7 @@
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . ',' . "<br>";
+                                        echo htmlspecialchars($g) . "<br>";
                                     }
                                 }
                             }
@@ -308,7 +308,7 @@
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . ',' . "<br>";
+                                        echo htmlspecialchars($g) . "<br>";
                                     }
                                 }
                             }
@@ -338,7 +338,7 @@
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . ',' . "<br>";
+                                        echo htmlspecialchars($g) . "<br>";
                                     }
                                 }
                             }
@@ -368,7 +368,7 @@
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . ',' . "<br>";
+                                        echo htmlspecialchars($g) . "<br>";
                                     }
                                 }
                             }

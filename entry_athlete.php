@@ -29,6 +29,7 @@ if (isset($categoryValue) && isset($orderValue)) {
     $sql_order = makeOrderBy($columnStartsWith, $categoryValue, $orderValue);
     $sql = $sql . $sql_order;
 }
+
 ?>
 <script type="text/javascript" src="./assets/js/jquery-1.12.4.min.js"></script>
 </head>
@@ -127,9 +128,8 @@ if (isset($categoryValue) && isset($orderValue)) {
                             <div class="search">
                                 <input type="hidden" name="page_size" value="<?php echo $pagesizeValue; ?>">
                                 <!-- +)검색할 때도 페이지 사이즈 유지하기 위해서 위에 추가해야 됨. -->
-                                <input type="text" id="search" class="defaultSearchInput" name="athlete_name" placeholder="이름을 입력해주세요" maxlength="30" value="<?php echo isset($searchValue["
-                                    athlete_name"]) ? $searchValue["athlete_name"] : ''; ?>">
-                                <button name="search" value=search type="submit" class="defaultSearchBth" title="검색"><i class="xi-search"></i></button>
+                                <input type="text" id="search" class="defaultSearchInput" name="athlete_name" placeholder="이름을 입력해주세요" maxlength="30" value="<?php echo isset($searchValue["athlete_name"]) ? $searchValue["athlete_name"] : ''; ?>">
+                                <button type="submit" class="defaultSearchBth" title="검색"><i class="xi-search"></i></button>
                             </div>
                         </div>
                     </form>

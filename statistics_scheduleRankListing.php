@@ -264,7 +264,7 @@
                                         if ($name == end($athlete_name)) {
                                             echo htmlspecialchars(trim($name));
                                         } else {
-                                            echo htmlspecialchars(trim($name)) . ',' . "<br>";
+                                            echo htmlspecialchars(trim($name)) . "<br>";
                                         }
                                     }
                                 } else {

@@ -1,17 +1,17 @@
 <?php
 
-require_once __DIR__ . "/console_log.php";
-require_once __DIR__ . "/head.php";
-require_once __DIR__ . "/includes/auth/config.php";
-require_once __DIR__ . "/security/security.php";
-require_once __DIR__ . "/action/module/dictionary.php";
+require_once "console_log.php";
+require_once "head.php";
+require_once "includes/auth/config.php";
+require_once "security/security.php";
+require_once "action/module/dictionary.php";
 
 global $db, $categoryOfSports_dic;
-$group_num = cleanInput($_GET["record_group"]) ?? null;         // ~ 조
-$group_count = cleanInput($_GET["count_group"]) ?? null;        // 조 개수
-$sport_code = cleanInput($_GET["record_sports"]) ?? null;       // 경기 이름(코드)
-$round = cleanInput($_GET["record_round"]) ?? null;             // 경기 라운드
-$gender = cleanInput($_GET["record_gender"]) ?? null;           // 경기 성별
+$group_num = $_GET["record_group"] ?? null;         // ~ 조
+$group_count = $_GET["count_group"] ?? null;        // 조 개수
+$sport_code = $_GET["record_sports"] ?? null;       // 경기 이름(코드)
+$round = $_GET["record_round"] ?? null;             // 경기 라운드
+$gender = $_GET["record_gender"] ?? null;           // 경기 성별
 $category = $categoryOfSports_dic[$sport_code] ?? null;         // 경기 종목 (필드, 트랙)
 $each_group_athletes_id_lane = array();                         // each_group_athletes_id_lane[m][n][p] :: [m조][선수n의 id][선수 n의 레인p]
 $each_group_athletes_data = array();                            // each_group_athletes_data[m][n][] :: [m조][0~n][선수 n의 모든 정보]
@@ -30,6 +30,7 @@ while ($result = mysqli_fetch_array($get_all_athlete_of_group)) {
 
 console_log($each_group_athletes_id_lane);
 
+
 // m조에 대해
 $first_index_each_group_athletes_id_lane = array_key_first($each_group_athletes_id_lane);
 $last_index_each_group_athletes_id_lane = array_key_last($each_group_athletes_id_lane);
@@ -38,6 +39,13 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
     $each_group_athletes_id = array_keys($each_group_athletes_id_lane[$i]);
     // each_group_athletes_lane[][] :: m조에 편성되어있는 n명의 선수들 레인값
     $each_group_athletes_lane = array_values($each_group_athletes_id_lane[$i]);
+
+
+    console_log($each_group_athletes_id);
+    console_log($each_group_athletes_lane);
+
+
+
     // n명의 선수들 정보 가저오는 query
     $query = "SELECT athlete_id, athlete_name, athlete_country, athlete_division, athlete_attendance FROM list_athlete WHERE athlete_gender = ? AND INSTR(athlete_attendance, ?) AND (athlete_id = ";
     $query = $query . implode(" OR athlete_id = ", $each_group_athletes_id) . ") ORDER BY athlete_id asc";
@@ -112,42 +120,45 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                         <p class="tit_left_yellow"><?php echo $i ?>조</p>
                     </div>
                     <div class="filed2_form">
-                        <table cellspacing="0" cellpadding="0" class="filed2_Table " id="" name="table_name[]">
-                            <thead class="filed_list filed2_list">
+                        <table cellspacing="0" cellpadding="0" class="entry_table filed2_swap" id="" name="table_name[]">
+                            <thead class="filed_list filed2_list result_table ">
                                 <tr>
                                     <th>순서</th>
                                     <th>선수 이름</th>
                                 </tr>
                                 <tr class="filed2_bottom">
-                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <!-- m명 -->
                             <?php
-                            // START FOR (1~n명)
-                            $first_index_each_group_athletes_data_i = array_key_first($each_group_athletes_data[$i]);
-                            $last_index_each_group_athletes_data_i = array_key_last($each_group_athletes_data[$i]);
-                            for ($j = $first_index_each_group_athletes_data_i; $j <= $last_index_each_group_athletes_data_i; $j++) {
+                            // STAR FOR (한 레인 당 4명)
+                            for ($order = 1; $order <= 4; $order++) {
+                                // START FOR (1~n명)
+                                $first_index_each_group_athletes_data_i = array_key_first($each_group_athletes_data[$i]);
+                                $last_index_each_group_athletes_data_i = array_key_last($each_group_athletes_data[$i]);
+                                for ($j = $first_index_each_group_athletes_data_i; $j <= $last_index_each_group_athletes_data_i; $j++) {
                             ?>
-                                <tbody class="grouping_body">
-                                    <tr>
-                                        <td>
-                                            <!-- 조 :: record_group -->
-                                            <input type="hidden" name="group[]" id="group[]" value="<?php echo $i ?>">
-                                            <input type="hidden" name="order[]" id="order[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>">
-                                            <!-- 순서 :: record_order -->
-                                            <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled>
-                                        </td>
-                                        <td>
-                                            <!-- 선수 id :: record_athlete_id-->
-                                            <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
-                                            <input type="text" name="name" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                    <tbody class="grouping_body entry_table">
+                                        <tr>
+                                            <td>
+                                                <!-- 조 :: record_group -->
+                                                <input type="hidden" name="group[]" id="group[]" value="<?php echo $i ?>">
+                                                <input type="hidden" name="order[]" id="order[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>">
+                                                <!-- 순서 :: record_order -->
+                                                <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled>
+                                            </td>
+                                            <td>
+                                                <!-- 선수 id :: record_athlete_id-->
+                                                <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
+                                                <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
+                                            </td>
+                                        </tr>
+                                    </tbody>
                             <?php
+                                }
+                                // END FOR (n명)
                             }
-                            // END FOR (n명)
+                            // END FOR (한 레인 당 4명)
                             ?>
                         </table>
                         <div class="filed_BTN2">
@@ -301,8 +312,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
 <script>
     $("select[name=athlete]").select2();
 </script>
-<script src="./assets/js/main.js"></script>
-<script src="./assets/js/main_dh.js"></script>
+<script src="assets/js/main.js?ver=13"></script>
 </body>
 
 </html>

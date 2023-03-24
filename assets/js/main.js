@@ -714,7 +714,21 @@ function issueId(pageURL, entry_who) {
       checkedId.push(checkboxes[i].value);
     }
   }
-  checkedId.forEach((entry) => updatePop(entry, entry_who, pageURL));
+  pdfPop(entry_who, checkedId, pageURL);
+}
+
+function pdfPop(entry_who, checkedId, openURL) {
+  // 값 집어 넣기
+  let form = createHiddenIdForm("post", "", entry_who, checkedId);
+  document.body.appendChild(form);
+
+  //팝업 만들기
+  var pop_title = "ADcard_Print";
+  createPopupWin("", pop_title, 1100, 900);
+  var forms = form;
+  forms.target = pop_title;
+  forms.action = openURL;
+  forms.submit();
 }
 
 // 참가자 ID 사용 팝업함수

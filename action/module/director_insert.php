@@ -82,7 +82,7 @@ if ($_FILES['main_photo']['name']) {
 			$image_photo->save($upload_dir . $myFile);
 			$director_photo = str_replace("../../assets/img/director_img/", "", $upload_dir) . $myFile;
 
-			$director_profile = $director_photo;
+			$director_image = $director_photo;
 		} else {
 			AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
 			exit;
@@ -105,7 +105,7 @@ $stmt->bind_param(
 	$director_birth,
 	$director_age,
 	$director_sector,
-	$director_profile
+	$director_image
 );
 
 $stmt->execute();

@@ -210,7 +210,7 @@ zend_version()
                                 "<td><span class='AD_on'>" . htmlspecialchars($row["judge_isIssued"]) . "</span></td>" :
                                 "<td><span class='AD_off'>" . htmlspecialchars($row["judge_isIssued"]) . "</span></td>";
                             // 행 번호
-                            echo "<td>" . $num . "</td>";
+                            echo "<td>" . htmlspecialchars($row["judge_id"]) . "</td>";
                             // 참가자 이름
                             echo "<td>" . htmlspecialchars($row["judge_name"]) . "</td>";
                             // 참가자 국가코드

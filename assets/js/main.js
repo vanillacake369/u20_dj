@@ -152,6 +152,7 @@ function field1Format(obj) {
     rankcal();
   }
 }
+
 //등수 자동 배정 내림차순
 function rankcal() {
   let re = document.querySelectorAll("#result"); //결과 요소 가져옴
@@ -233,15 +234,12 @@ function selectAll(selectAll) {
     checkbox.checked = selectAll.checked;
   });
 }
+// 선수 접근 가능 구역
+function venue(VenueAll) {
+  const venues = document.getElementsByName("venue_code");
 
-// 참가자 관리 경기 목록
-const popupItem = document.querySelectorAll(".popup_BTN");
-const item_popup = document.querySelectorAll(".item_popup");
-
-for (let i = 0; i < popupItem.length; i++) {
-  popupItem[i].addEventListener("click", () => {
-    closeAllPopups();
-    togglePopup(i);
+  venues.forEach((checkbox) => {
+    checkbox.checked = !VenueAll.checked;
   });
 }
 
@@ -470,6 +468,41 @@ if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) 
       athleteInput = null;
     }
 
+for (let i = 0; i < filed_item.length; i++) {
+  if (filed_item.length == 1) {
+    filed_item[i].classList.add("decathlon_container");
+  } else {
+    filed_item[i].classList.remove("decathlon_container");
+  }
+}
+
+if (document.querySelectorAll('.filed2_Table>tbody>tr>td>input[name="name"]')) {
+  let clickedInput = null;
+  const inputs = document.querySelectorAll(
+    '.filed2_Table>tbody>tr>td>input[name="name"]'
+  );
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("click", () => {
+      if (!clickedInput) {
+        clickedInput = inputs[i];
+      } else {
+        const temp = clickedInput.value;
+        clickedInput.value = inputs[i].value;
+        inputs[i].value = temp;
+        clickedInput.setAttribute("value", clickedInput.value);
+        inputs[i].setAttribute("value", inputs[i].value);
+        clickedInput = null;
+      }
+      console.log(clickedInput.value);
+    });
+  }
+  document.addEventListener("click", (event) => {
+    // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
+    // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
+    if (event.target.name !== "name") {
+      clickedInput = null;
+    }
+    // console.log(clickedInput.value);
   });
 }
 

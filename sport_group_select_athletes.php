@@ -29,11 +29,11 @@ function select_max_athlete_in_group(string $schedule_name)
     }
 }
 
-$sports = $_GET['sports']; //post로 받는 경기종목
+$sports = $_POST['sports']; //post로 받는 경기종목
 $name = $sports;
-$gender = $_GET['gender']; //post로 받는 성별
-$round = $_GET['round']; //post로 받는 라운드
-$mode = $_GET['method'] ?? NULL; // post로 받는자동이나 수동
+$gender = $_POST['gender']; //post로 받는 성별
+$round = $_POST['round']; //post로 받는 라운드
+$mode = $_POST['method'] ?? NULL; // post로 받는자동이나 수동
 $round_condition = ''; // 라운드 구분 조건
 $gender_condition = ""; //릴레이를 위한 조건
 $group = 1;

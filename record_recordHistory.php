@@ -344,11 +344,19 @@ $total_count = mysqli_num_rows($count);
                             echo "<td>" . htmlspecialchars($row["worldrecord_record"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["worldrecord_datetime"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["worldrecord_country_code"]) . "</td>";
-                            echo "<td colspan='2' scope='col'>";
                             if (authCheck($db, "authRecordsUpdate")) {
-                                echo '<button type=\'button\' onclick="createPopupWin(\'\',\'창 이름\',900,900)" class=\'BTN_Blue defaultBtn\'>수정</button>';
+                                echo "<td>";
+                                echo '<form action="/record_worldrecord_modify.php" method="post" target="수정">';
+                                echo '<input type=hidden name=sports value="'.$row["worldrecord_sports"].'">';
+                                echo '<input type=hidden name=record value="'.$row["worldrecord_record"].'">';
+                                echo '<input type=hidden name=datetime value="'.$row["worldrecord_datetime"].'">';
+                                echo '<input type=hidden name=country_code value="'.$row["worldrecord_country_code"].'">';
+                                echo '<input type=hidden name=athletics value="'.$row["worldrecord_athletics"].'">';
+                                echo '<input type=hidden name=athlete_name value="'.$row["worldrecord_athlete_name"].'">';
+                                echo '<input type="submit" onclick="window.open';
+                                echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                                echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
                             }
-                            echo "</td>";
                             echo "<td colspan='2' scope='col'>";
                             if (authCheck($db, "authRecordsDelete")) {
                                 echo "<button type='button' class='BTN_Red defaultBtn'>삭제</button>";

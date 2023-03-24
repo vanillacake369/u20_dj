@@ -7,16 +7,18 @@ if (!isset($_POST['sports']) || $_POST['sports'] == "" || !isset($_POST['name'])
     echo '<script>alert("모두 입력하세요.");history.back();</script>';
     exit;
 } else {
-    $id = trim($_POST['id']);
-    $sports = trim($_POST['sports']);
-    $name = trim($_POST['name']);
+    $search_sports = trim($_POST['search_sports']);
+    $search_name = trim($_POST['search_name']);
+    $search_gender = trim($_POST['search_gender']);
+    $search_round = trim($_POST['search_round']);
 
-    $sql = "SELECT * FROM list_sports WHERE sports_code='" . $sports . "'";
+    $sql = "SELECT * FROM list_sports WHERE sports_code='" . $search_sports . "'";
     // $sql="SELECT * FROM list_sports WHERE sports_code='".$sports."' AND  sports_name_kr='".$name."'";
     $key = $db->query($sql);
 
     if (mysqli_fetch_array($key)) {
-
+        $name = trim($_POST['name']);
+        $sports = trim($_POST['sports']);
         $gender = trim($_POST['gender']);
         $round = trim($_POST['round']);
         $location = trim($_POST['location']);
@@ -33,13 +35,17 @@ if (!isset($_POST['sports']) || $_POST['sports'] == "" || !isset($_POST['name'])
 
         $start = $date_year . "-" . $date_month . "-" . $date_day . " " . $start_hour . ":" . $start_minute . ":00";
         $start = DateTime::createFromFormat('Y-m-d H:i:s', $start)->format('Y-m-d h:i:s');
-        $sql = "SELECT schedule_id from list_schedule where schedule_sports='" . $sports . "' and schedule_name='" . $name . "' and schedule_gender='" . $gender . "' and schedule_round='" . $round . "';";
+        $sql = "SELECT schedule_id from list_schedule where schedule_sports='" . $search_sports . "' and schedule_name='" . $search_name . "' and schedule_gender='" . $search_gender . "' and schedule_round='" . $search_round . "';";
         $key = $db->query($sql);
 
         if (mysqli_fetch_array($key)) {
-            $sql = "UPDATE list_schedule SET schedule_sports = ?, schedule_name=?, schedule_gender=?, schedule_round=?, schedule_location=?, schedule_start=?, schedule_result=?,schedule_date=?  WHERE schedule_id = ?;";
+            $sql = "UPDATE list_schedule SET schedule_sports = ?, schedule_name=?, schedule_gender=?, schedule_round=?, schedule_location=?, schedule_start=?, schedule_date=?  WHERE schedule_sports=? and schedule_name=? and schedule_gender=? and schedule_round=?;";
             $stmt = $db->prepare($sql);
-            $stmt->bind_param("sssssssss", $sports, $name, $gender, $round, $location, $start, $result, $date, $id);
+            $stmt->bind_param("sssssssssss", $sports, $name, $gender, $round, $location, $start, $date, $search_sports, $search_name, $search_gender, $search_round);
+            $stmt->execute();
+            $sql = "UPDATE list_record SET record_state=?  WHERE record_sports=? and record_gender=? and record_round=?;";
+            $stmt = $db->prepare($sql);
+            $stmt->bind_param("ssss",$result, $search_sports, $search_gender, $search_round);
             $stmt->execute();
             logInsert($db, $_SESSION['Id'], '일정 수정', $sports . "-" . $name . "-" . $gender . "-" . $round);
             echo "<script>alert('일정 수정되었습니다.'); window.close();</script>";

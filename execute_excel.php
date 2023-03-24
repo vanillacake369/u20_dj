@@ -91,9 +91,22 @@ function executeExcel(array $data, string $role)
     set_header($html, $role);
     $data = set_marking($role, $data);
     $data = sort_order($role, $data);
+    $i = 1;
+    $can=array();
     foreach ($data as $datum) {
         # 5-2번
+        if ($role == 'schedule_management')
+        {
+            $tmp= $datum["schedule_name"].$datum["schedule_round"].$datum['schedule_gender'];
+            if(in_array($tmp,$can)){
+                $i-=1;
+                continue;
+            }else{
+                $can[]=$tmp;
+            }
+        }
         add_table_row_data($html, $datum);
+        $i++;
     }
     $html .= "</table>";
     return $html;

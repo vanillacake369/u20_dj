@@ -38,24 +38,6 @@ require_once "action/module/dictionary.php";
                     </select>
                 </li>
                 <li class="row input_row Desc_item">
-                  <span>경기 이름</span>
-                    <select name="name" style="width: 200px;">
-                      <option value="non" hidden="">경기 이름</option>
-                      <?php
-                        $events = array_unique($categoryOfSports_dic);
-                        foreach ($events as $e) {
-                          echo "<optgroup label=\"$e\">";
-                          $sportsOfTheEvent = array_keys($categoryOfSports_dic, $e);
-                          foreach ($sportsOfTheEvent as $a) {
-                            $name = $sport_dic[$a];
-                            echo '<option value="'.$name.'">' . $name . '</option>';
-                          }
-                          echo "</optgroup>";
-                        }
-                      ?>
-                    </select>
-                </li>
-                <li class="row input_row Desc_item">
                   <span>경기 라운드</span>
                   <!-- 직접 입력기능(input 태그)는 왜 있는 거야?? @author 임지훈 @vanillacake369 -->
                   <!-- <input class="input_text_row" type="text" name="direct_input" id="direct_input" style="width:200px;" disabled> -->
@@ -84,21 +66,27 @@ require_once "action/module/dictionary.php";
                 <li class="row input_row Desc_item">
                   <span>경기 시간</span>
                   <div>
-                  <input placeholder="경기 시작 시간(시)" type="number" name="start_hour" min="1" maxlength="2" oninput="maxLengthCheck(this)" required="" />
+                  <input placeholder="경기 시작 시간(시)" type="number" name="start_hour" maxlength="2" oninput="maxLengthCheck(this)" required="" />
                     <span>:</span>
                     <input placeholder="경기 시작 시간(분)" type="number" name="start_minute" maxlength="2" oninput="maxLengthCheck(this)" required="" />
                   </div>
                 </li>
-                <li class="row input_row Desc_item input_width">
-                  <span>경기날짜</span>
-                  <input placeholder="(YYYY)" type="number" name="date_year" class="input_text_row" min="1" maxlength="4" oninput="maxLengthCheck(this)" required="" />
-                  <div style="float:left;"> -
-                  </div>
-                  <input placeholder="(mm)" type="number" name="date_month" class="input_text_row" min="1" maxlength="2" oninput="maxLengthCheck(this)" required="" />
-                  <div style="float:left;"> -
-                  </div>
-                  <input placeholder="(dd)" type="number" name="date_day" class="input_text_row" maxlength="2" oninput="maxLengthCheck(this)" required="" />
-                </li>
+                <li class="row input_row Desc_item">
+                                    <span>경기날짜</span>
+                                    <div>
+                                        <input placeholder="(YYYY)" type="number" name="date_year" maxlength="4"
+                                            required="" oninput="maxLengthCheck(this)"
+                                            value="" />
+                                        <span>:</span>
+                                        <input placeholder="(mm)" type="number" name="date_month"
+                                            maxlength="2" oninput="maxLengthCheck(this)"
+                                            value="" />
+                                        <span>:</span>
+                                        <input placeholder="(dd)" type="number" name="date_day"
+                                            maxlength="2" oninput="maxLengthCheck(this)"
+                                            value="" />
+                                    </div>
+                                </li>
               </ul>
             </div>
           </div>

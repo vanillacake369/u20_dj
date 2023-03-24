@@ -88,7 +88,7 @@ function islane($schedule_sports, $what)
     <div class="schedule_container">
         <div class="result_tit">
             <div class="result_list2">
-                <p class="tit_left_blue"><?php echo  $schedule_sports ?>
+                <p class="tit_left_blue"><?= $schedule_sports ?>
                     <?php echo $schedule_round == 'final' ? '결승전' : ($schedule_round == 'semi-final' ? '준결승전' : '예선전') ?>
                 </p>
             </div>
@@ -128,7 +128,7 @@ function islane($schedule_sports, $what)
                         </colgroup>
                         <thead class="result_table entry_table">
                             <tr>
-                                <th scope="col" colspan="1"><?php echo  islane($schedule_sports, '상단') ?></th>
+                                <th scope="col" colspan="1"><?= islane($schedule_sports, '상단') ?></th>
                                 <th scope="col" colspan="1">등수</th>
                                 <th scope="col" colspan="1">등번호</th>
                                 <th scope="col" colspan="1">이름</th>
@@ -153,13 +153,13 @@ function islane($schedule_sports, $what)
                             ?>
                         </tbody>
                     </table>
-                    <input type=hidden name=result value=<?php echo  $schedule_result ?>>
-                    <input type=hidden name=sports value=<?php echo  $schedule_sports ?>>
-                    <input type=hidden name=gender value=<?php echo  $schedule_gender ?>>
-                    <input type=hidden name=name value=<?php echo  $schedule_name ?>>
-                    <input type=hidden name=round value=<?php echo  $schedule_round ?>>
-                    <input type=hidden name=group value=<?php echo  $k ?>>
-                    <!-- <input type=hidden name=wind value=<?php echo  $row['record_wind'] ?>> -->
+                    <input type=hidden name=result value=<?= $schedule_result ?>>
+                    <input type=hidden name=sports value=<?= $schedule_sports ?>>
+                    <input type=hidden name=gender value=<?= $schedule_gender ?>>
+                    <input type=hidden name=name value=<?= $schedule_name ?>>
+                    <input type=hidden name=round value=<?= $schedule_round ?>>
+                    <input type=hidden name=group value=<?= $k ?>>
+                    <!-- <input type=hidden name=wind value=<?= $row['record_wind'] ?>> -->
                     <div class="filed_BTN">
                         <div>
                             <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
@@ -170,11 +170,11 @@ function islane($schedule_sports, $what)
                                     formaction="award_ceremony.php">시상식 보기</button>
                                     <?php } ?>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
-                                formaction="/record/track_<?php if  ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_pdf.php">PDF(한) 출력</button>
+                                formaction="/record/track_<?if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_pdf.php">PDF(한) 출력</button>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
-                                formaction="/record/track_<?php if  ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_eng_pdf.php">PDF(영) 출력</button>
+                                formaction="/record/track_<?if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_eng_pdf.php">PDF(영) 출력</button>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
-                                formaction="/record/track_<?php if  ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_word.php">워드 출력</button>
+                                formaction="/record/track_<?if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_word.php">워드 출력</button>
                                 <?php /*<form action="./execute_excel.php" method="post" enctype="multipart/form-data">
                                     <input type="submit" name="query" id="execute_excel" value="<?php echo $excel ?>" hidden />
                                     <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
@@ -189,9 +189,9 @@ function islane($schedule_sports, $what)
                             if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
                                 echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
                                 if ( $schedule_sports == " 4x100mR" || $schedule_sports == "4x400mR") {
-                                    echo "/record/track_relay_result_view.php";
+                                    echo "/record/track_relay_result_view.php?id=" . $id;
                                 } else {
-                                    echo "/record/track_normal_result_view.php";
+                                    echo "/record/track_normal_result_view.php?id=" . $id;
                                 }
                                 echo '">기록 입력</button>';
                                 echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';
@@ -214,7 +214,7 @@ function islane($schedule_sports, $what)
             <div class="schedule_filed filed_list_item filed_container">
                 <!-- class="contents something" -->
                 <div class="schedule_filed_tit">
-                    <p class="tit_left_yellow"><?php echo  $k ?>조</p>
+                    <p class="tit_left_yellow"><?= $k ?>조</p>
                     <?php
                         $row2 = mysqli_fetch_array($result2);
                         echo '<span class="defaultBtn';
@@ -239,7 +239,7 @@ function islane($schedule_sports, $what)
                         </colgroup>
                         <thead class="result_table entry_table">
                             <tr>
-                                <th scope="col" colspan="1"><?php echo  islane($schedule_sports, '상단') ?></th>
+                                <th scope="col" colspan="1"><?= islane($schedule_sports, '상단') ?></th>
                                 <th scope="col" colspan="1">등수</th>
                                 <th scope="col" colspan="1">등번호</th>
                                 <th scope="col" colspan="1">이름</th>
@@ -280,10 +280,10 @@ function islane($schedule_sports, $what)
 
                                         if ($num % 2 == 0) echo ' class="Ranklist_Background">';
                                         else echo '>';
-                                        echo '<td><input type="number"  name="rain[]" value="' . $row['record_order'] . '" min="1" required="" readonly /></td>';
+                                        echo '<td><input type="number"  name="rain[]" value="' . $row['record_order'] . '" min="1" max="12" required="" readonly /></td>';
                                         echo "<td><input type='number' name='rank[]' id='rank' value=";
                                         echo $row['record_status'] == 'o' ? $row['record_official_result'] : ($row['record_status'] == 'l' ? $row['record_live_result'] : '');
-                                        echo " min='1' /></td>";
+                                        echo " min='1' max='12' required='' /></td>";
                                         echo '<td>';
                                     }
                                     //@Potatoeunbi
@@ -306,12 +306,12 @@ function islane($schedule_sports, $what)
                                         echo '<td><input placeholder="소속" type="text" name="division"  value="' . $row['athlete_country'] . '"maxlength="50" required="" readonly/></td>';
                                         echo '<td>
                                 <input placeholder="경기 결과" type="text" id="result" name="gameresult[]" 
-                                    value="' . (($athrecord[3] ?? null) ? $athrecord[3] : '') . '" maxlength="8"  onkeyup="trackFinal(this)" readonly/>
+                                    value="' . (($athrecord[3] ?? null) ? $athrecord[3] : '') . '" maxlength="8" required="" onkeyup="trackFinal(this)" readonly/>
                                     </div>
                                     </div></td>';
                                         echo '<td>
                                 <input placeholder="" type="text" id="result" 
-                                    value="' . (($row['record_reaction_time'] ?? null) ? $row['record_reaction_time'] : '') . '" maxlength="8"  onkeyup="trackFinal(this)" readonly/>
+                                    value="' . (($row['record_reaction_time'] ?? null) ? $row['record_reaction_time'] : '') . '" maxlength="8" required="" onkeyup="trackFinal(this)" readonly/>
                                     </div>
                                     </div></td>';
 
@@ -335,12 +335,12 @@ function islane($schedule_sports, $what)
 
                             <tr>
                                 <td><input type="number" name="rain[]" 
-                                        value="<?php echo htmlspecialchars($row['record_order']) ?>" min="1"
+                                        value="<?php echo htmlspecialchars($row['record_order']) ?>" min="1" max="12"
                                         required="" readonly />
                                 </td>
                                 <td><input type="number" name="rank[]" 
                                         value="<?php echo ($row['record_status'] == 'o') ? htmlspecialchars($row['record_official_result']) : htmlspecialchars($row['record_live_result']) ?>"
-                                        min="1"  /></td>
+                                        min="1" max="12" required="" /></td>
                                 <td><input placeholder="등번호" type="text" name="playerbib[]" 
                                         value="<?php echo htmlspecialchars($row['athlete_bib']) ?>" maxlength="30"
                                         required="" readonly />
@@ -351,14 +351,14 @@ function islane($schedule_sports, $what)
                                 </td>
                                 <td><input placeholder="경기 결과" type="text" name="gameresult[]" 
                                         value="<?php echo ($row['record_status'] == 'o') ? htmlspecialchars($row['record_official_record']) : htmlspecialchars($row['record_live_record']) ?>"
-                                        maxlength="3"  style="
+                                        maxlength="3" required="" style="
                                         " /></td>
                                 <td><input placeholder="경기 결과" type="text" name="reactiontime[]" 
                                         value="<?php echo htmlspecialchars($row['record_reaction_time']) ?>"
                                         maxlength="3" style="
                                         " /></td>
                                 <td><input placeholder="비고" type="text" name="bigo[]" 
-                                        value="<?php echo  htmlspecialchars($row['record_memo']) ?>" maxlength="100" /></td>
+                                        value="<?= htmlspecialchars($row['record_memo']) ?>" maxlength="100" /></td>
                                 <?php
                                     world($db, $row['athlete_name'], $row['record_new'], $schedule_sports, ($row['record_status'] == 'o') ? htmlspecialchars($row['record_official_record']) : htmlspecialchars($row['record_live_record']));
                                 ?>
@@ -369,13 +369,13 @@ function islane($schedule_sports, $what)
                                 if ($j == $total_count) { ?>
                         </tbody>
                     </table>
-                    <input type=hidden name=result value=<?php echo  $schedule_result ?>>
-                    <input type=hidden name=sports value=<?php echo  $schedule_sports ?>>
-                    <input type=hidden name=gender value=<?php echo  $schedule_gender ?>>
-                    <input type=hidden name=name value=<?php echo  $schedule_name ?>>
-                    <input type=hidden name=round value=<?php echo  $schedule_round ?>>
-                    <input type=hidden name=group value=<?php echo  $k ?>>
-                    <!-- <input type=hidden name=wind value=<?php echo  $row['record_wind'] ?>> -->
+                    <input type=hidden name=result value=<?= $schedule_result ?>>
+                    <input type=hidden name=sports value=<?= $schedule_sports ?>>
+                    <input type=hidden name=gender value=<?= $schedule_gender ?>>
+                    <input type=hidden name=name value=<?= $schedule_name ?>>
+                    <input type=hidden name=round value=<?= $schedule_round ?>>
+                    <input type=hidden name=group value=<?= $k ?>>
+                    <!-- <input type=hidden name=wind value=<?= $row['record_wind'] ?>> -->
                     <div class="filed_BTN">
                         <div>
                             <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
@@ -386,11 +386,11 @@ function islane($schedule_sports, $what)
                                 formaction="award_ceremony.php">시상식 보기</button>
                                 <?php } ?>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
-                                formaction="/record/track_<?php if  ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_pdf.php">PDF(한) 출력</button>
+                                formaction="/record/track_<?if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_pdf.php">PDF(한) 출력</button>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
-                                formaction="/record/track_<?php if  ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_eng_pdf.php">PDF(영) 출력</button>
+                                formaction="/record/track_<?if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_eng_pdf.php">PDF(영) 출력</button>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
-                                formaction="/record/track_<?php if  ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_word.php">워드 출력</button>
+                                formaction="/record/track_<?if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay'; else echo 'normal';?>_result_word.php">워드 출력</button>
                                 <?php /*<form action="./execute_excel.php" method="post" enctype="multipart/form-data">
                                     <input type="submit" name="query" id="execute_excel" value="<?php echo $excel ?>" hidden />
                                     <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
@@ -405,9 +405,9 @@ function islane($schedule_sports, $what)
                             if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
                                 echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
                                 if ( $schedule_sports == " 4x100mR" || $schedule_sports == "4x400mR") {
-                                    echo "/record/track_relay_result_view.php";
+                                    echo "/record/track_relay_result_view.php?id=" . $id;
                                 } else {
-                                    echo "/record/track_normal_result_view.php";
+                                    echo "/record/track_normal_result_view.php?id=" . $id;
                                 }
                                 echo '">기록 입력</button>';
                                 echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';

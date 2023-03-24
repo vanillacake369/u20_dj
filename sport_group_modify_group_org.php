@@ -142,8 +142,15 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                             ?>
                                 <tbody class="grouping_body">
                                     <tr>
-                                        <td><input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled></td>
                                         <td>
+                                            <!-- 조 :: record_group -->
+                                            <input type="hidden" name="group[]" id="group[]" value=" <?php echo $i ?>">
+                                            <!-- 순서 :: record_order -->
+                                            <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled>
+                                        </td>
+                                        <td>
+                                            <!-- 선수 id :: record_athlete_id-->
+                                            <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
                                             <input type="text" name="name" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
                                         </td>
                                     </tr>
@@ -290,7 +297,12 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                     </div>
                 </div>
             </div> -->
-            <button type="button" class="changePwBtn defaultBtn">만들기</button>
+            <input type="hidden" name="count" value="<?php echo $group_count ?>">
+            <input type="hidden" name="round" value="<?php echo $round ?>">
+            <input type="hidden" name="gender" value="<?php echo $gender ?>">
+            <input type="hidden" name="sport_code" value="<?php echo $sport_code ?>">
+            <input type="hidden" name="sport_category" value="<?php echo $category ?>">
+            <button type="submit" class="changePwBtn defaultBtn">만들기</button>
         </div>
     </form>
 </div>

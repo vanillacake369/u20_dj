@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../../console_log.php";
 require_once __DIR__ . "/../../backheader.php";
 require_once __DIR__ . "/../../class-image.php";
 // athlete_age 입력칸이 사라짐 :: 나이 입력 자체가 사라지나??? @author 임지훈
@@ -104,7 +105,7 @@ if ($_FILES['main_photo']['name']) {
 	$athlete_image = 'profile.jpg';
 }
 
-// 삽입 쿼리 실행
+// // 삽입 쿼리 실행
 $sql = "INSERT INTO list_athlete
             (athlete_name, athlete_country, athlete_region, athlete_division, athlete_gender, athlete_birth, athlete_age, athlete_sector, athlete_schedule, athlete_profile,athlete_attendance,athlete_sb,athlete_pb)
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";

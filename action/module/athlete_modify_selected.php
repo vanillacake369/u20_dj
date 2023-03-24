@@ -28,6 +28,7 @@ $athlete_schedules = explode(',', $row["athlete_schedule"]); //체크 박스
 foreach ($athlete_schedules as $s) {
     echo "document.getElementById('sports_$s').checked = true;";
 }
+
 // DB 저장된 참석확정경기 => checkbox 의 참석확정경기 : checked
 $athlete_attendances = explode(',', $row["athlete_attendance"]); //체크 박스
 foreach ($athlete_attendances as $a) {

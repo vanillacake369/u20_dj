@@ -184,9 +184,8 @@ if (($sport_code === "decathlon" || $sport_code === "heptathlon") && $round === 
                                                 ?>
                                             </td>
                                         </tr>
-                                        <?php } ?>
+                                    <?php } ?>
                                 </tbody>
-                            
                             </table>
 
                             <div class="filed_BTN2">

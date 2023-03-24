@@ -1,12 +1,12 @@
 <?php
-    $schedule_sports=$POST['sports'];
-    $schedule_round=$POST['round'];
-    $gender=$POST['gender'];
-    $group=$POST['group'];
+    $schedule_sports=$_POST['sports'];
+    $schedule_round=$_POST['round'];
+    $gender=$_POST['gender'];
+    $group=$_POST['group'];
     require_once __DIR__ . "/../action/module/record_worldrecord.php";
     require_once __DIR__ . "/../includes/auth/config.php"; //B:데이터베이스 연결 
     
-    $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group'";
+    $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
     $result=$db->query($sql);
     $rows = mysqli_fetch_assoc($result);
     if ($rows['schedule_sports'] == 'decathlon' || $rows['schedule_sports'] == 'heptathlon') {
@@ -54,7 +54,7 @@
         $(".signup_submit").append("<input type='hidden' name=tempstore value='1'>");
     });
     $(document).on("click", "button[name='addresult']", function() {
-        $(".signup_submit").append("<input type='hidden' name=tempstore value='0'>");
+        $(".signup_submit").append("<input type='hidden' name=tempstore value='0'>")
     });
 
     function input_time() {
@@ -83,7 +83,7 @@
             </div>
             <div class="UserProfile">
                 <p class="UserProfile_tit tit_left_blue">
-                    <?=$_POST['schedule_sports']?>
+                    <?=$_POST['sports']?>
                 </p>
                 <form action="../action/record/track_normal_result_insert.php" method="post">
                     <input type="hidden" name="sports" value="<?= $schedule_sports ?>">
@@ -118,6 +118,7 @@
                                     echo '<input placeholder="시작 시간" type="text" name="starttime" class="input_text" value="'. ($rows['record_start']) .'"
                                     maxlength="30" required="" />';
                                     ?>
+                                    <input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />
                                 </li>
                             </ul>
                         </div>
@@ -127,7 +128,7 @@
                             <div class="result_BTN">
                                 <h1 class="tit_padding tit_left_green">결과</h1>
                                 <div>
-                                <?php
+                                    <?php
                                     if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
                                     } else {
                                         echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
@@ -142,11 +143,11 @@
                     </div>
                     <table class="box_table">
                         <colgroup>
-                        <col style="width: 3%" />
-                        <col style="width: 3%" />
-                        <col style="width: 6%" />
-                        <col style="width: 14%" />
-                        <?php
+                            <col style="width: 3%" />
+                            <col style="width: 3%" />
+                            <col style="width: 6%" />
+                            <col style="width: 14%" />
+                            <?php
                                 if ($check_round == 'y') {
                                     echo '<col style="width: 15%" />';
                                     echo '<col style="width: 15%" />';
@@ -164,17 +165,17 @@
                                     echo '<col style="width: 10%" />';
                                 }
                                 ?>
-                    </colgroup>
-                    <thead class="result_table entry_table">
-                        <tr>
-                            <th style="background: none" rowspan="2">등수</th>
-                            <th style="background: none" rowspan="2">순서</th>
-                            <th style="background: none" rowspan="2">BIB</th>
-                            <th style="background: none" rowspan="2">이름</th>
-                            <th style="background: none">1차 시기</th>
-                            <th style="background: none">2차 시기</th>
-                            <th style="background: none">3차 시기</th>
-                            <?php
+                        </colgroup>
+                        <thead class="result_table entry_table">
+                            <tr>
+                                <th style="background: none" rowspan="2">등수</th>
+                                <th style="background: none" rowspan="2">순서</th>
+                                <th style="background: none" rowspan="2">BIB</th>
+                                <th style="background: none" rowspan="2">이름</th>
+                                <th style="background: none">1차 시기</th>
+                                <th style="background: none">2차 시기</th>
+                                <th style="background: none">3차 시기</th>
+                                <?php
                                 if ($check_round == 'y') {
                                 }else{
                                     echo '<th style="background: none">4차 시기</th>';
@@ -182,25 +183,25 @@
                                     echo '<th style="background: none">6차 시기</th>';
                                 }
                                 ?>
-                            <th style="background: none">기록</th>
-                            <th style="background: none">비고</th>
+                                <th style="background: none">기록</th>
+                                <th style="background: none">비고</th>
 
-                        </tr>
-                        <tr>
-                            <?php
+                            </tr>
+                            <tr>
+                                <?php
                                 if ($check_round == 'y') {
                                   echo '<th style="background: none" colspan="4">풍속</th>';
                                 }else{
                                   echo '<th style="background: none" colspan="7">풍속</th>';
                                 }
                                 ?>
-                            <th style="background: none">신기록</th>
-                        </tr>
-                        <tr class="filed2_bottom">
-                        </tr>
-                    </thead>
-                    <tbody class="table_tbody entry_table">
-                    <?php
+                                <th style="background: none">신기록</th>
+                            </tr>
+                            <tr class="filed2_bottom">
+                            </tr>
+                        </thead>
+                        <tbody class="table_tbody entry_table">
+                            <?php
                         $i=1;
                             $count=0; //신기록 위치 관련 변수
                             $trial=1;
@@ -354,25 +355,33 @@
                           $i = 1;
                         }
                         ?>
-                        </tr>
-                        </tr>
-                    </tbody>
-                </table>
-                    </div>
+                            </tr>
+                            </tr>
+                        </tbody>
+                    </table>
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
                     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="input_text"
                         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-                        
-                    <div class="modify_Btn input_Btn result_Btn" >
+
+                    <div class="modify_Btn input_Btn result_Btn">
+                        <?php 
+                        if ($rows["record_state"] != "y") {
+                            if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
+                            } else {
+                                echo '<button class="BTN_Red" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
+                            }
+                        }
+                        ?>
+                    </div>
                     <?php
                         if ($rows["record_state"] != "y") {
                         echo '<div class="signup_submit" style="width:49%; margin-right:1%">
-                              <button type="submit" class="BTN_Red full_width" name="addtempresult"
-                                  formaction="../action/record/field_horizontal_result_insert.php">
-                                  <span>임시저장</span>
-                              </button>
-                          </div>';
-                          echo '<div class="signup_submit" style="width:49%;">
+                            <button type="submit" class="BTN_Red full_width" name="addtempresult"
+                            formaction="../action/record/field_horizontal_result_insert.php">
+                            <span>임시저장</span>
+                            </button>
+                        </div>';
+                        echo '<div class="signup_submit" style="width:49%;">
                             <button type="submit" class="BTN_Blue full_width" name="addresult"
                                 formaction="../action/record/field_horizontal_result_insert.php">
                                 <span>확인</span>
@@ -380,24 +389,27 @@
                         </div>';
                     }else {
                         if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                            <div class="signup_submit" style="width:100%;">
-                                <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/field_horizontal_result_insert.php">
-                                    <span>확인</span>
-                                </button>
-                            </div>
-                        <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                            <div class="signup_submit" style="width:100%;">
-                                <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/field_horizontal_result_insert.php">
-                                    <span>확인</span>
-                                </button>
-                            </div>
+                    <div class="signup_submit" style="width:100%;">
+                        <button type="submit" class="BTN_Blue full_width" name="addresult"
+                            formaction="../action/record/field_horizontal_result_insert.php">
+                            <span>확인</span>
+                        </button>
+                    </div>
+                    <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                    <div class="signup_submit" style="width:100%;">
+                        <button type="submit" class="BTN_Blue full_width" name="addresult"
+                            formaction="../action/record/field_horizontal_result_insert.php">
+                            <span>확인</span>
+                        </button>
+                    </div>
                     <?php }
                     }
                     ?>
-                    </div>
-                </form>
             </div>
+            </form>
         </div>
+    </div>
+    </div>
     </div>
     <script src="../assets/js/main.js?ver=7"></script>
 </body>

@@ -61,11 +61,16 @@
             let wind = document.querySelector('[name=\"wind\"]')
             // let check = document.getElementsByTagName('th')[1].textContent;
             let val = ddd[0].split(',')[4];
-            wind.value = val;
+            if (val != '') {
+                wind.value = val;
+            } else {
+                wind.value = '0'
+            }
             console.log(ddd.length)
             for (i = 1; i < ddd.length; i++) {
                 let k = ddd[i].split(",")
                 let on;
+                console.log("k1: " + k[2])
                 if (!document.querySelector("#id" + k[1]) && !document.querySelector(
                         "#rane" + k[2])) {
                     console.log("없는 레인")
@@ -237,6 +242,7 @@
                              ORDER BY " . $order . " ASC ";
                              $count = 0;
                             $result = $db->query($sql);
+                            echo $sql;
                             while ($row = mysqli_fetch_array($result)) {
                                 if (in_array($rows['schedule_sports'], $longname)) {
                                     echo '<tr id="id' . $row['athlete_bib'] .'"';
@@ -246,8 +252,9 @@
                                 if ($num % 2 == 1) echo ' class="Ranklist_Background">'; else echo ">";
                                 echo '<td><input type="number" name="rank[]" id="rank" value="' . $row['record_' . $result_type . '_result'] . '" min="1" required="" /></td>';
                                 if (in_array($rows['schedule_sports'], $longname)) {
+                                    echo '<td hidden><input type="number" name="rain[]" value="' . $row['record_order'] . '" min="1" required="" readonly /></td>';
                                 } else {
-                                    echo '<td><input type="number" name="rain[]" value="' . $row['record_order'] . '" min="1" max="12" required="" readonly /></td>';
+                                    echo '<td><input type="number" name="rain[]" value="' . $row['record_order'] . '" min="1" required="" readonly /></td>';
                                 }
                                 echo '<td><input placeholder="등번호" type="text" name="playerbib[]" 
                                 value="' . $row['athlete_bib'] . '" maxlength="30" required="" readonly /></td>';

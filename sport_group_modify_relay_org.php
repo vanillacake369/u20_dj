@@ -209,7 +209,7 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                                         <td>
                                             <!-- 삭제 버튼 -->
                                             <div class="filed_BTN2">
-                                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN" id="deleteBtn<?php echo $i ?>"><i class="xi-minus"></i></button>
+                                                <button type="button" name="delete_each_row" class="defaultBtn BIG_btn BTN_Blue filedBTN" id="deleteBtn<?php echo $i ?>"><i class="xi-minus"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -276,7 +276,8 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                     // 각 행의 -버튼을 누르게 되면 AJAX를 통해 테이블의 마지막 행을 "가상"삭제
                     // 각 조 별로 테이블,input,select의 id값이 달라야 서로 달리 적용가능
                     $(document).ready(function() {
-                        $("#deleteBtn<?php echo $i ?>").click(function() {
+                        $("button[name='delete_each_row']").click(function() {
+                            console.log($(this));
                             var tableId = $(this).closest("tr").find("input").each(function() {
                                 $(this).val('');
                             });

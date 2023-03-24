@@ -1,8 +1,10 @@
 <?php
-require_once __DIR__ . "/head.php";
-require_once __DIR__ . "/includes/auth/config.php";
-require_once __DIR__ . "/security/security.php";
-require_once __DIR__ . "/action/module/dictionary.php";
+
+require_once "console_log.php";
+require_once "head.php";
+require_once "includes/auth/config.php";
+require_once "security/security.php";
+require_once "action/module/dictionary.php";
 
 global $db, $categoryOfSports_dic;
 $group_num = cleanInput($_GET["record_group"]) ?? null;         // ~ 조
@@ -26,6 +28,9 @@ while ($result = mysqli_fetch_array($get_all_athlete_of_group)) {
     $each_group_athletes_id_lane[$result["record_group"]][$result["record_athlete_id"]][] = $result["record_order"];    // [1조][22232][2번 레인]
 }
 
+console_log($each_group_athletes_id_lane);
+
+
 // m조에 대해
 $first_index_each_group_athletes_id_lane = array_key_first($each_group_athletes_id_lane);
 $last_index_each_group_athletes_id_lane = array_key_last($each_group_athletes_id_lane);
@@ -34,6 +39,13 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
     $each_group_athletes_id = array_keys($each_group_athletes_id_lane[$i]);
     // each_group_athletes_lane[][] :: m조에 편성되어있는 n명의 선수들 레인값
     $each_group_athletes_lane = array_values($each_group_athletes_id_lane[$i]);
+
+
+    console_log($each_group_athletes_id);
+    console_log($each_group_athletes_lane);
+
+
+
     // n명의 선수들 정보 가저오는 query
     $query = "SELECT athlete_id, athlete_name, athlete_country, athlete_division, athlete_attendance FROM list_athlete WHERE athlete_gender = ? AND INSTR(athlete_attendance, ?) AND (athlete_id = ";
     $query = $query . implode(" OR athlete_id = ", $each_group_athletes_id) . ") ORDER BY athlete_id asc";
@@ -108,14 +120,13 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                         <p class="tit_left_yellow"><?php echo $i ?>조</p>
                     </div>
                     <div class="filed2_form">
-                        <table cellspacing="0" cellpadding="0" class="filed2_Table " id="" name="table_name[]">
-                            <thead class="filed_list filed2_list">
+                        <table cellspacing="0" cellpadding="0" class="entry_table filed2_swap" id="" name="table_name[]">
+                            <thead class="filed_list filed2_list result_table ">
                                 <tr>
                                     <th>순서</th>
                                     <th>선수 이름</th>
                                 </tr>
                                 <tr class="filed2_bottom">
-                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <!-- m명 -->
@@ -125,7 +136,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                             $last_index_each_group_athletes_data_i = array_key_last($each_group_athletes_data[$i]);
                             for ($j = $first_index_each_group_athletes_data_i; $j <= $last_index_each_group_athletes_data_i; $j++) {
                             ?>
-                                <tbody class="grouping_body">
+                                <tbody class="grouping_body entry_table">
                                     <tr>
                                         <td>
                                             <!-- 조 :: record_group -->
@@ -137,7 +148,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                                         <td>
                                             <!-- 선수 id :: record_athlete_id-->
                                             <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
-                                            <input type="text" name="name" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
+                                            <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -297,8 +308,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
 <script>
     $("select[name=athlete]").select2();
 </script>
-<script src="./assets/js/main.js"></script>
-<script src="./assets/js/main_dh.js"></script>
+<script src="assets/js/main.js?ver=13"></script>
 </body>
 
 </html>

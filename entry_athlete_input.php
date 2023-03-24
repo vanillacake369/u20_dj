@@ -13,6 +13,7 @@ if (!authCheck($db, "authEntrysRead")) {
         </script>");
 }
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -57,11 +58,11 @@ if (!authCheck($db, "authEntrysRead")) {
                                 </li>
                                 <li class="row input_row row_item input_width">
                                     <span>성별</span>
-                                        <select name="athlete_gender" required>
-                                            <option value='' selected disabled hidden>성별 선택</option>
-                                            <option value="m">남자</option>
-                                            <option value="f">여자</option>
-                                        </select>
+                                    <select name="athlete_gender" required>
+                                        <option value='' selected disabled hidden>성별 선택</option>
+                                        <option value="m">남자</option>
+                                        <option value="f">여자</option>
+                                    </select>
                                 </li>
                                 <li class="row input_row row_item row_date">
                                     <span>생년월일</span>
@@ -121,7 +122,7 @@ if (!authCheck($db, "authEntrysRead")) {
                             <div class="modify_enter">
                                 <p class="tit_left_green">참가확정경기</p>
                                 <ul class="modify_checkList">
-                                <?php
+                                    <?php
                                     for ($value = 1; $value <= count($sport_dic); $value++) {
 
                                         echo '<li>';
@@ -139,12 +140,77 @@ if (!authCheck($db, "authEntrysRead")) {
                             </div>
                         </div>
                     </div>
-                    <div class="modify_Btn input_Btn Participant_Btn">
+                    <div class="modifyform">
+                        <div class="modify_check">
+                            <div class="modify_enter modify_tit_color" id="sb-section">
+                                <p class="tit_left_red">SB</p>
+                                <ul class="modify_checkList" id="sb-input">
+                                    <select name="athlete_sb_sports" required>
+                                        <?php
+                                        // key($sport_dic) : sports_code
+                                        // current($sport_dic) : sports_name
+                                        for ($value = 1; $value <= count($sport_dic); $value++) {
+                                            echo '<option value=\'\' selected disabled hidden>종목 선택</option>';
+                                            echo '<option value="' . key($sport_dic) . '">' . current($sport_dic) . '</option>';
+                                            next($sport_dic);
+                                        }
+                                        reset($sport_dic);
+                                        ?>
+                                    </select>
+                                    <input type="number" name="athlete_sb" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" required />
+                                </ul>
+                            </div>
+                            <div class="filed_BTN2">
+                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button>
+                                <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-sb"><i class="xi-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="modify_check">
+                            <div class="modify_enter" id="pb-section">
+                                <p class="tit_left_green">PB</p>
+                                <ul class="modify_checkList" id="pb-input">
+                                    <select name="athlete_pb_sports" required>
+                                        <?php
+                                        // key($sport_dic) : sports_code
+                                        // current($sport_dic) : sports_name
+                                        for ($value = 1; $value <= count($sport_dic); $value++) {
+                                            echo '<option value=\'\' selected disabled hidden>종목 선택</option>';
+                                            echo '<option value="' . key($sport_dic) . '">' . current($sport_dic) . '</option>';
+                                            next($sport_dic);
+                                        }
+                                        reset($sport_dic);
+                                        ?>
+                                    </select>
+                                    <input type="number" name="athlete_pb" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" required />
+                                </ul>
+                            </div>
+                            <div class="filed_BTN2">
+                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
+                                <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-pb"><i class="xi-plus"></i></button>
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#add-pb').click(function() {
+                                    var list = $('#pb-input').clone(); // Make a copy of the <ul> element
+                                    console.log(list);
+                                    $('#pb-section').append(list); // Append the copy to the body of the document
+                                });
+                            });
+                            $(document).ready(function() {
+                                $('#add-sb').click(function() {
+                                    var list = $('#sb-input').clone(); // Make a copy of the <ul> element
+                                    console.log(list);
+                                    $('#sb-section').append(list); // Append the copy to the body of the document
+                                });
+                            });
+                        </script>
+                    </div>
+                    <div class=" modify_Btn input_Btn Participant_Btn">
                         <button class="BTN_blue2" type="button">등록하기</button>
                     </div>
                 </form>
             </div>
-            
         </div>
     </div>
     </div>

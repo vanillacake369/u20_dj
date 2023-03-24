@@ -34,12 +34,6 @@ if (isset($_POST['functionName']) && $_POST['functionName'] == 'addNewRow') {
     $lane = $_POST['lane'];
     $id = $_POST['id'];
     $name = $_POST['name'];
-
-    console_log($group);
-    console_log($lane);
-    console_log($id);
-    console_log($name);
-
     // call the function with the data
     addNewRow($group, $lane, $id,  $name);
     exit(); // stop executing the script after the function call

@@ -1,10 +1,4 @@
 <?php
-require_once "console_log.php";
-require_once "head.php";
-require_once "includes/auth/config.php";
-require_once "security/security.php";
-require_once "action/module/dictionary.php";
-
 // AJAX에서 던진 순서와 선수이름 인자값을 AJAX로 받아 새로운 row 생성
 // @author 임지훈 @vanillacake369
 function addNewRow($group, $lane, $id, $name)
@@ -25,6 +19,12 @@ function addNewRow($group, $lane, $id, $name)
     // <!-- 선수 이름 -->
     echo '<input type="text" name="name[]" value="' . $name . '">';
     echo '</td>';
+    // 삭제버튼
+    echo '<td>';
+    echo '<div class="filed_BTN2">';
+    echo '<button type="button" name="delete_each_row" class="defaultBtn BIG_btn BTN_Blue filedBTN"><i class="xi-minus"></i></button>';
+    echo '</div>';
+    echo '</td>';
     echo '</tr>';
     echo '</tbody>';
 }
@@ -38,6 +38,12 @@ if (isset($_POST['functionName']) && $_POST['functionName'] == 'addNewRow') {
     addNewRow($group, $lane, $id,  $name);
     exit(); // stop executing the script after the function call
 }
+require_once "console_log.php";
+require_once "head.php";
+require_once "includes/auth/config.php";
+require_once "security/security.php";
+require_once "action/module/dictionary.php";
+
 
 global $db, $categoryOfSports_dic;
 $group_num = $_GET["record_group"] ?? null;         // ~ 조
@@ -256,7 +262,6 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                     });
                     // @author 임지훈 @vanillacake369
                     // 각 행의 -버튼을 누르게 되면 AJAX를 통해 테이블의 마지막 행을 "가상"삭제
-                    // 각 조 별로 테이블,input,select의 id값이 달라야 서로 달리 적용가능
                     $(document).ready(function() {
                         $("button[name='delete_each_row']").click(function() {
                             // SQL NULL값 INSERT : 해당 선수 record의 group과 order => NULL

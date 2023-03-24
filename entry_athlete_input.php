@@ -190,6 +190,15 @@ if (!authCheck($db, "authEntrysRead")) {
                             </div>
                         </div>
                         <script>
+                            // sb 추가 버튼 @author 임지훈 @vanillacake369
+                            $(document).ready(function() {
+                                $('#add-sb').click(function() {
+                                    var list = $('#sb-input').clone(); // Make a copy of the <ul> element
+                                    console.log(list);
+                                    $('#sb-section').append(list); // Append the copy to the body of the document
+                                });
+                            });
+                            // pb 추가 버튼 @author 임지훈 @vanillacake369
                             $(document).ready(function() {
                                 $('#add-pb').click(function() {
                                     var list = $('#pb-input').clone(); // Make a copy of the <ul> element
@@ -197,11 +206,16 @@ if (!authCheck($db, "authEntrysRead")) {
                                     $('#pb-section').append(list); // Append the copy to the body of the document
                                 });
                             });
+                            // sb 추가 버튼 @author 임지훈 @vanillacake369
                             $(document).ready(function() {
-                                $('#add-sb').click(function() {
-                                    var list = $('#sb-input').clone(); // Make a copy of the <ul> element
-                                    console.log(list);
-                                    $('#sb-section').append(list); // Append the copy to the body of the document
+                                $('#delete-sb').click(function() {
+                                    $(this).siblings('ul').empty(); // Remove all child elements of the <ul> element
+                                });
+                            });
+                            // pb 삭제 버튼 @author 임지훈 @vanillacake369
+                            $(document).ready(function() {
+                                $('#delete-pb').click(function() {
+                                    $('ul').empty(); // Remove all child elements of the <ul> element
                                 });
                             });
                         </script>

@@ -145,7 +145,7 @@ if (!authCheck($db, "authEntrysRead")) {
                             <div class="modify_enter modify_tit_color" id="sb-section">
                                 <p class="tit_left_red">SB</p>
                                 <ul class="modify_checkList" id="sb-input">
-                                    <select name="athlete_sb_sports" id="sb-sports-select">
+                                    <select name="athlete_sb_sports[]" id="sb-sports-select">
                                         <?php
                                         // key($sport_dic) : sports_code
                                         // current($sport_dic) : sports_name
@@ -157,12 +157,11 @@ if (!authCheck($db, "authEntrysRead")) {
                                         reset($sport_dic);
                                         ?>
                                     </select>
-                                    <input type="number" name="athlete_sb" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" />
+                                    <input type="text" name="athlete_sb[]" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" />
                                     <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button>
                                 </ul>
                             </div>
                             <div class="filed_BTN2">
-                                <!-- <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button> -->
                                 <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-sb"><i class="xi-plus"></i></button>
                             </div>
                         </div>
@@ -170,7 +169,7 @@ if (!authCheck($db, "authEntrysRead")) {
                             <div class="modify_enter" id="pb-section">
                                 <p class="tit_left_green">PB</p>
                                 <ul class="modify_checkList" id="pb-input">
-                                    <select name="athlete_pb_sports" id="pb-sports-select">
+                                    <select name="athlete_pb_sports[]" id="pb-sports-select">
                                         <?php
                                         // key($sport_dic) : sports_code
                                         // current($sport_dic) : sports_name
@@ -182,12 +181,11 @@ if (!authCheck($db, "authEntrysRead")) {
                                         reset($sport_dic);
                                         ?>
                                     </select>
-                                    <input type="number" name="athlete_pb" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" />
+                                    <input type="text" name="athlete_pb[]" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" />
                                     <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
                                 </ul>
                             </div>
                             <div class="filed_BTN2">
-                                <!-- <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button> -->
                                 <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-pb"><i class="xi-plus"></i></button>
                             </div>
                         </div>
@@ -221,7 +219,7 @@ if (!authCheck($db, "authEntrysRead")) {
                         </script>
                     </div>
                     <div class=" modify_Btn input_Btn Participant_Btn">
-                        <button class="BTN_blue2" type="button">등록하기</button>
+                        <button class="BTN_blue2" type="submit">등록하기</button>
                     </div>
                 </form>
             </div>

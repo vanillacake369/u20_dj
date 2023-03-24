@@ -286,15 +286,15 @@ $total_count = mysqli_num_rows($count);
                 </div>
                 <table class="box_table">
                     <colgroup>
-                        <col style="width:10%;">
-                        <col style="width:20%;">
-                        <col style="width:6%;">
-                        <col style="width:18%;">
-                        <col style="width:13%;">
-                        <col style="width:5%;">
-                        <col style="width:13%;">
-                        <col style="width:8%;">
-                        <col style="width:7%;">
+                        <col width="10%">
+                        <col width="20%">
+                        <col width="10%">
+                        <col width="15%">
+                        <col width="12%">
+                        <col width="8%">
+                        <col width="5%">
+                        <col width="10%">
+                        <col width="10%">
                     </colgroup>
                     <thead class="table_head entry_table">
                         <tr>

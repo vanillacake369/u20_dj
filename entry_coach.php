@@ -136,14 +136,14 @@ if (isset($categoryValue) && isset($orderValue)) {
                         <col width="5%">
                         <col width="5%">
                         <col width="5%">
-                        <col width="auto">
-                        <col width="5%">
-                        <col width="5%">
-                        <col width="5%">
-                        <col width="5%">
+                        <col width="16%">
+                        <col width="7%">
+                        <col width="10%">
                         <col width="8%">
                         <col width="5%">
+                        <col width="11%">
                         <col width="5%">
+                        <col width="8%">
                         <col width="5%">
                         <?php if (authCheck($db, "authEntrysUpdate")) { ?>
                             <col width="5%">

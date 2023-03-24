@@ -161,12 +161,22 @@ function processFile(file) {
                     </div>
                     <div class="Thorw_result">
                         <div class="relay_result">
-                            <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
-                            <?php
-                            if ($rows['record_state'] != 'y') {
-                                echo '<input type="button" onclick="openTextFile()" class="defaultBtn BTN_green BIG_btn" value="자동 입력">';
-                            }
-                            ?>
+                            <div class="result_BTN">
+                                <h1 class="tit_padding tit_left_green">결과</h1>
+                                <div>
+                                <?php
+                                    if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
+                                    } else {
+                                        echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
+                                    }
+                                    if ($rows['record_state'] != 'y') {
+                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
+                                    }
+                                ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                             <table class="box_table">
                                 <colgroup>
                                     <col style="width: 7%" />
@@ -179,7 +189,7 @@ function processFile(file) {
                                     <col style="width: 10%" />
                                     <col style="width: 10%" />
                                 </colgroup>
-                            <thead class="table_head entry_table">
+                            <thead class="result_table entry_table">
                                 <tr>
                                     <th style="background: none">등수</th>
                                     <th style="background: none">레인</th>
@@ -192,7 +202,7 @@ function processFile(file) {
                                     <th style="background: none">신기록</th>
                                 </tr>
                             </thead>
-                            <tbody class="table_tbody entry_table">
+                            <tbody class="input_table De_tbody entry_table">
                             <?php
                                 $count = 0;
                                 $num = 0;

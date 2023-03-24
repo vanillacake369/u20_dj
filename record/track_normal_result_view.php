@@ -164,12 +164,20 @@ function openTextFile() {
                     </div>
                     <div class="Thorw_result">
                         <div class="relay_result">
-                            <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
-                            <?php
-                                if ($rows['record_state'] != 'y') {
-                                    echo '<input type="button" onclick="openTextFile()" class="defaultBtn BTN_green BIG_btn" value="자동 입력">';
-                                }
-                            ?>
+                            <div class="result_BTN">
+                                <h1 class="tit_padding tit_left_green">결과</h1>
+                                <div>
+                                <?php
+                                    if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
+                                    } else {
+                                        echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
+                                    }
+                                    if ($rows['record_state'] != 'y') {
+                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
+                                    }
+                                ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <table class="box_table">
@@ -217,7 +225,7 @@ function openTextFile() {
                             <tr class="filed2_bottom">
                             </tr>
                         </thead>
-                        <tbody class="table_tbody entry_table">
+                        <tbody class="table_tbody De_tbody entry_table">
                             <?php
                             $num = 0;
                              $relm = 'record_' . $result_type . '_result,record_' . $result_type . '_record,record_pass,record_memo,record_new,record_reaction_time,athlete_name,athlete_bib, record_order,athlete_country';
@@ -300,7 +308,7 @@ function openTextFile() {
                     </table>
                     </div>
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
+                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text" value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
                         
                     <div class="modify_Btn input_Btn result_Btn">
                         <button type="submit" class="BTN_Blue" name="addresult">확인</button>

@@ -135,7 +135,20 @@ $judgerow = mysqli_fetch_array($judgeresult);
                     </div>
                     <div class="Thorw_result">
                         <div class="relay_result">
-                            <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
+                            <div class="result_BTN">
+                                <h1 class="tit_padding tit_left_green">결과</h1>
+                                <div>
+                                <?php
+                                    if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
+                                    } else {
+                                        echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
+                                    }
+                                    if ($rows['record_state'] != 'y') {
+                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
+                                    }
+                                ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <table class="box_table">

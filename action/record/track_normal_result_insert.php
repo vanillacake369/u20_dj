@@ -21,15 +21,16 @@ $memo = $_POST['bigo'];
 $judge_name = $_POST['refereename'];
 $newrecord=$_POST['newrecord'];
 //echo $gender." ".$round." ".$heat." ".$name.'<br>';
-
+$starttime = $_POST['starttime'];
+$db->query("update list_record set record_start ='" . $starttime . "' where record_sports='$name' and record_gender='$gender' and record_round='$round' and record_group='$heat'");
 $judgeresult=$db->query("select judge_id from list_judge where judge_name='$judge_name'"); //심판 아이디 쿼리
 $judge=mysqli_fetch_array($judgeresult);
 $new = 'n';
 $res1 = $db->query("SELECT * FROM list_schedule 
 join list_record
-where record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round");
+where record_sports= '$sport' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round");
 $row1 = mysqli_fetch_array($res1);
-if($name==='decathlon' || $name ==='heptathlon'){
+if($sport==='decathlon' || $sport ==='heptathlon'){
     $totalrow='record_sports="'.$row1['schedule_sports'].'" and record_gender="$gender" and record_round="final"';
     $check_round='y';
 }else{
@@ -45,7 +46,7 @@ if($row1['record_status'] ==='o'){ //schedule_result에 따른 수정 및 저장
 for ($i = 0; $i < count($athlete_name); $i++) {
     $tempmemo='';
     $medal = 0;
-    $re = $db->query("SELECT athlete_id,athlete_country FROM list_athlete join list_record on record_sports= '$name' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender' and athlete_name = '" . $athlete_name[$i] . "' and record_athlete_id=athlete_id");
+    $re = $db->query("SELECT athlete_id,athlete_country FROM list_athlete join list_record on record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender' and athlete_name = '" . $athlete_name[$i] . "' and record_athlete_id=athlete_id");
     $row = mysqli_fetch_array($re);
     if ($round == 'final') {
         switch ($result[$i]) {
@@ -65,7 +66,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
     }
     // 신기록 계산
     if($row1['record_state']==='y'){
-        $newre=$db->query("select record_new,record_multi_record from list_record where record_athlete_id ='".$row['athlete_id']."' AND record_sports= '$name' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender' AND record_".$result_type1."_result>0");
+        $newre=$db->query("select record_new,record_multi_record from list_record where record_athlete_id ='".$row['athlete_id']."' AND record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender' AND record_".$result_type1."_result>0");
         $rerow=mysqli_fetch_array($newre);
         $new = $rerow[0];
     }
@@ -158,7 +159,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
         }
             $savequery="UPDATE list_record SET record_pass='$pass[$i]', record_".$result_type1."_result='$result[$i]', record_judge='$judge[0]',
             record_".$result_type1."_record='$record[$i]', record_new='$new',record_memo='".$memo[$i]."',record_medal=".$medal.",record_reaction_time='$reactiontime[$i]'
-            ,record_wind='$wind',record_status='".$result_type2."'".$plus." WHERE record_athlete_id ='".$row['athlete_id']."' AND record_sports= '$name' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'" ;
+            ,record_wind='$wind',record_status='".$result_type2."'".$plus." WHERE record_athlete_id ='".$row['athlete_id']."' AND record_sports= '$sport$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'" ;
             $db->query($savequery);
         }
 
@@ -196,13 +197,13 @@ for ($i = 0; $i < count($athlete_name); $i++) {
         }
     if($row1['record_state']!='y'){
         $finishcnt=0;
-        $db->query("UPDATE list_record set record_end='".date("Y-m-d H:i:s")."',record_state='y' where record_sports= '$name' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'"); // 경기 종료 스케쥴에 반영
-        $db->query("UPDATE list_schedule set schedule_memo='".$_POST['bibigo']."' where schedule_sports= '$name' AND schedule_round= '$round' AND schedule_gender='$gender'"); // 경기 종료 스케쥴에 반영
+        $db->query("UPDATE list_record set record_end='".date("Y-m-d H:i:s")."',record_state='y' where record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'"); // 경기 종료 스케쥴에 반영
+        $db->query("UPDATE list_schedule set schedule_memo='".$_POST['bibigo']."' where schedule_sports= '$sport' AND schedule_round= '$round' AND schedule_gender='$gender'"); // 경기 종료 스케쥴에 반영
 }
 if($row1['record_state']!='y'){
-    logInsert($db, $_SESSION['Id'], '기록 등록', $name . "-" . $row1['schedule_gender'] . "-" . $round. "-" .$row1['record_group']);
+    logInsert($db, $_SESSION['Id'], '기록 등록', $sport . "-" . $row1['schedule_gender'] . "-" . $round. "-" .$row1['record_group']);
 }else{
-    logInsert($db, $_SESSION['Id'], '기록 수정', $name . "-" . $row1['schedule_gender'] . "-" . $round. "-" .$row1['record_group']);
+    logInsert($db, $_SESSION['Id'], '기록 수정', $sport . "-" . $row1['schedule_gender'] . "-" . $round. "-" .$row1['record_group']);
 
 }
         echo "<script>

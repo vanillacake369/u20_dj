@@ -62,7 +62,9 @@ $sql = "SELECT record_end,
             record_official_record,
             record_live_record,
             schedule_sports,
-            record_status
+            record_status,
+            record_group,
+            record_gender
             FROM list_schedule
             INNER JOIN list_record ON record_sports=schedule_sports and record_gender=schedule_gender and record_round=schedule_round and record_state='y'
             INNER JOIN list_athlete ON record_athlete_id = athlete_id
@@ -221,28 +223,29 @@ if ($count) {
 }
 ?>
 <script type="text/javascript">
-  function changetype() {
+function changetype() {
     if (window.confirm("30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?")) {
-      location.href = './record_change_type.php'
+        location.href = './record_change_type.php'
     }
-  }
+}
 </script>
 </head>
 
 <body>
-  <?php require_once "header.php"; ?>
-  <div class="Area">
-    <div class="Wrapper TopWrapper">
-      <div class="MainRank coachList defaultList">
-        <div class="MainRank_tit">
-          <h1>경기결과 목록<i class="xi-timer-o timer"></i></h1>
-        </div>
-        <div class="searchArea">
-          <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
-            <div class="page_size">
-              <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
-                <option value="non" hidden="">페이지</option>
-                <?php
+    <?php require_once "header.php"; ?>
+    <div class="Area">
+        <div class="Wrapper TopWrapper">
+            <div class="MainRank coachList defaultList">
+                <div class="MainRank_tit">
+                    <h1>경기결과 목록<i class="xi-timer-o timer"></i></h1>
+                </div>
+                <div class="searchArea">
+                    <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
+                        <div class="page_size">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
+                                <option value="non" hidden="">페이지</option>
+                                <?php
                                     echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
                                     echo '<option value="15"' . ($pagesizeValue == 15 ? 'selected' : '') . '>15개씩</option>';
                                     echo '<option value="20"' . ($pagesizeValue == 20 ? 'selected' : '') . '>20개씩</option>';
@@ -251,49 +254,49 @@ if ($count) {
                                         echo '<option value="' . $total_count . "\">모두</option>\"";
                                     }
                                 ?>
-              </select>
-            </div>
-            <div class="selectArea defaultSelectArea">
-              <div class="defaultSelectBox">
-                <select title="날짜" name="schedule_date">
-                  <option value="non">날짜</option>
-                  <?php
+                            </select>
+                        </div>
+                        <div class="selectArea defaultSelectArea">
+                            <div class="defaultSelectBox">
+                                <select title="날짜" name="schedule_date">
+                                    <option value="non">날짜</option>
+                                    <?php
                   $dSql = "SELECT DISTINCT (SUBSTRING_INDEX(record_end, ' ', 1)) AS a FROM list_record WHERE record_end is not null ORDER BY a ASC;";
                   $dResult = $db->query($dSql);
                   while ($dRow = mysqli_fetch_array($dResult)) {
                     echo "<option value=" . $dRow['a'] . ' ' . ($searchValue["schedule_date"] == $dRow['a'] ? 'selected' : '') . ">" . $dRow['a'] . "</option>";
                   }
                   ?>
-                </select>
-              </div>
-              <div class="defaultSelectBox">
-                <select title="성별" name="schedule_gender">
-                  <option value="non">성별</option>
-                  <?php
+                                </select>
+                            </div>
+                            <div class="defaultSelectBox">
+                                <select title="성별" name="schedule_gender">
+                                    <option value="non">성별</option>
+                                    <?php
                   $sSql = "SELECT distinct schedule_gender FROM list_schedule;";
                   $sResult = $db->query($sSql);
                   while ($sRow = mysqli_fetch_array($sResult)) {
                     echo "<option value=" . $sRow['schedule_gender'] . ' ' . ($searchValue["schedule_gender"] == $sRow['schedule_gender'] ? 'selected' : '') . ">" . ($sRow['schedule_gender'] == 'm' ? '남' : ($sRow['schedule_gender'] == 'f' ? '여' : '혼성')) . "</option>";
                   }
                   ?>
-                </select>
-              </div>
-              <div class="defaultSelectBox">
-                <select title="경기 구분" name="sports_category">
-                  <option value="non" hidden>경기 구분</option>
-                  <?php
+                                </select>
+                            </div>
+                            <div class="defaultSelectBox">
+                                <select title="경기 구분" name="sports_category">
+                                    <option value="non" hidden>경기 구분</option>
+                                    <?php
                   $events = array_unique($categoryOfSports_dic);
                   foreach ($events as $e) {
                     echo "<option value=$e " . ($e === $searchValue["sports_category"] ? 'selected' : '') . ">" . $e . "</option>";
                   }
                   ?>
-                </select>
-              </div>
-              <div class="defaultSelectBox">
-                <select title="참가 경기" name="schedule_sports">
-                  <option value='non' hidden="">참가 경기</option>
-                  <option value="non">전체</option>
-                  <?php
+                                </select>
+                            </div>
+                            <div class="defaultSelectBox">
+                                <select title="참가 경기" name="schedule_sports">
+                                    <option value='non' hidden="">참가 경기</option>
+                                    <option value="non">전체</option>
+                                    <?php
                   $events = array_unique($categoryOfSports_dic);
                   foreach ($events as $e) {
                     echo "<optgroup label=\"$e\">";
@@ -305,42 +308,49 @@ if ($count) {
                     echo "</optgroup>";
                   }
                   ?>
-                </select>
-              </div>
-              <div class="search">
-                <button class="SearchBtn" type="submit"><i class="xi-search"></i></button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <table class="box_table">
-          <colgroup>
-            <col style="width:13%;">
-            <col style="width:10%;">
-            <col style="width:10%;">
-            <col style="width:7%;">
-            <col style="width:18%;">
-            <col style="width:10%;">
-            <col style="width:8%;">
-            <col style="width:7%;">
-            <col style="width:10%;">
-            <!-- <col style="width: auto;"> -->
-          </colgroup>
-          <thead class="table_head entry_table">
-            <tr>
-              <th><a href="<?= Get_Sort_Link("schedule_date", $pageValue, $link, $orderValue) ?>">날짜</th>
-              <th><a href="<?= Get_Sort_Link("sports_category", $pageValue, $link, $orderValue) ?>">구분</th>
-              <th><a href="<?= Get_Sort_Link("schedule_name", $pageValue, $link, $orderValue) ?>">경기 이름</th>
-              <th><a href="<?= Get_Sort_Link("schedule_round", $pageValue, $link, $orderValue) ?>">경기 라운드</th>
-              <th><a href="<?= Get_Sort_Link("athlete_name", $pageValue, $link, $orderValue) ?>">선수 이름</th>
-              <th><a href="<?= Get_Sort_Link("judge_name", $pageValue, $link, $orderValue) ?>">심판 이름</th>
-              <th><a href="<?= Get_Sort_Link("record_live_record", $pageValue, $link, $orderValue) ?>">기록</th>
-              <th><a href="<?= Get_Sort_Link("record_status", $pageValue, $link, $orderValue) ?>">기록 방식</th>
-              <th><a href="<?= Get_Sort_Link("schedule_status", $pageValue, $link, $orderValue) ?>">기록 상태</th>
-            </tr>
-          </thead>
-          <tbody class="table_tbody entry_table">
-          <?php
+                                </select>
+                            </div>
+                            <div class="search">
+                                <button class="SearchBtn" type="submit"><i class="xi-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <table class="box_table">
+                    <colgroup>
+                        <col style="width:13%;">
+                        <col style="width:10%;">
+                        <col style="width:10%;">
+                        <col style="width:7%;">
+                        <col style="width:18%;">
+                        <col style="width:10%;">
+                        <col style="width:8%;">
+                        <col style="width:7%;">
+                        <col style="width:10%;">
+                        <!-- <col style="width: auto;"> -->
+                    </colgroup>
+                    <thead class="table_head entry_table">
+                        <tr>
+                            <th><a href="<?= Get_Sort_Link("schedule_date", $pageValue, $link, $orderValue) ?>">날짜</th>
+                            <th><a href="<?= Get_Sort_Link("sports_category", $pageValue, $link, $orderValue) ?>">구분
+                            </th>
+                            <th><a href="<?= Get_Sort_Link("schedule_name", $pageValue, $link, $orderValue) ?>">경기 이름
+                            </th>
+                            <th><a href="<?= Get_Sort_Link("schedule_round", $pageValue, $link, $orderValue) ?>">경기 라운드
+                            </th>
+                            <th><a href="<?= Get_Sort_Link("athlete_name", $pageValue, $link, $orderValue) ?>">선수 이름
+                            </th>
+                            <th><a href="<?= Get_Sort_Link("judge_name", $pageValue, $link, $orderValue) ?>">심판 이름</th>
+                            <th><a href="<?= Get_Sort_Link("record_live_record", $pageValue, $link, $orderValue) ?>">기록
+                            </th>
+                            <th><a href="<?= Get_Sort_Link("record_status", $pageValue, $link, $orderValue) ?>">기록 방식
+                            </th>
+                            <th><a href="<?= Get_Sort_Link("schedule_status", $pageValue, $link, $orderValue) ?>">기록 상태
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table_tbody entry_table">
+                        <?php
             $num = 0;
             while ($result != null && ($row = mysqli_fetch_array($result))) {
               $num++;
@@ -369,120 +379,248 @@ if ($count) {
                   if ($row["sports_category"] === "트랙경기") {
                     if ($row["schedule_sports"] === "4x100mR" || $row["schedule_sports"] === "4x400mR") {
                       echo "<td>";
-                      echo '<input type="button" onclick="window.open';
-                      echo "('./record/track_relay_result_view.php?id=" .
-                        $row["record_schedule_id"] .
-                        "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                      echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                    } else {
+                      echo '<form action="./record/track_relay_result_view.php" method="post" target="수정">';
+                      echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                      echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                      echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                      echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                      echo '<input type="submit" onclick="window.open';
+                      echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                      echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                      } else { 
                       echo "<td>";
-                      echo '<input type="button" onclick="window.open';
-                      echo "('./record/track_normal_result_view.php?id=" .
-                        $row["record_schedule_id"] .
-                        "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                      echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                    }
-                  } elseif ($row["sports_category"] === "필드경기") {
-                    if ($row["schedule_sports"] === "polevault" || $row["schedule_sports"] === "highjump") {
+                      echo '<form action="./record/track_normal_result_view.php" method="post" target="수정">';
+                      echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                      echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                      echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                      echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                      echo '<input type="submit" onclick="window.open';
+                      echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                      echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          } 
+                        } else if($row["sports_category"]==="필드경기" ) { 
+                          if ($row["schedule_sports"]==="polevault" || $row["schedule_sports"]==="highjump" ) {
+                            echo "<td>";
+                            echo '<form action="./record/field_vertical_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          } else if($row["schedule_sports"]==="longjump" || $row["schedule_sports"]==="triplejump" ) {
+                            echo "<td>";
+                            echo '<form action="./record/field_horizontal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          } else { 
+                            echo "<td>";
+                            echo '<form action="./record/field_normal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          }
+                        } else { //혼합경기 switch
+                            switch ($row["schedule_round"]) { //세부 종목별 분류 
+                            case "100m" : 
+                            case "100mH" : 
+                            case "110mH" :
+                            case "200m" : 
+                            case "400m" : 
+                            case "800m" : 
+                            case "1500m" :
+                              echo "<td>";
+                              echo '<form action="./record/track_normal_result_view.php" method="post" target="수정">';
+                              echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                              echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                              echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                              echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                              echo '<input type="submit" onclick="window.open';
+                              echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                              echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                            break; 
+                            case "discusthrow" :
+                            case "javelinthrow" : 
+                            case "shotput" : 
+                            echo "<td>";
+                            echo '<form action="./record/field_normal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ;  break; 
+                            case "polevault" :
+                            case "highjump" :
+                            echo "<td>";
+                            echo '<form action="./record/field_vertical_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ;  break;
+                            case "longjump" :
+                            echo "<td>";
+                            echo '<form action="./record/field_horizontal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ;  break; 
+                          } 
+                          } 
+                        } 
+                        } elseif($row["record_status"]==="o" ) { // 기록 
+                          echo "<td>" .htmlspecialchars($row["record_official_record"]) . "</td>" ; // 기록 상태
+                            echo "<td>Official Result</td>" ; // 수정버튼 echo "<td></td>" ; 
+                            if (authCheck($db, "authRecordsUpdate")) {
+                  if ($row["sports_category"] === "트랙경기") {
+                    if ($row["schedule_sports"] === "4x100mR" || $row["schedule_sports"] === "4x400mR") {
                       echo "<td>";
-                      echo '<input type="button" onclick="window.open';
-                      echo "('./record/field_vertical_result_view.php?id=" .
-                        $row["record_schedule_id"] .
-                        "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                      echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                    } elseif ($row["schedule_sports"] === "longjump" || $row["schedule_sports"] === "triplejump") {
+                      echo '<form action="./record/track_relay_result_view.php" method="post" target="수정">';
+                      echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                      echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                      echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                      echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                      echo '<input type="submit" onclick="window.open';
+                      echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                      echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                      } else { 
                       echo "<td>";
-                      echo '<input type="button" onclick="window.open';
-                      echo "('./record/field_horizontal_result_view.php?id=" .
-                        $row["record_schedule_id"] .
-                        "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                      echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                    } else {
-                      echo "<td>";
-                      echo '<input type="button" onclick="window.open';
-                      echo "('./record/field_normal_result_view.php?id=" .
-                        $row["record_schedule_id"] .
-                        "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                      echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                    }
-                  } else {
-                    //혼합경기
-                    switch ($row["schedule_round"]) {
-                        //세부 종목별 분류
-                      case "100m":
-                      case "100mH":
-                      case "110mH":
-                      case "200m":
-                      case "400m":
-                      case "800m":
-                      case "1500m":
-                        echo "<td>";
-                        echo '<input type="button" onclick="window.open';
-                        echo "('./record/track_normal_result_view.php?id=" .
-                          $row["record_schedule_id"] .
-                          "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                        echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                        break;
-                      case "discusthrow":
-                      case "javelinthrow":
-                      case "shotput":
-                        echo "<td>";
-                        echo '<input type="button" onclick="window.open';
-                        echo "('./record/field_normal_result_view.php?id=" .
-                          $row["record_schedule_id"] .
-                          "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                        echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                        break;
-                      case "polevault":
-                      case "highjump":
-                        echo "<td>";
-                        echo '<input type="button" onclick="window.open';
-                        echo "('./record/field_vertical_result_view.php?id=" .
-                          $row["record_schedule_id"] .
-                          "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                        echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                        break;
-                      case "longjump":
-                        echo "<td>";
-                        echo '<input type="button" onclick="window.open';
-                        echo "('./record/field_horizontal_result_view.php?id=" .
-                          $row["record_schedule_id"] .
-                          "','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
-                        echo '"value="수정" class="defaultBtn BTN_Blue"></td>';
-                        break;
-                    }
-                  }
-                }
-              } elseif ($row["record_status"] === "o") {
-                // 기록
-                echo "<td>" . htmlspecialchars($row["record_official_record"]) . "</td>";
-                // 기록 상태
-                echo "<td>Official Result</td>";
-                // 수정버튼
-                echo "<td></td>";
-              }
-              echo "</tr>";
-            } ?>
-          </tbody>
-        </table>
-        <div class="playerRegistrationBtnArea">
-          <div class="ExcelBtn IDBtn">
-            <form action="./execute_excel.php" method="post" enctype="multipart/form-data">
-              <input type="submit" name="query" id="execute_excel" value="<?php echo $sql . $sql_order; ?>" hidden />
-              <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
-              <input type="text" name="role" value="result_management" hidden />
-              <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀 출력</label>
-            </form>
-          </div>
+                      echo '<form action="./record/track_normal_result_view.php" method="post" target="수정">';
+                      echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                      echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                      echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                      echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                      echo '<input type="submit" onclick="window.open';
+                      echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                      echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          } 
+                        } else if($row["sports_category"]==="필드경기" ) { 
+                          if ($row["schedule_sports"]==="polevault" || $row["schedule_sports"]==="highjump" ) {
+                            echo "<td>";
+                            echo '<form action="./record/field_vertical_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          } else if($row["schedule_sports"]==="longjump" || $row["schedule_sports"]==="triplejump" ) {
+                            echo "<td>";
+                            echo '<form action="./record/field_horizontal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          } else { 
+                            echo "<td>";
+                            echo '<form action="./record/field_normal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                          }
+                        } else { //혼합경기 switch
+                            switch ($row["schedule_round"]) { //세부 종목별 분류 
+                            case "100m" : 
+                            case "100mH" : 
+                            case "110mH" :
+                            case "200m" : 
+                            case "400m" : 
+                            case "800m" : 
+                            case "1500m" :
+                              echo "<td>";
+                              echo '<form action="./record/track_normal_result_view.php" method="post" target="수정">';
+                              echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                              echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                              echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                              echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                              echo '<input type="submit" onclick="window.open';
+                              echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                              echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ; 
+                            break; 
+                            case "discusthrow" :
+                            case "javelinthrow" : 
+                            case "shotput" : 
+                            echo "<td>";
+                            echo '<form action="./record/field_normal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ;  break; 
+                            case "polevault" :
+                            case "highjump" :
+                            echo "<td>";
+                            echo '<form action="./record/field_vertical_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ;  break;
+                            case "longjump" :
+                            echo "<td>";
+                            echo '<form action="./record/field_horizontal_result_view.php" method="post" target="수정">';
+                            echo '<input type=hidden name=sports value="'.$row['schedule_sports'].'">';
+                            echo '<input type=hidden name=round value="'.$row['schedule_round'].'">';
+                            echo '<input type=hidden name=gender value="'.$row['record_gender'].'">';
+                            echo '<input type=hidden name=group value="'.$row['record_group'].'">';
+                            echo '<input type="submit" onclick="window.open';
+                            echo " ('','수정','width=1280,height=720,location=no,status=no,scrollbars=yes')";
+                            echo '"value="수정" class="defaultBtn BTN_Blue"></form></td>' ;  break; 
+                          } 
+                          } 
+                        }
+                          } echo "</tr>" ; 
+                        } ?>
+                    </tbody>
+                </table>
+                <div class="playerRegistrationBtnArea">
+                    <div class="ExcelBtn IDBtn">
+                        <form action="./execute_excel.php" method="post" enctype="multipart/form-data">
+                            <input type="submit" name="query" id="execute_excel"
+                                value="<?php echo $sql . $sql_order; ?>" hidden />
+                            <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
+                            <input type="text" name="role" value="result_management" hidden />
+                            <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀 출력</label>
+                        </form>
+                    </div>
+                </div>
+                <div class="page">
+                    <?= Get_Pagenation($page_list_size, $pagesizeValue, $pageValue, $total_count, $link) ?>
+                </div>
+            </div>
         </div>
-        <div class="page">
-          <?= Get_Pagenation($page_list_size, $pagesizeValue, $pageValue, $total_count, $link) ?>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script src="/assets/js/main.js?ver=4"></script>
+    <script src="/assets/js/main.js?ver=4"></script>
 </body>
 
 

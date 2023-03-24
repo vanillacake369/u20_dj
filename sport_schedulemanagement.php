@@ -42,12 +42,7 @@ $sql = "SELECT distinct
         schedule_name,schedule_sports,schedule_gender,schedule_round,record_state,record_status,
         schedule_location,schedule_start,schedule_date
         FROM list_schedule JOIN list_record ON schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round=record_round";
-// $sql = "SELECT 
-//         schedule_id, 
-//         (SELECT sports_category FROM list_sports WHERE schedule_sports=sports_code) AS category, 
-//         schedule_name,schedule_sports,schedule_gender,schedule_round,
-//         schedule_location,schedule_start,schedule_date
-//         FROM list_schedule";
+
 $uri_array = array();
 $bindarray = array();
 $keyword = array();

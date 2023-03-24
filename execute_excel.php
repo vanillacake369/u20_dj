@@ -20,8 +20,8 @@
  * 5-3. 데이터 엑셀로 변환
  */
 # 1번
-include_once(__DIR__ . "/includes/auth/config.php");
-include_once(__DIR__ . "/action/module/dictionary.php");
+require_once __DIR__ . "/includes/auth/config.php";
+require_once __DIR__ . "/action/module/dictionary.php";
 
 # 3번
 global $db;

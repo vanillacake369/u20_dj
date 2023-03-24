@@ -11,13 +11,15 @@
     <script src="../../assets/js/jquery-3.2.1.min.js"></script>
     <script src="../../assets/js/restrict.js"></script>
     <?php
-
+    
     include __DIR__ . "/../../database/dbconnect.php";
     // include_once "auth/config.php";
     include_once "../../security/security.php";
     $name = $_POST['athlete_name'];
-    $sports = $_POST['schedule_sports'];
-    $schedule_id = $_POST['schedule_id'];
+    $sports = $_POST['sports'];
+    $gender = $_POST['gender'];
+    $round = $_POST['round'];
+    $group = $_POST['group'];
     $record = $_POST['gamerecord'];
     $sql = "SELECT worldrecord_athletics FROM list_worldrecord WHERE worldrecord_athlete_name ='$name' AND worldrecord_sports='$sports'and worldrecord_record='$record'";
     $result = $db->query($sql);
@@ -38,7 +40,9 @@
                 <form action="./change_result.php" method="post" class="form" id="form_action">
                     <input type="hidden" name="name" value="<?= $name ?>">
                     <input type="hidden" name="sports" value="<?= $sports ?>">
-                    <input type="hidden" name="schedule_id" value="<?= $schedule_id ?>">
+                    <input type="hidden" name="gender" value="<?= $gender ?>">
+                    <input type="hidden" name="round" value="<?= $round ?>">
+                    <input type="hidden" name="group" value="<?= $group ?>">
                     <div class="input_row">
                         <span class="input_guide">달성 신기록</span>
                         <?php

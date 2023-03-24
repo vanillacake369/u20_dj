@@ -4,6 +4,8 @@ require_once __DIR__ . "/../../security/security.php";
 require_once __DIR__ . "/../../console_log.php";
 global $db;
 
+console_log($_POST);
+
 /**
  * @author 임지훈 @vanillacake369
  * 세 종류의 로직을 처리해야함
@@ -139,4 +141,4 @@ try {
     exit();
 }
 
-echo "<script>alert('수정되었습니다.'); window.close(); </script>";
+// echo "<script>alert('수정되었습니다.'); window.close(); </script>";

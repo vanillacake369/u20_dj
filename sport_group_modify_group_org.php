@@ -7,11 +7,11 @@ require_once "security/security.php";
 require_once "action/module/dictionary.php";
 
 global $db, $categoryOfSports_dic;
-$group_num = cleanInput($_GET["record_group"]) ?? null;         // ~ 조
-$group_count = cleanInput($_GET["count_group"]) ?? null;        // 조 개수
-$sport_code = cleanInput($_GET["record_sports"]) ?? null;       // 경기 이름(코드)
-$round = cleanInput($_GET["record_round"]) ?? null;             // 경기 라운드
-$gender = cleanInput($_GET["record_gender"]) ?? null;           // 경기 성별
+$group_num = $_GET["record_group"] ?? null;         // ~ 조
+$group_count = $_GET["count_group"] ?? null;        // 조 개수
+$sport_code = $_GET["record_sports"] ?? null;       // 경기 이름(코드)
+$round = $_GET["record_round"] ?? null;             // 경기 라운드
+$gender = $_GET["record_gender"] ?? null;           // 경기 성별
 $category = $categoryOfSports_dic[$sport_code] ?? null;         // 경기 종목 (필드, 트랙)
 $each_group_athletes_id_lane = array();                         // each_group_athletes_id_lane[m][n][p] :: [m조][선수n의 id][선수 n의 레인p]
 $each_group_athletes_data = array();                            // each_group_athletes_data[m][n][] :: [m조][0~n][선수 n의 모든 정보]

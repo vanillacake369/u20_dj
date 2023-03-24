@@ -61,8 +61,8 @@ if ($create_type === "자동") {
 
 ?>
 <!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css"/>
-<link rel="stylesheet" href="/assets/css/select2.min.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
+<link rel="stylesheet" href="/assets/css/select2.min.css" />
 <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/assets/DataTables/datatables.min.js"></script>
 <script type="text/javascript" src="/assets/js/useDataTables.js"></script>
@@ -72,28 +72,28 @@ if ($create_type === "자동") {
 </head>
 
 <body>
-<!-- contents 본문 내용 -->
-<div class="schedule_container">
-    <form action="action/sport/schedule_manual_insert.php" method="post" class="form">
-        <div class="schedule schedule_flex">
-            <?php for ($i = 1; $i <= $group_count; $i++) { ?>
-                <div class="schedule_filed filed_list_item">
-                    <div class="profile_logo">
-                        <img src="/assets/images/logo.png">
-                    </div>
-                    <div class="schedule_filed_tit schedule_green">
-                        <p class="tit_left_yellow"><?php echo $i ?>조 편성</p>
-                    </div>
-                    <div class="filed_list filed2_list ">
-                        <ul>
-                            <li>
-                                <p><?php echo $category == '트랙경기' ? '레인' : '순서' ?></p>
-                                <p>선수 이름</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="filed_item filed2_item">
-                    <?php for ($j = 1; $j <= count($groups[$i - 1]); $j++) { ?>
+    <!-- contents 본문 내용 -->
+    <div class="schedule_container">
+        <form action="action/sport/schedule_manual_insert.php" method="post" class="form">
+            <div class="schedule schedule_flex">
+                <?php for ($i = 1; $i <= $group_count; $i++) { ?>
+                    <div class="schedule_filed filed_list_item">
+                        <div class="profile_logo">
+                            <img src="/assets/images/logo.png">
+                        </div>
+                        <div class="schedule_filed_tit schedule_green">
+                            <p class="tit_left_yellow"><?php echo $i ?>조 편성</p>
+                        </div>
+                        <div class="filed_list filed2_list ">
+                            <ul>
+                                <li>
+                                    <p><?php echo $category == '트랙경기' ? '레인' : '순서' ?></p>
+                                    <p>선수 이름</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="filed_item filed2_item">
+                            <?php for ($j = 1; $j <= count($groups[$i - 1]); $j++) { ?>
                                 <ul>
                                     <?php for ($order = 1; $order <= 4; $order++) { ?>
                                         <li>
@@ -144,32 +144,30 @@ if ($create_type === "자동") {
                                 </ul>
                             <?php } ?>
 
-                        <div class="filed_BTN2">
-                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN"
-                                    onclick="addColumn()"><i class="xi-plus"></i></button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN"
-                                    onclick="deleteColumn()"><i class="xi-minus"></i></button>
+                            <div class="filed_BTN2">
+                                <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN" onclick="addColumn()"><i class="xi-plus"></i></button>
+                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN" onclick="deleteColumn()"><i class="xi-minus"></i></button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
-            <input type="hidden" name="count" value="<?php echo $group_count ?>">
-            <input type="hidden" name="round" value="<?php echo $round ?>">
-            <input type="hidden" name="gender" value="<?php echo $gender ?>">
-            <input type="hidden" name="sport_code" value="<?php echo $sport_code ?>">
-            <input type="hidden" name="sport_category" value="<?php echo $category ?>">
-            <button type="submit" class="changePwBtn defaultBtn" name="addresult">확인</button>
-        </div>
-    </form>
-</div>
-<script>
-    $("select[name=athlete]").select2();
-    $("select[name=athlete]").change(function (idx) {
-        var index = $("select[name='athlete[]']").index(this);
-        var value = $(this).val();
-        var eqValue = $(this).next().next().val(value);
-    });
-</script>
+                <?php } ?>
+                <input type="hidden" name="count" value="<?php echo $group_count ?>">
+                <input type="hidden" name="round" value="<?php echo $round ?>">
+                <input type="hidden" name="gender" value="<?php echo $gender ?>">
+                <input type="hidden" name="sport_code" value="<?php echo $sport_code ?>">
+                <input type="hidden" name="sport_category" value="<?php echo $category ?>">
+                <button type="submit" class="changePwBtn defaultBtn" name="addresult">확인</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        $("select[name=athlete]").select2();
+        $("select[name=athlete]").change(function(idx) {
+            var index = $("select[name='athlete[]']").index(this);
+            var value = $(this).val();
+            var eqValue = $(this).next().next().val(value);
+        });
+    </script>
 
 </body>
 

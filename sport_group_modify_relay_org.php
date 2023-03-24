@@ -131,8 +131,6 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                             </thead>
                             <!-- m명 -->
                             <?php
-                            // STAR FOR (한 레인 당 4명)
-                            for ($order = 1; $order <= 4; $order++) {
                                 // START FOR (1~n명)
                                 $first_index_each_group_athletes_data_i = array_key_first($each_group_athletes_data[$i]);
                                 $last_index_each_group_athletes_data_i = array_key_last($each_group_athletes_data[$i]);
@@ -157,8 +155,6 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                             <?php
                                 }
                                 // END FOR (n명)
-                            }
-                            // END FOR (한 레인 당 4명)
                             ?>
                         </table>
                         <div class="filed_BTN2">

@@ -56,11 +56,17 @@ if (count($row) !== 1) {
                     <input type="hidden" name="gender" value="<?php echo $gender ?>">
                     <select name="next_round" class="d_select">
                         <option value="" hidden="">라운드</option>
-<!--                    <option value="1">직접입력</option>-->
-                        <?php if ($round != 'semi-final') { ?>
-                            <option value="semi-final">준결승</option>
-                        <?php } ?>
-                        <option value="final">결승</option>
+                        <?php
+                        // break문을 걸지 않아 해당 라운드에 나와야하는 라운드가 나옴
+                        switch ($round) {
+                            case 'preliminary-round':
+                                echo '<option value="qualification">예선</option>';
+                            case 'qualification':
+                                echo '<option value="semi-final">준결승</option>';
+                            case 'semi-final':
+                                echo '<option value="final">결승</option>';
+                        }
+                        ?>
                     </select>
                     <div class="schedule_filed_tit round_tit">
                         <p class="tit_left_green">조 갯수</p>

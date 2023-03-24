@@ -165,10 +165,10 @@ $total_count = mysqli_num_rows($count);
                                     <option value="non" hidden="">경기종목 이름</option>
                                     <option value="non">전체</option>
                                     <?php
-                                    $sSql = "SELECT distinct record_round FROM list_record;";
+                                    $sSql = "SELECT distinct record_sports FROM list_record;";
                                     $sResult = $db->query($sSql);
                                     while ($sRow = mysqli_fetch_array($sResult)) {
-                                        echo "<option value=" . $sRow['record_round'] . ' ' . ($searchValue["record_round"] == $sRow['record_round'] ? 'selected' : '') . ">" . htmlspecialchars($sRow['record_round']) . "</option>";
+                                        echo "<option value=" . $sRow['record_sports'] . ' ' . ($searchValue["record_sports"] == $sRow['record_sports'] ? 'selected' : '') . ">" . htmlspecialchars($sRow['record_sports']) . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -178,10 +178,10 @@ $total_count = mysqli_num_rows($count);
                                     <option value="non" hidden="">경기 라운드</option>
                                     <option value="non">전체</option>
                                     <?php
-                                    $sSql = "SELECT distinct record_gender FROM list_record;";
+                                    $sSql = "SELECT distinct record_round FROM list_record;";
                                     $sResult = $db->query($sSql);
                                     while ($sRow = mysqli_fetch_array($sResult)) {
-                                        echo "<option value=" . $sRow['record_gender'] . ' ' . ($searchValue["record_gender"] == $sRow['record_gender'] ? 'selected' : '') . ">" . ($sRow['record_gender'] == 'm' ? '남' : ($sRow['record_gender'] == 'f' ? '여' : '혼성')) . "</option>";
+                                        echo "<option value=" . $sRow['record_round'] . ' ' . ($searchValue["record_round"] == $sRow['record_round'] ? 'selected' : '') . ">" . htmlspecialchars($sRow['record_round']) . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -225,7 +225,7 @@ $total_count = mysqli_num_rows($count);
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
-                    <?php
+                        <?php
                         // 검색조건 있는 경우에만 table 보여주기
                         // if ($searchValue["record_sports"] !== null || $searchValue["record_round"] !== null || $searchValue["record_gender"] !== null) {
                         $i = $total_count - $page_list_count;
@@ -235,7 +235,8 @@ $total_count = mysqli_num_rows($count);
                             $num++;
                             $where = '';
                             echo '<tr';
-                            if ($num%2 == 0) echo ' class="Ranklist_Background">'; else echo ">";
+                            if ($num % 2 == 0) echo ' class="Ranklist_Background">';
+                            else echo ">";
                             $sport = $row["record_sports"];
                             $group = $row["record_group"];
                             $round = $row["record_round"];
@@ -248,7 +249,7 @@ $total_count = mysqli_num_rows($count);
                             echo "<td>" . $round . "</td>";
                             // 경기 성별
                             echo "<td>";
-                            echo $gender=='m' ? "MEN" : ($gender=='f' ? "WOMEN" : "MIXED" );
+                            echo $gender == 'm' ? "MEN" : ($gender == 'f' ? "WOMEN" : "MIXED");
                             echo "</td>";
                             // 수정
                             echo "<td>";

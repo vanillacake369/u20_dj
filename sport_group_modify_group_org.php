@@ -149,7 +149,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                                         <td>
                                             <!-- 선수 id :: record_athlete_id-->
                                             <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
-                                            <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
+                                            <input type="text" name="name" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
                                         </td>
                                     </tr>
                                 </tbody>

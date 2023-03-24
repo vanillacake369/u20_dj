@@ -21,13 +21,6 @@ $categoryValue = getCategoryValue($_GET["order"] ?? NULL);
 $orderValue = getOrderValue($_GET["sc"] ?? NULL);
 $pagesizeValue = getPageSizeValue($_GET["page_size"] ?? NULL);
 
-$pageSizeOption = [];
-    array_push($pageSizeOption, 10);
-    array_push($pageSizeOption, 15);
-    array_push($pageSizeOption, 20);
-    array_push($pageSizeOption, 100);
-    $isPageSizeChecked = maintainSelected($_GET["page_size"] ?? NULL);
-
 $page_list_size = 10;
 $link = "";
 
@@ -100,15 +93,14 @@ $total_count = mysqli_num_rows($count);
                             <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
-                                    $get_country_count_sql = "SELECT COUNT(*) AS country_count FROM list_country;";
-                                    $country_count_result = $db->query($get_country_count_sql);
-                                    $country_count_row = mysqli_fetch_array($country_count_result);
-                                    $size_of_all = $country_count_row["country_count"];
-                                    foreach ($pageSizeOption as $size) {
-                                        echo '<option value="' . $size . '"' . ($isPageSizeChecked[$size] ?? NULL) . ">" . $size . "개씩</option>\"";
+                                    echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
+                                    echo '<option value="15"' . ($pagesizeValue == 15 ? 'selected' : '') . '>15개씩</option>';
+                                    echo '<option value="20"' . ($pagesizeValue == 20 ? 'selected' : '') . '>20개씩</option>';
+                                    echo '<option value="100"' . ($pagesizeValue == 100 ? 'selected' : '') . '>100개씩</option>';
+                                    if ($total_count != 0){
+                                        echo '<option value="' . $total_count . "\">모두</option>\"";
                                     }
-                                    echo '<option value="' . $size_of_all . '"' . ($isPageSizeChecked[$size_of_all] ?? NULL) . ">모두</option>\"";
-                                ?>   
+                                ?>
                             </select>
                         </div>
                         <div class="selectArea defaultSelectArea">

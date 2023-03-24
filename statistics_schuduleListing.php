@@ -18,12 +18,6 @@ $link = "";
 $page_list_count = ($pageValue - 1) * $pagesizeValue;
 //+) $page_size->$pagesizeValue
 // pageSizeOption : 한 페이지 내의 행 수
-$pageSizeOption = [];
-    array_push($pageSizeOption, 10);
-    array_push($pageSizeOption, 15);
-    array_push($pageSizeOption, 20);
-    array_push($pageSizeOption, 100);
-    $isPageSizeChecked = maintainSelected($_GET["page_size"] ?? NULL);
 
 // SQL 조건문
 $sql = "SELECT
@@ -181,19 +175,13 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                             <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
-                                    $get_count_sql = "SELECT COUNT(*) AS record_count FROM list_athlete 
-                                                        INNER JOIN list_record  ON record_athlete_id = athlete_id AND record_medal >=1
-                                                        INNER JOIN list_schedule ON schedule_sports = record_sports
-                                                        INNER JOIN list_sports ON sports_code = schedule_sports";
-                                    $count_result = $db->query($get_count_sql);
-                                    $count_row = mysqli_fetch_array($count_result);
-                                    $size_of_all = $count_row["record_count"];
-                                    foreach ($pageSizeOption as $size) {
-                                        echo '<option value="' . $size . '"' . ($isPageSizeChecked[$size] ?? NULL) . ">" . $size . "개씩</option>\"";
+                                    echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
+                                    echo '<option value="15"' . ($pagesizeValue == 15 ? 'selected' : '') . '>15개씩</option>';
+                                    echo '<option value="20"' . ($pagesizeValue == 20 ? 'selected' : '') . '>20개씩</option>';
+                                    echo '<option value="100"' . ($pagesizeValue == 100 ? 'selected' : '') . '>100개씩</option>';
+                                    if ($total_count != 0){
+                                        echo '<option value="' . $total_count . "\">모두</option>\"";
                                     }
-                                    if ($size_of_all != 0){
-                                        echo '<option value="' . $size_of_all . '"' . ($isPageSizeChecked[$size_of_all] ?? NULL) . ">모두</option>\"";
-                                        }
                                 ?>
                             </select>
                         </div>

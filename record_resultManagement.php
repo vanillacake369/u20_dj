@@ -76,14 +76,6 @@ $sql_like = "";
 $page_list_count = ($pageValue - 1) * $pagesizeValue;
 //+) $page_size->$pagesizeValue
 
-// pageSizeOption : 한 페이지 내의 행 수
-$pageSizeOption = [];
-    array_push($pageSizeOption, 10);
-    array_push($pageSizeOption, 15);
-    array_push($pageSizeOption, 20);
-    array_push($pageSizeOption, 100);
-    $isPageSizeChecked = maintainSelected($_GET["page_size"] ?? NULL);
-
 // GET METHOD로 넘어온 값을 가져옴
 $searchValue = [];
 $searchValue["search"] = getSearchValue($_GET["search"] ?? null);
@@ -251,15 +243,14 @@ if ($count) {
               <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
                 <option value="non" hidden="">페이지</option>
                 <?php
-                                    $get_schedule_count_sql = "SELECT COUNT(*) AS schedule_count FROM list_schedule;";
-                                    $schedule_count_result = $db->query($get_schedule_count_sql);
-                                    $schedule_count_row = mysqli_fetch_array($schedule_count_result);
-                                    $size_of_all = $schedule_count_row["schedule_count"];
-                                    foreach ($pageSizeOption as $size) {
-                                        echo '<option value="' . $size . '"' . ($isPageSizeChecked[$size] ?? NULL) . ">" . $size . "개씩</option>\"";
+                                    echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
+                                    echo '<option value="15"' . ($pagesizeValue == 15 ? 'selected' : '') . '>15개씩</option>';
+                                    echo '<option value="20"' . ($pagesizeValue == 20 ? 'selected' : '') . '>20개씩</option>';
+                                    echo '<option value="100"' . ($pagesizeValue == 100 ? 'selected' : '') . '>100개씩</option>';
+                                    if ($total_count != 0){
+                                        echo '<option value="' . $total_count . "\">모두</option>\"";
                                     }
-                                    echo '<option value="' . $size_of_all . '"' . ($isPageSizeChecked[$size_of_all] ?? NULL) . ">모두</option>\"";
-                                ?>   
+                                ?>
               </select>
             </div>
             <div class="selectArea defaultSelectArea">

@@ -154,6 +154,8 @@ $total_count = mysqli_num_rows($count);
                                 echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
                                 echo '<option value="15"' . ($pagesizeValue == 15 ? 'selected' : '') . '>15개씩</option>';
                                 echo '<option value="20"' . ($pagesizeValue == 20 ? 'selected' : '') . '>20개씩</option>';
+                                echo '<option value="100"' . ($pagesizeValue == 100 ? 'selected' : '') . '>100개씩</option>';
+                                echo '<option value="' . $total_count . "\">모두</option>\"";
                                 ?>
                             </select>
                         </div>

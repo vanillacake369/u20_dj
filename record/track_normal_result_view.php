@@ -13,11 +13,9 @@
     $round = $_POST['round'];
     $gender = $_POST['gender'];
     $group = $_POST['group'];
-    
-    $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
+    $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";    echo $sql;
     $result = $db->query($sql);
     $rows = mysqli_fetch_assoc($result);
-    
     $judgesql = "select distinct judge_name from list_judge  join list_record ON  record_judge = judge_id and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'";
     $judgeresult = $db->query($judgesql);
     $judgerow = mysqli_fetch_array($judgeresult);
@@ -39,14 +37,14 @@
     <link rel="stylesheet" href="/assets/css/reset.css">
     <link rel="stylesheet" href="/assets/css/style.css?v=37">
     <title>u20 관리자 페이지</title>
-<!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
-<script type="text/javascript" src="/assets/js/onlynumber.js"></script>
-<script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/assets/js/change_athletics.js"></script>
-<script type="text/javascript" src="/action/record/result_track_single_execute_excel.js"></script>
-<script>
-function openTextFile() {
+    <!--Data Tables-->
+    <link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
+    <script type="text/javascript" src="/assets/js/onlynumber.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/assets/js/change_athletics.js"></script>
+    <script type="text/javascript" src="/action/record/result_track_single_execute_excel.js"></script>
+    <script>
+    function openTextFile() {
         var input = document.createElement("input");
         input.type = "file";
         input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
@@ -105,7 +103,7 @@ function openTextFile() {
         };
         reader.readAsText(file, /* optional */ "utf-8");
     }
-</script>
+    </script>
 </head>
 
 <body>
@@ -174,7 +172,7 @@ function openTextFile() {
                     </div>
                     <table class="box_table">
                         <colgroup>
-                                <?php
+                            <?php
                                 if (in_array($rows['schedule_sports'], $longname)) {
                                     echo '<col style="width: 7%" />';
                                     echo '<col style="width: 7%" />';
@@ -196,7 +194,7 @@ function openTextFile() {
                                     echo '<col style="width: 10%" />';
                                 }
                                 ?>
-                            </colgroup>
+                        </colgroup>
                         <thead class="result_table entry_table">
                             <tr>
                                 <th style="background: none">등수</th>
@@ -298,16 +296,17 @@ function openTextFile() {
                             </tr>
                         </tbody>
                     </table>
-                    </div>
-                    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-                        
-                    <div class="modify_Btn input_Btn result_Btn">
-                        <button type="submit" class="BTN_Blue" name="addresult">확인</button>
-                    </div>
-                </form>
             </div>
+            <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
+            <input placeholder="비고를 입력해주세요." type="text" name="bibigo" value="<?=($rows['schedule_memo']??null)?>"
+                maxlength=" 100" />
+
+            <div class="modify_Btn input_Btn result_Btn">
+                <button type="submit" class="BTN_Blue" name="addresult">확인</button>
+            </div>
+            </form>
         </div>
+    </div>
     </div>
     <script src="assets/js/main.js?ver=7"></script>
 </body>

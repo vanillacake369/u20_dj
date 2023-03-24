@@ -24,15 +24,16 @@
         <div class="middle" style="display:inline-block">
             <p style="margin:10px 0px 0px 0px; text-align:center;">RESULT[경기결과]</p>
             <?php
-            $schedule_sports=$POST['sports'];
-            $schedule_round=$POST['round'];
-            $gender=$POST['gender'];
-            $group=$POST['group'];
             require_once __DIR__ . "/../action/module/record_worldrecord.php";
-            require_once __DIR__ . "/../includes/auth/config.php"; //B:데이터베이스 연결 
-            
-            $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group'";
-            $result=$db->query($sql);
+            require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결
+            $sports = $_POST['sports'];
+            $round = $_POST['round'];
+            $gender = $_POST['gender'];
+            $group = $_POST['group'];
+            //print_r($_POST);
+            $sql = "select *, record_weight, record_end from list_schedule inner join list_record ON (schedule_sports = record_sports)
+                        where record_gender = schedule_gender AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
+            $result = $db->query($sql);
             $row = mysqli_fetch_assoc($result);
             if ($row['schedule_sports'] == 'decathlon' || $row['schedule_sports'] == 'heptathlon') {
                 $check_round = 'y';
@@ -43,7 +44,7 @@
             <div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">종목명: ' . $row['schedule_name'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">종목명: ' . $row['schedule_sports'] . '</p>';
                     echo '<p style="font-size:12px; width:330px">위치: ' . $row['schedule_location'] . '</p>';
                     ?>
                 </div>
@@ -55,8 +56,8 @@
                 </div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">라운드: ' . $rows['schedule_round'] . '</p>';
-                    echo '<p style="font-size:12px; width:330px">용기구: ' . $row['record_weight'] . 'KG</p>';
+                    echo '<p style="font-size:12px; width:330px">라운드: ' . $_POST['round'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">용기구: ' . $row['record_weight'] . '</p>';
                     ?>
                 </div>
             </div>
@@ -147,9 +148,9 @@
                             }
                             echo '</td>';
                             if ($check_round == 'y') {
-                                $point = $db->query("SELECT record_multi_record from list_record where record_athlete_id ='$row1[1]' and record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' AND record_multi_record IS NOT null");
+                                $point = $db->query("SELECT record_multi_record from list_record where record_athlete_id ='$row1[1]' and record_schedule_id=" . $_POST['schedule_id'] . " AND record_multi_record IS NOT null");
                                 $pointrow = mysqli_fetch_array($point);
-                                $totalid = $db->query("select schedule_id from list_schedule where schedule_name='" . $rows['schedule_name'] . "' and schedule_round='final' and schedule_division='s'");
+                                $totalid = $db->query("select schedule_id from list_schedule where schedule_name='" . $_POST['gamename'] . "' and schedule_round='final' and schedule_division='s'");
                                 $totalrow = mysqli_fetch_array($totalid);
                                 $totalpoint = $db->query("SELECT record_live_record from list_record where record_athlete_id ='$row1[1]' and record_schedule_id=$totalrow[0]");
                                 $totalrow1 = mysqli_fetch_array($totalpoint);

@@ -372,17 +372,16 @@
                             }
                         }
                         ?>
-                        <button type="submit" class="BTN_Blue" name="addresult" style="width:100%;">확인</button>
                     </div>
                     <?php
                         if ($rows["record_state"] != "y") {
                         echo '<div class="signup_submit" style="width:49%; margin-right:1%">
-                              <button type="submit" class="BTN_Red full_width" name="addtempresult"
-                                  formaction="../action/record/field_horizontal_result_insert.php">
-                                  <span>임시저장</span>
-                              </button>
-                          </div>';
-                          echo '<div class="signup_submit" style="width:49%;">
+                            <button type="submit" class="BTN_Red full_width" name="addtempresult"
+                            formaction="../action/record/field_horizontal_result_insert.php">
+                            <span>임시저장</span>
+                            </button>
+                        </div>';
+                        echo '<div class="signup_submit" style="width:49%;">
                             <button type="submit" class="BTN_Blue full_width" name="addresult"
                                 formaction="../action/record/field_horizontal_result_insert.php">
                                 <span>확인</span>

@@ -13,7 +13,7 @@
     $round = $_POST['round'];
     $gender = $_POST['gender'];
     $group = $_POST['group'];
-    $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";    echo $sql;
+    $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
     $result = $db->query($sql);
     $rows = mysqli_fetch_assoc($result);
     $judgesql = "select distinct judge_name from list_judge  join list_record ON  record_judge = judge_id and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'";
@@ -300,75 +300,43 @@
                             </tr>
                         </tbody>
                     </table>
-                    </div>
-                    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text" value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-                        
-                    <div class="modify_Btn input_Btn result_Btn">
-                    <?php
+            </div>
+            <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
+            <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
+                value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
+
+            <div class="modify_Btn input_Btn result_Btn">
+                <?php
                     if ($rows["record_state"] != "y") {
-                      echo '<div class="signup_submit" style="width:49%;">
-                                  <button type="submit" class="BTN_Blue full_width" name="addresult"
+                      echo '<div class="signup_submit" style="width:100%;">
+                                  <button type="submit" class="defaultBtn BTN_Blue full_width" name="addresult"
                                       formaction="../action/record/track_normal_result_insert.php">
                                       <span>확인</span>
                                   </button>
                               </div>';
                           }else{
                             if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                              <div class="modify_Btn input_Btn result_Btn">
-                                <button type="submit" class="BTN_Blue full_width" name="addresult"
-                                    formaction="../action/record/track_normal_result_insert.php">
-                                    <span>확인</span>
-                                </button>
-                            </div>
-                          <?php }
+                <div class="modify_Btn input_Btn result_Btn">
+                    <button type="submit" class="BTN_Blue full_width" name="addresult"
+                        formaction="../action/record/track_normal_result_insert.php">
+                        <span>확인</span>
+                    </button>
+                </div>
+                <?php }
                           elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                              <div class="modify_Btn input_Btn result_Btn">
-                              <button type="submit" class="BTN_Blue full_width" name="addresult"
-                                  formaction="../action/record/track_normal_result_insert.php">
-                                  <span>확인</span>
-                              </button>
-                          </div>
-                          <?php } 
+                <div class="modify_Btn input_Btn result_Btn">
+                    <button type="submit" class="BTN_Blue full_width" name="addresult"
+                        formaction="../action/record/track_normal_result_insert.php">
+                        <span>확인</span>
+                    </button>
+                </div>
+                <?php } 
                       }
                     ?>
-                    </div>
-                </form>
             </div>
+            </form>
         </div>
     </div>
-    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
-        value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-
-    <div class="modify_Btn input_Btn result_Btn">
-        <?php
-                    if ($rows["record_state"] != "y") {
-                      echo '<div class="signup_submit" style="width:49%;">
-                                  <button type="submit" class="BTN_Blue full_width" name="addresult"
-                                      formaction="../action/record/track_normal_result_insert.php">
-                                      <span>확인</span>
-                                  </button>
-                              </div>';
-                          }else{
-                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
-        <div class="modify_Btn input_Btn result_Btn">
-            <button type="submit" class="BTN_Blue full_width" name="addresult"
-                formaction="../action/record/track_normal_result_insert.php">
-                <span>확인</span>
-            </button>
-        </div>
-        <?php }
-                          elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-        <div class="modify_Btn input_Btn result_Btn">
-            <button type="submit" class="BTN_Blue full_width" name="addresult"
-                formaction="../action/record/track_normal_result_insert.php">
-                <span>확인</span>
-            </button>
-        </div>
-        <?php } 
-                      }
-                    ?>
     </div>
     </form>
     </div>

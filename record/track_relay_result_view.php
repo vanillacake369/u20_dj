@@ -29,81 +29,79 @@
     <link rel="stylesheet" href="/assets/css/reset.css">
     <link rel="stylesheet" href="/assets/css/style.css?v=37">
     <title>u20 관리자 페이지</title>
-<!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="../assets/DataTables/datatables.min.css" />
-<script type="text/javascript" src="../assets/js/onlynumber.js"></script>
-<script type="text/javascript" src="../assets/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="../assets/js/change_athletics.js"></script>
-<script type="text/javascript" src="../action/record/result_track_team_execute_excel.js"></script>
-<script>
-function openTextFile() {
-    var input = document.createElement("input");
-    input.type = "file";
-    input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
-    input.onchange = function(event) {
-        processFile(event.target.files[0]);
-    };
-    input.click();
-}
+    <!--Data Tables-->
+    <link rel="stylesheet" type="text/css" href="../assets/DataTables/datatables.min.css" />
+    <script type="text/javascript" src="../assets/js/onlynumber.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../assets/js/change_athletics.js"></script>
+    <script type="text/javascript" src="../action/record/result_track_team_execute_excel.js"></script>
+    <script>
+    function openTextFile() {
+        var input = document.createElement("input");
+        input.type = "file";
+        input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
+        input.onchange = function(event) {
+            processFile(event.target.files[0]);
+        };
+        input.click();
+    }
 
-function processFile(file) {
-    var reader = new FileReader();
-    reader.onload = function() {
-        let ddd = reader.result.split("\r\n");
-        let wind = document.querySelector('[name=\"wind\"]')
-        let val = ddd[0].split(" ")[1];
-        wind.value = val;
-        let count = -1;
-        for (i = 1; i < ddd.length; i++) {
-            let k = ddd[i].split(" ")
-            if (k[0].indexOf('rane') != 0) {
-                count++
-
+    function processFile(file) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            let ddd = reader.result.split("\r\n");
+            let wind = document.querySelector('[name=\"wind\"]')
+            // let check = document.getElementsByTagName('th')[1].textContent;
+            let val = ddd[0].split(',')[4];
+            if (val != '') {
+                wind.value = val;
             } else {
-                let on = document.querySelector("#" + k[0]).parentElement.children
-                let total = on[7].firstElementChild
-                if (k[2]) {
-                    on[8].firstElementChild.value = k[2]
-                }
-                if (k[1]) {
-                    on['gamepass[]'].value = 'p'
-                } else if (k[0] == 'DNS') {
-                    on['gamepass[]'].firstElementChild.value = 'n'
-                    total.value = 0
-                    on[9].firstElementChild.value = k[0]
-                } else if (k[0] == 'DNF') {
-                    on['gamepass[]'].value = 'n'
-                    total.value = 0
-                    on[9].firstElementChild.value = k[0]
-                } else {
-                    on['gamepass[]'].value = 'd'
-                    total.value = 0
-                    on[9].firstElementChild.value = 'DQ'
-                }
-                let temp = k[1].split(":")
-                if (temp.length == 2) {
-                    total.value = parseFloat(total.value) + parseFloat(temp[0] * 60) + parseFloat(temp[1])
-                } else {
-                    total.value = parseFloat(total.value) + parseFloat(temp[0])
-                }
-                if (count == 3) {
-                    if (parseInt(parseInt(total.value) / 60) >= 1) {
-                        if (total.value % 60 < 10) {
-                            total.value = parseInt(parseInt(total.value) / 60) + ":0" + (total.value % 60)
-                                .toFixed(2)
-                        } else {
-                            total.value = parseInt(parseInt(total.value) / 60) + ":" + (total.value % 60)
-                                .toFixed(2)
-                        }
-                    }
-                }
+                wind.value = '0'
             }
-        }
-        rankcal1()
-    };
-    reader.readAsText(file, /* optional */ "utf-8");
-}
-</script>
+            console.log(ddd.length)
+            for (i = 1; i < ddd.length; i++) {
+                let k = ddd[i].split(",")
+                console.log(k)
+                let on;
+                console.log("k1: " + k[2])
+                if (!document.querySelector("#id" + k[1]) && !document.querySelector(
+                        "#rane" + k[2])) {
+                    console.log("없는 레인")
+                    continue;
+                }
+                if (!document.querySelector("#id" + k[1])) {
+                    on = document.querySelector("#rane" + k[2]).children
+                } else {
+                    on = document.querySelector("#id" + k[1]).children
+                }
+                console.log(on[6])
+                if (k[6]) {
+                    on[5].firstElementChild.value = 'p'
+                    on[6].firstElementChild.value = k[6]
+                } else if (k[0] == 'DNS') {
+                    on[5].firstElementChild.value = 'n'
+                    on[6].firstElementChild.value = 0
+                    on[8].firstElementChild.value = k[0]
+                } else if (k[0] == 'DNF') {
+                    on[5].firstElementChild.value = 'n'
+                    on[6].firstElementChild.value = 0
+                    on[8].firstElementChild.value = k[0]
+                } else {
+                    on[5].firstElementChild.value = 'd'
+                    on[6].firstElementChild.value = 0
+                    on[8].firstElementChild.value = 'DQ'
+                }
+                // if (k[3]) {
+                //     on[7].firstElementChild.value = k[3]
+                // } else {
+                //     on[7].firstElementChild.value = '';
+                // }
+            }
+            rankcal1()
+        };
+        reader.readAsText(file, /* optional */ "utf-8");
+    }
+    </script>
 </head>
 
 <body>
@@ -127,7 +125,8 @@ function processFile(file) {
                                 <li class="row input_row throw_row">
                                     <span>경기 이름</span>
                                     <input placeholder="경기 이름" type="text" name="gamename"
-                                        value="<?php echo $rows['schedule_name']?>" maxlength="16" required="" readonly />
+                                        value="<?php echo $rows['schedule_name']?>" maxlength="16" required=""
+                                        readonly />
                                 </li>
                                 <li class="row input_row throw_row">
                                     <span>라운드</span>
@@ -139,8 +138,7 @@ function processFile(file) {
                                 <li class="row input_row throw_row">
                                     <span>심판 이름</span>
                                     <input placeholder="심판 이름" type="text" name="refereename"
-                                        value="<?php echo ($judgerow[0]??null)?>" maxlength="30" required=""
-                                        readonly />
+                                        value="<?php echo ($judgerow[0]??null)?>" maxlength="30" required="" readonly />
                                 </li>
                                 <li class="row input_row throw_row">
                                     <span>풍속</span>
@@ -164,7 +162,7 @@ function processFile(file) {
                             <div class="result_BTN">
                                 <h1 class="tit_padding tit_left_green">결과</h1>
                                 <div>
-                                <?php
+                                    <?php
                                     if ($rows['record_state'] != 'y') {
                                         echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
                                     }
@@ -173,32 +171,32 @@ function processFile(file) {
                             </div>
                         </div>
                     </div>
-                            <table class="box_table">
-                                <colgroup>
-                                    <col style="width: 7%" />
-                                    <col style="width: 7%" />
-                                    <col style="width: 7%" />
-                                    <col style="width: 25%" />
-                                    <col style="width: 7%" />
-                                    <col style="width: 15%" />
-                                    <col style="width: 14%" />
-                                    <col style="width: 10%" />
-                                    <col style="width: 10%" />
-                                </colgroup>
-                            <thead class="result_table entry_table">
-                                <tr>
-                                    <th style="background: none">등수</th>
-                                    <th style="background: none">레인</th>
-                                    <th style="background: none">등번호</th>
-                                    <th style="background: none">이름</th>
-                                    <th style="background: none">국가</th>
-                                    <th style="background: none">경기 결과</th>
-                                    <th style="background: none">Reaction Time</th>
-                                    <th style="background: none">비고</th>
-                                    <th style="background: none">신기록</th>
-                                </tr>
-                            </thead>
-                            <tbody class="input_table De_tbody entry_table">
+                    <table class="box_table">
+                        <colgroup>
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 25%" />
+                            <col style="width: 7%" />
+                            <col style="width: 15%" />
+                            <col style="width: 14%" />
+                            <col style="width: 10%" />
+                            <col style="width: 10%" />
+                        </colgroup>
+                        <thead class="result_table entry_table">
+                            <tr>
+                                <th style="background: none">등수</th>
+                                <th style="background: none">레인</th>
+                                <th style="background: none">등번호</th>
+                                <th style="background: none">이름</th>
+                                <th style="background: none">국가</th>
+                                <th style="background: none">경기 결과</th>
+                                <th style="background: none">Reaction Time</th>
+                                <th style="background: none">비고</th>
+                                <th style="background: none">신기록</th>
+                            </tr>
+                        </thead>
+                        <tbody class="input_table De_tbody entry_table">
                             <?php
                                 $count = 0;
                                 $num = 0;
@@ -285,15 +283,15 @@ function processFile(file) {
                                     $count++;
                                 }
                             ?>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
-                        value="<?php echo ($rows['schedule_memo']??null)?>" maxlength=" 100" />
-                    <div class="modify_Btn input_Btn result_Btn">
-                    <?php
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
+        <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
+            value="<?php echo ($rows['schedule_memo']??null)?>" maxlength=" 100" />
+        <div class="modify_Btn input_Btn result_Btn">
+            <?php
                         if ($rows["record_state"] != "y") {
                         echo '<div class="signup_submit" style="width:49%;">
                                     <button type="submit" class="BTN_Blue full_width" name="addresult"
@@ -303,27 +301,27 @@ function processFile(file) {
                                 </div>';
                             }else{
                                 if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                                <div class="modify_Btn input_Btn result_Btn">
-                                    <button type="submit" class="BTN_Blue full_width" name="addresult"
-                                        formaction="../action/record/track_relay_result_insert.php">
-                                        <span>확인</span>
-                                    </button>
-                                </div>
-                            <?php }
+            <div class="modify_Btn input_Btn result_Btn">
+                <button type="submit" class="BTN_Blue full_width" name="addresult"
+                    formaction="../action/record/track_relay_result_insert.php">
+                    <span>확인</span>
+                </button>
+            </div>
+            <?php }
                             elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                                <div class="modify_Btn input_Btn result_Btn">
-                                <button type="submit" class="BTN_Blue full_width" name="addresult"
-                                    formaction="../action/record/track_relay_result_insert.php">
-                                    <span>확인</span>
-                                </button>
-                            </div>
-                            <?php } 
+            <div class="modify_Btn input_Btn result_Btn">
+                <button type="submit" class="BTN_Blue full_width" name="addresult"
+                    formaction="../action/record/track_relay_result_insert.php">
+                    <span>확인</span>
+                </button>
+            </div>
+            <?php } 
                         }
                         ?>
-                    </div>
-                </form>
-            </div>
         </div>
+        </form>
+    </div>
+    </div>
     </div>
     <script src="/assets/js/main.js?ver=6"></script>
 </body>

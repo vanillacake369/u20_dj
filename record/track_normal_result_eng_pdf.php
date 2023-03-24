@@ -23,10 +23,10 @@
         <?php
         require_once __DIR__ . "/../action/module/record_worldrecord.php";
         require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결 
-        $sports = $_POST['schedule_sports'];
-        $round = $_POST['schedule_round'];
-        $gender = $_POST['schedule_gender'];
-        $group = $_POST['schedule_group'];
+        $sports = $_POST['sports'];
+        $round = $_POST['round'];
+        $gender = $_POST['gender'];
+        $group = $_POST['group'];
         $sql = "select *, record_wind, record_end from list_schedule inner join list_record ON (schedule_sports = record_sports)
                 where record_gender = schedule_gender AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
         $result = $db->query($sql);

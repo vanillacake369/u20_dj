@@ -36,6 +36,7 @@ $row = mysqli_fetch_array($result);
             </div>
             <div class="MainRank coachList defaultList">
                 <form action="action/auth/auth_account_update.php" method="post" class="form" id="authForm">
+                    <input name="id" value="<?php echo $account; ?>" hidden />
                     <div class="signupPageBox labelBox">
                         <div class="pms_tit">
                             <h1 class="tit_left_green">권한 설정</h1>

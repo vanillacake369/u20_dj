@@ -107,69 +107,48 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
         <div class="schedule schedule_flex">
             <!-- n조 -->
             <?php
-            // START FOR (1~m조)   
-            $first_index_each_group_athletes_data = array_key_first($each_group_athletes_data);
-            $last_index_each_group_athletes_data = array_key_last($each_group_athletes_data);
-            for ($i = $first_index_each_group_athletes_data; $i <= $last_index_each_group_athletes_data; $i++) {
+            // START FOR (1~m조)     
+            for ($i = 1; $i <= count($each_group_athletes_data); $i++) {
             ?>
                 <div class="schedule_filed filed_list_item filed2">
                     <div class="profile_logo">
                         <img src="/assets/images/logo.png">
                     </div>
                     <div class="schedule_filed_tit schedule_green">
-                        <p class="tit_left_yellow"><?php echo $i ?>조</p>
+                        <p class="tit_left_yellow">1조</p>
                     </div>
                     <div class="filed2_form">
-                        <table cellspacing="0" cellpadding="0" class="entry_table filed2_swap" id="" name="table_name[]">
-                            <thead class="filed_list filed2_list result_table ">
+                        <table cellspacing="0" cellpadding="0" class="filed2_Table " id="" name="table_name[]">
+                            <thead class="filed_list filed2_list">
                                 <tr>
                                     <th>순서</th>
                                     <th>선수 이름</th>
                                 </tr>
                                 <tr class="filed2_bottom">
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
-                            <!-- m명 -->
-                            <?php
-                            // START FOR (1~n명)
-                            $first_index_each_group_athletes_data_i = array_key_first($each_group_athletes_data[$i]);
-                            $last_index_each_group_athletes_data_i = array_key_last($each_group_athletes_data[$i]);
-                            for ($j = $first_index_each_group_athletes_data_i; $j <= $last_index_each_group_athletes_data_i; $j++) {
-                            ?>
-                                <tbody class="grouping_body entry_table">
-                                    <tr>
-                                        <td>
-                                            <!-- 조 :: record_group -->
-                                            <input type="hidden" name="group[]" id="group[]" value="<?php echo $i ?>">
-                                            <input type="hidden" name="order[]" id="order[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>">
-                                            <!-- 순서 :: record_order -->
-                                            <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled>
-                                        </td>
-                                        <td>
-                                            <!-- 선수 id :: record_athlete_id-->
-                                            <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
-                                            <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            <?php
-                            }
-                            // END FOR (n명)
-                            ?>
+                            <tbody class="grouping_body">
+                                <tr>
+                                    <!-- m명 -->
+                                    <td><input type="text" class="number" value="1" name="lane[]" disabled></td>
+                                    <td>
+                                        <input type="text" name="name" value="Boubacar BARRY(LKA)(CON)">
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                         <div class="filed_BTN2">
-                            <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn"><i class="xi-minus"></i></button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn"><i class="xi-plus"></i></button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN "><i class="xi-minus"></i></button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN "><i class="xi-plus"></i></button>
                         </div>
                     </div>
                 </div>
             <?php
             }
-            // END FOR (m조)
+            // END FOR(m조)
             ?>
-            <!-- 추가버튼 시, 예제코드 -->
-            <!-- 추가 버튼을 누르면 이와 같이 select2를 사용한 select > option 을 생성해내야 함 -->
-            <!-- <div class="schedule_filed filed_list_item">
+            <div class="schedule_filed filed_list_item">
                 <div class="profile_logo">
                     <img src="/assets/images/logo.png">
                 </div>
@@ -191,99 +170,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                             <tr>
                                 <td><input type="text" class="number" value="1" name="lane[]" disabled></td>
                                 <td>
-                                    <div id="copy-value">
-                                        <select class='select-box' name="athlete" onchange="select_change_listener()" required class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                            <option value="" disabled="" selected="">선수 선택</option>
-                                            <option value="84">
-                                                Abdulrahman Ali (MYS)(WVY)
-                                            </option>
-                                            <option value="71">
-                                                Aldrin Jeswin (NPL)(DVU)
-                                            </option>
-                                            <option value="81">
-                                                Aneed Ameer Shakir (IRN)(HYK)
-                                            </option>
-                                            <option value="70">
-                                                Chanda Km (MYS)(HGD)
-                                            </option>
-                                            <option value="85">
-                                                Chen Kuei Ru (JPN)(KIK)
-                                            </option>
-                                            <option value="79">
-                                                Cheung Wang Fung (CHN)(SUI)
-                                            </option>
-                                            <option value="3">
-                                                choi KYUNG (MYS)(KUFF)
-                                            </option>
-                                            <option value="73">
-                                                Chopra Neeraj (JPN)(SDFS)
-                                            </option>
-                                            <option value="75">
-                                                Hong Kit Yeung (BTN)(SSY)
-                                            </option>
-                                            <option value="87">
-                                                Hsieh Hsi En (LKA)(WER)
-                                            </option>
-                                            <option value="80">
-                                                Kim Doyeon (KOR)(SGR)
-                                            </option>
-                                            <option value="13">
-                                                kristina OVCHINNI (LBN)(BEFF)
-                                            </option>
-                                            <option value="14">
-                                                krithana RAMASA (MMR)(NMN)
-                                            </option>
-                                            <option value="16">
-                                                lai YIU (CHN)(CCC)
-                                            </option>
-                                            <option value="77">
-                                                Li Tsz To (JPN)(KRF)
-                                            </option>
-                                            <option value="86">
-                                                Li Yun Chen (BTN)(FGU)
-                                            </option>
-                                            <option value="76">
-                                                Lin Mingfu (MMR)(DKU)
-                                            </option>
-                                            <option value="74">
-                                                Lui Lai Yiu (NPL)(SSI)
-                                            </option>
-                                            <option value="23">
-                                                Mudha Alshammary F (MYS)(KUFF)
-                                            </option>
-                                            <option value="91">
-                                                Mudha Alshammary M (MYS)(KUFF)
-                                            </option>
-                                            <option value="83">
-                                                Nayef Hussein (NPL)(SCH)
-                                            </option>
-                                            <option value="82">
-                                                Obaid Mohamed Nahith (MDV)(CAK)
-                                            </option>
-                                            <option value="68">
-                                                Paul Eldhose (PHL)(DCS)
-                                            </option>
-                                            <option value="66">
-                                                Pha Aphay Silina (LBN)(XDO)
-                                            </option>
-                                            <option value="67">
-                                                Phompakdy Sorsy (KGZ)(DSS)
-                                            </option>
-                                            <option value="69">
-                                                Rani Annu (CHN)(TDV)
-                                            </option>
-                                            <option value="65">
-                                                Rotundo Manuela (IRN)(DSA)
-                                            </option>
-                                            <option value="72">
-                                                Yarraji Jyothi (KAZ)(DSC)
-                                            </option>
-                                            <option value="64">
-                                                Zamora Cristhian (IDN)(GNF)
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <input type="hidden" name="playerid[]" value="">
+                                    <input type="text" name="name" value="Ebrahima CAMARA(UZB)(GKE)">
                                 </td>
                             </tr>
                         </tbody>
@@ -293,13 +180,10 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                         <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn"><i class="xi-plus"></i></button>
                     </div>
                 </div>
-            </div> -->
-            <input type="hidden" name="count" value="<?php echo $group_count ?>">
-            <input type="hidden" name="round" value="<?php echo $round ?>">
-            <input type="hidden" name="gender" value="<?php echo $gender ?>">
-            <input type="hidden" name="sport_code" value="<?php echo $sport_code ?>">
-            <input type="hidden" name="sport_category" value="<?php echo $category ?>">
-            <button type="submit" class="changePwBtn defaultBtn">만들기</button>
+            </div>
+
+
+            <button type="button" class="changePwBtn defaultBtn">만들기</button>
         </div>
     </form>
 </div>
@@ -308,7 +192,8 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
 <script>
     $("select[name=athlete]").select2();
 </script>
-<script src="assets/js/main.js?ver=13"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/main_dh.js"></script>
 </body>
 
 </html>

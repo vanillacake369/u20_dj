@@ -152,7 +152,6 @@ function field1Format(obj) {
     rankcal();
   }
 }
-
 //등수 자동 배정 내림차순
 function rankcal() {
   let re = document.querySelectorAll("#result"); //결과 요소 가져옴
@@ -234,6 +233,44 @@ function selectAll(selectAll) {
     checkbox.checked = selectAll.checked;
   });
 }
+
+// 참가자 관리 경기 목록
+const popupItem = document.querySelectorAll(".popup_BTN");
+const item_popup = document.querySelectorAll(".item_popup");
+
+for (let i = 0; i < popupItem.length; i++) {
+  popupItem[i].addEventListener("click", () => {
+    closeAllPopups();
+    togglePopup(i);
+  });
+}
+
+document.addEventListener("click", (event) => {
+  const isPopupItem = Array.from(popupItem).some((item) =>
+    item.contains(event.target)
+  );
+  const isPopupContent = Array.from(item_popup).some((item) =>
+    item.contains(event.target)
+  );
+  if (!isPopupItem && !isPopupContent) {
+    closeAllPopups();
+  }
+});
+
+function togglePopup(index) {
+  if (item_popup[index].style.display === "none") {
+    item_popup[index].style.display = "block";
+  } else {
+    item_popup[index].style.display = "none";
+  }
+}
+
+function closeAllPopups() {
+  for (let i = 0; i < item_popup.length; i++) {
+    item_popup[i].style.display = "none";
+  }
+}
+
 // 선수 접근 가능 구역
 function venue(VenueAll) {
   const venues = document.getElementsByName("venue_code");

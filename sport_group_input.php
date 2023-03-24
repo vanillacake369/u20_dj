@@ -39,7 +39,7 @@
         <p class="UserProfile_tit tit_left_blue">
             새로운 조 편성 하기
         </p>
-        <form action="./action/sport/schedule_insert.php" method="post">
+        <form action="./sport_group_select_athletes.php" method="post">
           <div class="UserProfile_modify UserProfile_input">
             <div>
               <ul class="UserDesc">

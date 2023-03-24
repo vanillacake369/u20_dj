@@ -1517,12 +1517,12 @@ input::-webkit-inner-spin-button {
 }
 
 /* 조 수정하기 */
-.grouping_body > tr > td > input[name="name"] {
+.grouping_body > tr > td > input[name="name[]"] {
   width: 100%;
   border: 1px solid var(--colorBorder);
 }
 
-.grouping_body > tr > td > input[name="name"]:focus {
+.grouping_body > tr > td > input[name="name[]"]:focus {
   background-color: var(--colorPink2);
   outline: 0;
 }

@@ -67,9 +67,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
         }
     );
     // n명에 대해
-    $first_index_each_group_athletes_data_i = array_key_first($each_group_athletes_data[$i]);
-    $last_index_each_group_athletes_data_i = array_key_last($each_group_athletes_data[$i]);
-    for ($j = $first_index_each_group_athletes_data_i; $j <= $last_index_each_group_athletes_data_i; $j++) {
+    for ($j = 0; $j < count($each_group_athletes_data[$i]); $j++) {
         // 선수이름 => 선수이름(국가)(소속)
         $each_group_athletes_data[$i][$j]['athlete_name'] = $each_group_athletes_data[$i][$j]['athlete_name']
             . '(' . $each_group_athletes_data[$i][$j]['athlete_country'] . ')'
@@ -138,20 +136,20 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
                             $first_index_each_group_athletes_data_i = array_key_first($each_group_athletes_data[$i]);
                             $last_index_each_group_athletes_data_i = array_key_last($each_group_athletes_data[$i]);
                             for ($j = $first_index_each_group_athletes_data_i; $j <= $last_index_each_group_athletes_data_i; $j++) {
-                                console_log($each_group_athletes_data[$i][$j]);
                             ?>
                                 <tbody class="grouping_body">
                                     <tr>
                                         <td>
                                             <!-- 조 :: record_group -->
-                                            <input type="hidden" name="group[]" id="group[]" value=" <?php echo $i ?>">
+                                            <input type="hidden" name="group[]" id="group[]" value="<?php echo $i ?>">
+                                            <input type="hidden" name="order[]" id="order[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>">
                                             <!-- 순서 :: record_order -->
                                             <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]" disabled>
                                         </td>
                                         <td>
                                             <!-- 선수 id :: record_athlete_id-->
                                             <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
-                                            <input type="text" name="name" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
+                                            <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
                                         </td>
                                     </tr>
                                 </tbody>

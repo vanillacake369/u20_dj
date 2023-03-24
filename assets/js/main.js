@@ -436,6 +436,7 @@ for (let i = 0; i < filed_item.length; i++) {
   }
 }
 
+// 조 편성 수정 > 클릭클릭으로 선수 SWAP 기능
 if (
   document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
 ) {

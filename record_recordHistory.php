@@ -286,7 +286,7 @@ $total_count = mysqli_num_rows($count);
                     </form>
                 </div>
                 <table class="box_table">
-                    <colgroup>
+                    <!-- <colgroup>
                         <col width="10%">
                         <col width="20%">
                         <col width="10%">
@@ -296,7 +296,7 @@ $total_count = mysqli_num_rows($count);
                         <col width="5%">
                         <col width="10%">
                         <col width="10%">
-                    </colgroup>
+                    </colgroup> -->
                     <thead class="table_head entry_table">
                         <tr>
                             <th><a href="<?= Get_Sort_Link("athletics", $pageValue, $link, $orderValue) ?>">기록구분</th>
@@ -308,6 +308,13 @@ $total_count = mysqli_num_rows($count);
                             <th><a href="<?= Get_Sort_Link("record", $pageValue, $link, $orderValue) ?>">기록</th>
                             <th><a href="<?= Get_Sort_Link("datetime", $pageValue, $link, $orderValue) ?>">기록일자</th>
                             <th><a href="<?= Get_Sort_Link("country_code", $pageValue, $link, $orderValue) ?>">국가</th>
+                            <?php
+                            if (authCheck($db, "authRecordsUpdate")) {  ?>
+                            <th colspan="2" scope="col">수정</th>
+                            <?php }
+                            if (authCheck($db, "authRecordsDelete")) {  ?>
+                            <th colspan="2" scope="col">삭제</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
@@ -337,6 +344,16 @@ $total_count = mysqli_num_rows($count);
                             echo "<td>" . htmlspecialchars($row["worldrecord_record"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["worldrecord_datetime"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["worldrecord_country_code"]) . "</td>";
+                            echo "<td colspan='2' scope='col'>";
+                            if (authCheck($db, "authRecordsUpdate")) {
+                                echo '<button type=\'button\' onclick="createPopupWin(\'\',\'창 이름\',900,900)" class=\'BTN_Blue defaultBtn\'>수정</button>';
+                            }
+                            echo "</td>";
+                            echo "<td colspan='2' scope='col'>";
+                            if (authCheck($db, "authRecordsDelete")) {
+                                echo "<button type='button' class='BTN_Red defaultBtn'>삭제</button>";
+                            }
+                            echo "</td>";
                             echo "</tr>";
                         }
                         ?>

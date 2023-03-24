@@ -25,7 +25,7 @@ $res1 = $db->query("SELECT * FROM list_schedule
     $row1 = mysqli_fetch_array($res1);
     if($name==='decathlon' || $name ==='heptathlon'){
         $check_round='y';
-        $totalrow='record_sports="'.$row1['schedule_sports'].'" and record_gender="$gender" and record_round="final"';
+        $totalrow='record_sports="'.$row1['schedule_sports'].'" and record_gender="'.$gender.'" and record_round="final"';
         $trialcnt=4;
     }else{
         $check_round='n';
@@ -49,6 +49,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
   $highrecord = 0;
   $medal = 0;
   $highwin = 0;
+  $hightri=1;
   for ($j = 0; $j < $trialcnt; $j++) {
     $plus = '';
     $new = 'n';
@@ -128,7 +129,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
         $highrecord = 'X';
       }
       $savequery = "UPDATE list_record SET record_" . $result_type1 . "_result='$result[$i]',record_judge='$judge[0]',record_new='$new',record_medal=" . $medal . ",record_status='" . $result_type2 . "'" . $plus . ",record_memo='" . $memo[$i] . "'
-                    WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_" . $result_type1 . "_record='$highrecord'";
+                    WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_" . $result_type1 . "_record='$highrecord' and record_trial ='$hightri'";
     } else {
       $k = $j + 1;
       $ruf = ($fieldrecord[$j][$i] ?? 0);
@@ -148,9 +149,10 @@ for ($i = 0; $i < count($athlete_name); $i++) {
         $highrecord = $ruf;
         $hightrial = $k;
         $highwin = $win;
+        $hightri = $j+1;
       }
     }
-    echo $savequery.'<br>';
+    // echo $savequery.'<br>';
     mysqli_query($db, $savequery);
   }
 }
@@ -164,10 +166,10 @@ if ($row1['record_state'] != 'y') {
 } else {
   logInsert($db, $_SESSION['Id'], '기록 수정', $name . "-" . $row1['record_gender'] . "-" . $round . "-" . $row1['record_group']);
 }
-// echo "<script>
-//         opener.parent.location.reload();
-//         window.close(); 
-//         </script>";
-// echo "<script>
-//     location.replace('../../record/field_horizontal_result_view.php?id=" . $s_id . "') 
-//     </script>";
+echo "<script>
+        opener.parent.location.reload();
+        window.close(); 
+        </script>";
+echo "<script>
+    location.replace('../../record/field_horizontal_result_view.php?id=" . $s_id . "') 
+    </script>";

@@ -364,31 +364,37 @@
                         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
                         
                     <div class="modify_Btn input_Btn result_Btn" >
-                        <button type="submit" class="BTN_Blue" name="addresult" style="width:100%;">확인</button>
-                    </div>
                     <?php
                         if ($rows["record_state"] != "y") {
                         echo '<div class="signup_submit" style="width:49%; margin-right:1%">
-                              <button type="submit" class="btn_login" name="addtempresult"
+                              <button type="submit" class="BTN_Red full_width" name="addtempresult"
                                   formaction="../action/record/field_horizontal_result_insert.php">
                                   <span>임시저장</span>
                               </button>
                           </div>';
                           echo '<div class="signup_submit" style="width:49%;">
-                            <button type="submit" class="btn_login" name="addresult"
+                            <button type="submit" class="BTN_Blue full_width" name="addresult"
                                 formaction="../action/record/field_horizontal_result_insert.php">
                                 <span>확인</span>
                             </button>
                         </div>';
-                    }else{
-                      echo '<div class="signup_submit" style="width:100%;">
-                            <button type="submit" class="btn_login" name="addresult"
-                                formaction="../action/record/field_horizontal_result_insert.php">
-                                <span>확인</span>
-                            </button>
-                        </div>';
+                    }else {
+                        if (authCheck($db, "authSchedulesUpdate")) {  ?>
+                            <div class="signup_submit" style="width:100%;">
+                                <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/field_horizontal_result_insert.php">
+                                    <span>확인</span>
+                                </button>
+                            </div>
+                        <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                            <div class="signup_submit" style="width:100%;">
+                                <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/field_horizontal_result_insert.php">
+                                    <span>확인</span>
+                                </button>
+                            </div>
+                    <?php }
                     }
                     ?>
+                    </div>
                 </form>
             </div>
         </div>

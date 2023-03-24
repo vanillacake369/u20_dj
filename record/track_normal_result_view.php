@@ -311,7 +311,39 @@ function openTextFile() {
                     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text" value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
                         
                     <div class="modify_Btn input_Btn result_Btn">
-                        <button type="submit" class="BTN_Blue" name="addresult">확인</button>
+                    <?php
+                    if ($rows["schedule_status"] != "y") {
+                      echo '<div class="signup_submit" style="width:49%;>
+                                    <button type="submit" class="BTN_Red full_width" name="addtempresult"
+                                        formaction="../action/record/track_normal_result_insert.php">
+                                        <span>임시저장</span>
+                                    </button>
+                                </div>';
+                      echo '<div class="signup_submit" style="width:49%;">
+                                  <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                      formaction="../action/record/track_normal_result_insert.php">
+                                      <span>확인</span>
+                                  </button>
+                              </div>';
+                          }else{
+                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
+                              <div class="modify_Btn input_Btn result_Btn">
+                                <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                    formaction="../action/record/track_normal_result_insert.php">
+                                    <span>확인</span>
+                                </button>
+                            </div>
+                          <?php }
+                          elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                              <div class="modify_Btn input_Btn result_Btn">
+                              <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                  formaction="../action/record/track_normal_result_insert.php">
+                                  <span>확인</span>
+                              </button>
+                          </div>
+                          <?php } 
+                      }
+                    ?>
                     </div>
                 </form>
             </div>

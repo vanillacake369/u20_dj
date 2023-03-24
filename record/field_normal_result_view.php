@@ -143,6 +143,11 @@ $judgerow = mysqli_fetch_array($judgeresult);
                                     } else {
                                         echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
                                     }
+                                    if ($_POST['check'] ?? null === '3') {
+                                        echo '<input type="hidden" name="count" value= "5">';
+                                    } else {
+                                        echo '<input type="hidden" name="count" value= "3">';
+                                    }
                                     if ($rows['record_state'] != 'y') {
                                         echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
                                     }
@@ -328,56 +333,39 @@ $judgerow = mysqli_fetch_array($judgeresult);
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
                     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
                         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-                    <div class="modify_Btn input_Btn result_Btn">
-                        <?php
-                            if ($rows["record_state"] != "y") {
-                                if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
-                                } else {
-                                    echo '<button type="submit" class="BTN_Red" formaction="/action/record/three_try_after_reverse.php"><span>순서 재정렬</span></button>';
-                                }
-                            }
-                            if ($_POST['check'] ?? null === '3') {
-                                echo '<input type="hidden" name="count" value= "5">';
-                            } else {
-                                echo '<input type="hidden" name="count" value= "3">';
-                            }
-                         ?>
-                        <button type="submit" class="BTN_Blue" name="addresult">확인</button>
-                    </div>
-                        
+
                     <div class="modify_Btn input_Btn result_Btn" >
-                        <button type="submit" class="BTN_Blue" name="addresult" style="width:100%;">확인</button>
-                    </div>
                     <?php
-                    if ($rows["record_state"] != "y") {
-                        echo '<div class="signup_submit" style="width:49%; margin-right:1%">
-                        <button type="submit" class="btn_login" name="addtempresult"
-                            formaction="../action/record/field_normal_result_insert.php">
-                            <span>임시저장</span>
-                        </button>
-                    </div>';
-                        echo '<div class="signup_submit" style="width:49%;">
-                        <button type="submit" class="btn_login" name="addresult"
-                            formaction="../action/record/field_normal_result_insert.php">
-                            <span>확인</span>
-                        </button>
-                    </div>';
-                    }else {
-                        if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                            <div class="signup_submit" style="width:100%;">
-                                <button type="submit" class="btn_login" name="addresult" formaction="../action/record/field_normal_result_insert.php">
-                                    <span>확인</span>
-                                </button>
-                            </div>
-                        <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                            <div class="signup_submit" style="width:100%;">
-                                <button type="submit" class="btn_login" name="addresult" formaction="../action/record/field_normal_result_insert.php">
-                                    <span>확인</span>
-                                </button>
-                            </div>
-                    <?php }
-                    }
+                        if ($rows["record_state"] != "y") {
+                            echo '<div class="signup_submit" style="width:49%;">
+                            <button type="submit" class="BTN_Red full_width" name="addtempresult"
+                                formaction="../action/record/field_normal_result_insert.php">
+                                <span>임시저장</span>
+                            </button>
+                        </div>';
+                            echo '<div class="signup_submit" style="width:49%;">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                formaction="../action/record/field_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>';
+                        }else {
+                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
+                                <div class="signup_submit" style="width:100%;">
+                                    <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/field_normal_result_insert.php">
+                                        <span>확인</span>
+                                    </button>
+                                </div>
+                            <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                                <div class="signup_submit" style="width:100%;">
+                                    <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/field_normal_result_insert.php">
+                                        <span>확인</span>
+                                    </button>
+                                </div>
+                        <?php }
+                        }
                     ?>
+                    </div>
                 </form>
             </div>
         </div>

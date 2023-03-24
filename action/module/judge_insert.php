@@ -69,6 +69,7 @@ $judge_profile = trim($profile);
 $userid = trim($_POST["userid"]);
 $judge_password = trim($_POST["judge_password"]);
 $judge_password_hash = hash("sha256", $judge_password);
+
 $judge_image = "";
 
 if ($_FILES['main_photo']['name']) {
@@ -123,7 +124,7 @@ $stmt->bind_param(
     $judge_age,
     $judge_sector,
     $judge_schedule,
-    $judge_profile,
+    $judge_image,
     $judge_attendance,
     $userid,
     $judge_password_hash

@@ -162,12 +162,16 @@
                     </div>
                     <div class="Thorw_result">
                         <div class="relay_result">
-                            <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
-                            <?php
-                                if ($rows['record_state'] != 'y') {
-                                    echo '<input type="button" onclick="openTextFile()" class="defaultBtn BTN_green BIG_btn" value="자동 입력">';
-                                }
-                            ?>
+                            <div class="result_BTN">
+                                <h1 class="tit_padding tit_left_green">결과</h1>
+                                <div>
+                                    <?php
+                                    if ($rows['record_state'] != 'y') {
+                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
+                                    }
+                                ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <table class="box_table">
@@ -215,7 +219,7 @@
                             <tr class="filed2_bottom">
                             </tr>
                         </thead>
-                        <tbody class="table_tbody entry_table">
+                        <tbody class="table_tbody De_tbody entry_table">
                             <?php
                             $num = 0;
                              $relm = 'record_' . $result_type . '_result,record_' . $result_type . '_record,record_pass,record_memo,record_new,record_reaction_time,athlete_name,athlete_bib, record_order,athlete_country';
@@ -296,16 +300,78 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
+                    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
+                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text" value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
+                        
+                    <div class="modify_Btn input_Btn result_Btn">
+                    <?php
+                    if ($rows["record_state"] != "y") {
+                      echo '<div class="signup_submit" style="width:49%;">
+                                  <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                      formaction="../action/record/track_normal_result_insert.php">
+                                      <span>확인</span>
+                                  </button>
+                              </div>';
+                          }else{
+                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
+                              <div class="modify_Btn input_Btn result_Btn">
+                                <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                    formaction="../action/record/track_normal_result_insert.php">
+                                    <span>확인</span>
+                                </button>
+                            </div>
+                          <?php }
+                          elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                              <div class="modify_Btn input_Btn result_Btn">
+                              <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                  formaction="../action/record/track_normal_result_insert.php">
+                                  <span>확인</span>
+                              </button>
+                          </div>
+                          <?php } 
+                      }
+                    ?>
+                    </div>
+                </form>
             </div>
-            <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-            <input placeholder="비고를 입력해주세요." type="text" name="bibigo" value="<?=($rows['schedule_memo']??null)?>"
-                maxlength=" 100" />
-
-            <div class="modify_Btn input_Btn result_Btn">
-                <button type="submit" class="BTN_Blue" name="addresult">확인</button>
-            </div>
-            </form>
         </div>
+    </div>
+    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
+    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
+        value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
+
+    <div class="modify_Btn input_Btn result_Btn">
+        <?php
+                    if ($rows["record_state"] != "y") {
+                      echo '<div class="signup_submit" style="width:49%;">
+                                  <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                      formaction="../action/record/track_normal_result_insert.php">
+                                      <span>확인</span>
+                                  </button>
+                              </div>';
+                          }else{
+                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
+        <div class="modify_Btn input_Btn result_Btn">
+            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                formaction="../action/record/track_normal_result_insert.php">
+                <span>확인</span>
+            </button>
+        </div>
+        <?php }
+                          elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+        <div class="modify_Btn input_Btn result_Btn">
+            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                formaction="../action/record/track_normal_result_insert.php">
+                <span>확인</span>
+            </button>
+        </div>
+        <?php } 
+                      }
+                    ?>
+    </div>
+    </form>
+    </div>
     </div>
     </div>
     <script src="assets/js/main.js?ver=7"></script>

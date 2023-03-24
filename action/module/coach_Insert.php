@@ -112,7 +112,7 @@ $stmt->bind_param(
 	$coach_birth,
 	$coach_age,
 	$coach_sector,
-	$coach_profile
+	$coach_image
 );
 
 $stmt->execute();

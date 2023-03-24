@@ -114,8 +114,8 @@ function input_time() {
                             <li class="row input_row throw_row">
                                 <span>경기 시작 시간</span>
                                 <?php
-                                echo '<input placeholder="시작 시간" type="text" name="starttime" value="'. ($rows['record_start']) .'"
-                                maxlength="30" required="" />';
+                                  echo '<input placeholder="시작 시간" type="text" name="starttime" value="'. ($rows['record_start']) .'"
+                                  maxlength="30" required="" />';
                                 if ($schedule_result != 'y') {
                                     echo '<input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />';
                                 }
@@ -135,7 +135,25 @@ function input_time() {
         </div>
         <div class="Thorw_result">
             <div class="relay_result">
-                <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
+                <div class="result_BTN">
+                    <h1 class="tit_padding tit_left_green">결과</h1>
+                    <div>
+                        <?php
+                                    if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
+                                    } else {
+                                        echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
+                                    }
+                                    if ($_POST['check'] ?? null === '3') {
+                                        echo '<input type="hidden" name="count" value= "5">';
+                                    } else {
+                                        echo '<input type="hidden" name="count" value= "3">';
+                                    }
+                                    if ($rows['record_state'] != 'y') {
+                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
+                                    }
+                                ?>
+                    </div>
+                </div>
             </div>
         </div>
         <table class="box_table">
@@ -240,7 +258,7 @@ function input_time() {
                                 value="' . $id['athlete_bib'] . '" maxlength="30" required="" readonly /></td>';
                                 echo '<td><input placeholder="선수 이름" type="text" id="name" name="playername[]" class="input_text"
                                 value="' . $id['athlete_name'] . '" maxlength="30" required="" readonly /></td>';
-                                $answer = $db->query("SELECT record_" . $result_type . "_record FROM list_record join list_athlete ON athlete_id = record_athlete_id where record_athlete_id = '" . $id['a_id'] . "' AND record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' ORDER BY record_trial ASC");
+                                $answer = $db->query("SELECT record_" . $result_type . "_record FROM list_record join list_athlete ON athlete_id = record_athlete_id where record_athlete_id = '" . $id['a_id'] . "' AND record_schedule_id = '$s_id' ORDER BY record_trial ASC");
                                 while ($row = mysqli_fetch_array($answer)) {
                                     echo '<td>';
                                     echo '<input placeholder="경기 결과" type="text" name="gameresult' . ($i) . '[]" class="input_text" value="' . ($row['record_' . $result_type . '_record'] ?? null) . '"
@@ -284,26 +302,26 @@ function input_time() {
                                         $time = $rows['record_end'];
                                     }
                                     $athletics = check_my_record($id['athlete_name'], $sport_code, $time);
-                                    if((key($athletics)??null)==='w'){
-                                            echo '<td><input placeholder=""  type="text" name="newrecord[]" class="input_text" value="세계신기록';
-                                            echo '" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'.$row['record_'.$result_type.'_record'].'" readonly/></td>';
-                                        }else if((key($athletics)??null)==='u'){
-                                            echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="세계U20신기록';
-                                            echo '" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'.$row['record_'.$result_type.'_record'].'" readonly/></td>';   
-                                        }else if((key($athletics)??null)==='a'){
-                                            echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="아시아신기록';
-                                            echo '" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'.$row['record_'.$result_type.'_record'].'" readonly/></td>';                       
-                                        }else if((key($athletics)??null)==='s'){
-                                            echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="아시아U20신기록';
-                                            echo '" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'.$row['record_'.$result_type.'_record'].'" readonly/></td>';                        
-                                        }else if((key($athletics)??null)==='c'){
-                                            echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="대회신기록';
-                                            echo '" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'.$row['record_'.$result_type.'_record'].'" readonly/></td>';
-                                        }else{
-                                            echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'. ($row['record_'.$result_type.'_record'] ?? null).'" readonly/></td>';
-                                        }
+                                    if ((key($athletics) ?? null) === 'w') {
+                                        echo '<td><input placeholder=""  type="text" name="newrecord[]" class="input_text" value="세계신기록';
+                                        echo '" maxlength="100" ath="' . $id['athlete_name'] . '" sports=' . $sport_code . ' schedule_id="' . $s_id . '" record="' . $id["record_" . $result_type . "_record"] . '" readonly/></td>';
+                                    } else if ((key($athletics) ?? null) === 'u') {
+                                        echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="세계U20신기록';
+                                        echo '" maxlength="100" ath="' . $id['athlete_name'] . '" sports=' . $sport_code . ' schedule_id="' . $s_id . '"  record="' . $id["record_" . $result_type . "_record"] . '"readonly/></td>';
+                                    } else if ((key($athletics) ?? null) === 'a') {
+                                        echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="아시아신기록';
+                                        echo '" maxlength="100" ath="' . $id['athlete_name'] . '" sports=' . $sport_code . ' schedule_id="' . $s_id . '" record="' . $id["record_" . $result_type . "_record"] . '" readonly/></td>';
+                                    } else if ((key($athletics) ?? null) === 's') {
+                                        echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="아시아U20신기록';
+                                        echo '" maxlength="100" ath="' . $id['athlete_name'] . '" sports=' . $sport_code . ' schedule_id="' . $s_id . '" record="' . $id["record_" . $result_type . "_record"] . '" readonly/></td>';
+                                    } else if ((key($athletics) ?? null) === 'c') {
+                                        echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="대회신기록';
+                                        echo '" maxlength="100" ath="' . $id['athlete_name'] . '" sports=' . $sport_code . ' schedule_id="' . $s_id . '" record="' . $id["record_" . $result_type . "_record"] . '" readonly/></td>';
+                                    } else {
+                                        echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'. ($row['record_'.$result_type.'_record'] ?? null).'" readonly/></td>';
+                                    }
                                 } else {
-                                    echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="" maxlength="100" ath="'.$id['athlete_name'].'" sports='.$sport_code.' record_round="'.$schedule_round.'" and record_gender ="'.$gender.'" and record_group="'.$group.'" record="'.($row['record_'.$result_type.'_record']??null).'" readonly/></td>';
+                                    echo '<td><input placeholder="" type="text" name="newrecord[]" class="input_text" value="" maxlength="100" ath="' . $id['athlete_name'] . '" sports=' . $sport_code . ' schedule_id="' . $s_id . '" record="' . $id["record_" . $result_type . "_record"] . '" readonly/></td>';
                                 }
                                 $i = 1;
                                 $count++;
@@ -315,53 +333,41 @@ function input_time() {
     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
+
     <div class="modify_Btn input_Btn result_Btn">
         <?php
-                            if ($rows["record_state"] != "y") {
-                                if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
-                                } else {
-                                    echo '<button type="submit" class="BTN_Red" formaction="/action/record/three_try_after_reverse.php"><span>순서 재정렬</span></button>';
-                                }
-                            }
-                            if ($_POST['check'] ?? null === '3') {
-                                echo '<input type="hidden" name="count" value= "5">';
-                            } else {
-                                echo '<input type="hidden" name="count" value= "3">';
-                            }
-                        ?>
-    </div>
-    <?php
-                    if ($rows["record_state"] != "y") {
-                        echo '<div class="signup_submit" style="width:49%; margin-right:1%">
-                        <button type="submit" class="btn_login" name="addtempresult"
-                            formaction="../action/record/field_normal_result_insert.php">
-                            <span>임시저장</span>
-                        </button>
-                    </div>';
-                        echo '<div class="signup_submit" style="width:49%;">
-                        <button type="submit" class="btn_login" name="addresult"
-                            formaction="../action/record/field_normal_result_insert.php">
-                            <span>확인</span>
-                        </button>
-                    </div>';
-                    }else {
-                        if (authCheck($db, "authSchedulesUpdate")) {  ?>
-    <div class="signup_submit" style="width:100%;">
-        <button type="submit" class="btn_login" name="addresult"
-            formaction="../action/record/field_normal_result_insert.php">
-            <span>확인</span>
-        </button>
-    </div>
-    <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-    <div class="signup_submit" style="width:100%;">
-        <button type="submit" class="btn_login" name="addresult"
-            formaction="../action/record/field_normal_result_insert.php">
-            <span>확인</span>
-        </button>
-    </div>
-    <?php }
-                    }
+                        if ($rows["record_state"] != "y") {
+                            echo '<div class="signup_submit" style="width:49%;">
+                            <button type="submit" class="BTN_Red full_width" name="addtempresult"
+                                formaction="../action/record/field_normal_result_insert.php">
+                                <span>임시저장</span>
+                            </button>
+                        </div>';
+                            echo '<div class="signup_submit" style="width:49%;">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                formaction="../action/record/field_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>';
+                        }else {
+                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
+        <div class="signup_submit" style="width:100%;">
+            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                formaction="../action/record/field_normal_result_insert.php">
+                <span>확인</span>
+            </button>
+        </div>
+        <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+        <div class="signup_submit" style="width:100%;">
+            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                formaction="../action/record/field_normal_result_insert.php">
+                <span>확인</span>
+            </button>
+        </div>
+        <?php }
+                        }
                     ?>
+    </div>
     </form>
 </div>
 </div>

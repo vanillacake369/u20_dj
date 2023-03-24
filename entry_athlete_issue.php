@@ -8,31 +8,6 @@ if (!$_POST['athlete_id']) {
     require_once "includes/auth/config.php";
     // 국가,종목,지역,직무에 대한 매핑구조
     require_once "action/module/dictionary.php";
-    $update_issue_sql =
-    "UPDATE list_athlete SET athlete_isIssued = 'Y' WHERE athlete_id=" . $_POST['athlete_id'];
-    $db->query($update_issue_sql);
-    // 참가자 정보 가져오기
-    $sql =
-        "SELECT 
-                athlete_id,
-                athlete_name,
-                country_name,
-                country_name_kr,
-                country_code,
-                athlete_region,
-                athlete_division,
-                athlete_gender,
-                athlete_birth,
-                athlete_age, 
-                athlete_schedule,
-                athlete_profile,
-                athlete_attendance
-                FROM list_athlete
-                INNER JOIN list_country  
-                ON athlete_country=country_code
-            where athlete_id=" . $_POST['athlete_id'];
-$result = $db->query($sql);
-$row = mysqli_fetch_array($result);
 }
 ?>
 <script>
@@ -40,6 +15,39 @@ $row = mysqli_fetch_array($result);
 </script>
 </head>
 <body>
+    <?php
+         $athlete_id = explode(",", $_POST['athlete_id']);
+         foreach ($athlete_id as $id)
+         {
+             $update_issue_sql =
+             "UPDATE list_athlete SET athlete_isIssued = 'Y' WHERE athlete_id=" . $id;
+             $db->query($update_issue_sql);
+            
+             $sql =
+             "SELECT 
+                     athlete_id,
+                     athlete_name,
+                     country_name,
+                     country_name_kr,
+                     country_code,
+                     athlete_region,
+                     athlete_division,
+                     athlete_gender,
+                     athlete_birth,
+                     athlete_age, 
+                     athlete_schedule,
+                     athlete_profile,
+                     athlete_attendance
+                     FROM list_athlete
+                     INNER JOIN list_country  
+                     ON athlete_country=country_code
+                     where athlete_id=" . $id;
+
+            $result = $db->query($sql);
+            while($row=mysqli_fetch_array($result)){
+         
+         // 참가자 정보 가져오기
+    ?>
     <div class="AD_box a4">
         <div class="AD_front">
             <div class="AD_container">
@@ -116,6 +124,10 @@ $row = mysqli_fetch_array($result);
             </div>
         </div>
     </div>
+    <?php
+        }
+        }
+    ?>
     <script src="assets/js/main.js?ver=9"></script>
 </body>
 

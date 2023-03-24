@@ -210,7 +210,7 @@ zend_version()
                                 "<td><span class='AD_on'>" . htmlspecialchars($row["judge_isIssued"]) . "</span></td>" :
                                 "<td><span class='AD_off'>" . htmlspecialchars($row["judge_isIssued"]) . "</span></td>";
                             // 행 번호
-                            echo "<td>" . $num . "</td>";
+                            echo "<td>" . htmlspecialchars($row["judge_id"]) . "</td>";
                             // 참가자 이름
                             echo "<td>" . htmlspecialchars($row["judge_name"]) . "</td>";
                             // 참가자 국가코드
@@ -241,7 +241,7 @@ zend_version()
                                 if ($id == end($sports)) {
                                     echo htmlspecialchars($judge_sport_dic[trim($id)]);
                                 } else {
-                                    echo htmlspecialchars($judge_sport_dic[trim($id)]) . ',';
+                                    echo htmlspecialchars($judge_sport_dic[trim($id)]) . '<br>';
                                 }
                             }
                             echo '</div>';
@@ -265,7 +265,7 @@ zend_version()
                                     if ($attend == end($attendingSports)) {
                                         echo htmlspecialchars($judge_sport_dic[trim($attend)]);
                                     } else {
-                                        echo htmlspecialchars($judge_sport_dic[trim($attend)]) . ',';
+                                        echo htmlspecialchars($judge_sport_dic[trim($attend)]) . '<br>';
                                     }
                                 }
                             } else {

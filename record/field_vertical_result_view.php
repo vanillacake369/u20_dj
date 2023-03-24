@@ -141,7 +141,20 @@
                     </div>
                     <div class="Thorw_result">
                         <div class="relay_result">
-                            <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
+                            <div class="result_BTN">
+                                <h1 class="tit_padding tit_left_green">결과</h1>
+                                <div>
+                                <?php
+                                    if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
+                                    } else {
+                                        echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
+                                    }
+                                    if ($rows['record_state'] != 'y') {
+                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
+                                    }
+                                ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <table class="box_table">
@@ -378,51 +391,41 @@
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
                     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
                         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-                        
                       <div class="modify_Btn input_Btn result_Btn">
-                        <?php 
-                        if ($rows["record_state"] != "y") {
-                            if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
-                            } else {
-                                echo '<button class="BTN_Red" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
-                            }
-                        }
-                        ?>
-                        <button type="submit" class="BTN_Blue" name="addresult">확인</button>
-                    </div>
                     <?php
-              if ($rows["schedule_status"] != "y") {
-                echo '<div class="signup_submit" style="width:49%; margin-right:1%">
-                              <button type="submit" class="btn_login" name="addtempresult"
+                    if ($rows["schedule_status"] != "y") {
+                      echo '<div class="signup_submit" style="width:49%;>
+                                    <button type="submit" class="BTN_Red full_width" name="addtempresult"
+                                        formaction="../action/record/field_vertical_result_insert.php">
+                                        <span>임시저장</span>
+                                    </button>
+                                </div>';
+                      echo '<div class="signup_submit" style="width:49%;">
+                                  <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                      formaction="../action/record/field_vertical_result_insert.php">
+                                      <span>확인</span>
+                                  </button>
+                              </div>';
+                          }else{
+                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
+                              <div class="modify_Btn input_Btn result_Btn">
+                                <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                    formaction="../action/record/field_vertical_result_insert.php">
+                                    <span>확인</span>
+                                </button>
+                            </div>
+                          <?php }
+                          elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                              <div class="modify_Btn input_Btn result_Btn">
+                              <button type="submit" class="BTN_Blue full_width" name="addresult"
                                   formaction="../action/record/field_vertical_result_insert.php">
-                                  <span>임시저장</span>
+                                  <span>확인</span>
                               </button>
-                          </div>';
-                echo '<div class="signup_submit" style="width:49%;">
-                            <button type="submit" class="BTN_Blue" name="addresult"
-                                formaction="../action/record/field_vertical_result_insert.php">
-                                <span>확인</span>
-                            </button>
-                        </div>';
-                    }else{
-                      if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                        <div class="modify_Btn input_Btn result_Btn">
-                        <button type="submit" class="BTN_Blue" name="addresult"
-                            formaction="../action/record/field_vertical_result_insert.php">
-                            <span>확인</span>
-                        </button>
-                    </div>
-                    <?php }
-                    elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                        <div class="modify_Btn input_Btn result_Btn">
-                        <button type="submit" class="btn_login" name="addresult"
-                            formaction="../action/record/field_vertical_result_insert.php">
-                            <span>확인</span>
-                        </button>
-                    </div>
-                    <?php } 
-                }
+                          </div>
+                          <?php } 
+                      }
                     ?>
+                    </div>
                 </form>
             </div>
         </div>

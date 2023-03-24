@@ -241,7 +241,7 @@ zend_version()
                                 if ($id == end($sports)) {
                                     echo htmlspecialchars($judge_sport_dic[trim($id)]);
                                 } else {
-                                    echo htmlspecialchars($judge_sport_dic[trim($id)]) . ',';
+                                    echo htmlspecialchars($judge_sport_dic[trim($id)]) . '<br>';
                                 }
                             }
                             echo '</div>';
@@ -265,7 +265,7 @@ zend_version()
                                     if ($attend == end($attendingSports)) {
                                         echo htmlspecialchars($judge_sport_dic[trim($attend)]);
                                     } else {
-                                        echo htmlspecialchars($judge_sport_dic[trim($attend)]) . ',';
+                                        echo htmlspecialchars($judge_sport_dic[trim($attend)]) . '<br>';
                                     }
                                 }
                             } else {

@@ -43,12 +43,12 @@
             <div>
                 <span class="middle_tit">Wind speed/Apparatus</span>
                 <?php
-                $wind = $_GET['wind'] ?? NULL;
-                $weight = $_GET['weight'] ?? NULL;
+                $wind = $_GET['wind'] . "m/s" ?? NULL;
+                $weight = $_GET['weight'] . "Kg" ?? NULL;
                 if ($wind === "")
-                    $wind = 'NONE';
+                    $wind = '-m/s';
                 if ($weight === "")
-                    $weight = 'NONE';
+                    $weight = '-Kg';
                 ?>
                 <p><?php echo $wind ?>/<?php echo $weight ?></p>
                 <!-- 풍속 용기구 -->

@@ -243,7 +243,7 @@ if (isset($categoryValue) && isset($orderValue)) {
                                 if ($id == end($sports)) {
                                     echo htmlspecialchars($sport_dic[trim($id)]);
                                 } else {
-                                    echo htmlspecialchars($sport_dic[trim($id)]) . ',';
+                                    echo htmlspecialchars($sport_dic[trim($id)]) . '<br>';
                                 }
                             }
                             echo '</div>';
@@ -267,7 +267,7 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     if ($attend == end($attendingSports)) {
                                         echo htmlspecialchars($sport_dic[trim($attend)]);
                                     } else {
-                                        echo htmlspecialchars($sport_dic[trim($attend)]) . ',';
+                                        echo htmlspecialchars($sport_dic[trim($attend)]) . '<br>';
                                     }
                                 }
                             } else {

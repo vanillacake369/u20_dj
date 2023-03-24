@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . "/../../backheader.php";
 date_default_timezone_set('Asia/Seoul'); //timezone 설정
-if (!isset($_POST['name']) || $_POST['name'] == "" ||
-    !isset($_POST['sports']) || $_POST['sports'] == "" || 
+if (!isset($_POST['sports']) || $_POST['sports'] == "" || 
     !isset($_POST['round']) || $_POST['round'] == "" || 
     !isset($_POST['gender']) || $_POST['gender'] == "non" ||  
     !isset($_POST['location']) || $_POST['location'] == "" || 
@@ -16,8 +15,12 @@ if (!isset($_POST['name']) || $_POST['name'] == "" ||
     echo '<script>alert("모두 입력하세요.");history.back();</script>';
     exit;
 } else {
+    $sports = trim($_POST['sports']);
 
-    
+    $sql_search = "SELECT sports_name FROM list_sports WHERE sports_code = '$sports'";
+    $result_search = $db->query($sql_search);
+    $row_search = mysqli_fetch_array($result_search);
+
     $sql = "SELECT * FROM list_record";
 
 // -- and sports_code='" . $sports . "'"
@@ -28,8 +31,7 @@ $key = $db->query($sql);
 
 if (mysqli_fetch_array($key)) {
     
-        $sports = trim($_POST['sports']);
-        $name = trim($_POST['name']);
+        $name = trim($row_search['sports_name']);
         $gender = trim($_POST['gender']);
         $round = trim($_POST['round']);
         $location = trim($_POST['location']);
@@ -50,16 +52,17 @@ if (mysqli_fetch_array($key)) {
 
         $start = $date_year . "-" . $date_month . "-" . $date_day . " " . $start_hour . ":" . $start_minute . ":00";
         //$start = DateTime::createFromFormat('Y-m-d H:i:s', $start)->format('Y-m-d h:i:s');
-        $sql = "SELECT schedule_sports from list_schedule where schedule_sports='" . $sports . "'  and schedule_gender='" . $gender . "' and schedule_round='" . $round . "';";
+        $sql = "SELECT COUNT(*) as cnt from list_schedule where schedule_sports='" . $sports . "'  and schedule_gender='" . $gender . "' and schedule_round='" . $round . "';";
         $key = $db->query($sql);
+        $row_key = mysqli_fetch_array($key);
         //echo ($sql);
-        if (!mysqli_fetch_array($key)) {
+        if ($row_key['cnt'] == 0) {
             $sql = " INSERT into list_schedule (schedule_sports, schedule_name, schedule_gender, schedule_round, schedule_location, schedule_start, schedule_date) values (?,?,?,?,?,?,?);";
             $stmt = $db->prepare($sql);
             $stmt->bind_param("sssssss", $sports, $name, $gender, $round, $location, $start, $date);
             $stmt->execute();
             logInsert($db, $_SESSION['Id'], '일정 생성', $sports . "-" . $name . "-" . $round);
-            echo "<script>alert('일정 생성되었습니다.'); location.href='../../sport_schedule_input.php';</script>";
+            echo "<script>alert('일정 생성되었습니다.'); opener.parent.location.reload(); window.close(); </script>";
             exit;
         } else {
             echo "<script>alert('해당 일정은 이미 존재합니다.'); history.back();</script>";

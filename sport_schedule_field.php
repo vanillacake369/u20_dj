@@ -45,52 +45,52 @@ if (empty($total_count)) {
 </head>
 
 <body>
-<div class="schedule_container">
-    <div class="result_tit">
-        <div class="result_list2">
-            <p class="tit_left_blue"><?php echo $schedule_sports?>
-                <?php echo $schedule_round=='final'?'결승전':($schedule_round=='semi-final'?'준결승전':'예선전')?>
-            </p>
-        </div>
-        <div class="result_list">
-            <?php echo '<p class="defaultBtn';
+    <div class="schedule_container">
+        <div class="result_tit">
+            <div class="result_list2">
+                <p class="tit_left_blue"><?php echo $schedule_sports?>
+                    <?php echo $schedule_round=='final'?'결승전':($schedule_round=='semi-final'?'준결승전':'예선전')?>
+                </p>
+            </div>
+            <div class="result_list">
+                <?php echo '<p class="defaultBtn';
             echo $schedule_result=='o'?' BTN_DarkBlue">마감중</p>':($schedule_result=='l'?'
                 BTN_Blue">진행중</p>':' BTN_yellow ">대기중</p>');?>
+            </div>
         </div>
-    </div>
-    <form action="" method="post">
-        <input name="round" value="<?php echo $schedule_round?>" hidden>
-        <input name="sports" value="<?php echo $schedule_sports?>" hidden>
-        <input name="gender" value="<?php echo $gender?>" hidden>
-        <input name="group" value="<?php echo $row["record_group"] ?>" hidden>
-        <input name="name" value="<?php echo $schedule_name?>" hidden>
-        <input name="result" value="<?php echo $schedule_result?>" hidden>
-        <div class="schedule schedule_flex">
-            <div class="schedule_filed filed_list_item">
-                <div class="schedule_filed_tit">
-                    <p class="tit_left_yellow">1조</p>
-                    <?php echo '<span class="defaultBtn';
+        <form action="" method="post">
+            <input name="round" value="<?php echo $schedule_round?>" hidden>
+            <input name="sports" value="<?php echo $schedule_sports?>" hidden>
+            <input name="gender" value="<?php echo $gender?>" hidden>
+            <input name="group" value="<?php echo $row["record_group"] ?>" hidden>
+            <input name="name" value="<?php echo $schedule_name?>" hidden>
+            <input name="result" value="<?php echo $schedule_result?>" hidden>
+            <div class="schedule schedule_flex">
+                <div class="schedule_filed filed_list_item">
+                    <div class="schedule_filed_tit">
+                        <p class="tit_left_yellow">1조</p>
+                        <?php echo '<span class="defaultBtn';
                     echo $schedule_result=='o'?' BTN_green">Official Result</span>':($schedule_result=='l'?' BTN_yellow">Live Result</span>':' BTN_green">Start List</span>');
                     ?>
-                </div>
-                <table class="box_table">
-                    <colgroup>
-                        <col style="width: 4%" />
-                        <col style="width: 4%" />
-                        <col style="width: 4%" />
-                        <col style="width: 15%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 10%" />
-                    </colgroup>
-                    <thead class="result_table De_tbody entry_table">
-                    <tr>
-                        <?php
+                    </div>
+                    <table class="box_table">
+                        <colgroup>
+                            <col style="width: 4%" />
+                            <col style="width: 4%" />
+                            <col style="width: 4%" />
+                            <col style="width: 15%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 10%" />
+                        </colgroup>
+                        <thead class="result_table De_tbody entry_table">
+                            <tr>
+                                <?php
                         echo "<th rowspan='2'>순서</th>";
                         echo "<th rowspan='2'>등수</th>";
                         echo "<th rowspan='2'>BIB</th>";
@@ -127,12 +127,12 @@ if (empty($total_count)) {
                         echo "<th> 신기록</th>";
                         echo "</tr>";
                         ?>
-                    </tr>
-                    <tr class="filed2_bottom">
-                    </tr>
-                    </thead>
-                    <tbody class="table_tbody De_tbody entry_table">
-                    <?php
+                            </tr>
+                            <tr class="filed2_bottom">
+                            </tr>
+                        </thead>
+                        <tbody class="table_tbody De_tbody entry_table">
+                            <?php
 
                     $i = 1;
                     $k = 1;
@@ -141,28 +141,24 @@ if (empty($total_count)) {
                     while ($row = mysqli_fetch_array($result)) {
                     if ($row['record_group'] != $k) {
                     ?>
-                    </tbody>
-                </table>
-                <div class="filed_BTN">
-                    <div>
-                        <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                        </tbody>
+                    </table>
+                    <div class="filed_BTN">
+                        <div>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
                                 formaction="electronic_display<? echo $schedule_result=='o' ? '_official' : '';?>.php">전광판
-                            보기</button>
-                        <? if ($schedule_result=='o'){?>
+                                보기</button>
+                            <? if ($schedule_result=='o'){?>
                             <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                    formaction="award_ceremony.php">시상식 보기</button>
-                        <?}?>
-                        <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
-                                formaction="/record/field_normal_result_pdf.php">PDF 출력</button>
-                        <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
+                                formaction="award_ceremony.php">시상식 보기</button>
+                            <?}?>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_normal_result_eng_pdf.php">PDF(영) 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
                                 formaction="/record/field_normal_result_word.php">워드 출력</button>
-                        <?php /*<form action="./execute_excel.php" method="post" enctype="multipart/form-data">
-                                    <input type="submit" name="query" id="execute_excel" value="<?php echo $excel ?>" hidden />
-                                    <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
-                                    <input type="text" name="role" value="schedule_management" hidden />
-                                    <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
-                                        출력</label>
-                                </form>*/ ?>
+                        </div>
                     </div>
                     <div>
                         <?php
@@ -186,46 +182,45 @@ if (empty($total_count)) {
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-    <?php
+        </form>
+        <?php
     $k++;
     if ($total_count != $j){
     $count=0;
     ?>
-    <form action="" method="post">
-        <input name="round" value="<?php echo $schedule_round?>" hidden>
-        <input name="sports" value="<?php echo $schedule_sports?>" hidden>
-        <input name="gender" value="<?php echo $gender?>" hidden>
-        <input name="group" value="<?php echo $row['record_group']?>" hidden>
-        <input name="name" value="<?php echo $schedule_name?>" hidden>
-        <input name="result" value="<?php echo $schedule_result?>" hidden>
-        <!-- <input name="weight" value="<?php echo $record_weight?>" hidden> -->
-        <div class="schedule_filed filed_list_item">
-            <div class="schedule_filed_tit">
-                <p class="tit_left_yellow"><?php echo $k?>조</p>
-                <?php echo '<span class="defaultBtn';
-                echo $schedule_result=='o'?' BTN_green">Official Result</span>':($schedule_result=='l'?' BTN_yellow">Live Result</span>':' BTN_green">Start List</span>');
-                ?>
-            </div>
-            <table class="box_table">
-                <colgroup>
-                    <col style="width: 4%" />
-                    <col style="width: 4%" />
-                    <col style="width: 4%" />
-                    <col style="width: 15%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 10%" />
-                </colgroup>
-                <thead class="result_table De_tbody entry_table">
-                <tr>
-                    <?php
+        <form action="" method="post">
+            <input name="round" value="<?php echo $schedule_round?>" hidden>
+            <input name="sports" value="<?php echo $schedule_sports?>" hidden>
+            <input name="gender" value="<?php echo $gender?>" hidden>
+            <input name="group" value="<?php echo $row['record_group']?>" hidden>
+            <input name="name" value="<?php echo $schedule_name?>" hidden>
+            <input name="result" value="<?php echo $schedule_result?>" hidden>
+            <!-- <input name="weight" value="<?php echo $record_weight?>" hidden> -->
+            <div class="schedule schedule_flex">
+                <div class="schedule_filed filed_list_item">
+                    <div class="schedule_filed_tit">
+                        <p class="tit_left_yellow"><?php echo $k?>조</p>
+                        <?php echo '<span class="defaultBtn';
+                        echo $schedule_result=='o'?' BTN_green">Official Result</span>':($schedule_result=='l'?' BTN_yellow">Live Result</span>':' BTN_green">Start List</span>'); ?>
+                    </div>
+                    <table class="box_table">
+                        <colgroup>
+                            <col style="width: 4%" />
+                            <col style="width: 4%" />
+                            <col style="width: 4%" />
+                            <col style="width: 15%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 7%" />
+                            <col style="width: 10%" />
+                        </colgroup>
+                        <thead class="result_table De_tbody entry_table">
+                            <tr>
+                                <?php
                     echo "<th rowspan='2'>순서</th>";
                     echo "<th rowspan='2'>등수</th>";
                     echo "<th rowspan='2'>BIB</th>";
@@ -262,12 +257,12 @@ if (empty($total_count)) {
                     echo "<th> 신기록</th>";
                     echo "</tr>";
                     ?>
-                </tr>
-                <tr class="filed2_bottom">
-                </tr>
-                </thead>
-                <tbody class="table_tbody De_tbody entry_table">
-                <?php }
+                            </tr>
+                            <tr class="filed2_bottom">
+                            </tr>
+                        </thead>
+                        <tbody class="table_tbody De_tbody entry_table">
+                            <?php }
                 }
                 if ($row['record_group'] == $k) {
                 $num++;
@@ -318,16 +313,16 @@ if (empty($total_count)) {
                 if ($num%2 == 0) echo ' class="Ranklist_Background">'; else echo ">";
 
                 if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
-                    for ($j = 0; $j <= 6; $j++) {
+                    for ($t = 0; $t <= 6; $t++) {
                         $wind = $db->query("SELECT record_wind FROM list_record
                                     INNER JOIN list_athlete ON record_athlete_id=" .
                             $row["athlete_id"] .
                             " AND athlete_id= record_athlete_id
-                                    INNER JOIN list_schedule ON schedule_id= record_schedule_id
-                                    AND schedule_id = '" . $schedule_id . "'
+                                    and record_sports='$sports' 
+                                        and record_round='$round' and record_gender='$gender' and record_group=".$row['record_group']."
                                     ORDER BY record_live_record ASC limit 6 ");
                         $windrow = mysqli_fetch_array($wind);
-                        if ($j % 7 == 6) {
+                        if ($t % 7 == 6) {
                             echo "<td>";
                             echo '<input placeholder="풍속" type="text" name="lastwind[]" class="input_text" value="' .
                                 ($row["wind"] ?? null) .
@@ -337,7 +332,7 @@ if (empty($total_count)) {
                         } else {
                             echo "<td>";
                             echo '<input placeholder="풍속" type="text" name="wind' .
-                                ($j + 1) .
+                                ($t + 1) .
                                 '[]" value="' .
                                 ($windrow["record_wind"] ?? null) .
                                 '"
@@ -357,33 +352,26 @@ if (empty($total_count)) {
                 $count++;
                 $j++;
                 if ($j == $total_count) { ?>
-                </tbody>
-            </table>
-            <div class="filed_BTN">
-                <div>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                            formaction="electronic_display<? echo $schedule_result=='o' ? '_official' : '';?>.php">전광판
-                        보기</button>
-                    <? if ($schedule_result=='o'){?>
-                        <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                        </tbody>
+                    </table>
+                    <div class="filed_BTN">
+                        <div>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                                formaction="electronic_display<? echo $schedule_result=='o' ? '_official' : '';?>.php">전광판
+                                보기</button>
+                            <? if ($schedule_result=='o'){?>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 formaction="award_ceremony.php">시상식 보기</button>
-                    <?}?>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
-                            formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
-                            formaction="/record/field_normal_result_eng_pdf.php">PDF(영) 출력</button>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
-                            formaction="/record/field_normal_result_word.php">워드 출력</button>
-                    <?php /*<form action="./execute_excel.php" method="post" enctype="multipart/form-data">
-                                    <input type="submit" name="query" id="execute_excel" value="<?php echo $excel ?>" hidden />
-                                    <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
-                                    <input type="text" name="role" value="schedule_management" hidden />
-                                    <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
-                                        출력</label>
-                                </form>*/?>
-                </div>
-                <div>
-                    <?php
+                            <?}?>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_normal_result_eng_pdf.php">PDF(영) 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
+                                formaction="/record/field_normal_result_word.php">워드 출력</button>
+                        </div>
+                        <div>
+                            <?php
                     // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                     if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
                         echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
@@ -402,25 +390,17 @@ if (empty($total_count)) {
                             echo '}" class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                         }
                     }?>
-                    <?php      }
+                            <?php      }
                     }
                     }?>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-</div>
-<!-- <div class="BTNform">
-        <button type="button" class="nextBTN BTN_blue2 defaultBtn"
-            onclick="window.open('/forming_group.html', 'window_name', 'width=800, height=750, location=no, status=no, scrollbars=yes')">다음
-            조 편성</button>
-        <form action="" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="id" value="<?php echo  $ids ?>">
-            <button type="submit" class="resetBTN BTN_Orange2 defaultBtn" name="">모든 조 초기화</button>
         </form>
-    </div> -->
-<button type="button" class="changePwBtn defaultBtn">확인</button>
-</div>
+        <button type="button" class="changePwBtn defaultBtn">확인</button>
 </body>
+
 <script src="assets/js/main.js?ver=10"></script>
 
 </html>

@@ -60,44 +60,45 @@
             let ddd = reader.result.split("\r\n");
             let wind = document.querySelector('[name=\"wind\"]')
             // let check = document.getElementsByTagName('th')[1].textContent;
-            let val = ddd[0].split(" ")[1];
+            let val = ddd[0].split(',')[4];
             wind.value = val;
+            console.log(ddd.length)
             for (i = 1; i < ddd.length; i++) {
-                let k = ddd[i].split(" ")
+                let k = ddd[i].split(",")
                 let on;
-                console.log(k[1])
-                if (!document.querySelector("#id" + k[1]) && !document.querySelector("#" + k[1])) {
+                if (!document.querySelector("#id" + k[1]) && !document.querySelector(
+                        "#rane" + k[2])) {
                     console.log("없는 레인")
                     continue;
                 }
                 if (!document.querySelector("#id" + k[1])) {
                     if (!k[1]) continue;
-                    on = document.querySelector("#" + k[1]).parentElement.children
+                    on = document.querySelector("#rane" + k[2]).children
                 } else {
                     if (!k[1]) continue;
-                    on = document.querySelector("#id" + k[1]).parentElement.children
+                    on = document.querySelector("#id" + k[1]).children
                 }
-                if (k[2]) {
+                if (k[6]) {
                     on['gamepass[]'].value = 'p'
-                    on[6].firstElementChild.value = k[2]
+                    on[5].firstElementChild.value = k[6]
                 } else if (k[0] == 'DNS') {
                     on['gamepass[]'].value = 'n'
-                    on[6].firstElementChild.value = 0
-                    on[8].firstElementChild.value = k[0]
+                    on[5].firstElementChild.value = 0
+                    on[7].firstElementChild.value = k[0]
                 } else if (k[0] == 'DNF') {
                     on['gamepass[]'].value = 'n'
-                    on[6].firstElementChild.value = 0
-                    on[8].firstElementChild.value = k[0]
+                    on[5].firstElementChild.value = 0
+                    on[7].firstElementChild.value = k[0]
                 } else {
                     on['gamepass[]'].value = 'd'
-                    on[6].firstElementChild.value = 0
-                    on[8].firstElementChild.value = 'DQ'
+                    on[5].firstElementChild.value = 0
+                    on[7].firstElementChild.value = 'DQ'
                 }
-                if (k[3]) {
-                    on[7].firstElementChild.value = k[3]
-                } else {
-                    on[7].firstElementChild.value = '';
-                }
+                // if (k[3]) {
+                //     on[7].firstElementChild.value = k[3]
+                // } else {
+                //     on[7].firstElementChild.value = '';
+                // }
             }
             rankcal1()
         };
@@ -238,9 +239,9 @@
                             $result = $db->query($sql);
                             while ($row = mysqli_fetch_array($result)) {
                                 if (in_array($rows['schedule_sports'], $longname)) {
-                                    echo '<tr id="id"' . $row['athlete_bib'] ;
+                                    echo '<tr id="id' . $row['athlete_bib'] .'"';
                                 } else {
-                                    echo '<tr id="rane"' . $row['record_order'];
+                                    echo '<tr id="rane' . $row['record_order'].'"';
                                 }
                                 if ($num % 2 == 1) echo ' class="Ranklist_Background">'; else echo ">";
                                 echo '<td><input type="number" name="rank[]" id="rank" value="' . $row['record_' . $result_type . '_result'] . '" min="1" required="" /></td>';

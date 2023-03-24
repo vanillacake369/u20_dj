@@ -132,7 +132,7 @@ while ($row = mysqli_fetch_array($result)) {
                                         </tr>
                                     </thead>
                                     <tbody class="table_tbody entry_table">
-                                    <?php
+                                        <?php
                                         // function str_contains($haystack, $needle)
                                         // {
                                         //     if (is_string($haystack) && is_string($needle)) {

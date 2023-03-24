@@ -85,6 +85,10 @@ $groupresult = $db->query($groupsql);
                         ?>
                 </div>
                 <form action="" method="post">
+                    <input name="schedule_round" value="<?=$schedule_round?>" hidden>
+                    <input name="schedule_gender" value="<?=$schedule_gender?>" hidden>
+                    <input name="schedule_group" value="1" hidden>
+                    <input name="schedule_sports" value="<?=$schedule_sports?>" hidden>
                     <table class="box_table">
                         <colgroup>
                             <col style="width: 3%" />

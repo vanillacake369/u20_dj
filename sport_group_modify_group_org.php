@@ -1,10 +1,8 @@
 <?php
-
-require_once "console_log.php";
-require_once "head.php";
-require_once "includes/auth/config.php";
-require_once "security/security.php";
-require_once "action/module/dictionary.php";
+require_once __DIR__ . "/head.php";
+require_once __DIR__ . "/includes/auth/config.php";
+require_once __DIR__ . "/security/security.php";
+require_once __DIR__ . "/action/module/dictionary.php";
 
 global $db, $categoryOfSports_dic;
 $group_num = cleanInput($_GET["record_group"]) ?? null;         // ~ 조
@@ -28,9 +26,6 @@ while ($result = mysqli_fetch_array($get_all_athlete_of_group)) {
     $each_group_athletes_id_lane[$result["record_group"]][$result["record_athlete_id"]][] = $result["record_order"];    // [1조][22232][2번 레인]
 }
 
-console_log($each_group_athletes_id_lane);
-
-
 // m조에 대해
 $first_index_each_group_athletes_id_lane = array_key_first($each_group_athletes_id_lane);
 $last_index_each_group_athletes_id_lane = array_key_last($each_group_athletes_id_lane);
@@ -39,13 +34,6 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
     $each_group_athletes_id = array_keys($each_group_athletes_id_lane[$i]);
     // each_group_athletes_lane[][] :: m조에 편성되어있는 n명의 선수들 레인값
     $each_group_athletes_lane = array_values($each_group_athletes_id_lane[$i]);
-
-
-    console_log($each_group_athletes_id);
-    console_log($each_group_athletes_lane);
-
-
-
     // n명의 선수들 정보 가저오는 query
     $query = "SELECT athlete_id, athlete_name, athlete_country, athlete_division, athlete_attendance FROM list_athlete WHERE athlete_gender = ? AND INSTR(athlete_attendance, ?) AND (athlete_id = ";
     $query = $query . implode(" OR athlete_id = ", $each_group_athletes_id) . ") ORDER BY athlete_id asc";

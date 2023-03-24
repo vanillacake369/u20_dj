@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../../backheader.php";
+require_once __DIR__ . "/../../console_log.php";
 
 if (
     !isset($_POST["athlete_first_name"]) ||
@@ -42,6 +43,22 @@ $athlete_sector = trim($sector);
 $athlete_schedule = trim($schedule);
 $athlete_attendance = trim($attendance_id);
 $athlete_profile = trim($profile);
+$athlete_sb_sports = $_POST["athlete_sb_sports"];
+$athlete_sb = $_POST["athlete_sb"];
+$athlete_sb_json = array();
+$athlete_pb_sports = $_POST["athlete_pb_sports"];
+$athlete_pb = $_POST["athlete_pb"];
+$athlete_pb_json = array();
+// athlete_sb_json {"sports_code"=>record}
+for ($i = 0; $i < count($athlete_sb_sports); $i++) {
+    $athlete_sb_json[$athlete_sb_sports[$i]] = $athlete_sb[$i];
+}
+$athlete_sb_json_str = json_encode($athlete_sb_json);
+// athlete_pb_json {"sports_code"=>record}
+for ($i = 0; $i < count($athlete_pb); $i++) {
+    $athlete_pb_json[$athlete_pb_sports[$i]] = $athlete_pb[$i];
+}
+$athlete_pb_json_str = json_encode($athlete_pb_json);
 
 if ($_POST["athlete_birth_month"] > 12 || $_POST["athlete_birth_month"] < 0) {
     echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
@@ -64,12 +81,14 @@ if ($_FILES['main_photo']["size"] == 0) {
         athlete_age=?,
         athlete_sector=?,
         athlete_schedule=?,
-        athlete_attendance=?
+        athlete_attendance=?,
+        athlete_sb=?,
+        athlete_pb=?
         WHERE athlete_id=?";
     $stmt = $db->prepare($sql);
 
     $stmt->bind_param(
-        "sssssssssss",
+        "sssssssssssss",
         $athlete_name,
         $athlete_country,
         $athlete_region,
@@ -80,6 +99,8 @@ if ($_FILES['main_photo']["size"] == 0) {
         $athlete_sector,
         $athlete_schedule,
         $athlete_attendance,
+        $athlete_sb_json_str,
+        $athlete_pb_json_str,
         $athlete_id
     );
     $stmt->execute();
@@ -110,7 +131,7 @@ if ($_FILES['main_photo']["size"] == 0) {
             $image_photo->save($upload_dir . $myFile);
             $athlete_photo = str_replace("../../assets/img/athlete_img/", "", $upload_dir) . $myFile;
             $athlete_photo = $upload_dir . $myFile;
-            $athlete_image = $athlete_photo;
+            $athlete_image = $myFile;
         } else {
             AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
             exit;
@@ -131,11 +152,13 @@ if ($_FILES['main_photo']["size"] == 0) {
         athlete_sector=?,
         athlete_schedule=?,
         athlete_attendance=?,
-        athlete_profile=?
+        athlete_profile=?,
+        athlete_sb=?,
+        athlete_pb=?,
         WHERE athlete_id=?";
     $stmt = $db->prepare($sql);
     $stmt->bind_param(
-        "ssssssssssss",
+        "ssssssssssssss",
         $athlete_name,
         $athlete_country,
         $athlete_region,
@@ -146,7 +169,9 @@ if ($_FILES['main_photo']["size"] == 0) {
         $athlete_sector,
         $athlete_schedule,
         $athlete_attendance,
-        $athlete_image,
+        $athlete_profile,
+        $athlete_sb_json_str,
+        $athlete_pb_json_str,
         $athlete_id
     );
     $stmt->execute();

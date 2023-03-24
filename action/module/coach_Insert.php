@@ -87,7 +87,7 @@ if ($_FILES['main_photo']['name']) {
 			$image_photo->save($upload_dir . $myFile);
 			$coach_photo = str_replace("../../assets/img/coach_img/", "", $upload_dir) . $myFile;
 
-			$coach_image = $coach_photo;
+			$coach_image = $myFile;
 		} else {
 			AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
 			exit;

@@ -308,7 +308,7 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
 <script>
     $("select[name=athlete]").select2();
 </script>
-<script src="assets/js/main.js?ver=12"></script>
+<script src="assets/js/main.js?ver=13"></script>
 </body>
 
 </html>

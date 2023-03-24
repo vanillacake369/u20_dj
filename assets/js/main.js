@@ -373,7 +373,8 @@ for (let i = 0; i < addColumnBtns.length; i++) {
     const Cell1 = newRow.insertCell(0);
     const Cell2 = newRow.insertCell(1);
 
-    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]" disabled></td>`;
+    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]"></td>`;
+    // Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]" disabled></td>`;
     Cell2.innerHTML =
       '<td><div class="copy-value"><select name="playerid[]"></select></div></td>';
 

@@ -155,22 +155,22 @@ if ($hasSearched) {
     if ($hasSearchedCountry) {
         $uri_array["athlete_country"] = $searchValue["athlete_country"];
         array_push($bindarray, $searchValue["athlete_country"]);
-        array_push($keyword, "athlete_country=?");
+        array_push($keyword, "athlete_country=? ");
     }
     if ($hasSearchedRegion) {
         $uri_array["athlete_region"] = $searchValue["athlete_region"];
         array_push($bindarray, $searchValue["athlete_region"]);
-        array_push($keyword, "athlete_region=?");
+        array_push($keyword, "athlete_region=? ");
     }
     if ($hasSearchedDivision) {
         $uri_array["athlete_division"] = $searchValue["athlete_division"];
         array_push($bindarray, $searchValue["athlete_division"]);
-        array_push($keyword, "athlete_division=?");
+        array_push($keyword, "athlete_division=? ");
     }
     if ($hasSearchedGender) {
         $uri_array["athlete_gender"] = $searchValue["athlete_gender"];
         array_push($bindarray, $searchValue["athlete_gender"]);
-        array_push($keyword, "athlete_gender=?");
+        array_push($keyword, "athlete_gender=? ");
     }
     if ($hasSearchedSports) {
         $uri_array["athlete_schedule"] = $searchValue["athlete_schedule"];
@@ -181,7 +181,7 @@ if ($hasSearched) {
     if ($hasSearchedName) {
         $uri_array["athlete_name"] = $searchValue["athlete_name"];
         array_push($bindarray, trim("%{$searchValue["athlete_name"]}%"));
-        array_push($keyword, "athlete_name LIKE ?");
+        array_push($keyword, "athlete_name LIKE ? ");
     }
     for ($i = 0; $i < count($keyword); $i++) {
         $sql_like = $sql_like . " AND " . $keyword[$i];
@@ -249,6 +249,7 @@ if ($hasSearched) {
         $types = str_repeat('s', count($bindarray));
         $stmt->bind_param($types, ...$bindarray);
     }
+
     $stmt->execute();
     $result = $stmt->get_result();
 } else {

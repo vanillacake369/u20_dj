@@ -23,6 +23,8 @@
     $judge_id=$_POST['refereename'];
     $judgeresult=$db->query("select judge_id from list_judge where judge_name='$judge_id'"); //심판 아이디 쿼리
     $judge=mysqli_fetch_array($judgeresult);
+    $starttime = $_POST['starttime'];
+$db->query("update list_record set record_start ='" . $starttime . "' where record_sports='$name' and record_gender='$gender' and record_round='$round' and record_group='$heat'");
     $res1 = $db->query("SELECT * FROM list_schedule 
     join list_record
     where record_sports= '$sports' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round");

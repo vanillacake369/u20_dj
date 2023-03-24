@@ -101,6 +101,21 @@
         };
         reader.readAsText(file, /* optional */ "utf-8");
     }
+
+    function input_time() {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2);
+        var day = ('0' + today.getDate()).slice(-2);
+        var dateString = year + '-' + month + '-' + day;
+        var hours = ('0' + today.getHours()).slice(-2);
+        var minutes = ('0' + today.getMinutes()).slice(-2);
+        var seconds = ('0' + today.getSeconds()).slice(-2);
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        let total = dateString + " " + timeString;
+        let intime = document.querySelector("input[name='starttime']")
+        intime.value = total
+    }
     </script>
 </head>
 
@@ -153,6 +168,16 @@
                                                 required="" />';
                                             }
                                     ?>
+                                </li>
+                                <li class="row input_row throw_row">
+                                    <span>경기 시작 시간</span>
+                                    <?php
+                                echo '<input placeholder="시작 시간" type="text" name="starttime" value="'. ($rows['record_start']) .'"
+                                maxlength="30" required="" />';
+                                if ($rows['record_state'] != 'y') {
+                                    echo '<input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />';
+                                }
+                                ?>
                                 </li>
                             </ul>
                         </div>

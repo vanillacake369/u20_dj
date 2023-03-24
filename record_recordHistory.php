@@ -212,7 +212,8 @@ $total_count = mysqli_num_rows($count);
                 <div class="searchArea">
                     <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
                         <div class="page_size">
-                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
                                     echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
@@ -285,7 +286,7 @@ $total_count = mysqli_num_rows($count);
                     </form>
                 </div>
                 <table class="box_table">
-                    <colgroup>
+                    <!-- <colgroup>
                         <col width="10%">
                         <col width="20%">
                         <col width="10%">
@@ -295,7 +296,7 @@ $total_count = mysqli_num_rows($count);
                         <col width="5%">
                         <col width="10%">
                         <col width="10%">
-                    </colgroup>
+                    </colgroup> -->
                     <thead class="table_head entry_table">
                         <tr>
                             <th><a href="<?= Get_Sort_Link("athletics", $pageValue, $link, $orderValue) ?>">기록구분</th>
@@ -307,6 +308,13 @@ $total_count = mysqli_num_rows($count);
                             <th><a href="<?= Get_Sort_Link("record", $pageValue, $link, $orderValue) ?>">기록</th>
                             <th><a href="<?= Get_Sort_Link("datetime", $pageValue, $link, $orderValue) ?>">기록일자</th>
                             <th><a href="<?= Get_Sort_Link("country_code", $pageValue, $link, $orderValue) ?>">국가</th>
+                            <?php
+                            if (authCheck($db, "authRecordsUpdate")) {  ?>
+                            <th colspan="2" scope="col">수정</th>
+                            <?php }
+                            if (authCheck($db, "authRecordsDelete")) {  ?>
+                            <th colspan="2" scope="col">삭제</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
@@ -336,6 +344,16 @@ $total_count = mysqli_num_rows($count);
                             echo "<td>" . htmlspecialchars($row["worldrecord_record"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["worldrecord_datetime"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["worldrecord_country_code"]) . "</td>";
+                            echo "<td colspan='2' scope='col'>";
+                            if (authCheck($db, "authRecordsUpdate")) {
+                                echo '<button type=\'button\' onclick="createPopupWin(\'\',\'창 이름\',900,900)" class=\'BTN_Blue defaultBtn\'>수정</button>';
+                            }
+                            echo "</td>";
+                            echo "<td colspan='2' scope='col'>";
+                            if (authCheck($db, "authRecordsDelete")) {
+                                echo "<button type='button' class='BTN_Red defaultBtn'>삭제</button>";
+                            }
+                            echo "</td>";
                             echo "</tr>";
                         }
                         ?>
@@ -344,12 +362,22 @@ $total_count = mysqli_num_rows($count);
                 <div class="playerRegistrationBtnArea">
                     <div class="ExcelBtn IDBtn">
                         <form action="./execute_excel.php" method="post" enctype="multipart/form-data">
-                            <input type="submit" name="query" id="execute_excel" value="<?php echo $sql . $sql_order; ?>" hidden />
+                            <input type="submit" name="query" id="execute_excel"
+                                value="<?php echo $sql . $sql_order; ?>" hidden />
                             <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
                             <input type="text" name="role" value="record_history" hidden />
                             <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
                                 출력</label>
                         </form>
+                    </div>
+                    <div class="registrationBtn">
+                        <?php
+                        if (authCheck($db, "authSchedulesCreate")) { ?>
+                        <div class="btn_base base_mar col_right">
+                            <button class="defaultBtn BIG_btn BTN_Blue" type="button"
+                                onclick="createPopupWin('record_worldrecord_input.php','창 이름',900,900)">등록</button>
+                        </div>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="page">

@@ -306,41 +306,6 @@ function closeAllPopups() {
   }
 }
 
-// 선수 접근 가능 구역
-function venue(VenueAll) {
-  const venues = document.getElementsByName("venue_code");
-
-  venues.forEach((checkbox) => {
-    checkbox.checked = !VenueAll.checked;
-  });
-}
-
-document.addEventListener("click", (event) => {
-  const isPopupItem = Array.from(popupItem).some((item) =>
-    item.contains(event.target)
-  );
-  const isPopupContent = Array.from(item_popup).some((item) =>
-    item.contains(event.target)
-  );
-  if (!isPopupItem && !isPopupContent) {
-    closeAllPopups();
-  }
-});
-
-function togglePopup(index) {
-  if (item_popup[index].style.display === "none") {
-    item_popup[index].style.display = "block";
-  } else {
-    item_popup[index].style.display = "none";
-  }
-}
-
-function closeAllPopups() {
-  for (let i = 0; i < item_popup.length; i++) {
-    item_popup[i].style.display = "none";
-  }
-}
-
 /* 조 편성 관련 js */
 function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] == value);
@@ -1113,4 +1078,3 @@ ID_Print.addEventListener("click", () => {
   }
 })
 }
-

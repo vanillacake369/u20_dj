@@ -56,23 +56,19 @@ $athlete_profile = trim($profile);
 
 $athlete_iamge = "";
 
-
-
-
-
-if ($_FILES['athlete_imgFile']['name']) {
+if ($_FILES['main_photo']['name']) {
 	$upload_dir = '../../assets/img/athlete_img/';
 	if (!is_dir($upload_dir))
 		mkdir($upload_dir, 0777, true);
 	// for ($i = 0; $i < count($_FILES['athlete_imgFile']['name']); $i++) {
-	$FileExt = substr(strrchr($_FILES['athlete_imgFile']['name'], "."), 1); // 확장자 추출
+	$FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
 	$myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
 
 	if ($FileExt != "jpg" && $FileExt != "gif" && $FileExt != "jpeg" && $FileExt != "png" && $FileExt != "JPG" && $FileExt != "GIF" && $FileExt != "JPEG" && $FileExt != "PNG") {
 		AlertBox("[오류] 올바른 이미지 확장자가 아닙니다.", 'back', '');
 		exit;
 	}
-	if (move_uploaded_file($_FILES['athlete_imgFile']['tmp_name'], $upload_dir . $myFile)) {
+	if (move_uploaded_file($_FILES['main_photo']['tmp_name'], $upload_dir . $myFile)) {
 		$image_photo = new Image($upload_dir . $myFile);
 		if ($image_photo->getWidth() < 10 || $image_photo->getHeight() < 10) {
 			AlertBox("[오류] 올바른 이미지가 아닙니다.", 'back', '');

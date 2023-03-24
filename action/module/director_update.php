@@ -53,7 +53,7 @@ if ($month_dic[$_POST["director_birth_month"]] < $_POST["director_birth_day"]) {
     exit;
 }
 
-if ($_FILES['director_imgFile']["size"] == 0) {
+if ($_FILES['main_photo']["size"] == 0) {
 
     $sql = "UPDATE list_director SET 
         director_name=?,
@@ -85,8 +85,43 @@ if ($_FILES['director_imgFile']["size"] == 0) {
     $stmt->execute();
 } else { //이미지를 수정했을 경우
 
-    $director_profile = str_replace(' ', '', $director_profile);
-    $director_profile = Img_Upload($_FILES['director_imgFile'], "director_img", $profile);
+    $director_image = '';
+
+    if ($_FILES['main_photo']['name']) {
+        $upload_dir = "../../assets/img/director_img/";
+    
+        if (!is_dir($upload_dir))
+            mkdir($upload_dir, 0777);
+    
+            $FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
+            $myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
+    
+            if ($FileExt != "jpg" && $FileExt != "gif" && $FileExt != "jpeg" && $FileExt != "png" && $FileExt != "JPG" && $FileExt != "GIF" && $FileExt != "JPEG" && $FileExt != "PNG") {
+                AlertBox("[오류] 올바른 이미지 확장자가 아닙니다.", 'back', '');
+                exit;
+            }
+            if (move_uploaded_file($_FILES['main_photo']['tmp_name'], $upload_dir . $myFile)) {
+                $image_photo = new Image($upload_dir . $myFile);
+    
+                if ($image_photo->getWidth() < 10 || $image_photo->getHeight() < 10) {
+                    AlertBox("[오류] 올바른 이미지가 아닙니다.", 'back', '');
+                    exit;
+                }
+    
+                if ($image_photo->getWidth() > 2000)
+                    $image_photo->resizeToWidth(2000);
+    
+                $image_photo->save($upload_dir . $myFile);
+                $director_photo = str_replace("../../assets/img/director_img/", "", $upload_dir) . $myFile;
+    
+                $director_image = $director_photo;
+            } else {
+                AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
+                exit;
+        }
+    } else {
+        $director_image = 'profile.jpg';
+    }
 
     $sql = "UPDATE list_director SET 
         director_name=?,
@@ -110,7 +145,7 @@ if ($_FILES['director_imgFile']["size"] == 0) {
         $director_birth,
         $director_age,
         $director_sector,
-        $director_profile,
+        $director_image,
         $director_id
     );
     $stmt->execute();

@@ -122,7 +122,7 @@ $birth = explode('-', $row["director_birth"]); //생일 정보 나눔
                                 </li>
                                 <li class="row full_width">
                                     <span class="full_span">이미지 변경</span>
-                                    <input type="file" name="director_imgFile" />
+                                    <input type="file" name="main_photo" />
                                 </li>
                                 <li class="row full_width">
                                     <span class="full_span">출입가능구역</span>

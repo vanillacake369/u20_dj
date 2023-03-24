@@ -212,7 +212,8 @@ $total_count = mysqli_num_rows($count);
                 <div class="searchArea">
                     <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
                         <div class="page_size">
-                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
                                     echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
@@ -344,12 +345,22 @@ $total_count = mysqli_num_rows($count);
                 <div class="playerRegistrationBtnArea">
                     <div class="ExcelBtn IDBtn">
                         <form action="./execute_excel.php" method="post" enctype="multipart/form-data">
-                            <input type="submit" name="query" id="execute_excel" value="<?php echo $sql . $sql_order; ?>" hidden />
+                            <input type="submit" name="query" id="execute_excel"
+                                value="<?php echo $sql . $sql_order; ?>" hidden />
                             <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
                             <input type="text" name="role" value="record_history" hidden />
                             <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
                                 출력</label>
                         </form>
+                    </div>
+                    <div class="registrationBtn">
+                        <?php
+                        if (authCheck($db, "authSchedulesCreate")) { ?>
+                        <div class="btn_base base_mar col_right">
+                            <button class="defaultBtn BIG_btn BTN_Blue" type="button"
+                                onclick="createPopupWin('record_worldrecord_input.php','창 이름',900,900)">등록</button>
+                        </div>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="page">

@@ -120,6 +120,7 @@ if (isset($searchValue) && ($searchValue["schedule_sports"] != "non" || $searchV
     $sql .= " $sql_order LIMIT $page_list_count, $pagesizeValue";
     $result = $db->query($sql);
 }
+
 $total_count = mysqli_num_rows($count);
 ?>
 
@@ -248,11 +249,6 @@ $total_count = mysqli_num_rows($count);
                     </thead>
                     <tbody class="table_tbody entry_table">
                     <?php
-                        // $tmp= $row["schedule_name"].$row["schedule_round"].$row['schedule_gender'];
-                        // if(in_array($tmp,$can)){
-                            //         continue;
-                            //     }
-                            // $i = count($can) - $page_list_count;
                             $i = 1;
                             $j = 0;
                             $num = 0;
@@ -410,10 +406,7 @@ $total_count = mysqli_num_rows($count);
                             <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
                                 출력</label>
                         </form>
-                        <form action="action/sport/sport_create_schedule.php" method="post" enctype="multipart/form-data">
-                            <input type="submit" id="create_schedule" hidden="" />
-                            <label for="create_schedule" class="defaultBtn BIG_btn2 matchBtn">자동경기생성</label>
-                        </form>
+                        
                     </div>
                     <div class="registrationBtn">
                     <?php

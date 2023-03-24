@@ -274,5 +274,3 @@ $isDivisionSelected = maintainSelected($_GET["athlete_division"] ?? NULL);
 $isGenderSelected = maintainSelected($_GET["athlete_gender"] ?? NULL);
 $isSportsSelected = maintainSelected($_GET["athlete_schedule"] ?? NULL);
 // $isAttendanceSelected = maintainSelected($_GET[""]??NULL);
-
-

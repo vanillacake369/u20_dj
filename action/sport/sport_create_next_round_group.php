@@ -12,23 +12,21 @@ $next_round = $_POST['next_round'] ?? null;
 $gender = $_POST['gender'] ?? null;
 $athlete_count = $_POST['count'] ?? null;
 $group_count = $_POST['group_count'] ?? null;
-$reset = $_GET['reset'] ?? null;
+$reset = $_POST['reset'] ?? null;
 //if ($round == "1") { // 라운드 직접 입력 시
 //    $round = $_POST['direct_input'];
 //}
 
 if (isset($reset)) {
-    // reset으로 페이지를 들어옴 (GET으로 들어옴)
-    $sport_code = $_GET['sports'] ?? null;
-    $gender = $_GET['gender'] ?? null;
-    $current_round = $_GET['round'] ?? null;
-    $next_round = $_GET['round'] ?? null;
+    // reset으로 페이지를 들어옴 (POST으로 들어옴)
+    // 이전 라운드 정보를 불러와 선수들을 가져와서 다시 현재 라운드에 update
+    $next_round = $_POST['current_round'] ?? null;  // 따라서 다음 라운드는 현재 라운드가 되어야함
     $data = get_record_round_information($sport_code, $gender, $current_round);
     $group_count = $data[0]["group_count"];
     $athlete_count = $data[0]["athlete_count"];
 }
 
-if (!isset($reset) && !isset($sport_code, $current_round, $gender, $athlete_count, $group_count)) { // 유효성 검사
+if (!isset($sport_code, $current_round, $gender, $athlete_count, $group_count)) { // 유효성 검사
     mysqli_close($db);
     echo '<script>alert("모두 입력하세요.");history.back();</script>';
     exit;
@@ -54,6 +52,7 @@ if ($reset === null && in_array($next_round, array("결승", "final")) && $group
         exit;
     } else {
         // 이전 schedule_data를 저장
+        // 이전 데이터의 라운드가 현재 라운드 변수에 저장
         $current_round = get_previous_information($sport_code, $gender, $current_round);
         $record_information = get_record_round_information($sport_code, $gender, $current_round);
     }
@@ -124,8 +123,13 @@ if (!in_array($sport_code, ["4x100mR", "4x400mR"])) { // 개인 달리기 경기
 
 mysqli_close($db);
 if (!isset($reset)) {   // 다음 라운드 조 편성 버튼
+    // 조 편성이 끝난 후 조 편성 페이지 -> 수정 페이지로 넘어감
     echo '<script>alert("조 편성이 완료되었습니다.\n일정을 생성해 주세요.");</script>';
-    echo '<script>window.close();</script>';
+    echo '<script>
+           window.location = "/sport_group_modify_group_org.php?record_group=1" +
+                             "&count_group='. $group_count .'&record_sports=' . $sport_code . '&record_round='. $next_round .'" +
+                             "&record_gender='. $gender .'&sports_category=트랙경기"
+          </script>';
 } else {    // 조 재편성 버튼
     echo '<script>alert("조 재편성이 완료되었습니다.");</script>';
     echo '<script>history.back();</script>';

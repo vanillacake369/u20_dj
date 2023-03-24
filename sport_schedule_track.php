@@ -420,18 +420,30 @@ function islane($schedule_sports, $what)
                     </div>
                 </form>
             </div>
-
             <?php }
-                            }
+            }
         ?>
         </div>
-        <!-- <div class="BTNform">
+        <?php if ($row2['record_status'] === 'o' && $round !== 'final') {
+            // 경기 마감 상황일 때 그리고 라운드가 결승이 아닐 때 다음 조 편성 페이지 버튼 활성화
+            // TODO 조 생성 권한 함수 추가 필요 ?>
             <button type="button" class="nextBTN BTN_blue2 defaultBtn"
-                onclick="window.open('/forming_group.html', 'window_name', 'width=800, height=750, location=no, status=no, scrollbars=yes')">다음
-                조 편성</button>
-            <button type="button" class="resetBTN BTN_Orange2 defaultBtn">모든 조 초기화</button>
-        </div> -->
-        <button type="button" class="changePwBtn defaultBtn">확인</button>
+                    onclick="window.open('/sport_schedule_group_next.php?<?php echo 'sports=' . $sports . '&gender=' . $gender . '&round=' . $round . '\'' ?>, 'window_name', 'width=800, height=750, location=no, status=no, scrollbars=yes')">
+                다음 조 편성
+            </button>
+        <?php } if (!in_array($schedule_round, ["preliminary-round", "qualification"]) && $row2['record_status'] === 'n') {
+            // 자격라운드, 예선 경기를 제외한 경기일 때 그리고 경기 상태가 not start일 때 모든 조 초기화 버튼 활성화
+            // TODO 조 수성 권한 함수 추가 필요 ?>
+            <form action="#" method="post" class="filed2_form">
+                <input type="hidden" name="sports" value="<?php echo $sports ?>">
+                <input type="hidden" name="current_round" value="<?php echo $round ?>">
+                <input type="hidden" name="gender" value="<?php echo $gender ?>">
+                <input type="hidden" name="reset" value="reset">
+                <button type="submit" class="resetBTN BTN_Orange2 defaultBtn" formaction="/action/sport/sport_create_next_round_group.php">모든 조 초기화</button>
+            </form>
+        <?php } ?>
+        </form>
+        <button  type="button" class="changePwBtn defaultBtn">확인</button>
     </div>
     <script src="/assets/js/main.js?ver=9"></script>
     <script src="assets/js/restrict.js"></script>

@@ -15,9 +15,9 @@ console_log($_POST);
  */
 
 try {
-    $athlete = $_POST["athlete_id"] ?? null;        // array: 참가하는 선수들 id
-    $lane = $_POST["order"] ?? null;                 // array: 선수별 순서 or 레인
-    $group = $_POST["group"] ?? null;               // array: 선수 별 그룹 배정
+    $athlete = $_POST["athlete_id"] ?? null;                    // array: 참가하는 선수들 id
+    $lane = $_POST["order"] ?? null;                            // array: 선수별 순서 or 레인
+    $group = $_POST["group"] ?? null;                           // array: 선수 별 그룹 배정
     $sports = cleanInput($_POST["sport_code"] ?? null);         // string: 스포츠 종목 명 (cleanInput 사용 시 4mr만 남음)
     $round = cleanInput($_POST["round"] ?? NULL);               // string: 라운드(영어)
     $gender = cleanInput($_POST["gender"] ?? NULL);             // string: 경기 성별
@@ -26,6 +26,12 @@ try {
     if (($category == '트랙경기' && ($sports != '4x400mR' && $sports != '4x100mR')) || $sports == 'highjump' || $sports == 'polevault') {
         //릴레이 경기가 아닌 트랙경기와 높이뛰기, 장대높이뛰기인 경우
         for ($idx = 0; $idx < count($athlete); $idx++) {  //선수 수만큼
+            if ($lane[$idx] === '') {
+                $lane[$idx] = NULL;
+            }
+            if ($group[$idx] === '') {
+                $group[$idx] = NULL;
+            }
             $athlete_data = [
                 $athlete[$idx], // 0: record_athlete_id
                 $lane[$idx],    // 1: record_order
@@ -42,9 +48,10 @@ try {
             $select_record_id = 'SELECT record_id FROM list_record WHERE'
                 . ' record_athlete_id = ' . $athlete[$idx];
             $is_record_id = $db->query($select_record_id);
-            if ($result = mysqli_fetch_array($is_record_id)) {
+
+            if ($is_record_id) {
+                $result = mysqli_fetch_array($is_record_id);
                 array_unshift($athlete_data, $result['record_id']);
-                console_log($result['record_id']);
             } else {
                 array_unshift($athlete_data, null);
             }
@@ -63,6 +70,12 @@ try {
         $MAX_TRIAL = in_array($sports, ["decathlon", "heptathlon"]) ? 3 : 6;
         for ($idx = 0; $idx < count($athlete); $idx++) {
             for ($trial = 1; $trial <= $MAX_TRIAL; $trial++) {  //선수 수만큼
+                if ($lane[$idx] === '') {
+                    $lane[$idx] = NULL;
+                }
+                if ($group[$idx] === '') {
+                    $group[$idx] = NULL;
+                }
                 $athlete_data = [
                     $athlete[$idx], // 0: record_athlete_id
                     $lane[$idx],    // 1: record_order
@@ -99,6 +112,12 @@ try {
         //릴레이 경기일 경우
         $relay_lane = 0;
         for ($idx = 0; $idx < count($athlete); $idx++) {  //선수 수만큼
+            if ($lane[$idx] === '') {
+                $lane[$idx] = NULL;
+            }
+            if ($group[$idx] === '') {
+                $group[$idx] = NULL;
+            }
             if (((int)$order[$idx]) % 4 == 1) {
                 $relay_lane = $lane[$idx];
             }
@@ -141,4 +160,4 @@ try {
     exit();
 }
 
-// echo "<script>alert('수정되었습니다.'); window.close(); </script>";
+echo "<script>alert('수정되었습니다.'); window.close(); </script>";

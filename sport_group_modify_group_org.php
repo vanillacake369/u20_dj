@@ -165,6 +165,7 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                                 <tr>
                                     <th>순서</th>
                                     <th>선수 이름</th>
+                                    <th>삭제</th>
                                 </tr>
                                 <tr class="filed2_bottom">
                                 </tr>
@@ -191,6 +192,12 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                                             <!-- 선수 이름 -->
                                             <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
                                         </td>
+                                        <td>
+                                            <!-- 삭제 버튼 -->
+                                            <div class="filed_BTN2">
+                                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN" id="deleteBtn<?php echo $i ?>"><i class="xi-minus"></i></button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             <?php
@@ -213,13 +220,8 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                             </select>
                         </label>
                         <div class="filed_BTN2">
-                            <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN"><i class="xi-minus"></i></button>
                             <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN" id="addBtn<?php echo $i ?>"><i class=" xi-plus"></i></button>
                         </div>
-                        <!-- <div class="filed_BTN2">
-                            <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn"><i class="xi-minus"></i></button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn"><i class="xi-plus"></i></button>
-                        </div> -->
                     </div>
                 </div>
                 <script>
@@ -253,6 +255,16 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                                     $("#lane<?php echo $i ?>").val('');
                                     $("#name<?php echo $i ?>").val('');
                                 }
+                            });
+                        });
+                    });
+                    // @author 임지훈 @vanillacake369
+                    // 각 행의 -버튼을 누르게 되면 AJAX를 통해 테이블의 마지막 행을 "가상"삭제
+                    // 각 조 별로 테이블,input,select의 id값이 달라야 서로 달리 적용가능
+                    $(document).ready(function() {
+                        $("#deleteBtn<?php echo $i ?>").click(function() {
+                            var tableId = $(this).closest("tr").find("input").each(function() {
+                                $(this).val('');
                             });
                         });
                     });

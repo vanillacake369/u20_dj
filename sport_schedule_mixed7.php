@@ -16,7 +16,7 @@ $gender = $_GET['gender'];
 $round=['100mh','highjump','200m','shotput','longjump','javelinthrow','800m'];
 $statussql = "SELECT distinct record_round, schedule_sports,record_status, schedule_gender FROM list_schedule JOIN list_record  
 where schedule_sports='$sports' and schedule_gender ='$gender' AND record_sports=schedule_sports AND record_gender=schedule_gender
-ORDER BY FIELD(record_status,'o','l','n'),FIELD(record_round,'final','100mh','highjump','200m','shotput','longjump','javelinthrow','800m')";
+ORDER BY FIELD(record_round,'final','100mh','highjump','200m','shotput','longjump','javelinthrow','800m'),FIELD(record_status,'o','l','n')";
 $statusresult = $db->query($statussql);
 $statusrow = mysqli_fetch_array($statusresult);
 $schedule_sports = $statusrow['schedule_sports'];

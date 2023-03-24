@@ -253,9 +253,9 @@
                                         echo '<td><input placeholder="비고" type="text" name="bigo[]"  value="' . ($row['record_memo'] ? $row['record_memo'] : '') . '" maxlength="100" /></td>';
                                         $sport_code = $rows['schedule_sports'];
                                         if ($rows['record_state'] != 'y') {
-                                            $time = $rows['schedule_start'];
+                                            $time = $rows['record_start'];
                                         } else {
-                                            $time = $rows['schedule_end'];
+                                            $time = $rows['record_end'];
                                         }
                                         $athletics = check_my_record($row['athlete_country'], $sport_code, $time);
                                         if ((key($athletics) ?? null) === 'w') {

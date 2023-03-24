@@ -205,10 +205,10 @@ if($row1['record_state']!='y'){
     logInsert($db, $_SESSION['Id'], '기록 수정', $name . "-" . $row1['schedule_gender'] . "-" . $round. "-" .$row1['record_group']);
 
 }
-//         echo "<script>
-//         opener.parent.location.reload();
-//         window.close();
-//         </script>";
-//         echo "<script>
-//     location.replace('../../record/track_normal_result_view.php?id=".$s_id."')
-//     </script>";
+        echo "<script>
+        opener.parent.location.reload();
+        window.close();
+        </script>";
+        echo "<script>
+    location.replace(document.referrer) 
+    </script>";

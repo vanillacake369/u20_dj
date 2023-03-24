@@ -159,43 +159,6 @@
   margin: 2rem 0;
 }
 
-<<<<<<< HEAD
-=======
-.dataTables_paginate {
-  width: 100%;
-  padding-top: 3rem;
-  display: flex;
-  gap: 0.8rem;
-  justify-content: center;
-}
-
-.dataTables_paginate > span {
-  display: flex;
-  gap: 0.8rem;
-}
-
-.paginate_button {
-  border: 1px solid var(--colorBorder);
-  border-radius: 50%;
-  color: #111;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.current {
-  text-align: center;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  background-color: var(--colorLogo);
-  color: #fff;
-}
-
->>>>>>> 6c86d7f (update: main.js,style.css BY 정태 깃헙)
 .note_text {
   width: 100%;
   height: 13rem;
@@ -260,10 +223,6 @@
   line-height: 21px;
   text-align: center;
   left: 50%;
-<<<<<<< HEAD
-=======
-  padding: 1rem;
->>>>>>> 6c86d7f (update: main.js,style.css BY 정태 깃헙)
   top: 100%;
   transform: translateX(-50%);
 }
@@ -374,7 +333,7 @@
   gap: 6px;
 }
 
-.full_div>label {
+.full_div > label {
   display: flex;
 }
 
@@ -981,25 +940,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   font-weight: 700;
 }
 
-<<<<<<< HEAD
-.UserDesc .row>select:focus {
-  background: var(--colorLogo);
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -ms-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  transition: all .5s ease;
-  color: white;
-=======
 .UserDesc .row > select:focus {
-  background: var(--colorPink2);
+  background: var(--colorLogo);
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-  color: black;
->>>>>>> 6c86d7f (update: main.js,style.css BY 정태 깃헙)
+  color: white;
 }
 
 .UserDesc .check > input {
@@ -1516,17 +1464,6 @@ input::-webkit-inner-spin-button {
   margin: 5rem 0px;
 }
 
-/* 조 수정하기 */
-.grouping_body > tr > td > input[name="name[]"] {
-  width: 100%;
-  border: 1px solid var(--colorBorder);
-}
-
-.grouping_body > tr > td > input[name="name[]"]:focus {
-  background-color: var(--colorPink2);
-  outline: 0;
-}
-
 /* 창 던지기 페이지 */
 .thorw_main {
   height: auto;
@@ -1562,17 +1499,12 @@ input::-webkit-inner-spin-button {
   font-size: 14px;
 }
 
-<<<<<<< HEAD
-.UserDesc .referee_row>input {
+.UserDesc .referee_row > input {
   width: 90%;
 }
 
-.UserDesc .referee_row>span {
+.UserDesc .referee_row > span {
   width: 10%;
-=======
-.UserDesc .referee_row > input {
-  width: 93%;
->>>>>>> 6c86d7f (update: main.js,style.css BY 정태 깃헙)
 }
 
 .Thorw_result > div > .throw_tit {
@@ -1938,29 +1870,29 @@ input::-webkit-inner-spin-button {
   color: black;
 }
 
-.UserDesc .row>div>input:focus::placeholder {
+.UserDesc .row > div > input:focus::placeholder {
   color: black;
 }
 
-.UserDesc .row>input:focus {
+.UserDesc .row > input:focus {
   background: var(--colorLogo);
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -ms-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  transition: all .5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
   color: white;
   text-decoration: underline;
   text-underline-position: under;
 }
 
-.UserDesc .row>div>input:focus {
+.UserDesc .row > div > input:focus {
   background: var(--colorLogo);
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -ms-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  transition: all .5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
   color: white;
   text-decoration: underline;
   text-underline-position: under;
@@ -1984,12 +1916,12 @@ input::-webkit-inner-spin-button {
   background-color: white;
 }
 
-.UserDesc .row>select>optgroup {
+.UserDesc .row > select > optgroup {
   color: white;
   background-color: var(--colorLogo);
 }
 
-.UserDesc .row>select>optgroup>option {
+.UserDesc .row > select > optgroup > option {
   color: black;
   background-color: white;
 }
@@ -2164,7 +2096,6 @@ input::-webkit-inner-spin-button {
   background: white;
 }
 
-
 @a4 {
   size: A4;
 }
@@ -2179,7 +2110,6 @@ input::-webkit-inner-spin-button {
     margin: 0;
     padding: 0;
   }
-
 }
 
 .AD_front {
@@ -2246,8 +2176,7 @@ input::-webkit-inner-spin-button {
   font-weight: 500;
 }
 
-
-.AD_front_desc>p {
+.AD_front_desc > p {
   line-height: 15px;
   word-spacing: 5px;
 }
@@ -2352,7 +2281,6 @@ input::-webkit-inner-spin-button {
   font-weight: 700;
   display: flex;
 }
-
 
 .AD_front_text {
   font-size: 11px;
@@ -2479,17 +2407,17 @@ input::-webkit-inner-spin-button {
   justify-content: space-between;
 }
 
-.grouping_body>tr>td {
+.grouping_body > tr > td {
   text-align: center;
   vertical-align: middle;
 }
 
-.grouping_body>tr>td:first-child {
+.grouping_body > tr > td:first-child {
   border-left: 1px solid var(--colorBorder);
   border-bottom: 1px solid var(--colorBorder);
 }
 
-.grouping_body>tr>td>input {
+.grouping_body > tr > td > input {
   border: 0;
   text-align: center;
   padding: 1rem;
@@ -2497,13 +2425,12 @@ input::-webkit-inner-spin-button {
   background-color: transparent;
 }
 
-
-.grouping_body>tr>td>input[name="name[]"] {
+.grouping_body > tr > td > input[name="name[]"] {
   width: 100%;
   border: 1px solid var(--colorBorder);
 }
 
-.grouping_body>tr>td>input[name="name[]"]:focus {
+.grouping_body > tr > td > input[name="name[]"]:focus {
   background-color: var(--colorPink2);
   outline: 0;
 }
@@ -2513,7 +2440,7 @@ input::-webkit-inner-spin-button {
 .box_table {
   width: 100%;
   background: white;
-  border-collapse: collapse
+  border-collapse: collapse;
 }
 
 .table_head {
@@ -2575,14 +2502,14 @@ input::-webkit-inner-spin-button {
   border: 1px solid var(--colorBorder);
 }
 
-.field3_hover>tr>td {
+.field3_hover > tr > td {
   padding: 0.5rem 0;
   text-align: center;
   vertical-align: middle;
   border: 1px solid var(--colorBorder);
 }
 
-.table_tbody>tr>td {
+.table_tbody > tr > td {
   padding: 1rem 0;
   text-align: center;
   vertical-align: middle;
@@ -2595,7 +2522,7 @@ input::-webkit-inner-spin-button {
   color: rgb(0, 0, 0);
 }
 
-.table_tbody>tr:hover>td {
+.table_tbody > tr:hover > td {
   border-color: transparent;
 }
 
@@ -2605,16 +2532,15 @@ input::-webkit-inner-spin-button {
   border-color: transparent;
 }
 
-.field3_hover:hover>tr>td {
+.field3_hover:hover > tr > td {
   border-color: transparent;
-
 }
 
-.field3_hover>tr:hover td>input {
+.field3_hover > tr:hover td > input {
   color: rgb(0, 0, 0);
 }
 
-.field3_hover>tr>td>input {
+.field3_hover > tr > td > input {
   text-align: center;
   border: 0;
   background: transparent;
@@ -2623,7 +2549,7 @@ input::-webkit-inner-spin-button {
   outline: 0;
 }
 
-.De_tbody>tr:hover {
+.De_tbody > tr:hover {
   background: #ffd3a6d9;
   color: rgb(0, 0, 0);
 }
@@ -2636,7 +2562,7 @@ input::-webkit-inner-spin-button {
   color: rgb(0, 0, 0);
 }
 
-.De_tbody>tr>td>input {
+.De_tbody > tr > td > input {
   text-align: center;
   border: 0;
   background: transparent;
@@ -2645,11 +2571,11 @@ input::-webkit-inner-spin-button {
   outline: 0;
 }
 
-.info_table>tr>td {
+.info_table > tr > td {
   border-right: 1px solid var(--colorBorder);
 }
 
-.input_table>tr>td {
+.input_table > tr > td {
   padding: 0.5rem 0;
   text-align: center;
   vertical-align: middle;
@@ -2886,7 +2812,7 @@ input::-webkit-inner-spin-button {
   justify-content: center;
 }
 
-.dataTables_paginate>span {
+.dataTables_paginate > span {
   display: flex;
   gap: 0.8rem;
 }
@@ -3071,9 +2997,6 @@ input::-webkit-inner-spin-button {
 
   /* athlete list */
 
-
-
-
   .defaultBtn {
     padding: 0px 5px;
     font-size: 10px;
@@ -3109,7 +3032,7 @@ input::-webkit-inner-spin-button {
 
   /* 선수 정보 수정 */
 
-  .UserDesc .row>select {
+  .UserDesc .row > select {
     font-size: 14px;
   }
 
@@ -3276,7 +3199,7 @@ input::-webkit-inner-spin-button {
     font-size: 10px;
   }
 
-  .field3_hover>tr>td>input {
+  .field3_hover > tr > td > input {
     font-size: 10px;
   }
 }

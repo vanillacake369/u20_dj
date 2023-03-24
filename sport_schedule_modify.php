@@ -2,7 +2,7 @@
 require_once "head.php";
 require_once "includes/auth/config.php";
 
-$sql = "SELECT schedule_sports,schedule_name,schedule_gender,schedule_round,schedule_location,schedule_start,record_state,schedule_date,record_status FROM list_schedule join list_record on record_sports=schedule_sports and record_gender=schedule_gender and record_round=schedule_round where schedule_sports='".$_GET['sports']."' and schedule_gender='".$_GET['gender']."' and schedule_round='".$_GET['round']."'";
+$sql = "SELECT schedule_sports,schedule_name,schedule_gender,schedule_round,schedule_location,schedule_start,record_state,schedule_date,record_state FROM list_schedule join list_record on record_sports=schedule_sports and record_gender=schedule_gender and record_round=schedule_round where schedule_sports='".$_GET['sports']."' and schedule_gender='".$_GET['gender']."' and schedule_round='".$_GET['round']."'";
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 ?>
@@ -22,10 +22,10 @@ $row = mysqli_fetch_array($result);
                     일정 수정
                 </p>
                 <form action="action/sport/schedule_modify.php" method="post" class="form">
-                <input type="hidden" name="sports" value="<?php echo $row['schedule_sports'] ?>">
-                    <input type="hidden" name="name" value="<?php echo $row['schedule_name'] ?>">
-                    <input type="hidden" name="gender" value="<?php echo $_GET['gender'] ?>">
-                    <input type="hidden" name="round" value="<?php echo $_GET['round'] ?>">
+                    <input type="hidden" name="search_sports" value="<?php echo $row['schedule_sports'] ?>">
+                    <input type="hidden" name="search_name" value="<?php echo $row['schedule_name'] ?>">
+                    <input type="hidden" name="search_gender" value="<?php echo $_GET['gender'] ?>">
+                    <input type="hidden" name="search_round" value="<?php echo $_GET['round'] ?>">
                     <div class="UserProfile_modify UserProfile_input">
                         <div>
                             <ul class="UserDesc">
@@ -60,7 +60,7 @@ $row = mysqli_fetch_array($result);
                                 <li class="row input_row Desc_item">
                                     <span>경기 장소</span>
                                     <input placeholder="경기 장소" type="text" name="location" maxlength="50" required=""
-                                        value="<?php echo $row['schedule_location'] ?>" />
+                                        value="<?php echo $row['schedule_location']; ?>" />
                                 </li>
                                 <li class="row input_row Desc_item">
                                     <span>경기 시간</span>

@@ -120,6 +120,7 @@ if (isset($searchValue) && ($searchValue["schedule_sports"] != "non" || $searchV
     $sql .= " $sql_order LIMIT $page_list_count, $pagesizeValue";
     $result = $db->query($sql);
 }
+
 $total_count = mysqli_num_rows($count);
 ?>
 
@@ -156,6 +157,7 @@ $total_count = mysqli_num_rows($count);
                             <div class="defaultSelectBox">
                                 <select title="구분" name="schedule_sports">
                                     <option value="non" hidden="">구분</option>
+                                    <option value="non">전체</option>
                                     <?php
                                     $sSql = "SELECT distinct sports_category FROM list_sports;";
                                     $sResult = $db->query($sSql);
@@ -248,11 +250,6 @@ $total_count = mysqli_num_rows($count);
                     </thead>
                     <tbody class="table_tbody entry_table">
                     <?php
-                        // $tmp= $row["schedule_name"].$row["schedule_round"].$row['schedule_gender'];
-                        // if(in_array($tmp,$can)){
-                            //         continue;
-                            //     }
-                            // $i = count($can) - $page_list_count;
                             $i = 1;
                             $j = 0;
                             $num = 0;
@@ -355,6 +352,13 @@ $total_count = mysqli_num_rows($count);
 
                             $S_result = $db->query($S_sql);
                             $S_row = mysqli_fetch_array($S_result);;
+
+                            $condition = '';
+                            $whereD = "
+                                and s1.schedule_sports=s2.schedule_sports 
+                                AND s1.schedule_name=s2.schedule_name 
+                                AND s1.schedule_gender=s2.schedule_gender";
+
                             //@Potatoeunbi
                             //해당 경기의 신기록도 삭제하기 위해서 경기의 끝나는 시간을 다 불러오는 sql문.(대분류, 소분류 모두)
                             $endsql = "select distinct record_end from list_record where record_sports='".$_POST["sports"]."' and record_gender='".$_POST["gender"]."' and record_round='".$_POST["round"]."'";
@@ -366,7 +370,7 @@ $total_count = mysqli_num_rows($count);
                                             WHERE worldrecord_sports=? 
                                             AND worldrecord_location=? 
                                             AND worldrecord_gender=? 
-                                            AND worldrecord_datetime=DATETIME( ? );";
+                                            AND worldrecord_datetime=?;";
                                 $worldstmt = $db->prepare($worldsql);
                                 $worldstmt->bind_param("ssss", $S_row['schedule_sports'],  $S_row['schedule_location'], $S_row['schedule_gender'], $endrow['record_end']);
                                 $worldstmt->execute();
@@ -384,12 +388,10 @@ $total_count = mysqli_num_rows($count);
 
                             //@Potatoeunbi
                             //경기 삭제(생성된 대분류, 소분류 모두)
-                            $sql = "DELETE s1 FROM list_schedule AS s1 
-                                join list_schedule AS s2 
-                                where ( $whereD $condition );";
+                            $sql = "DELETE FROM list_schedule WHERE schedule_sports=? AND schedule_round=? AND schedule_gender=?;";
 
                             $stmt = $db->prepare($sql);
-                            $stmt->bind_param("s", $_POST["schedule_delete"]);
+                            $stmt->bind_param("sss", $S_row['schedule_sports'],$S_row['schedule_round'], $S_row['schedule_gender']);
                             $stmt->execute();
 
 
@@ -410,10 +412,7 @@ $total_count = mysqli_num_rows($count);
                             <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
                                 출력</label>
                         </form>
-                        <form action="action/sport/sport_create_schedule.php" method="post" enctype="multipart/form-data">
-                            <input type="submit" id="create_schedule" hidden="" />
-                            <label for="create_schedule" class="defaultBtn BIG_btn2 matchBtn">자동경기생성</label>
-                        </form>
+                        
                     </div>
                     <div class="registrationBtn">
                     <?php
@@ -433,6 +432,12 @@ $total_count = mysqli_num_rows($count);
     </div>
 
     <script src="/assets/js/main.js?ver=4"></script>
+    <script>
+    // 일정 생성, 수정 후 부모 페이지(일정 목록 페이지) 자동 리로드
+    window.onunload = function() {
+        window.opener.location.reload();
+    };
+    </script>
 </body>
 
 </html>

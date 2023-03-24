@@ -1,11 +1,4 @@
 <?php
-
-require_once "console_log.php";
-require_once "head.php";
-require_once "includes/auth/config.php";
-require_once "security/security.php";
-require_once "action/module/dictionary.php";
-
 // AJAX에서 던진 순서와 선수이름 인자값을 AJAX로 받아 새로운 row 생성
 // @author 임지훈 @vanillacake369
 function addNewRow($group, $lane, $id, $name)
@@ -26,6 +19,14 @@ function addNewRow($group, $lane, $id, $name)
     // <!-- 선수 이름 -->
     echo '<input type="text" name="name[]" value="' . $name . '">';
     echo '</td>';
+    // 삭제버튼
+    echo '<td>';
+    echo '<div class="filed_BTN2">';
+    echo '<button type="button" name="delete_each_row" class="defaultBtn BIG_btn BTN_Blue filedBTN"><i class="xi-minus"></i></button>';
+    echo '</div>';
+    echo '</td>';
+    echo '</tr>';
+    echo '</tbody>';
     echo '</tr>';
     echo '</tbody>';
 }
@@ -35,16 +36,17 @@ if (isset($_POST['functionName']) && $_POST['functionName'] == 'addNewRow') {
     $lane = $_POST['lane'];
     $id = $_POST['id'];
     $name = $_POST['name'];
-
-    console_log($group);
-    console_log($lane);
-    console_log($id);
-    console_log($name);
-
     // call the function with the data
     addNewRow($group, $lane, $id,  $name);
     exit(); // stop executing the script after the function call
 }
+
+require_once "console_log.php";
+require_once "head.php";
+require_once "includes/auth/config.php";
+require_once "security/security.php";
+require_once "action/module/dictionary.php";
+
 
 global $db, $categoryOfSports_dic;
 $group_num = $_GET["record_group"] ?? null;         // ~ 조
@@ -69,10 +71,6 @@ while ($result = mysqli_fetch_array($get_all_athlete_of_group)) {
         $each_group_athletes_id_lane[$result["record_group"]][$result["record_athlete_id"]][] = $result["record_order"];    // [1조][22232][2번 레인]
     }
 }
-
-console_log($each_group_athletes_id_lane);
-
-
 // m조에 대해
 $first_index_each_group_athletes_id_lane = array_key_first($each_group_athletes_id_lane);
 $last_index_each_group_athletes_id_lane = array_key_last($each_group_athletes_id_lane);
@@ -81,13 +79,6 @@ for ($i = $first_index_each_group_athletes_id_lane; $i <= $last_index_each_group
     $each_group_athletes_id = array_keys($each_group_athletes_id_lane[$i]);
     // each_group_athletes_lane[][] :: m조에 편성되어있는 n명의 선수들 레인값
     $each_group_athletes_lane = array_values($each_group_athletes_id_lane[$i]);
-
-
-    console_log($each_group_athletes_id);
-    console_log($each_group_athletes_lane);
-
-
-
     // n명의 선수들 정보 가저오는 query
     $query = "SELECT athlete_id, athlete_name, athlete_country, athlete_division, athlete_attendance FROM list_athlete WHERE athlete_gender = ? AND INSTR(athlete_attendance, ?) AND (athlete_id = ";
     $query = $query . implode(" OR athlete_id = ", $each_group_athletes_id) . ") ORDER BY athlete_id asc";

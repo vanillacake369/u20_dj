@@ -146,7 +146,7 @@ function fieldFinal2(obj) {
     }
     a.children[a.children.length - 3].firstElementChild.value = top;
     a.nextElementSibling.children[
-    a.children.length - 6
+    a.children.length - 7
         ].firstElementChild.value = wind;
 }
 
@@ -155,6 +155,7 @@ function fieldFinal3(obj) {
     let top = "0";
     let wind = "";
     let a = obj.parentElement.parentElement.previousElementSibling;
+
     for (i = 3; i < a.children.length - 3; i++) {
         if (parseFloat(top) < parseFloat(a.children[i].firstElementChild.value)) {
             top = a.children[i].firstElementChild.value;
@@ -163,9 +164,7 @@ function fieldFinal3(obj) {
         }
     }
     a.children[a.children.length - 3].firstElementChild.value = top;
-    a.nextElementSibling.children[
-    a.children.length - 6
-        ].firstElementChild.value = wind;
+    a.nextElementSibling.children[a.children.length - 7].firstElementChild.value = wind;
 }
 
 //일반 필드 경기

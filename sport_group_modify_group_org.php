@@ -64,7 +64,9 @@ $select_athlete_ids_sql = 'SELECT record_group,record_athlete_id,record_order FR
 $get_all_athlete_of_group = $db->query($select_athlete_ids_sql);
 
 while ($result = mysqli_fetch_array($get_all_athlete_of_group)) {
-    $each_group_athletes_id_lane[$result["record_group"]][$result["record_athlete_id"]][] = $result["record_order"];    // [1조][22232][2번 레인]
+    if ($result["record_order"] != null) {
+        $each_group_athletes_id_lane[$result["record_group"]][$result["record_athlete_id"]][] = $result["record_order"];    // [1조][22232][2번 레인]
+    }
 }
 // m조에 대해
 $first_index_each_group_athletes_id_lane = array_key_first($each_group_athletes_id_lane);
@@ -183,14 +185,14 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                                             <!-- 조 :: record_group -->
                                             <input type="hidden" name="group[]" id="group[]" value="<?php echo $i ?>">
                                             <!-- 순서 :: record_order -->
-                                            <input type="hidden" name="order[]" id="order[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>">
-                                            <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?>" name="lane[]">
+                                            <input type="hidden" name="order[]" id="order[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane'] ?? NULL ?>">
+                                            <input type="text" class="number" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_lane']  ?? NULL ?>" name="lane[]">
                                         </td>
                                         <td>
                                             <!-- 선수 id :: record_athlete_id-->
-                                            <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id'] ?>">
+                                            <input type="hidden" name="athlete_id[]" id="athlete_id[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_id']  ?? NULL ?>">
                                             <!-- 선수 이름 -->
-                                            <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name'] ?>">
+                                            <input type="text" name="name[]" value="<?php echo $each_group_athletes_data[$i][$j]['athlete_name']  ?? NULL ?>">
                                         </td>
                                         <td>
                                             <!-- 삭제 버튼 -->
@@ -263,10 +265,12 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                     // 각 조 별로 테이블,input,select의 id값이 달라야 서로 달리 적용가능
                     $(document).ready(function() {
                         $("button[name='delete_each_row']").click(function() {
-                            console.log($(this));
-                            var tableId = $(this).closest("tr").find("input").each(function() {
-                                $(this).val('');
-                            });
+                            // SQL NULL값 INSERT : 해당 선수 record의 group과 order => NULL
+                            $(this).closest("tr").find("input[name='group[]']").val('');
+                            $(this).closest("tr").find("input[name='order[]']").val('');
+                            // 가상 삭제(뷰)
+                            $(this).closest("tr").find("input[name='lane[]']").val('');
+                            $(this).closest("tr").find("input[name='name[]']").val('');
                         });
                     });
                 </script>

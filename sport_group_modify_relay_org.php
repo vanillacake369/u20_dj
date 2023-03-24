@@ -65,7 +65,9 @@ $select_athlete_ids_sql = 'SELECT record_group,record_athlete_id,record_order FR
 $get_all_athlete_of_group = $db->query($select_athlete_ids_sql);
 
 while ($result = mysqli_fetch_array($get_all_athlete_of_group)) {
-    $each_group_athletes_id_lane[$result["record_group"]][$result["record_athlete_id"]][] = $result["record_order"];    // [1조][22232][2번 레인]
+    if ($result["record_order"] != null) {
+        $each_group_athletes_id_lane[$result["record_group"]][$result["record_athlete_id"]][] = $result["record_order"];    // [1조][22232][2번 레인]
+    }
 }
 
 console_log($each_group_athletes_id_lane);
@@ -277,10 +279,12 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                     // 각 조 별로 테이블,input,select의 id값이 달라야 서로 달리 적용가능
                     $(document).ready(function() {
                         $("button[name='delete_each_row']").click(function() {
-                            console.log($(this));
-                            var tableId = $(this).closest("tr").find("input").each(function() {
-                                $(this).val('');
-                            });
+                            // SQL NULL값 INSERT : 해당 선수 record의 group과 order => NULL
+                            $(this).closest("tr").find("input[name='group[]']").val('');
+                            $(this).closest("tr").find("input[name='order[]']").val('');
+                            // 가상 삭제(뷰)
+                            $(this).closest("tr").find("input[name='lane[]']").val('');
+                            $(this).closest("tr").find("input[name='name[]']").val('');
                         });
                     });
                 </script>

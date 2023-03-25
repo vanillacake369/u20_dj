@@ -56,9 +56,9 @@ WHERE schedule_sports='decathlon' and schedule_gender ='m' AND r.record_round = 
 ORDER BY " . $order_val . ",record_trial;";
 $result = $db->query($sql);
 $total_count = mysqli_num_rows($result);
-if (empty($total_count)) {
-    echo "<script>alert('세부 경기 일정이 없습니다.'); location.href='./sport_schedulemanagement.php';</script>";
-}
+// if (empty($total_count)) {
+//     echo "<script>alert('세부 경기 일정이 없습니다.'); location.href='./sport_schedulemanagement.php';</script>";
+// }
 
 $groupsql="SELECT distinct record_round AS r,(select count(distinct record_group) FROM list_record WHERE record_sports='decathlon' and record_gender ='m' AND record_round= r)AS cnt FROM list_record WHERE record_sports='decathlon' and record_gender ='m' 
 AND record_sports=record_sports AND record_gender=record_gender AND record_round!='final'

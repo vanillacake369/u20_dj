@@ -191,17 +191,16 @@ function islane($schedule_sports, $what)
                 <?php
                             // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                             if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
-                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
+                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" ';
                                 if ( $schedule_sports == " 4x100mR" || $schedule_sports == "4x400mR") {
                                     echo "/record/track_relay_result_view.php";
                                 } else {
                                     echo "/record/track_normal_result_view.php";
                                 }
                                 echo '">기록 입력</button>';
-                                echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';
-                                echo 'location.href =';
-                                echo '\'./record_change_type.php?id='.$schedule_id.'\'';
-                                echo '}" class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
+                                echo '<input type="submit" formaction="';
+                                echo './record_change_type.php"';
+                                echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                             }
                             ?>
             </div>
@@ -411,17 +410,16 @@ function islane($schedule_sports, $what)
         <?php
                             // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                             if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
-                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
+                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" ';
                                 if ( $schedule_sports == " 4x100mR" || $schedule_sports == "4x400mR") {
                                     echo "/record/track_relay_result_view.php";
                                 } else {
                                     echo "/record/track_normal_result_view.php";
                                 }
                                 echo '">기록 입력</button>';
-                                echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';
-                                echo 'location.href =';
-                                echo '\'./record_change_type.php?id='.$schedule_id.'\'';
-                                echo '}" class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
+                                echo '<input type="submit" formaction="';
+                                echo './record_change_type.php"';
+                                echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                             }
                             ?>
     </div>

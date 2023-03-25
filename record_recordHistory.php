@@ -198,6 +198,12 @@ $total_count = mysqli_num_rows($count);
 <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/assets/DataTables/datatables.min.js"></script>
 <script type="text/javascript" src="/assets/js/useDataTables.js"></script>
+<script>
+function jbSubmit() {
+
+    return window.confirm("정말로 삭제하시겠습니까?");
+}
+</script>
 </head>
 
 <body>
@@ -362,7 +368,19 @@ $total_count = mysqli_num_rows($count);
                             }
                             echo "<td colspan='2' scope='col'>";
                             if (authCheck($db, "authRecordsDelete")) {
-                                echo "<button type='button' class='BTN_Red defaultBtn'>삭제</button>";
+                                echo "<td>";
+                                echo '<form action="/action/record/worldrecord_delete.php" method="post" onsubmit="return jbSubmit();">';
+                                echo '<input type=hidden name=sports value="'.$row["worldrecord_sports"].'">';
+                                echo '<input type=hidden name=gender value="'.$row["worldrecord_gender"].'">';
+                                echo '<input type=hidden name=record value="'.$row["worldrecord_record"].'">';
+                                echo '<input type=hidden name=datetime value="'.$row["worldrecord_datetime"].'">';
+                                echo '<input type=hidden name=country_code value="'.$row["worldrecord_country_code"].'">';
+                                echo '<input type=hidden name=athletics value="'.$row["worldrecord_athletics"].'">';
+                                echo '<input type=hidden name=athlete_name value="'.$row["worldrecord_athlete_name"].'">';
+                                echo '<input type=hidden name=location value="'.$row["worldrecord_location"].'">';
+                                echo '<input type=hidden name=wind value="'.$row["worldrecord_wind"].'">';
+                                echo '<input type="submit"';
+                                echo 'value="삭제" class="BTN_Red defaultBtn"></form></td>' ; 
                             }
                             echo "</td>";
                             echo "</tr>";

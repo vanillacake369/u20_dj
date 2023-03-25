@@ -14,7 +14,10 @@ if (
 	!isset($_POST["coach_birth_day"]) ||
 	!isset($_POST["coach_age"]) ||
 	!isset($_POST["coach_duty"]) ||
-	!isset($_POST["coach_sector"])
+	!isset($_POST["coach_village"]) ||
+	!isset($_POST["coach_seats"]) ||
+	!isset($_POST["coach_sector"]) ||
+	!isset($_POST["coach_venue_access"])
 	// !isset($_POST["coach_schedules"]) ||
 	// !isset($_POST["attendance_sports"])
 ) {
@@ -28,7 +31,6 @@ require_once __DIR__ . "/dictionary.php"; //B:서치 select 태크 사용하기 
 
 // $schedule = implode(',', $_POST["coach_schedules"]);
 // $attendance_id = implode(',', $_POST["attendance_sports"]);
-$sector = implode(',', $_POST["coach_sector"]);
 $birth_day = $_POST["coach_birth_year"] . "-" . $_POST["coach_birth_month"] . "-" . $_POST["coach_birth_day"];
 $name = strtolower($_POST["coach_second_name"]) . " " . strtoupper($_POST["coach_first_name"]);
 $profile = strtolower($_POST["coach_second_name"]) . $birth_day . "_profile";
@@ -52,8 +54,19 @@ $coach_duty = trim($_POST["coach_duty"]);
 $coach_gender = trim($_POST["coach_gender"]);
 $coach_birth = trim($birth_day);
 $coach_age = trim($_POST["coach_age"]);
-$coach_sector = trim($sector);
 $coach_profile = trim($profile);
+if (isset($_POST["coach_eat"]) && $_POST["coach_eat"] != "")
+	$coach_eat = "y";
+else
+	$coach_eat = "n";
+if (isset($_POST["coach_transport"]) &&  $_POST["coach_transport"] != "")
+	$coach_transport = trim($_POST["coach_transport"]);
+else
+	$coach_transport = "";
+$coach_seats = trim($_POST["coach_seats"]);
+$coach_village = trim($_POST["coach_village"]);
+$coach_sector = implode(',', $_POST["coach_sector"]);
+$coach_venue_access = trim($_POST["coach_venue_access"]);
 // $coach_schedule = trim($schedule);
 // $coach_attendance = trim($attendance_id);
 
@@ -65,7 +78,6 @@ if ($_FILES['main_photo']['name']) {
 	if (!is_dir($upload_dir))
 		mkdir($upload_dir, 0777);
 
-	//for ($i = 0; $i < count($_FILES['main_photo']['name']); $i++) {
 		$FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
 		$myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
 
@@ -91,18 +103,17 @@ if ($_FILES['main_photo']['name']) {
 		} else {
 			AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
 			exit;
-		//}
 	}
 } else {
 	$coach_image = 'profile.jpg';
 }
 
 $sql = "INSERT INTO list_coach
-            (coach_name, coach_country, coach_region, coach_division, coach_duty, coach_gender, coach_birth, coach_age, coach_sector, coach_profile)
-            VALUES(?,?,?,?,?,?,?,?,?,?)";
+            (coach_name, coach_country, coach_region, coach_division, coach_duty, coach_gender, coach_birth, coach_age, coach_sector, coach_profile, coach_eat,coach_transport,coach_venue_access,coach_seats,coach_village)
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 $stmt = $db->prepare($sql);
 $stmt->bind_param(
-	"ssssssssss",
+	"sssssssssssssss",
 	$coach_name,
 	$coach_country,
 	$coach_region,
@@ -112,7 +123,12 @@ $stmt->bind_param(
 	$coach_birth,
 	$coach_age,
 	$coach_sector,
-	$coach_image
+	$coach_image,
+	$coach_eat,
+	$coach_transport,
+	$coach_venue_access,
+	$coach_seats,
+	$coach_village
 );
 
 $stmt->execute();

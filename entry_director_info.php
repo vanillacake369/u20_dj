@@ -17,20 +17,7 @@ if (!isset($_GET["id"])) {
     echo "<script>alert('잘못된 유입경로입니다.')</script>";
     exit();
 }
-$sql = "SELECT 
-                    director_id,
-                    director_name,
-                    country_name_kr,
-                    country_code,
-                    director_division,
-                    director_gender,
-                    director_birth,
-                    director_age, 
-                    director_duty,
-                    director_schedule,
-                    director_profile,
-                    director_attendance
-                    FROM list_director
+$sql = "SELECT * FROM list_director
                     INNER JOIN list_country  
                     ON director_country=country_code
                 where director_id=" . $_GET["id"];
@@ -91,6 +78,39 @@ $row = mysqli_fetch_array($result);
                                 <li class="row Desc_item">
                                     <span>나이</span>
                                     <p><?php echo htmlspecialchars($row["director_age"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>식사 가능 여부</span>
+                                    <p><?php echo htmlspecialchars($row["director_eat"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>대회접근시설</span>
+                                    <p><?php echo htmlspecialchars($row["director_venue_access"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>경기장 내 좌석</span>
+                                    <p><?php echo htmlspecialchars($row["director_seats"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>교통 권한</span>
+                                    <p><?php echo htmlspecialchars($row["director_transport"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>선수촌</span>
+                                    <p><?php echo htmlspecialchars($row["director_village"]) ?></p>
+                                </li>
+                                <li class="row">
+                                <span>경기장 접근 허용</span>
+                                    <div class="full_div">
+                                        <?php
+                                            $sector_row = explode(",",htmlspecialchars($row["director_sector"]));
+                                            $i = 0;
+                                            foreach ($sector_row as $sector)
+                                            {
+                                                echo "<p>" . $sector . "</p>";
+                                            }
+                                        ?>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

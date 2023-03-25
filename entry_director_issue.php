@@ -23,20 +23,7 @@ if (!$_POST['director_id']) {
              "UPDATE list_director SET director_isIssued = 'Y' WHERE director_id=" . $id;
              $db->query($update_issue_sql);
 
-             $sql = "SELECT 
-                    director_id,
-                    director_name,
-                    country_name,
-                    country_name_kr,
-                    country_code,
-                    director_division,
-                    director_gender,
-                    director_birth,
-                    director_age, 
-                    director_duty,
-                    director_schedule,
-                    director_profile,
-                    director_attendance
+             $sql = "SELECT *
                     FROM list_director
                     INNER JOIN list_country  
                     ON director_country=country_code
@@ -64,7 +51,7 @@ if (!$_POST['director_id']) {
                 </div>
                 <!-- 직책 -->
                 <div class="AD_front_desc">
-                    <p>Technical Official</p>
+                    <p>Director</p>
                 </div>
                 <div class="AD_front_text">
                     <p>Yecheon Asian U20</p>
@@ -72,26 +59,30 @@ if (!$_POST['director_id']) {
                 </div>
                 <!-- 접근코드 -->
                 <div class="AD_Venue">
-                    <p>HQ</p>
+                    <p><?php if (htmlspecialchars($row["director_venue_access"]) == 'HQ') echo 'HQ';?></p>
                 </div>
                 <!-- 접근 무한 -->
                 <div class="All_Venue">
-                    <p>∞</p>
+                    <p><?php if (htmlspecialchars($row["director_venue_access"]) == 'Y') echo '∞';?></p>
                 </div>
                     <!-- 시설 접근 코드 -->
                     <!-- 선수촌 거주 허용 코드 -->
-                    <p class="village">AV</p>
+                    <p class="village"><?php echo htmlspecialchars($row["director_village"]) ?></p>
                     <!-- 식사 가능 여부 없을 시 이미지 삭제 -->
-                    <img class="eat" src="/assets/images/eat.png" alt="">
+                    <?php if (htmlspecialchars($row["director_eat"]) == 'y'){ ?>
+                        <img class="eat" src="/assets/images/eat.png" alt="">
+                    <?php } ?>
                     <!-- 교통권한 -->
-                    <p class="transport">T</p>
+                    <p class="transport"><?php if (htmlspecialchars($row["director_transport"]) != "") echo "T"; ?></p>
                     <!-- 경기장 내 좌석 -->
-                    <p class="Seats">RS</p>
+                    <p class="Seats"><?php echo htmlspecialchars($row["director_seats"]) ?></p>
                     <div class="Access_venue">
-                    <p>1</p>
-                    <p>2</p>
-                    <p>3</p>
-                    <p>4</p>
+                    <?php
+                        $sector_row = explode(",", htmlspecialchars($row["director_sector"]));
+                        foreach ($sector_row as $sector) {
+                            echo "<p>" . $sector . "</p>";
+                        }
+                    ?>
                 </div>
             </div>
         </div>

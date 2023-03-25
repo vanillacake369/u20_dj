@@ -17,21 +17,7 @@ if (!isset($_GET["id"])) {
     exit();
 }
 $id = $_GET["id"];
-$sql = "SELECT 
-                    judge_id,
-                    judge_name,
-                    country_name_kr,
-                    country_code,
-                    judge_division,
-                    judge_gender,
-                    judge_birth,
-                    judge_age, 
-                    judge_duty,
-                    judge_schedule,
-                    judge_profile,
-                    judge_attendance,
-                    judge_account,
-                    judge_password
+$sql = "SELECT *
                     FROM list_judge
                     INNER JOIN list_country  
                     ON judge_country=country_code
@@ -94,6 +80,39 @@ $row = mysqli_fetch_array($result);
                                 <li class="row">
                                     <span>나이</span>
                                     <p><?php echo htmlspecialchars($row["judge_age"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>식사 가능 여부</span>
+                                    <p><?php echo htmlspecialchars($row["judge_eat"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>대회접근시설</span>
+                                    <p><?php echo htmlspecialchars($row["judge_venue_access"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>경기장 내 좌석</span>
+                                    <p><?php echo htmlspecialchars($row["judge_seats"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>교통 권한</span>
+                                    <p><?php echo htmlspecialchars($row["judge_transport"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>선수촌</span>
+                                    <p><?php echo htmlspecialchars($row["judge_village"]) ?></p>
+                                </li>
+                                <li class="row">
+                                <span>경기장 접근 허용</span>
+                                    <div class="full_div">
+                                        <?php
+                                            $sector_row = explode(",",htmlspecialchars($row["judge_sector"]));
+                                            $i = 0;
+                                            foreach ($sector_row as $sector)
+                                            {
+                                                echo "<p>" . $sector . "</p>";
+                                            }
+                                        ?>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

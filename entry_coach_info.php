@@ -18,22 +18,10 @@ if (!isset($_GET["id"])) {
     echo "<script>alert('잘못된 유입경로입니다.')</script>";
     exit();
 }
-$sql = "SELECT 
-                    coach_id,
-                    coach_name,
-                    country_name_kr,
-                    country_code,
-                    coach_region,
-                    coach_division,
-                    coach_gender,
-                    coach_birth,
-                    coach_age, 
-                    coach_duty,
-                    coach_profile
-                    FROM list_coach
-                    INNER JOIN list_country  
-                    ON coach_country=country_code
-                where coach_id=" . $_GET["id"];
+$sql = "SELECT * FROM list_coach
+        INNER JOIN list_country  
+        ON coach_country=country_code
+        where coach_id=" . $_GET["id"];
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 ?>
@@ -94,6 +82,39 @@ $row = mysqli_fetch_array($result);
                                 <li class="row">
                                     <span>나이</span>
                                     <p><?= htmlspecialchars($row["coach_age"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>식사 가능 여부</span>
+                                    <p><?php echo htmlspecialchars($row["coach_eat"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>대회접근시설</span>
+                                    <p><?php echo htmlspecialchars($row["coach_venue_access"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>경기장 내 좌석</span>
+                                    <p><?php echo htmlspecialchars($row["coach_seats"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>교통 권한</span>
+                                    <p><?php echo htmlspecialchars($row["coach_transport"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>선수촌</span>
+                                    <p><?php echo htmlspecialchars($row["coach_village"]) ?></p>
+                                </li>
+                                <li class="row">
+                                <span>경기장 접근 허용</span>
+                                    <div class="full_div">
+                                        <?php
+                                            $sector_row = explode(",",htmlspecialchars($row["coach_sector"]));
+                                            $i = 0;
+                                            foreach ($sector_row as $sector)
+                                            {
+                                                echo "<p>" . $sector . "</p>";
+                                            }
+                                        ?>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

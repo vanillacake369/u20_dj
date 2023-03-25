@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../../backheader.php";
+require_once __DIR__ . "/../../class-image.php";
 
 if (
     !isset($_POST["coach_first_name"]) ||
@@ -12,8 +13,11 @@ if (
     !isset($_POST["coach_birth_month"]) ||
     !isset($_POST["coach_birth_day"]) ||
     !isset($_POST["coach_age"]) ||
-    !isset($_POST["coach_duty"])
-    // !isset($_POST["coach_sector"])
+    !isset($_POST["coach_duty"]) ||
+	!isset($_POST["coach_village"]) ||
+	!isset($_POST["coach_seats"]) ||
+	!isset($_POST["coach_venue_access"])||
+    !isset($_POST["coach_sector"])
     // !isset($_POST["coach_schedules"]) ||
     // !isset($_POST["attendance_sports"])
 ) {
@@ -27,7 +31,6 @@ require_once "./dictionary.php"; //B:서치 select 태크 사용하기 위한 �
 
 // $schedule = implode(',', $_POST["coach_schedules"]);
 // $attendance_id = implode(',', $_POST["attendance_sports"]);
-$sector = implode(',', $_POST["coach_sector"]);
 $birth_day = $_POST["coach_birth_year"] . "-" . $_POST["coach_birth_month"] . "-" . $_POST["coach_birth_day"];
 $name = strtolower($_POST["coach_second_name"]) . " " . strtoupper($_POST["coach_first_name"]);
 $profile = strtolower($_POST["coach_second_name"]) . $birth_day . "_profile";
@@ -41,8 +44,19 @@ $coach_duty = trim($_POST["coach_duty"]);
 $coach_gender = trim($_POST["coach_gender"]);
 $coach_birth = trim($birth_day);
 $coach_age = trim($_POST["coach_age"]);
-$coach_sector = trim($sector);
 $coach_profile = trim($profile);
+if (isset($_POST["coach_eat"]) && $_POST["coach_eat"] != "")
+	$coach_eat = "y";
+else
+	$coach_eat = "n";
+if (isset($_POST["coach_transport"]) &&  $_POST["coach_transport"] != "")
+	$coach_transport = trim($_POST["coach_transport"]);
+else
+	$coach_transport = "";
+$coach_seats = trim($_POST["coach_seats"]);
+$coach_village = trim($_POST["coach_village"]);
+$coach_sector = implode(',', $_POST["coach_sector"]);
+$coach_venue_access = trim($_POST["coach_venue_access"]);
 // $coach_schedule = trim($schedule);
 // $coach_attendance = trim($attendance_id);
 
@@ -66,14 +80,19 @@ if ($_FILES['main_photo']["size"] == 0) {
         coach_gender=?,
         coach_birth=?,
         coach_age=?,
-        coach_sector=?
+        coach_sector=?,
+        coach_eat=?,
+        coach_transport=?,
+        coach_venue_access=?,
+        coach_seats=?,
+        coach_village=?
         -- coach_schedule=?,
         -- coach_attendance=?
         WHERE coach_id=?";
     $stmt = $db->prepare($sql);
 
     $stmt->bind_param(
-        "ssssssssss",
+        "sssssssssssssss",
         $coach_name,
         $coach_country,
         $coach_region,
@@ -83,6 +102,11 @@ if ($_FILES['main_photo']["size"] == 0) {
         $coach_birth,
         $coach_age,
         $coach_sector,
+        $coach_eat,
+        $coach_transport,
+        $coach_venue_access,
+        $coach_seats,
+        $coach_village,
         // $coach_schedule,
         // $coach_attendance,
         $coach_id
@@ -142,11 +166,16 @@ if ($_FILES['main_photo']["size"] == 0) {
         coach_sector=?,
         -- coach_schedule=?,
         -- coach_attendance=?,
-        coach_profile=?
+        coach_profile=?,
+        coach_eat=?,
+        coach_transport=?,
+        coach_venue_access=?,
+        coach_seats=?,
+        coach_village=?
         WHERE coach_id=?";
     $stmt = $db->prepare($sql);
     $stmt->bind_param(
-        "sssssssssss",
+        "ssssssssssssssss",
         $coach_name,
         $coach_country,
         $coach_region,
@@ -159,6 +188,11 @@ if ($_FILES['main_photo']["size"] == 0) {
         // $coach_schedule,
         // $coach_attendance,
         $coach_image,
+        $coach_eat,
+        $coach_transport,
+        $coach_venue_access,
+        $coach_seats,
+        $coach_village,
         $coach_id
     );
     $stmt->execute();

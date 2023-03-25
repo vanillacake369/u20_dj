@@ -173,10 +173,9 @@ if (empty($total_count)) {
                                 echo "/record/field_normal_result_view.php";
                             }
                             echo '">기록 입력</button>';
-                            echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';
-                            echo 'location.href =';
-                            echo '\'./record_change_type.php';
-                            echo '}" class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
+                            echo '<input type="submit" formaction="';
+                                echo './record_change_type.php"';
+                                echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                         }
                         ?>
                     </div>
@@ -384,10 +383,9 @@ if (empty($total_count)) {
                         }
                         echo '">기록 입력</button>';
                         if (authCheck($db, "authRecordsUpdate")) {
-                            echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';
-                            echo 'location.href =';
-                            echo '\'./record_change_type.php';
-                            echo '}" class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
+                            echo '<input type="submit" formaction="';
+                                echo './record_change_type.php"';
+                                echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                         }
                     }?>
                             <?php      }

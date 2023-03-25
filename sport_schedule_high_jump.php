@@ -46,63 +46,63 @@ $judgerow = mysqli_fetch_array($judgeresult);
 </head>
 
 <body>
-  <div class="schedule_container">
-    <div class="result_tit">
-      <div class="result_list2">
-        <p class="tit_left_blue"><?= $schedule_sports ?>
-          <?php echo $schedule_round == 'final' ? '결승전' : ($schedule_round == 'semi-final' ? '준결승전' : '예선전') ?>
-        </p>
-      </div>
-      <div class="result_list">
-        <?php echo '<p class="defaultBtn';
+    <div class="schedule_container">
+        <div class="result_tit">
+            <div class="result_list2">
+                <p class="tit_left_blue"><?= $schedule_sports ?>
+                    <?php echo $schedule_round == 'final' ? '결승전' : ($schedule_round == 'semi-final' ? '준결승전' : '예선전') ?>
+                </p>
+            </div>
+            <div class="result_list">
+                <?php echo '<p class="defaultBtn';
         echo $schedule_result == 'o' ? ' BTN_DarkBlue">마감중</p>' : ($schedule_result == 'l' ? '
                 BTN_Blue">진행중</p>' : ' BTN_yellow ">대기중</p>'); ?>
-      </div>
-    </div>
-    <div class="schedule schedule_flex">
-        <div class="schedule_filed filed_list_item">
-          <div class="schedule_filed_tit">
-            <p class="tit_left_yellow">1조</p>
-            <?php echo '<span class="defaultBtn';
+            </div>
+        </div>
+        <div class="schedule schedule_flex">
+            <div class="schedule_filed filed_list_item">
+                <div class="schedule_filed_tit">
+                    <p class="tit_left_yellow">1조</p>
+                    <?php echo '<span class="defaultBtn';
             echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
             ?>
-          </div>
-      <form action="" method="post">
-        <input name="round" value="<?=$schedule_round?>" hidden>
-        <input name="sports" value="<?=$schedule_sports?>" hidden>
-        <input name="gender" value="<?=$schedule_gender?>" hidden>
-        <input name="group" value="<?=$schedule_group?>" hidden>
-        <input name="name" value="<?=$schedule_name?>" hidden>
-        <input name="result" value="<?=$schedule_result?>" hidden>
+                </div>
+                <form action="" method="post">
+                    <input name="round" value="<?=$schedule_round?>" hidden>
+                    <input name="sports" value="<?=$schedule_sports?>" hidden>
+                    <input name="gender" value="<?=$schedule_gender?>" hidden>
+                    <input name="group" value="<?=$schedule_group?>" hidden>
+                    <input name="name" value="<?=$schedule_name?>" hidden>
+                    <input name="result" value="<?=$schedule_result?>" hidden>
 
-          <table class="box_table">
-            <colgroup>
-              <col style="width: 3%" />
-              <col style="width: 3%" />
-              <col style="width: 5%" />
-              <col style="width: 15%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 9%" />
-            </colgroup>
-            <thead class="result_table entry_table">
-              <tr>
-                <th style="background: none" rowspan="2">등수</th>
-                <th style="background: none" rowspan="2">순서</th>
-                <th style="background: none" rowspan="2">BIB</th>
-                <th style="background: none" rowspan="2">이름</th>
-                <?php
+                    <table class="box_table">
+                        <colgroup>
+                            <col style="width: 3%" />
+                            <col style="width: 3%" />
+                            <col style="width: 5%" />
+                            <col style="width: 15%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 9%" />
+                        </colgroup>
+                        <thead class="result_table entry_table">
+                            <tr>
+                                <th style="background: none" rowspan="2">등수</th>
+                                <th style="background: none" rowspan="2">순서</th>
+                                <th style="background: none" rowspan="2">BIB</th>
+                                <th style="background: none" rowspan="2">이름</th>
+                                <?php
                 // 높이 찾는 쿼리
                 $highresult = $db->query("SELECT DISTINCT record_" . $result_type . "_record FROM list_record INNER JOIN list_schedule 
                                                 ON list_schedule.schedule_id= list_record.record_schedule_id AND list_schedule.schedule_id = '$schedule_id' and record_" . $result_type . "_record>0 limit 12");
@@ -121,11 +121,11 @@ $judgerow = mysqli_fetch_array($judgeresult);
                                                     onkeyup="heightFormat(this)" readonly></th>';
                 }
                 ?>
-                <th style="background: none" rowspan="2">기록</th>
-                <th style="background: none">비고</th>
-              </tr>
-              <tr id="col2">
-                <?php if ($cnt1 == 12) {
+                                <th style="background: none" rowspan="2">기록</th>
+                                <th style="background: none">비고</th>
+                            </tr>
+                            <tr id="col2">
+                                <?php if ($cnt1 == 12) {
                   $cnt2 = 0;
                   $highresult = $db->query("SELECT DISTINCT record_" . $result_type . "_record FROM list_record INNER JOIN list_schedule 
                                                 ON list_schedule.schedule_id= list_record.record_schedule_id AND list_schedule.schedule_id = '$schedule_id' and record_" . $result_type . "_record>0 limit 12,12");
@@ -149,13 +149,13 @@ $judgerow = mysqli_fetch_array($judgeresult);
                                                         onkeyup="heightFormat(this)" readonly></th>';
                   }
                 } ?>
-                <th style="background: none">신기록</th>
-              </tr>
-              <tr class="filed2_bottom">
-              </tr>
-            </thead>
-            <tbody class="table_tbody De_tbody entry_table">
-            <?php
+                                <th style="background: none">신기록</th>
+                            </tr>
+                            <tr class="filed2_bottom">
+                            </tr>
+                        </thead>
+                        <tbody class="table_tbody De_tbody entry_table">
+                            <?php
 
               $i = 1;
               $k = 1;
@@ -180,17 +180,19 @@ $judgerow = mysqli_fetch_array($judgeresult);
               while ($row = mysqli_fetch_array($result)) {
                   if ($row['schedule_group'] != $k) {
               ?>
-              </tbody>
-            </table>
-            <div class="filed_BTN">
-            <div>
-              <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-              <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN" onclick="window.open('/electronic_display.html')">시상식 보기</button>
-              <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
-              <!-- <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button> -->
-            </div>
-            <div>
-              <?php
+                        </tbody>
+                    </table>
+                    <div class="filed_BTN">
+                        <div>
+                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
+                            <!-- <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button> -->
+                        </div>
+                        <div>
+                            <?php
               // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
               if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
                 echo '<button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN" onclick="window.open(\'';
@@ -203,67 +205,66 @@ $judgerow = mysqli_fetch_array($judgeresult);
                 }
                 echo '\')">기록 입력</button>';
                 if (authCheck($db, "authRecordsUpdate")) {
-                  echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';
-                  echo 'location.href =';
-                  echo '\'./record_change_type.php?id=' . $schedule_id . '\'';
-                  echo '}" class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
+                  echo '<input type="submit" formaction="';
+                                echo './record_change_type.php"';
+                                echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                 }
               }
               ?>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-          </form>
         </div>
-      </div>
-    
-    <?php
+
+        <?php
             $k++;
             if ($total_count != $j){
     ?>
-    <div class="schedule schedule_flex">
-        <div class="schedule_filed filed_list_item">
-          <div class="schedule_filed_tit">
-            <p class="tit_left_yellow"><?=$k?>조</p>
-            <?php echo '<span class="defaultBtn';
+        <div class="schedule schedule_flex">
+            <div class="schedule_filed filed_list_item">
+                <div class="schedule_filed_tit">
+                    <p class="tit_left_yellow"><?=$k?>조</p>
+                    <?php echo '<span class="defaultBtn';
             echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
             ?>
-          </div>
-        <form action="" method="post">
-          <input name="round" value="<?=$schedule_round?>" hidden>
-          <input name="sports" value="<?=$schedule_sports?>" hidden>
-          <input name="gender" value="<?=$schedule_gender?>" hidden>
-          <input name="group" value="<?=$schedule_group?>" hidden>
-          <input name="name" value="<?=$schedule_name?>" hidden>
-          <input name="result" value="<?=$schedule_result?>" hidden>
-      
-          <table class="box_table">
-            <colgroup>
-              <col style="width: 3%" />
-              <col style="width: 3%" />
-              <col style="width: 5%" />
-              <col style="width: 15%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 5%" />
-              <col style="width: 9%" />
-            </colgroup>
-            <thead class="result_table entry_table">
-              <tr>
-                <th style="background: none" rowspan="2">등수</th>
-                <th style="background: none" rowspan="2">순서</th>
-                <th style="background: none" rowspan="2">BIB</th>
-                <th style="background: none" rowspan="2">이름</th>
-                <?php
+                </div>
+                <form action="" method="post">
+                    <input name="round" value="<?=$schedule_round?>" hidden>
+                    <input name="sports" value="<?=$schedule_sports?>" hidden>
+                    <input name="gender" value="<?=$schedule_gender?>" hidden>
+                    <input name="group" value="<?=$schedule_group?>" hidden>
+                    <input name="name" value="<?=$schedule_name?>" hidden>
+                    <input name="result" value="<?=$schedule_result?>" hidden>
+
+                    <table class="box_table">
+                        <colgroup>
+                            <col style="width: 3%" />
+                            <col style="width: 3%" />
+                            <col style="width: 5%" />
+                            <col style="width: 15%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 9%" />
+                        </colgroup>
+                        <thead class="result_table entry_table">
+                            <tr>
+                                <th style="background: none" rowspan="2">등수</th>
+                                <th style="background: none" rowspan="2">순서</th>
+                                <th style="background: none" rowspan="2">BIB</th>
+                                <th style="background: none" rowspan="2">이름</th>
+                                <?php
                 // 높이 찾는 쿼리
                 $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record FROM list_record where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 limit 12");
                 $cnt1 = 0;
@@ -281,11 +282,11 @@ $judgerow = mysqli_fetch_array($judgeresult);
                                                     onkeyup="heightFormat(this)" readonly></th>';
                 }
                 ?>
-                <th style="background: none" rowspan="2">기록</th>
-                <th style="background: none">비고</th>
-              </tr>
-              <tr id="col2">
-              <?php if ($cnt1 == 12) {
+                                <th style="background: none" rowspan="2">기록</th>
+                                <th style="background: none">비고</th>
+                            </tr>
+                            <tr id="col2">
+                                <?php if ($cnt1 == 12) {
                   $cnt2 = 0;
                   $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record FROM list_record where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 limit 12,12");
                   while ($highrow = mysqli_fetch_array($highresult)) {
@@ -308,13 +309,13 @@ $judgerow = mysqli_fetch_array($judgeresult);
                                                         onkeyup="heightFormat(this)" readonly></th>';
                   }
                 } ?>
-                <th style="background: none">신기록</th>
-              </tr>
-              <tr class="filed2_bottom">
-              </tr>
-            </thead>
-            <tbody class="table_tbody De_tbody entry_table">
-              <?php }
+                                <th style="background: none">신기록</th>
+                            </tr>
+                            <tr class="filed2_bottom">
+                            </tr>
+                        </thead>
+                        <tbody class="table_tbody De_tbody entry_table">
+                            <?php }
               }
               if ($row['schedule_group'] == $k) {
                   $num++;
@@ -441,17 +442,19 @@ $judgerow = mysqli_fetch_array($judgeresult);
               $j++;
               if ($j == $total_count) {
               ?>
-            </tbody>
-          </table>
-          <div class="filed_BTN">
-            <div>
-              <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-              <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN" onclick="window.open('/electronic_display.html')">시상식 보기</button>
-              <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
-              <!-- <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button> -->
-            </div>
-            <div>
-              <?php
+                        </tbody>
+                    </table>
+                    <div class="filed_BTN">
+                        <div>
+                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
+                            <!-- <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button> -->
+                        </div>
+                        <div>
+                            <?php
               // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
               if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
                 echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" onclick="window.open(\'';
@@ -464,23 +467,22 @@ $judgerow = mysqli_fetch_array($judgeresult);
                 }
                 echo '\')">기록 입력</button>';
                 if (authCheck($db, "authRecordsUpdate")) {
-                  echo '<input type="button" onclick="if (window.confirm(\'30분이 경과한 Live Result를 Official Result로 바꾸시겠습니까?\')) {';
-                  echo 'location.href =';
-                  echo '\'./record_change_type.php?id=' . $schedule_id . '\'';
-                  echo '}" class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
+                  echo '<input type="submit" formaction="';
+                                echo './record_change_type.php"';
+                                echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                 }
               }
               ?>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-          </form>
-          </div>
-      
-              <?php      }
+
+            <?php      }
             }
         ?>
         </div>
-    <!-- <div class="BTNform">
+        <!-- <div class="BTNform">
       <button type="button" class="nextBTN BTN_blue2 defaultBtn" onclick="window.open('/sport_schedule_group_next.php?id=<?= $id ?>', 'window_name', 'width=800, height=750, location=no, status=no, scrollbars=yes')">다음
         조 편성</button>
       <form action="" method="post" enctype="multipart/form-data">
@@ -488,10 +490,10 @@ $judgerow = mysqli_fetch_array($judgeresult);
         <button type="submit" class="resetBTN BTN_Orange2 defaultBtn" name="">모든 조 초기화</button>
       </form>
     </div> -->
-    <button type="button" class="changePwBtn defaultBtn">확인</button>
-  </div>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/restrict.js"></script>
+        <button type="button" class="changePwBtn defaultBtn">확인</button>
+    </div>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/restrict.js"></script>
 </body>
 
 

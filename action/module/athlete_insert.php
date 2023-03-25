@@ -68,6 +68,7 @@ $athlete_seats = trim($_POST["athlete_seats"]);
 $athlete_village = trim($_POST["athlete_village"]);
 $athlete_sector = implode(',', $_POST["athlete_sector"]);
 $athlete_venue_access = trim($_POST["athlete_venue_access"]);
+$athlete_bib = trim($_POST["athlete_age"] ?? NULL);
 $athlete_iamge = "";
 
 if (isset($_POST["athlete_sb_sports"]) &&  $_POST["athlete_sb_sports"] != "")
@@ -75,7 +76,7 @@ if (isset($_POST["athlete_sb_sports"]) &&  $_POST["athlete_sb_sports"] != "")
 else
 	$athlete_sb_sports = "";
 if (isset($_POST["athlete_sb"]) &&  $_POST["athlete_sb"] != "")
-    $athlete_sb = $_POST["athlete_sb"];
+	$athlete_sb = $_POST["athlete_sb"];
 else
 	$athlete_sb = "";
 
@@ -93,15 +94,15 @@ $athlete_pb_json = array();
 
 // athlete_sb_json {"sports_code"=>record}
 if ($athlete_sb_sports != "")
-for ($i = 0; $i < count($athlete_sb_sports); $i++) {
-	$athlete_sb_json[$athlete_sb_sports[$i]] = $athlete_sb[$i];
-}
+	for ($i = 0; $i < count($athlete_sb_sports); $i++) {
+		$athlete_sb_json[$athlete_sb_sports[$i]] = $athlete_sb[$i];
+	}
 $athlete_sb_json_str = json_encode($athlete_sb_json);
 // athlete_pb_json {"sports_code"=>record}
 if ($athlete_pb != "")
-for ($i = 0; $i < count($athlete_pb); $i++) {
-	$athlete_pb_json[$athlete_pb_sports[$i]] = $athlete_pb[$i];
-}
+	for ($i = 0; $i < count($athlete_pb); $i++) {
+		$athlete_pb_json[$athlete_pb_sports[$i]] = $athlete_pb[$i];
+	}
 $athlete_pb_json_str = json_encode($athlete_pb_json);
 // 이미지 저장
 if ($_FILES['main_photo']['name']) {
@@ -139,11 +140,17 @@ if ($_FILES['main_photo']['name']) {
 
 // // 삽입 쿼리 실행
 $sql = "INSERT INTO list_athlete
-            (athlete_name, athlete_country, athlete_region, athlete_division, athlete_gender, athlete_birth, athlete_age, athlete_sector, athlete_schedule, athlete_profile,athlete_attendance,athlete_sb,athlete_pb,athlete_eat,athlete_transport,athlete_venue_access,athlete_seats,athlete_village)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            (athlete_name, athlete_country, athlete_region, 
+			athlete_division, athlete_gender, athlete_birth, 
+			athlete_age, athlete_sector, athlete_schedule, 
+			athlete_profile,athlete_attendance,athlete_sb,
+			athlete_pb,athlete_eat,athlete_transport,
+			athlete_venue_access,athlete_seats,athlete_village
+			athlete_bib)
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 $stmt = $db->prepare($sql);
 $stmt->bind_param(
-	"ssssssssssssssssss",
+	"ssssssssssssssssssi",
 	$athlete_name,
 	$athlete_country,
 	$athlete_region,
@@ -161,7 +168,8 @@ $stmt->bind_param(
 	$athlete_transport,
 	$athlete_venue_access,
 	$athlete_seats,
-	$athlete_village
+	$athlete_village,
+	$athlete_bib
 );
 
 // $athlete_profile (x) => $athlete_image(o)

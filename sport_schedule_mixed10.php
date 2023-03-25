@@ -244,7 +244,16 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                 onclick="window.open('/award_ceremony.html')">전광판 보기</button>
                             <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 onclick="window.open('/electronic_display.html')">시상식 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
+                            <?php
+                            echo '<form action="" method="post">';
+                                            echo '<input name="sports" value="' . $sports . '" hidden>';
+                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
+                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
+                                            echo 'formaction =';
+                                            echo '\'/record/mix10_pdf.php\'';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
+                                            echo '</form>';
+                            ?>
                             <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                         </div>
                     </div>

@@ -2,8 +2,24 @@
 require_once "head.php";
 require_once "includes/auth/config.php";
 require_once "action/module/dictionary.php";
+$sports=$_POST['sports'];
+$record=$_POST['record'];
+$datetime=$_POST['datetime'];
+$country_code=$_POST['country_code'];
+$athletics=$_POST['athletics'];
+$athlete_name=$_POST['athlete_name'];
+$location=$_POST['location'];
+$gender=$_POST['gender'];
+$date=explode(' ',$datetime)[0];
+$date2=explode('-',$date);
+$wind=$_POST['wind'];
 ?>
 <script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#sports').val("<?php echo $sports?>").prop("selected", true)
+});
+</script>
 </head>
 
 <body>
@@ -16,8 +32,17 @@ require_once "action/module/dictionary.php";
                 <p class="UserProfile_tit tit_left_blue">
                     신기록 수정
                 </p>
-                <form action="./action/record/worldrecord_insert.php" method="post">
-                    <div class="UserProfile_modify UserProfile_input">
+                <form action="./action/record/worldrecord_modify.php" method="post">
+                    <input type='hidden' name='old_sports' value="<?php echo $sports?>">
+                    <input type='hidden' name='old_datetime' value="<?php echo $datetime?>">
+                    <input type='hidden' name='old_country_code' value="<?php echo $country_code?>">
+                    <input type='hidden' name='old_record' value="<?php echo $record?>">
+                    <input type='hidden' name='old_athletics' value="<?php echo $athletics?>">
+                    <input type='hidden' name='old_athlete_name' value="<?php echo $athlete_name?>">
+                    <input type='hidden' name='old_location' value="<?php echo $location?>">
+                    <input type='hidden' name='old_gender' value="<?php echo $gender?>">
+                    <input type='hidden' name='old_wind' value="<?php echo $wind?>">
+                    <div class=" UserProfile_modify UserProfile_input">
                         <div>
                             <ul class="UserDesc">
                                 <li class="row input_row Desc_item">
@@ -97,62 +122,73 @@ require_once "action/module/dictionary.php";
                                     <span>성별</span>
                                     <select name="gender" style="width: 200px;" id='gender'>
                                         <option value="non" hidden="">경기 성별</option>
-                                        <option value="m">남성</option>
-                                        <option value="f">여성</option>
-                                        <option value="c">혼성</option>
+                                        <option value="m" <?php if($gender =='m') echo "selected";?>>남성</option>
+                                        <option value="f" <?php if($gender =='f') echo "selected";?>>여성</option>
+                                        <option value="c" <?php if($gender =='c') echo "selected";?>>혼성</option>
                                     </select>
                                 </li>
                                 <li class="row input_row Desc_item input_width">
                                     <span>기록 구분</span>
                                     <select name="athletics" style="width: 200px;">
                                         <option value="non" hidden="">기록 구분</option>
-                                        <option value="w">세계신기록</option>
-                                        <option value="u">세계U20신기록</option>
-                                        <option value="a">아시아신기록</option>
-                                        <option value="s">아시아U20신기록</option>
-                                        <option value="c">대회신기록</option>
+                                        <option value="w" <?php if($athletics =='w') echo "selected";?>>세계신기록
+                                        </option>
+                                        <option value="u" <?php if($athletics =='u') echo "selected";?>>세계U20신기록
+                                        </option>
+                                        <option value="a" <?php if($athletics =='a') echo "selected";?>>아시아신기록
+                                        </option>
+                                        <option value="s" <?php if($athletics =='s') echo "selected";?>>아시아U20신기록
+                                        </option>
+                                        <option value="c" <?php if($athletics =='c') echo "selected";?>>대회신기록
+                                        </option>
                                     </select>
                                 </li>
                                 <li class="row input_row Desc_item">
                                     <span>선수 이름</span>
                                     <input placeholder="선수 이름" type="text" name="athletename" maxlength="50"
-                                        required="" />
+                                        value="<?php echo $athlete_name?>" required="" />
                                 </li>
                                 <li class="row input_row Desc_item">
                                     <span>선수 국가</span>
                                     <input placeholder="선수 국가" type="text" name="athletecountry" maxlength="50"
-                                        required="" />
+                                        value="<?php echo $country_code?>" required="" />
                                 </li>
                                 <li class="row input_row Desc_item">
                                     <span>기록</span>
-                                    <input placeholder="기록" type="text" name="record" maxlength="50" required="" />
+                                    <input placeholder="기록" type="text" name="record" maxlength="50"
+                                        value="<?php echo $record?>" required="" />
                                 </li>
                                 <li class="row input_row Desc_item">
                                     <span>풍속/용기구 무게</span>
-                                    <input placeholder="풍속/용기구 무게" type="text" name="wind" maxlength="50" required="" />
+                                    <input placeholder="풍속/용기구 무게" type="text" name="wind" maxlength="50"
+                                        value="<?php echo $wind?>" required="" />
                                 </li>
                                 <li class="row input_row Desc_item">
                                     <span>장소</span>
-                                    <input placeholder="장소" type="text" name="location" maxlength="50" required="" />
+                                    <input placeholder="장소" type="text" name="location" maxlength="50"
+                                        value="<?php echo $location?>" required="" />
                                 </li>
                                 <li class="row input_row Desc_item input_width">
                                     <span>경기날짜</span>
                                     <input placeholder="(YYYY)" type="number" name="date_year" class="input_text_row"
-                                        min="1" maxlength="4" oninput="maxLengthCheck(this)" required="" />
+                                        min="1" maxlength="4" oninput="maxLengthCheck(this)"
+                                        value="<?php echo $date2[0]?>" required="" />
                                     <div style="float:left;"> -
                                     </div>
                                     <input placeholder="(mm)" type="number" name="date_month" class="input_text_row"
-                                        min="1" max="12" maxlength=" 2" oninput="maxLengthCheck(this)" required="" />
+                                        min="1" max="12" maxlength=" 2" oninput="maxLengthCheck(this)"
+                                        value="<?php echo $date2[1]?>" required="" />
                                     <div style="float:left;"> -
                                     </div>
                                     <input placeholder="(dd)" type="number" name="date_day" class="input_text_row"
-                                        min="1" max="31" maxlength="2" oninput="maxLengthCheck(this)" required="" />
+                                        min="1" max="31" maxlength="2" oninput="maxLengthCheck(this)"
+                                        value="<?php echo $date2[2]?>" required="" />
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="modify_Btn input_Btn Participant_Btn">
-                        <button type="submit" class="btn_login">등록</button>
+                        <button type="submit" class="btn_login">수정</button>
                     </div>
                 </form>
             </div>

@@ -268,12 +268,12 @@
                                         echo '<td style="display:none"><input placeholder="경기 통과 여부" type="text" name="gamepass[]"  value="' . $row['record_pass'] . '" maxlength="1" required="" /></td>';
                                         echo '<td>
                                         <input placeholder="경기 결과" type="text" name="gameresult[]" id="result" 
-                                        value="' . ($athrecord[3] ? $athrecord[3] : 0) . '" maxlength="8" required="" onkeyup="trackFinal(this)" />
+                                        value="' . ($athrecord[3] ? $athrecord[3] : 0) . '" maxlength="9" required="" onkeyup="trackFinal(this)" />
                                         </td>';
                                         echo '<input type="hidden" name="compresult[]" value="' . ($athrecord[3] ? $athrecord[3] : 0) . '"/>';
                                         echo '<td>
                                         <input placeholder="reactiontime" type="text" name="reactiontime[]" id="reactiontime" 
-                                        value="' . ($row['record_reaction_time'] ?? null) . '" maxlength="8" required="" onkeyup="trackFinal(this)" />
+                                        value="' . ($row['record_reaction_time'] ?? null) . '" maxlength="9" required="" onkeyup="trackFinal(this)" />
                                         </td>';
                                         echo '<td><input placeholder="비고" type="text" name="bigo[]"  value="' . ($row['record_memo'] ? $row['record_memo'] : '') . '" maxlength="100" /></td>';
                                         $sport_code = $rows['schedule_sports'];

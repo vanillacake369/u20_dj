@@ -52,7 +52,8 @@ while ($row = mysqli_fetch_array($result)) {
 }
 
 // "ALL" sector_dic
-$sector_dic = ["track-area" => "track-area", "field-area" => "field-area", "warm-up-area" => "warm-up-area"];
+$sector_dic = ["0" => "경기장 내 전구역", "1" => "경기구역", "2" => "선수준비구역", "3" => "경기운영구역", "4" => "국제임원 업무구역", "5" => "VIP구역(3F)", "6" => "공동취재구역"
+             , "7" => "경기 후 구역", "8" => "기술정보센터(2F)"];
 
 // "ALL" categorty of sports dic
 $sql = "SELECT DISTINCT sports_code,sports_category FROM list_sports ORDER BY FIELD(sports_name,

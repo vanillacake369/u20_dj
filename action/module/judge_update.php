@@ -1,5 +1,6 @@
 <?php
 include_once(__DIR__ . "/../../backheader.php");
+require_once __DIR__ . "/../../class-image.php";
 
 if (
     !isset($_POST["judge_first_name"]) ||
@@ -14,7 +15,9 @@ if (
     !isset($_POST["judge_duty"]) ||
     !isset($_POST["judge_sector"]) ||
     !isset($_POST["judge_schedules"]) ||
-    !isset($_POST["attendance_sports"])
+	!isset($_POST["judge_village"]) ||
+	!isset($_POST["judge_seats"]) ||
+	!isset($_POST["judge_venue_access"])
 ) {
     echo "<script>alert('기입하지 않은 정보가 있습니다.');window.close();</script>";
     exit;
@@ -35,9 +38,7 @@ if (isset($_POST["judge_password"]) && $_POST["judge_password"] != "")
 require_once __DIR__ . "/imgUpload.php"; //B:데이터베이스 연결
 require_once __DIR__ . "/dictionary.php"; //B:서치 select 태크 사용하기 위한 자료구조
 
-$sector = implode(',', $_POST["judge_sector"]);
 $schedule = implode(',', $_POST["judge_schedules"]);
-$attendance_id = implode(',', $_POST["attendance_sports"]);
 $birth_day = $_POST["judge_birth_year"] . "-" . $_POST["judge_birth_month"] . "-" . $_POST["judge_birth_day"];
 $name = strtolower($_POST["judge_second_name"]) . " " . strtoupper($_POST["judge_first_name"]);
 $profile = strtolower($_POST["judge_second_name"]) . $birth_day . "_profile";
@@ -50,10 +51,20 @@ $judge_duty = trim($_POST["judge_duty"]);
 $judge_gender = trim($_POST["judge_gender"]);
 $judge_birth = trim($birth_day);
 $judge_age = trim($_POST["judge_age"]);
-$judge_sector = trim($sector);
 $judge_schedule = trim($schedule);
-$judge_attendance = trim($attendance_id);
 $judge_profile = trim($profile);
+if (isset($_POST["judge_eat"]) && $_POST["judge_eat"] != "")
+	$judge_eat = "y";
+else
+	$judge_eat = "n";
+if (isset($_POST["judge_transport"]) &&  $_POST["judge_transport"] != "")
+	$judge_transport = trim($_POST["judge_transport"]);
+else
+	$judge_transport = "";
+$judge_seats = trim($_POST["judge_seats"]);
+$judge_village = trim($_POST["judge_village"]);
+$judge_sector = implode(',', $_POST["judge_sector"]);
+$judge_venue_access = trim($_POST["judge_venue_access"]);
 
 if ($_POST["judge_birth_month"] > 12 || $_POST["judge_birth_month"] < 0) {
     echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
@@ -78,13 +89,17 @@ if ($_FILES['main_photo']["size"] == 0) {
             judge_age=?,
             judge_sector=?,
             judge_schedule=?,
-            judge_attendance=?,
-            judge_password=?
+            judge_password=?,
+            judge_eat=?,
+            judge_transport=?,
+            judge_venue_access=?,
+            judge_seats=?,
+            judge_village=?
             WHERE judge_id=?";
         $stmt = $db->prepare($sql);
 
         $stmt->bind_param(
-            "ssssssssssss",
+            "ssssssssssssssss",
             $judge_name,
             $judge_country,
             $judge_division,
@@ -94,8 +109,12 @@ if ($_FILES['main_photo']["size"] == 0) {
             $judge_age,
             $judge_sector,
             $judge_schedule,
-            $judge_attendance,
             $judge_password_hash, //충격 실화! 이거 순서 안 맞으면 DB에 저장 안되는 에러 발생
+            $judge_eat,
+            $judge_transport,
+            $judge_venue_access,
+            $judge_seats,
+            $judge_village,
             $judge_id);
     }
     else
@@ -110,12 +129,16 @@ if ($_FILES['main_photo']["size"] == 0) {
         judge_age=?,
         judge_sector=?,
         judge_schedule=?,
-        judge_attendance=?
+            judge_eat=?,
+            judge_transport=?,
+            judge_venue_access=?,
+            judge_seats=?,
+            judge_village=?
         WHERE judge_id=?";
     $stmt = $db->prepare($sql);
 
     $stmt->bind_param(
-        "sssssssssss",
+        "sssssssssssssss",
         $judge_name,
         $judge_country,
         $judge_division,
@@ -125,7 +148,11 @@ if ($_FILES['main_photo']["size"] == 0) {
         $judge_age,
         $judge_sector,
         $judge_schedule,
-        $judge_attendance,
+        $judge_eat,
+            $judge_transport,
+            $judge_venue_access,
+            $judge_seats,
+            $judge_village,
         $judge_id);
     }
     $stmt->execute();
@@ -182,13 +209,17 @@ if ($_FILES['main_photo']["size"] == 0) {
             judge_age=?,
             judge_sector=?,
             judge_schedule=?,
-            judge_attendance=?,
             judge_profile=?,
-            judge_password=?
+            judge_password=?,
+            judge_eat=?,
+            judge_transport=?,
+            judge_venue_access=?,
+            judge_seats=?,
+            judge_village=?
             WHERE judge_id=?";
         $stmt = $db->prepare($sql);
         $stmt->bind_param(
-            "sssssssssssss",
+            "sssssssssssssssss",
             $judge_name,
             $judge_country,
             $judge_division,
@@ -198,9 +229,13 @@ if ($_FILES['main_photo']["size"] == 0) {
             $judge_age,
             $judge_sector,
             $judge_schedule,
-            $judge_attendance,
             $judge_image,
             $judge_password_hash, //충격 실화! 이거 순서 안 맞으면 DB에 저장 안되는 에러 발생
+            $judge_eat,
+            $judge_transport,
+            $judge_venue_access,
+            $judge_seats,
+            $judge_village,
             $judge_id
         );
         $stmt->execute();
@@ -217,13 +252,17 @@ if ($_FILES['main_photo']["size"] == 0) {
         judge_age=?,
         judge_sector=?,
         judge_schedule=?,
-        judge_attendance=?,
-        judge_profile=?
+        judge_profile=?,
+            judge_eat=?,
+            judge_transport=?,
+            judge_venue_access=?,
+            judge_seats=?,
+            judge_village=?
         WHERE judge_id=?";
         $stmt = $db->prepare($sql);
 
         $stmt->bind_param(
-            "ssssssssssss",
+            "ssssssssssssssss",
             $judge_name,
             $judge_country,
             $judge_division,
@@ -233,8 +272,12 @@ if ($_FILES['main_photo']["size"] == 0) {
             $judge_age,
             $judge_sector,
             $judge_schedule,
-            $judge_attendance,
             $judge_image,
+            $judge_eat,
+            $judge_transport,
+            $judge_venue_access,
+            $judge_seats,
+            $judge_village,
             $judge_id
         );
         $stmt->execute();

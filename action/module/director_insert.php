@@ -11,7 +11,12 @@ if (
 	!isset($_POST["director_birth_month"]) ||
 	!isset($_POST["director_birth_day"]) ||
 	!isset($_POST["director_age"]) ||
-	!isset($_POST["director_duty"])
+	!isset($_POST["director_duty"]) ||
+	!isset($_POST["director_sector"]) ||
+	!isset($_POST["director_village"]) ||
+	!isset($_POST["director_seats"]) ||
+	!isset($_POST["director_sector"]) ||
+	!isset($_POST["director_venue_access"])
 	// !isset($_POST["director_schedules"]) ||
 	// !isset($_POST["attendance_sports"])
 ) {
@@ -25,7 +30,6 @@ require_once "./dictionary.php"; //B:서치 select 태크 사용하기 위한 �
 
 // $schedule = implode(',', $_POST["director_schedules"]);
 // $attendance_id = implode(',', $_POST["attendance_sports"]);
-$sector = implode(',', $_POST["director_sector"]);
 $birth_day = $_POST["director_birth_year"] . "-" . $_POST["director_birth_month"] . "-" . $_POST["director_birth_day"];
 $name = strtolower($_POST["director_second_name"]) . " " . strtoupper($_POST["director_first_name"]);
 $profile = strtolower($_POST["director_second_name"]) . $birth_day . "_profile";
@@ -50,6 +54,18 @@ $director_birth = trim($birth_day);
 $director_age = trim($_POST["director_age"]);
 $director_sector = trim($sector);
 $director_profile = trim($profile);
+if ($_POST["director_eat"] != "")
+	$director_eat = "y";
+else
+	$director_eat = "n";
+if (isset($_POST["director_transport"]) &&  $_POST["director_transport"] != "")
+	$director_transport = trim($_POST["director_transport"]);
+else
+	$director_transport = "";
+$director_seats = trim($_POST["director_seats"]);
+$director_village = trim($_POST["director_village"]);
+$director_sector = implode(',', $_POST["director_sector"]);
+$director_venue_access = trim($_POST["director_venue_access"]);
 // $director_schedule = trim($schedule);
 // $director_attendance = trim($attendance_id);
 
@@ -92,11 +108,11 @@ if ($_FILES['main_photo']['name']) {
 }
 
 $sql = "INSERT INTO list_director
-            (director_name, director_country, director_division, director_duty, director_gender, director_birth, director_age, director_sector, director_profile)
-            VALUES(?,?,?,?,?,?,?,?,?)";
+            (director_name, director_country, director_division, director_duty, director_gender, director_birth, director_age, director_sector, director_profile, director_eat,director_transport,director_venue_access,director_seats,director_village)
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 $stmt = $db->prepare($sql);
 $stmt->bind_param(
-	"sssssssss",
+	"ssssssssssssss",
 	$director_name,
 	$director_country,
 	$director_division,
@@ -105,7 +121,12 @@ $stmt->bind_param(
 	$director_birth,
 	$director_age,
 	$director_sector,
-	$director_image
+	$director_image,
+	$director_eat,
+	$director_transport,
+	$director_venue_access,
+	$director_seats,
+	$director_village
 );
 
 $stmt->execute();

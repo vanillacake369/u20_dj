@@ -66,31 +66,80 @@ if (!authCheck($db, "authEntrysRead")) {
                                 </li>
                                 <li class="row input_row row_item row_date">
                                     <span>생년월일</span>
-                                    <input type="number" name="athlete_birth_year" class="input_text_row_b" placeholder="연" required>
-                                    <input type="number" name="athlete_birth_month" class="input_text_row_b" placeholder="월" required>
-                                    <input type="number" name="athlete_birth_day" class="input_text_row_b" placeholder="일" required>
+                                    <input type="number" name="athlete_birth_year" class="input_text_row_b" placeholder="연" mexlength="4" required>
+                                    <input type="number" name="athlete_birth_month" class="input_text_row_b" placeholder="월" mexlength="2" required>
+                                    <input type="number" name="athlete_birth_day" class="input_text_row_b" placeholder="일" mexlength="2" required>
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>나이</span>
-                                    <input type="number" name="athlete_age" id="athlete_age" value="" placeholder="나이를 입력해 주세요" required />
+                                    <input type="number" name="athlete_age" id="athlete_age" value="" mexlength="3" placeholder="나이를 입력해 주세요" required />
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>이미지 변경</span>
                                     <input type="file" name="main_photo" class="form-control" />
                                 </li>
+                                <li class="row input_row row_item">
+                                    <span>식사 가능 여부</span>
+                                    <input type="checkbox" name="athlete_eat" value="식사">
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>대회접근시설</span>
+                                    <select name="athlete_venue_access" required>
+                                        <option value='' selected disabled hidden>접근시설선택</option>
+                                        <option value="Y">전 구역</option>
+                                        <option value="HQ">본부호텔</option>
+                                    </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>경기장 내 좌석</span>
+                                    <select name="athlete_seats" required>
+                                        <option value='' selected disabled hidden>좌석선택</option>
+                                        <option value="RS">VIP석</option>
+                                        <option value="US">자유석</option>
+                                        <option value="AS">선수 임원석</option>
+                                        <option value="MS">미디어석</option>
+
+                                    </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>교통 권한</span>
+                                    <select name="athlete_transport">
+                                        <option value='' selected disabled hidden>교통권한선택</option>
+                                        <option value="T1">1인 1차량</option>
+                                        <option value="T2">2인 1차량</option>
+                                        <option value="TA">선수임원수송버스</option>
+                                        <option value="TF">기술임원 수송버스</option>
+
+                                    </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>선수촌</span>
+                                    <select name="athlete_village" required>
+                                        <option value='' selected disabled hidden>접근시설선택</option>
+                                        <option value="AV">선수촌 거주 허용</option>
+                                        <option value="VA">선수촌 전구역(거주 불허)</option>
+                                    </select>
+                                </li>
                                 <li class="row full_width">
-                                    <span class="full_span">출입가능구역</span>
+                                    <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
-                                        <?php
-                                        for ($value = 1; $value <= count($sector_dic); $value++) {
-                                            echo "<label>";
-                                            echo '<input type="checkbox" name="athlete_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . current($sector_dic) . '"/>';
-                                            echo "<span>" . current($sector_dic) . "</span>";
-                                            echo "</label>";
-                                            next($sector_dic);
-                                        }
-                                        reset($sector_dic);
-                                        ?>
+                                        <label><input type="checkbox" name="athlete_sector[]" value="0" id="All Area"><span>경기장 내 전
+                                                구역</span></label>
+                                        <label><input type="checkbox" name="athlete_sector[]" value="1" id="Competition Area(FOP)"><span>경기구역</span></label>
+                                        <label><input type="checkbox" name="athlete_sector[]" value="2" id="Warm-up Area"><span>선수준비구역</span></label>
+                                        <label><input type="checkbox" name="athlete_sector[]" value="3" id="Administration & Operation zone"><span>경기운영구역
+                                                zone</span></label>
+                                        <label><input type="checkbox" name="athlete_sector[]" value="4" id="International Officials' Zone"><span>국제임원 업무구역</span>
+                                            <label><input type="checkbox" name="athlete_sector[]" value="5" id="VIP Area"><span>VIP구역(3F)</span></label>
+                                            <label><input type="checkbox" name="athlete_sector[]" value="6" id="Mixed Zone"><span>공동취재구역</span></label>
+                                            <label><input type="checkbox" name="athlete_sector[]" value="7" id="PEA(Post Event Area)"><span>경기 후 구역</span></label>
+                                            <label><input type="checkbox" name="athlete_sector[]" value="8" id="TIC(Technical Information Center)"><span>기술정보센터(2F)</span></label>
+                                    </div>
+                                </li>
+                                <li class="row full_width">
+                                    <span class="full_span">등번호</span>
+                                    <div class="full_div">
+                                        <input type="text" name="athlete_bib" value="">
                                     </div>
                                 </li>
                             </ul>
@@ -226,6 +275,14 @@ if (!authCheck($db, "authEntrysRead")) {
         </div>
     </div>
     </div>
+    <script>
+        function check() {
+            if ($("input:checkbox[name='athlete_sector[]']").is(":checked") == false) {
+                alert("하나 이상은 선택하세요.");
+                return;
+            }
+        }
+    </script>
 </body>
 
 </html>

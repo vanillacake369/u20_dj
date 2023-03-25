@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../../backheader.php";
 require_once __DIR__ . "/../../console_log.php";
+require_once __DIR__ . "/../../class-image.php";
 
 if (
     !isset($_POST["athlete_first_name"]) ||
@@ -12,9 +13,12 @@ if (
     !isset($_POST["athlete_birth_year"]) ||
     !isset($_POST["athlete_birth_month"]) ||
     !isset($_POST["athlete_birth_day"]) ||
-    !isset($_POST["athlete_sector"]) ||
     !isset($_POST["athlete_schedules"]) ||
-    !isset($_POST["attendance_sports"])
+    !isset($_POST["attendance_sports"]) ||
+    !isset($_POST["athlete_sector"]) ||
+    !isset($_POST["athlete_village"]) ||
+    !isset($_POST["athlete_seats"]) ||
+    !isset($_POST["athlete_venue_access"])
 ) {
     echo "<script>alert('기입하지 않은 정보가 있습니다.');window.close();</script>";
     exit;
@@ -24,7 +28,6 @@ require_once __DIR__ . "/../../includes/auth/config.php";
 require_once __DIR__ . "/imgUpload.php"; //B:데이터베이스 연결
 require_once __DIR__ . "/dictionary.php"; //B:서치 select 태크 사용하기 위한 자료구조
 
-$sector = implode(',', $_POST["athlete_sector"]);
 $schedule = implode(',', $_POST["athlete_schedules"]);
 $attendance_id = implode(',', $_POST["attendance_sports"]);
 $birth_day = $_POST["athlete_birth_year"] . "-" . $_POST["athlete_birth_month"] . "-" . $_POST["athlete_birth_day"];
@@ -39,20 +42,47 @@ $athlete_division = trim($_POST["athlete_division"]);
 $athlete_gender = trim($_POST["athlete_gender"]);
 $athlete_birth = trim($birth_day);
 $athlete_age = trim($_POST["athlete_age"]);
-$athlete_sector = trim($sector);
 $athlete_schedule = trim($schedule);
 $athlete_attendance = trim($attendance_id);
 $athlete_profile = trim($profile);
-$athlete_sb_sports = $_POST["athlete_sb_sports"];
-$athlete_sb = $_POST["athlete_sb"];
+if (isset($_POST["athlete_eat"]) && $_POST["athlete_eat"] != "")
+    $athlete_eat = "y";
+else
+    $athlete_eat = "n";
+if (isset($_POST["athlete_transport"]) &&  $_POST["athlete_transport"] != "")
+    $athlete_transport = trim($_POST["athlete_transport"]);
+else
+    $athlete_transport = "";
+$athlete_seats = trim($_POST["athlete_seats"]);
+$athlete_village = trim($_POST["athlete_village"]);
+$athlete_sector = implode(',', $_POST["athlete_sector"]);
+$athlete_venue_access = trim($_POST["athlete_venue_access"]);
+$athlete_bib = trim($_POST["athlete_bib"] ?? NULL);
+if (isset($_POST["athlete_sb_sports"]) &&  $_POST["athlete_sb_sports"] != "")
+    $athlete_sb_sports = $_POST["athlete_sb_sports"];
+else
+    $athlete_sb_sports = "";
+if (isset($_POST["athlete_sb"]) &&  $_POST["athlete_sb"] != "")
+    $athlete_sb = $_POST["athlete_sb"];
+else
+    $athlete_sb = "";
+
 $athlete_sb_json = array();
-$athlete_pb_sports = $_POST["athlete_pb_sports"];
-$athlete_pb = $_POST["athlete_pb"];
+if (isset($_POST["athlete_pb_sports"]) &&  $_POST["athlete_pb_sports"] != "")
+    $athlete_pb_sports = $_POST["athlete_pb_sports"];
+else
+    $athlete_pb_sports = "";
+if (isset($_POST["athlete_pb"]) &&  $_POST["athlete_pb"] != "")
+    $athlete_pb = $_POST["athlete_pb"];
+else
+    $athlete_pb = "";
 $athlete_pb_json = array();
+
 // athlete_sb_json {"sports_code"=>record}
-for ($i = 0; $i < count($athlete_sb_sports); $i++) {
-    $athlete_sb_json[$athlete_sb_sports[$i]] = $athlete_sb[$i];
-}
+if ($athlete_sb_sports != "")
+    for ($i = 0; $i < count($athlete_sb_sports); $i++) {
+        $athlete_sb_json[$athlete_sb_sports[$i]] = $athlete_sb[$i];
+    }
 $athlete_sb_json_str = json_encode($athlete_sb_json);
 // athlete_pb_json {"sports_code"=>record}
 for ($i = 0; $i < count($athlete_pb); $i++) {
@@ -83,12 +113,18 @@ if ($_FILES['main_photo']["size"] == 0) {
         athlete_schedule=?,
         athlete_attendance=?,
         athlete_sb=?,
-        athlete_pb=?
+        athlete_pb=?,
+        athlete_eat=?,
+        athlete_transport=?,
+        athlete_venue_access=?,
+        athlete_seats=?,
+        athlete_village=?,
+        athlete_bib=?
         WHERE athlete_id=?";
     $stmt = $db->prepare($sql);
 
     $stmt->bind_param(
-        "sssssssssssss",
+        "sssssssssssssssssis",
         $athlete_name,
         $athlete_country,
         $athlete_region,
@@ -101,6 +137,12 @@ if ($_FILES['main_photo']["size"] == 0) {
         $athlete_attendance,
         $athlete_sb_json_str,
         $athlete_pb_json_str,
+        $athlete_eat,
+        $athlete_transport,
+        $athlete_venue_access,
+        $athlete_seats,
+        $athlete_village,
+        $athlete_bib,
         $athlete_id
     );
     $stmt->execute();
@@ -115,7 +157,7 @@ if ($_FILES['main_photo']["size"] == 0) {
         // for ($i = 0; $i < count($_FILES['athlete_imgFile']['name']); $i++) {
         $FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
         $myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
-    
+
         if ($FileExt != "jpg" && $FileExt != "gif" && $FileExt != "jpeg" && $FileExt != "png" && $FileExt != "JPG" && $FileExt != "GIF" && $FileExt != "JPEG" && $FileExt != "PNG") {
             AlertBox("[오류] 올바른 이미지 확장자가 아닙니다.", 'back', '');
             exit;
@@ -155,10 +197,16 @@ if ($_FILES['main_photo']["size"] == 0) {
         athlete_profile=?,
         athlete_sb=?,
         athlete_pb=?,
+        athlete_eat=?,
+        athlete_transport=?,
+        athlete_venue_access=?,
+        athlete_seats=?,
+        athlete_village=?,
+        athlete_bib=?,
         WHERE athlete_id=?";
     $stmt = $db->prepare($sql);
     $stmt->bind_param(
-        "ssssssssssssss",
+        "sssssssssssssis",
         $athlete_name,
         $athlete_country,
         $athlete_region,
@@ -172,6 +220,12 @@ if ($_FILES['main_photo']["size"] == 0) {
         $athlete_profile,
         $athlete_sb_json_str,
         $athlete_pb_json_str,
+        $athlete_eat,
+        $athlete_transport,
+        $athlete_venue_access,
+        $athlete_seats,
+        $athlete_village,
+        $athlete_bib,
         $athlete_id
     );
     $stmt->execute();

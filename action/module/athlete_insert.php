@@ -68,7 +68,7 @@ $athlete_seats = trim($_POST["athlete_seats"]);
 $athlete_village = trim($_POST["athlete_village"]);
 $athlete_sector = implode(',', $_POST["athlete_sector"]);
 $athlete_venue_access = trim($_POST["athlete_venue_access"]);
-$athlete_bib = trim($_POST["athlete_age"] ?? NULL);
+$athlete_bib = trim($_POST["athlete_bib"] ?? NULL);
 $athlete_iamge = "";
 
 if (isset($_POST["athlete_sb_sports"]) &&  $_POST["athlete_sb_sports"] != "")
@@ -145,7 +145,7 @@ $sql = "INSERT INTO list_athlete
 			athlete_age, athlete_sector, athlete_schedule, 
 			athlete_profile,athlete_attendance,athlete_sb,
 			athlete_pb,athlete_eat,athlete_transport,
-			athlete_venue_access,athlete_seats,athlete_village
+			athlete_venue_access,athlete_seats,athlete_village,
 			athlete_bib)
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 $stmt = $db->prepare($sql);

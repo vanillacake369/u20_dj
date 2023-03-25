@@ -159,7 +159,8 @@ for ($i = 0; $i < count($athlete_name); $i++) {
         }
             $savequery="UPDATE list_record SET record_pass='$pass[$i]', record_".$result_type1."_result='$result[$i]', record_judge='$judge[0]',
             record_".$result_type1."_record='$record[$i]', record_new='$new',record_memo='".$memo[$i]."',record_medal=".$medal.",record_reaction_time='$reactiontime[$i]'
-            ,record_wind='$wind',record_status='".$result_type2."'".$plus." WHERE record_athlete_id ='".$row['athlete_id']."' AND record_sports= '$sport$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'" ;
+            ,record_wind='$wind',record_status='".$result_type2."'".$plus." WHERE record_athlete_id ='".$row['athlete_id']."' AND record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'" ;
+            
             $db->query($savequery);
         }
 

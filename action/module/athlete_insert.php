@@ -178,4 +178,4 @@ $stmt->execute();
 // 로그 생성
 logInsert($db, $_SESSION['Id'], '선수 생성', $athlete_name . "-" . $athlete_country . "-" . $athlete_schedule);
 
-echo "<script>alert('등록되었습니다.');window.close();</script>";
+// echo "<script>alert('등록되었습니다.');window.close();</script>";

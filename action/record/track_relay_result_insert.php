@@ -62,25 +62,25 @@ $db->query("update list_record set record_start ='" . $starttime . "' where reco
                         $new = $rerow[0];
                     }
                     if(strpos($memo[$in],'참고 기록') !== TRUE){
-                    // if($comprecord[$i/4] != $record[$i/4]){ //기존 기록과 변경된 기록이 같은 지 비교
-                    //     $memo[$in]=changePbSb($athlete_name[$i],$record[$in],$s_id,$memo[$in],$check_round,'t');
-                    //     if($row1['record_state']==='y'){ //경기가 끝났는 지 판단
-                    //         if($rerow[0]==='y'){
-                    //             $arr=modify_worldrecord($row[1],$row[1],$record[$in],$wind,$s_id,$check_round);
-                    //             $tempmemo=change_worldrecord_inc($row[1],$row[1],$record[$in],$wind,$s_id,$check_round,$arr);
-                    //         }else{
-                    //             $arr2=insert_worldrecord_inc($row[1],$row[1],$record[$in],$wind,$s_id,$check_round);
-                    //             $tempmemo=$arr2[0];
-                    //             $new=$arr2[1];
-                    //         }
-                    //     }else{
-                    //         $arr2=insert_worldrecord_inc($row[1],$row[1],$record[$in],$wind,$s_id,$check_round);
-                    //         $tempmemo=$arr2[0];
-                    //         $new=$arr2[1];
-                    //     }
-                    // }
+                    if($comprecord[$i/4] != $record[$i/4]){ //기존 기록과 변경된 기록이 같은 지 비교
+                        $memo[$in]=changePbSb($row['athlete_id'],$record[$in],$sports,$gender,$round,$memo[$in],$check_round,'t');
+                        if($row1['record_state']==='y'){ //경기가 끝났는 지 판단
+                            if($rerow[0]==='y'){
+                                $arr=modify_worldrecord($row[1],$row[1],$record[$in],$wind,$sports,$gender,$round,$check_round);
+                                $tempmemo=change_worldrecord_inc($row[1],$row[1],$record[$in],$wind,$sports,$gender,$round,$check_round,$arr);
+                            }else{
+                                $arr2=insert_worldrecord_inc($row[1],$row[1],$record[$in],$wind,$sports,$gender,$round,$check_round);
+                                $tempmemo=$arr2[0];
+                                $new=$arr2[1];
+                            }
+                        }else{
+                            $arr2=insert_worldrecord_inc($row[1],$row[1],$record[$in],$wind,$sports,$gender,$round,$check_round);
+                            $tempmemo=$arr2[0];
+                            $new=$arr2[1];
+                        }
+                    }
                 }else{
-                    // changePbSb($athlete_name[$i],$record[$in],$s_id,$memo[$in],$check_round,'t');
+                    changePbSb($row['athlete_id'],$record[$in],$sports,$gender,$round,$memo[$in],$check_round,'t');
                 }
             }
                     //memo 합치는 과정

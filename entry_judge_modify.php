@@ -146,7 +146,7 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                                 </li>
                                 <li class="row">
                                     <span>이미지 변경</span>
-                                    <input type="file" name="judge_imgFile" class="form-control" />
+                                    <input type="file" name="main_photo" class="form-control" />
                                 </li>
                                 <li class="row full_width">
                                     <span class="full_span">출입가능구역</span>

@@ -17,42 +17,33 @@ if (!authCheck($db, "authEntrysRead")) {
         history.back();
     </script>");
 }
-$sql = "SELECT 
-            athlete_id,
-            athlete_name,
-            athlete_country,
-            country_name_kr,
-            country_code,
-            athlete_region,
-            athlete_division,
-            athlete_gender,
-            athlete_birth,
-            athlete_age, 
-            athlete_sector,
-            athlete_schedule,
-            athlete_profile,
-            athlete_attendance
-            FROM list_athlete
-            INNER JOIN list_country  
-            ON athlete_country=country_code
-            where athlete_id=" . $_POST['athlete_id'];
+$sql = "SELECT * 
+        FROM list_athlete
+        INNER JOIN list_country  
+        ON athlete_country=country_code
+        where athlete_id=" . $_POST['athlete_id'];
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 $birth = explode('-', $row["athlete_birth"]); //생일 정보 나눔
+// sb array
+$athlete_sb_arr = json_decode($row['athlete_sb'], true);
+// pb array
+$athlete_pb_arr = json_decode($row['athlete_pb'], true);
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <div class="athlete">
-            <div class="profile_logo">
-                <img src="/assets/images/logo.png">
-            </div>
-            <div class="UserProfile">
-                <p class="UserProfile_tit tit_left_blue">
-                    참가자 정보
-                </p>
-                <form action="./action/module/athlete_update.php" method="post" class="form" enctype="multipart/form-data">
+        <form action="./action/module/athlete_update.php" method="post" class="form" enctype="multipart/form-data">
+            <div class="athlete">
+                <div class="profile_logo">
+                    <img src="/assets/images/logo.png">
+                </div>
+                <div class="UserProfile">
+                    <p class="UserProfile_tit tit_left_blue">
+                        참가자 정보
+                    </p>
                     <div class="UserProfile_modify Participant_img ptp_img">
                         <div>
                             <img src=<?php echo "./assets/img/athlete_img/" . $row["athlete_profile"] ?> alt="avatar" />
@@ -120,7 +111,7 @@ $birth = explode('-', $row["athlete_birth"]); //생일 정보 나눔
                                 <li class="row full_width">
                                     <span class="full_span">출입가능구역</span>
                                     <div class="full_div">
-                                    <?php
+                                        <?php
                                         for ($value = 1; $value <= count($sector_dic); $value++) {
                                             echo "<label>";
                                             echo '<input type="checkbox" name="athlete_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . current($sector_dic) . '"/>';
@@ -135,48 +126,157 @@ $birth = explode('-', $row["athlete_birth"]); //생일 정보 나눔
                             </ul>
                         </div>
                     </div>
-                    <div class="modifyform">
-                        <div class="modify_enter">
-                            <p class="tit_left_red">참석 예정 경기</p>
-                            <ul class="modify_checkList">
+                </div>
+                <div class="modifyform">
+                    <div class="modify_enter">
+                        <p class="tit_left_red">참석 예정 경기</p>
+                        <ul class="modify_checkList">
                             <?php
-                                for ($value = 1; $value <= count($sport_dic); $value++) {
-                                    echo "<li><label>";
-                                    echo '<input type="checkbox" name="athlete_schedules[]"' . 'value="' . key($sport_dic) . '"' . 'id="' . "sports_" . key($sport_dic) . '"/>';
-                                    echo "<span>" . current($sport_dic) . "</span>";
-                                    echo "</label></li>";
-                                    next($sport_dic);
-                                }
-                                reset($sport_dic);
-                                ?>
-                            </ul>
+                            for ($value = 1; $value <= count($sport_dic); $value++) {
+                                echo "<li><label>";
+                                echo '<input type="checkbox" name="athlete_schedules[]"' . 'value="' . key($sport_dic) . '"' . 'id="' . "sports_" . key($sport_dic) . '"/>';
+                                echo "<span>" . current($sport_dic) . "</span>";
+                                echo "</label></li>";
+                                next($sport_dic);
+                            }
+                            reset($sport_dic);
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modifyform">
+                    <div class="modify_enter">
+                        <p class="tit_left_green">참석 확정 경기</p>
+                        <ul class="modify_checkList">
+                            <?php
+                            for ($value = 1; $value <= count($sport_dic); $value++) {
+                                echo "<li><label>";
+                                echo '<input type="checkbox" name="attendance_sports[]"' . 'value="' . key($sport_dic) . '"' . 'id="' . "attendance_" . key($sport_dic) . '"/>';
+                                echo "<span>" . current($sport_dic) . "</span>";
+                                echo "</label></li>";
+                                next($sport_dic);
+                            }
+                            reset($sport_dic);
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modifyform">
+
+                    <!-- SB -->
+                    <div class="modify_check">
+                        <div class="modify_enter modify_tit_color" id="sb-section">
+                            <p class="tit_left_red">SB</p>
+                            <?php
+                            // START FOR LOOP OF "SB"
+                            // key($athlete_sb_arr) : sports_code
+                            // current($athlete_sb_arr) : record
+                            for ($i = 0; $i < count($athlete_sb_arr); $i++) {
+                            ?>
+                                <ul class="modify_checkList" id="sb-input">
+                                    <select name="athlete_sb_sports[]" id="sb-sports-select">
+                                        <?php
+                                        // key($sport_dic) : sports_code
+                                        // current($sport_dic) : sports_name
+                                        for ($value = 1; $value <= count($sport_dic); $value++) {
+                                            $maintain_selected = "";
+                                            if (key($athlete_sb_arr) === key($sport_dic)) {
+                                                $maintain_selected = " selected";
+                                            }
+                                            echo '<option value="' . key($sport_dic) . '"' . $maintain_selected . '>' . current($sport_dic) . '</option>';
+                                            next($sport_dic);
+                                        }
+                                        reset($sport_dic);
+                                        ?>
+                                    </select>
+                                    <input type="text" name="athlete_sb[]" id="athlete_sb" value="<?php echo current($athlete_sb_arr) ?>" placeholder="SB를 입력해 주세요" />
+                                    <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button>
+                                </ul>
+
+                            <?php
+                                next($athlete_sb_arr);
+                            }
+                            reset($athlete_sb_arr);
+                            // END FOR LOOP OF "SB"
+                            ?>
+                        </div>
+                        <div class="filed_BTN2">
+                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-sb"><i class="xi-plus"></i></button>
                         </div>
                     </div>
-            </div>
-            <div class="modifyform">
-                <div class="modify_enter">
-                    <p class="tit_left_green">참석 확정 경기</p>
-                    <ul class="modify_checkList">
-                        <?php
-                        for ($value = 1; $value <= count($sport_dic); $value++) {
-                            echo "<li><label>";
-                            echo '<input type="checkbox" name="attendance_sports[]"' . 'value="' . key($sport_dic) . '"' . 'id="' . "attendance_" . key($sport_dic) . '"/>';
-                            echo "<span>" . current($sport_dic) . "</span>";
-                            echo "</label></li>";
-                            next($sport_dic);
-                        }
-                        reset($sport_dic);
-                        ?>
-                    </ul>
+                    <div class="modify_check">
+                        <div class="modify_enter" id="pb-section">
+                            <p class="tit_left_green">PB</p>
+                            <?php
+                            // START FOR LOOP OF "PB"
+                            // key($athlete_pb_arr) : sports_code
+                            // current($athlete_pb_arr) : record
+                            for ($i = 0; $i < count($athlete_pb_arr); $i++) {
+                            ?>
+                                <ul class="modify_checkList" id="pb-input">
+                                    <select name="athlete_pb_sports[]" id="pb-sports-select">
+                                        <?php
+                                        // key($sport_dic) : sports_code
+                                        // current($sport_dic) : sports_name
+                                        for ($value = 1; $value <= count($sport_dic); $value++) {
+                                            $maintain_selected = "";
+                                            if (key($athlete_pb_arr) === key($sport_dic)) {
+                                                $maintain_selected = " selected";
+                                            }
+                                            echo '<option value="' . key($sport_dic) . '"' . $maintain_selected . '>' . current($sport_dic) . '</option>';
+                                            next($sport_dic);
+                                        }
+                                        reset($sport_dic);
+                                        ?>
+                                    </select>
+                                    <input type="text" name="athlete_pb[]" id="athlete_pb" value="<?php echo current($athlete_pb_arr) ?>" placeholder="PB를 입력해 주세요" />
+                                    <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
+                                </ul>
+                            <?php
+                                next($athlete_pb_arr);
+                            }
+                            reset($athlete_pb_arr);
+                            // END FOR LOOP OF "PB"
+                            ?>
+                        </div>
+                        <div class="filed_BTN2">
+                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-pb"><i class="xi-plus"></i></button>
+                        </div>
+                    </div>
+                    <script>
+                        // sb 추가 버튼 @author 임지훈 @vanillacake369
+                        $(document).ready(function() {
+                            $('#add-sb').click(function() {
+                                var list = $('#sb-input').clone(); // Make a copy of the <ul> element
+                                $('#sb-section').append(list); // Append the copy to the body of the document
+                            });
+                        });
+                        // pb 추가 버튼 @author 임지훈 @vanillacake369
+                        $(document).ready(function() {
+                            $('#add-pb').click(function() {
+                                var list = $('#pb-input').clone(); // Make a copy of the <ul> element
+                                $('#pb-section').append(list); // Append the copy to the body of the document
+                            });
+                        });
+                        // sb 삭제 버튼 @author 임지훈 @vanillacake369
+                        $(document).ready(function() {
+                            $(document).on("click", '#delete-sb', function() {
+                                $(this).parent().remove();
+                            });
+                        });
+                        // pb 삭제 버튼 @author 임지훈 @vanillacake369
+                        $(document).ready(function() {
+                            $(document).on("click", '#delete-pb', function() {
+                                $(this).parent().remove();
+                            });
+                        });
+                    </script>
+                </div>
+                <div class="modify_Btn input_Btn Participant_Btn">
+                    <button type="submit" class="BTN_blue2" type="button" name="athlete_edit">수정하기</button>
                 </div>
             </div>
-        </div>
-        <div class="modify_Btn input_Btn Participant_Btn">
-            <button type="submit" class="BTN_blue2" type="button" name="athlete_edit">수정하기</button>
-        </div>
         </form>
-    </div>
-    </div>
     </div>
     <script src="/assets/js/main.js?v=6"></script>
 </body>

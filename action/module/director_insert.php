@@ -61,31 +61,31 @@ if ($_FILES['main_photo']['name']) {
 	if (!is_dir($upload_dir))
 		mkdir($upload_dir, 0777);
 
-		$FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
-		$myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
+	$FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
+	$myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
 
-		if ($FileExt != "jpg" && $FileExt != "gif" && $FileExt != "jpeg" && $FileExt != "png" && $FileExt != "JPG" && $FileExt != "GIF" && $FileExt != "JPEG" && $FileExt != "PNG") {
-			AlertBox("[오류] 올바른 이미지 확장자가 아닙니다.", 'back', '');
+	if ($FileExt != "jpg" && $FileExt != "gif" && $FileExt != "jpeg" && $FileExt != "png" && $FileExt != "JPG" && $FileExt != "GIF" && $FileExt != "JPEG" && $FileExt != "PNG") {
+		AlertBox("[오류] 올바른 이미지 확장자가 아닙니다.", 'back', '');
+		exit;
+	}
+	if (move_uploaded_file($_FILES['main_photo']['tmp_name'], $upload_dir . $myFile)) {
+		$image_photo = new Image($upload_dir . $myFile);
+
+		if ($image_photo->getWidth() < 10 || $image_photo->getHeight() < 10) {
+			AlertBox("[오류] 올바른 이미지가 아닙니다.", 'back', '');
 			exit;
 		}
-		if (move_uploaded_file($_FILES['main_photo']['tmp_name'], $upload_dir . $myFile)) {
-			$image_photo = new Image($upload_dir . $myFile);
 
-			if ($image_photo->getWidth() < 10 || $image_photo->getHeight() < 10) {
-				AlertBox("[오류] 올바른 이미지가 아닙니다.", 'back', '');
-				exit;
-			}
+		if ($image_photo->getWidth() > 2000)
+			$image_photo->resizeToWidth(2000);
 
-			if ($image_photo->getWidth() > 2000)
-				$image_photo->resizeToWidth(2000);
+		$image_photo->save($upload_dir . $myFile);
+		$director_photo = str_replace("../../assets/img/director_img/", "", $upload_dir) . $myFile;
 
-			$image_photo->save($upload_dir . $myFile);
-			$director_photo = str_replace("../../assets/img/director_img/", "", $upload_dir) . $myFile;
-
-			$director_image = $director_photo;
-		} else {
-			AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
-			exit;
+		$director_image = $myFile;
+	} else {
+		AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
+		exit;
 	}
 } else {
 	$director_image = 'profile.jpg';

@@ -273,7 +273,7 @@ while ($rank_row = mysqli_fetch_array($rank_result)) {
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . ',' . "<br>";
+                                        echo htmlspecialchars($g) . "<br>";
                                     }
                                 }
                             }
@@ -303,7 +303,7 @@ while ($rank_row = mysqli_fetch_array($rank_result)) {
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . ',' . "<br>";
+                                        echo htmlspecialchars($g) . "<br>";
                                     }
                                 }
                             }
@@ -333,7 +333,7 @@ while ($rank_row = mysqli_fetch_array($rank_result)) {
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . ',' . "<br>";
+                                        echo htmlspecialchars($g) . "<br>";
                                     }
                                 }
                             }

@@ -948,52 +948,7 @@ function confirmDelete(account, table) {
   if (deleteConfirm) {
     if (table == "admin") admin_Delete(account);
     else if (table == "schedule") schedule_Delete(account);
-    if (
-      document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
-    ) {
-      let clickedInput = null;
-      const inputs = document.querySelectorAll(
-        '.filed2_swap>tbody>tr>td>input[name="name[]"]'
-      );
-      const athlete = document.querySelectorAll('input[name="athlete_id[]"]');
-      for (let i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener("click", () => {
-          if (!clickedInput) {
-            clickedInput = inputs[i];
-            athleteInput = athlete[i];
-            console.log(clickedInput);
-            console.log(athleteInput);
-          } else {
-            const tempValue = clickedInput.value;
-            const tempId = clickedInput.id;
-            const athleteValue = athleteInput.value;
-            clickedInput.value = inputs[i].value;
-            clickedInput.id = inputs[i].id;
-            athleteInput.value = athlete[i].value;
-            inputs[i].value = tempValue;
-            inputs[i].id = tempId;
-            athlete[i].value = athleteValue;
-            athlete[i].id = athletepId;
-            clickedInput.setAttribute("value", clickedInput.value);
-            clickedInput.setAttribute("id", clickedInput.id);
-            inputs[i].setAttribute("value", inputs[i].value);
-            inputs[i].setAttribute("id", inputs[i].id);
-            athleteInput.setAttribute("value", athleteInput.value);
-            athlete[i].setAttribute("value", athlete[i].value);
-            clickedInput = null;
-            athleteInput = null;
-          }
-        });
-      }
-      document.addEventListener("click", (event) => {
-        // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
-        // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
-        if (event.target.name !== "name[]") {
-          clickedInput = null;
-          athleteInput = null;
-        }
-      });
-    } else if (table == "country") country_Delete(account);
+    else if (table == "country") country_Delete(account);
     else if (table == "athlete") athlete_Delete(account);
     else if (table == "sports") sport_Delete(account);
     else if (table == "coach") coach_Delete(account);
@@ -1001,6 +956,51 @@ function confirmDelete(account, table) {
     else if (table == "judge") judge_Delete(account);
   }
 }
+
+if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) {
+  let clickedInput = null;
+  const inputs = document.querySelectorAll(
+    '.filed2_swap>tbody>tr>td>input[name="name[]"]'
+  );
+  const athlete = document.querySelectorAll('input[name="athlete_id[]"]');
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("click", () => {
+      if (!clickedInput) {
+        clickedInput = inputs[i];
+        athleteInput = athlete[i];
+        console.log(clickedInput);
+        console.log(athleteInput);
+      } else {
+        const tempValue = clickedInput.value;
+        const tempId = clickedInput.id;
+        const athleteValue = athleteInput.value;
+        clickedInput.value = inputs[i].value;
+        clickedInput.id = inputs[i].id;
+        athleteInput.value = athlete[i].value;
+        inputs[i].value = tempValue;
+        inputs[i].id = tempId;
+        athlete[i].value = athleteValue;
+        athlete[i].id = athletepId;
+        clickedInput.setAttribute("value", clickedInput.value);
+        clickedInput.setAttribute("id", clickedInput.id);
+        inputs[i].setAttribute("value", inputs[i].value);
+        inputs[i].setAttribute("id", inputs[i].id);
+        athleteInput.setAttribute("value", athleteInput.value);
+        athlete[i].setAttribute("value", athlete[i].value);
+        clickedInput = null;
+        athleteInput = null;
+      }
+    });
+  }
+  document.addEventListener("click", (event) => {
+    // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
+    // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
+    if (event.target.name !== "name[]") {
+      clickedInput = null;
+      athleteInput = null;
+    }
+  });
+} 
 
 //일정 상세정보 접근할 수 없게 하는 함수
 //@potatoeunbi

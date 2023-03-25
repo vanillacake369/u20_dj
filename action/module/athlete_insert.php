@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../../console_log.php";
 require_once __DIR__ . "/../../backheader.php";
 require_once __DIR__ . "/../../class-image.php";
 // athlete_age 입력칸이 사라짐 :: 나이 입력 자체가 사라지나??? @author 임지훈
@@ -53,26 +54,37 @@ $athlete_sector = trim($sector);
 $athlete_schedule = trim($schedule);
 $athlete_attendance = trim($attendance_id);
 $athlete_profile = trim($profile);
-
 $athlete_iamge = "";
-
-
-
-
-
-if ($_FILES['athlete_imgFile']['name']) {
+$athlete_sb_sports = $_POST["athlete_sb_sports"];
+$athlete_sb = $_POST["athlete_sb"];
+$athlete_sb_json = array();
+$athlete_pb_sports = $_POST["athlete_pb_sports"];
+$athlete_pb = $_POST["athlete_pb"];
+$athlete_pb_json = array();
+// athlete_sb_json {"sports_code"=>record}
+for ($i = 0; $i < count($athlete_sb_sports); $i++) {
+	$athlete_sb_json[$athlete_sb_sports[$i]] = $athlete_sb[$i];
+}
+$athlete_sb_json_str = json_encode($athlete_sb_json);
+// athlete_pb_json {"sports_code"=>record}
+for ($i = 0; $i < count($athlete_pb); $i++) {
+	$athlete_pb_json[$athlete_pb_sports[$i]] = $athlete_pb[$i];
+}
+$athlete_pb_json_str = json_encode($athlete_pb_json);
+// 이미지 저장
+if ($_FILES['main_photo']['name']) {
 	$upload_dir = '../../assets/img/athlete_img/';
 	if (!is_dir($upload_dir))
 		mkdir($upload_dir, 0777, true);
 	// for ($i = 0; $i < count($_FILES['athlete_imgFile']['name']); $i++) {
-	$FileExt = substr(strrchr($_FILES['athlete_imgFile']['name'], "."), 1); // 확장자 추출
+	$FileExt = substr(strrchr($_FILES['main_photo']['name'], "."), 1); // 확장자 추출
 	$myFile = str_replace(" ", "", microtime()) . '.' . $FileExt;
 
 	if ($FileExt != "jpg" && $FileExt != "gif" && $FileExt != "jpeg" && $FileExt != "png" && $FileExt != "JPG" && $FileExt != "GIF" && $FileExt != "JPEG" && $FileExt != "PNG") {
 		AlertBox("[오류] 올바른 이미지 확장자가 아닙니다.", 'back', '');
 		exit;
 	}
-	if (move_uploaded_file($_FILES['athlete_imgFile']['tmp_name'], $upload_dir . $myFile)) {
+	if (move_uploaded_file($_FILES['main_photo']['tmp_name'], $upload_dir . $myFile)) {
 		$image_photo = new Image($upload_dir . $myFile);
 		if ($image_photo->getWidth() < 10 || $image_photo->getHeight() < 10) {
 			AlertBox("[오류] 올바른 이미지가 아닙니다.", 'back', '');
@@ -83,7 +95,7 @@ if ($_FILES['athlete_imgFile']['name']) {
 		$image_photo->save($upload_dir . $myFile);
 		$athlete_photo = str_replace("../../assets/img/athlete_img/", "", $upload_dir) . $myFile;
 		$athlete_photo = $upload_dir . $myFile;
-		$athlete_image = $athlete_photo;
+		$athlete_image = $myFile;
 	} else {
 		AlertBox("[오류] 관리자에게 문의해주세요.", 'back', '');
 		exit;
@@ -93,12 +105,13 @@ if ($_FILES['athlete_imgFile']['name']) {
 	$athlete_image = 'profile.jpg';
 }
 
+// // 삽입 쿼리 실행
 $sql = "INSERT INTO list_athlete
-            (athlete_name, athlete_country, athlete_region, athlete_division, athlete_gender, athlete_birth, athlete_age, athlete_sector, athlete_schedule, athlete_profile,athlete_attendance)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            (athlete_name, athlete_country, athlete_region, athlete_division, athlete_gender, athlete_birth, athlete_age, athlete_sector, athlete_schedule, athlete_profile,athlete_attendance,athlete_sb,athlete_pb)
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 $stmt = $db->prepare($sql);
 $stmt->bind_param(
-	"sssssssssss",
+	"sssssssssssss",
 	$athlete_name,
 	$athlete_country,
 	$athlete_region,
@@ -109,11 +122,12 @@ $stmt->bind_param(
 	$athlete_sector,
 	$athlete_schedule,
 	$athlete_image,
-	$athlete_attendance
+	$athlete_attendance,
+	$athlete_sb_json_str,
+	$athlete_pb_json_str
 );
 
 // $athlete_profile (x) => $athlete_image(o)
-
 $stmt->execute();
 
 // 로그 생성

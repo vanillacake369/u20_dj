@@ -21,23 +21,7 @@ if (!authCheck($db, "authEntrysRead")) {
 
 
 
-$sql = "SELECT 
-            judge_id,
-            judge_name,
-            judge_country,
-            country_name_kr,
-            country_code,
-            judge_division,
-            judge_gender,
-            judge_birth,
-            judge_age, 
-            judge_duty,
-            judge_sector,
-            judge_schedule,
-            judge_profile,
-            judge_attendance,
-            judge_account,
-            judge_password
+$sql = "SELECT *
             FROM list_judge
             INNER JOIN list_country  
             ON judge_country=country_code
@@ -148,13 +132,55 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                                     <span>이미지 변경</span>
                                     <input type="file" name="main_photo" class="form-control" />
                                 </li>
+                                <li class="row input_row row_item">
+                                    <span>식사 가능 여부</span>
+                                    <input type="checkbox" name="judge_eat" value="식사" <?php echo $row["judge_eat"] == 'y' ? "selected" : "";?>>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>대회접근시설</span>
+                                        <select name="judge_venue_access" required>
+                                            <option value='' selected disabled hidden>접근시설선택</option>
+                                            <option value="Y" <?php echo $row["judge_venue_access"] == 'Y' ? "selected" : "";?>>전 구역</option>
+                                            <option value="HQ" <?php echo $row["judge_venue_access"] == 'HQ' ? "selected" : "";?>>본부호텔</option>
+                                        </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>경기장 내 좌석</span>
+                                        <select name="judge_seats" required>
+                                            <option value='' selected disabled hidden>좌석선택</option>
+                                            <option value="RS" <?php echo $row["judge_seats"] == 'RS' ? "selected" : "";?>>VIP석</option>
+                                            <option value="US" <?php echo $row["judge_seats"] == 'US' ? "selected" : "";?>>자유석</option>
+                                            <option value="AS" <?php echo $row["judge_seats"] == 'AS' ? "selected" : "";?>>선수 임원석</option>
+                                            <option value="MS" <?php echo $row["judge_seats"] == 'MS' ? "selected" : "";?>>미디어석</option>
+                                            
+                                        </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>교통 권한</span>
+                                        <select name="judge_transport">
+                                            <option value='' selected disabled hidden>교통권한선택</option>
+                                            <option value="T1" <?php echo $row["judge_transport"] == 'T1' ? "selected" : "";?>>1인 1차량</option>
+                                            <option value="T2" <?php echo $row["judge_transport"] == 'T2' ? "selected" : "";?>>2인 1차량</option>
+                                            <option value="TA" <?php echo $row["judge_transport"] == 'TA' ? "selected" : "";?>>선수임원수송버스</option>
+                                            <option value="TF" <?php echo $row["judge_transport"] == 'TF' ? "selected" : "";?>>기술임원 수송버스</option>
+                                            
+                                        </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>선수촌</span>
+                                        <select name="judge_village" required>
+                                            <option value='' selected disabled hidden>접근시설선택</option>
+                                            <option value="AV" <?php echo $row["judge_village"] == 'AV' ? "selected" : "";?>>선수촌 거주 허용</option>
+                                            <option value="VA" <?php echo $row["judge_village"] == 'VA' ? "selected" : "";?>>선수촌 전구역(거주 불허)</option>
+                                        </select>
+                                </li>
                                 <li class="row full_width">
-                                    <span class="full_span">출입가능구역</span>
+                                <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
                                         <?php
                                         for ($value = 1; $value <= count($sector_dic); $value++) {
                                             echo "<label>";
-                                            echo '<input type="checkbox" name="judge_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . current($sector_dic) . '"/>';
+                                            echo '<input type="checkbox" name="judge_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '"/>';
                                             echo "<span>" . current($sector_dic) . "</span>";
                                             echo "</label>";
                                             next($sector_dic);
@@ -167,7 +193,7 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                         </div>
                     </div>
                     <div class="modifyform">
-                        <div class="modify_check">
+                        <div class="modify_check full_width">
                             <div class="modify_enter modify_tit_color">
                                 <p class="tit_left_red">참석 경기</p>
                                 <ul class="modify_checkList">
@@ -175,23 +201,6 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                                     for ($value = 1; $value <= count($judge_sport_dic); $value++) {
                                         echo '<li><label>';
                                         echo '<input type="checkbox" name="judge_schedules[]"' . 'value="' . key($judge_sport_dic) . '"' . 'id="' . "sports_" . key($judge_sport_dic) . '"/>';
-                                        echo "<span>" . current($judge_sport_dic) . "</span>";
-                                        echo "</label></li>";
-                                        next($judge_sport_dic);
-                                    }
-                                    reset($judge_sport_dic);
-                                    ?>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="modify_check">
-                            <div class="modify_enter">
-                                <p class="tit_left_green">참가 경기</p>
-                                <ul class="modify_checkList">
-                                    <?php
-                                    for ($value = 1; $value <= count($judge_sport_dic); $value++) {
-                                        echo "<li><label>";
-                                        echo '<input type="checkbox" name="attendance_sports[]"' . 'value="' . key($judge_sport_dic) . '"' . 'id="' . "attendance_" . key($judge_sport_dic) . '"/>';
                                         echo "<span>" . current($judge_sport_dic) . "</span>";
                                         echo "</label></li>";
                                         next($judge_sport_dic);

@@ -24,24 +24,10 @@ if (!$_POST['athlete_id']) {
              $db->query($update_issue_sql);
             
              $sql =
-             "SELECT 
-                     athlete_id,
-                     athlete_name,
-                     country_name,
-                     country_name_kr,
-                     country_code,
-                     athlete_region,
-                     athlete_division,
-                     athlete_gender,
-                     athlete_birth,
-                     athlete_age, 
-                     athlete_schedule,
-                     athlete_profile,
-                     athlete_attendance
-                     FROM list_athlete
-                     INNER JOIN list_country  
-                     ON athlete_country=country_code
-                     where athlete_id=" . $id;
+             "SELECT * FROM list_athlete
+              INNER JOIN list_country  
+              ON athlete_country=country_code
+              where athlete_id=" . $id;
 
             $result = $db->query($sql);
             while($row=mysqli_fetch_array($result)){
@@ -68,7 +54,7 @@ if (!$_POST['athlete_id']) {
                 </div>
                 <!-- 직책 -->
                 <div class="AD_front_desc">
-                    <p>athletic</p>
+                    <p>Athletic</p>
                 </div>
                 <div class="AD_front_text">
                     <p>Yecheon Asian U20</p>
@@ -76,26 +62,30 @@ if (!$_POST['athlete_id']) {
                 </div>
                 <!-- 접근코드 -->
                 <div class="AD_Venue">
-                    <p>HQ</p>
+                    <p><?php if (htmlspecialchars($row["athlete_venue_access"]) == 'HQ') echo 'HQ';?></p>
                 </div>
                 <!-- 접근 무한 -->
                 <div class="All_Venue">
-                    <p>∞</p>
+                    <p><?php if (htmlspecialchars($row["athlete_venue_access"]) == 'Y') echo '∞';?></p>
                 </div>
                     <!-- 시설 접근 코드 -->
                     <!-- 선수촌 거주 허용 코드 -->
-                    <p class="village">AV</p>
+                    <p class="village"><?php echo htmlspecialchars($row["athlete_village"]) ?></p>
                     <!-- 식사 가능 여부 없을 시 이미지 삭제 -->
-                    <img class="eat" src="/assets/images/eat.png" alt="">
+                    <?php if (htmlspecialchars($row["athlete_eat"]) == 'y'){ ?>
+                        <img class="eat" src="/assets/images/eat.png" alt="">
+                    <?php } ?>
                     <!-- 교통권한 -->
-                    <p class="transport">T</p>
+                    <p class="transport"><?php if (htmlspecialchars($row["athlete_transport"]) != "") echo "T"; ?></p>
                     <!-- 경기장 내 좌석 -->
-                    <p class="Seats">RS</p>
+                    <p class="Seats"><?php echo htmlspecialchars($row["athlete_seats"]) ?></p>
                     <div class="Access_venue">
-                    <p>1</p>
-                    <p>2</p>
-                    <p>3</p>
-                    <p>4</p>
+                    <?php
+                        $sector_row = explode(",", htmlspecialchars($row["athlete_sector"]));
+                        foreach ($sector_row as $sector) {
+                            echo "<p>" . $sector . "</p>";
+                        }
+                    ?>
                 </div>
             </div>
         </div>

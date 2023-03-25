@@ -17,19 +17,7 @@ if (!isset($_GET["id"])) {
     echo "<script>alert('잘못된 유입경로입니다.')</script>";
     exit();
 }
-$sql = "SELECT 
-        athlete_id,
-        athlete_name,
-        country_name_kr,
-        country_code,
-        athlete_region,
-        athlete_division,
-        athlete_gender,
-        athlete_birth,
-        athlete_age, 
-        athlete_schedule,
-        athlete_profile,
-        athlete_attendance
+$sql = "SELECT *
         FROM list_athlete
         INNER JOIN list_country  
         ON athlete_country=country_code
@@ -104,6 +92,39 @@ while ($row = mysqli_fetch_array($result)) {
                                         echo htmlspecialchars($date[0]) . "년 " . htmlspecialchars($date[1]) . "월 " . htmlspecialchars($date[2]) . "일";
                                         ?>
                                     </p>
+                                </li>
+                                <li class="row">
+                                    <span>식사 가능 여부</span>
+                                    <p><?php echo htmlspecialchars($athlete_personal["athlete_eat"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>대회접근시설</span>
+                                    <p><?php echo htmlspecialchars($athlete_personal["athlete_venue_access"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>경기장 내 좌석</span>
+                                    <p><?php echo htmlspecialchars($athlete_personal["athlete_seats"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>교통 권한</span>
+                                    <p><?php echo htmlspecialchars($athlete_personal["athlete_transport"]) ?></p>
+                                </li>
+                                <li class="row">
+                                    <span>선수촌</span>
+                                    <p><?php echo htmlspecialchars($athlete_personal["athlete_village"]) ?></p>
+                                </li>
+                                <li class="row">
+                                <span>경기장 접근 허용</span>
+                                    <div class="full_div">
+                                        <?php
+                                            $sector_row = explode(",",htmlspecialchars($athlete_personal["athlete_sector"]));
+                                            $i = 0;
+                                            foreach ($sector_row as $sector)
+                                            {
+                                                echo "<p>" . $sector . "</p>";
+                                            }
+                                        ?>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -271,8 +292,12 @@ while ($row = mysqli_fetch_array($result)) {
                                             <?php
                                             foreach ((explode(',', $athlete_personal["athlete_attendance"])) as $eachSport) {
                                                 echo "<tr>";
-                                                echo "<td>" . htmlspecialchars($categoryOfSports_dic[trim($eachSport)]) . ' ' . "</td>";
-                                                echo "<td>" . htmlspecialchars($sport_dic[trim($eachSport)]) . ' ' . "</td>";
+                                                echo "<td>";
+                                                echo isset($categoryOfSports_dic[trim($eachSport)]) ? htmlspecialchars($categoryOfSports_dic[trim($eachSport)]) : "-";
+                                                echo ' ' . "</td>";
+                                                echo "<td>";
+                                                echo isset($sport_dic[trim($eachSport)]) ? htmlspecialchars($sport_dic[trim($eachSport)]) : "-";
+                                                echo ' ' . "</td>";
                                                 echo "</tr>";
                                             }
                                             ?>

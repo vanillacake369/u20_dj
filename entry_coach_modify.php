@@ -18,22 +18,7 @@ if (!authCheck($db, "authEntrysRead")) {
         </script>");
 }
 
-$sql = "SELECT 
-            coach_id,
-            coach_name,
-            coach_country,
-            country_name_kr,
-            country_code,
-            coach_region,
-            coach_division,
-            coach_gender,
-            coach_birth,
-            coach_age, 
-            coach_duty,
-            coach_sector,
-            coach_schedule,
-            coach_profile,
-            coach_attendance
+$sql = "SELECT *
             FROM list_coach
             INNER JOIN list_country  
             ON coach_country=country_code
@@ -126,13 +111,55 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
                                     <span>이미지 변경</span>
                                     <input type="file" name="main_photo" />
                                 </li>
+                                <li class="row input_row row_item">
+                                    <span>식사 가능 여부</span>
+                                    <input type="checkbox" name="coach_eat" value="식사" <?php echo $row["coach_eat"] == 'y' ? "selected" : "";?>>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>대회접근시설</span>
+                                        <select name="coach_venue_access" required>
+                                            <option value='' selected disabled hidden>접근시설선택</option>
+                                            <option value="Y" <?php echo $row["coach_venue_access"] == 'Y' ? "selected" : "";?>>전 구역</option>
+                                            <option value="HQ" <?php echo $row["coach_venue_access"] == 'HQ' ? "selected" : "";?>>본부호텔</option>
+                                        </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>경기장 내 좌석</span>
+                                        <select name="coach_seats" required>
+                                            <option value='' selected disabled hidden>좌석선택</option>
+                                            <option value="RS" <?php echo $row["coach_seats"] == 'RS' ? "selected" : "";?>>VIP석</option>
+                                            <option value="US" <?php echo $row["coach_seats"] == 'US' ? "selected" : "";?>>자유석</option>
+                                            <option value="AS" <?php echo $row["coach_seats"] == 'AS' ? "selected" : "";?>>선수 임원석</option>
+                                            <option value="MS" <?php echo $row["coach_seats"] == 'MS' ? "selected" : "";?>>미디어석</option>
+                                            
+                                        </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>교통 권한</span>
+                                        <select name="coach_transport">
+                                            <option value='' selected disabled hidden>교통권한선택</option>
+                                            <option value="T1" <?php echo $row["coach_transport"] == 'T1' ? "selected" : "";?>>1인 1차량</option>
+                                            <option value="T2" <?php echo $row["coach_transport"] == 'T2' ? "selected" : "";?>>2인 1차량</option>
+                                            <option value="TA" <?php echo $row["coach_transport"] == 'TA' ? "selected" : "";?>>선수임원수송버스</option>
+                                            <option value="TF" <?php echo $row["coach_transport"] == 'TF' ? "selected" : "";?>>기술임원 수송버스</option>
+                                            
+                                        </select>
+                                </li>
+                                <li class="row input_row row_item input_width">
+                                    <span>선수촌</span>
+                                        <select name="coach_village" required>
+                                            <option value='' selected disabled hidden>접근시설선택</option>
+                                            <option value="AV" <?php echo $row["coach_village"] == 'AV' ? "selected" : "";?>>선수촌 거주 허용</option>
+                                            <option value="VA" <?php echo $row["coach_village"] == 'VA' ? "selected" : "";?>>선수촌 전구역(거주 불허)</option>
+                                        </select>
+                                </li>
                                 <li class="row full_width">
-                                    <span class="full_span">출입가능구역</span>
+                                <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
                                         <?php
                                         for ($value = 1; $value <= count($sector_dic); $value++) {
                                             echo "<label>";
-                                            echo '<input type="checkbox" name="coach_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . current($sector_dic) . '"/>';
+                                            echo '<input type="checkbox" name="coach_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '"/>';
                                             echo "<span>" . current($sector_dic) . "</span>";
                                             echo "</label>";
                                             next($sector_dic);

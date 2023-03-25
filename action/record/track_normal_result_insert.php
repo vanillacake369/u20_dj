@@ -195,7 +195,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             }
             $db->query("UPDATE list_record set record_end='".date("Y-m-d H:i:s")."',record_status='l',record_state='y' where $totalrow");
         }
-    if($row1['record_state']!='y'){
+    if($row1['record_status']!='o'){
         $finishcnt=0;
         $db->query("UPDATE list_record set record_end='".date("Y-m-d H:i:s")."',record_state='y' where record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'"); // 경기 종료 스케쥴에 반영
         $db->query("UPDATE list_schedule set schedule_memo='".$_POST['bibigo']."' where schedule_sports= '$sport' AND schedule_round= '$round' AND schedule_gender='$gender'"); // 경기 종료 스케쥴에 반영

@@ -1,4 +1,6 @@
 <?php
+    header("Cache-Control: no cache");
+    session_cache_limiter('private_no_expire'); // works
     $schedule_sports=$_POST['sports'];
     $schedule_round=$_POST['round'];
     $gender=$_POST['gender'];
@@ -90,6 +92,18 @@
                     <input type="hidden" name="gender" value="<?= $gender ?>">
                     <input type="hidden" name="round" value="<?= $schedule_round ?>">
                     <input type="hidden" name="group" value="<?= $group ?>">
+                    <?php
+                        if (($_POST["check"] ?? null) === null) {
+                            // 처음 기록 페이지를 켯을 때
+                          echo '<input type="hidden" name="count" value= "3">';
+                        } else if (($_POST["check"] ?? null) === "3"){
+                            // 조 재편성 첫번 째 클릭 시 (1 ~ 3회차)
+                          echo '<input type="hidden" name="count" value= "5">';
+                        } else if (($_POST["check"] ?? null) === "5") {
+                            // 조 재편성 두번 째 클릭 시 (4 ~ 5회차)
+                          echo '<input type="hidden" name="count" value= "no_more_regroup">';
+                        }
+                    ?>
                     <div class="UserProfile_modify UserProfile_input thorw_main">
                         <div>
                             <ul class="UserDesc throwDesc">

@@ -50,8 +50,8 @@ while ($row = mysqli_fetch_array($result)) {
 usort($ID_check, function ($data1, $data2) {
     $first_record = str_replace(array('X', '-'), '-1', $data1['record_live_record']);
     $second_record = str_replace(array('X', '-'), '-1', $data2['record_live_record']);
-    if ($first_record > $second_record)    return -1;
-    else if ($first_record < $second_record)    return 1;
+    if ($first_record > $second_record) return -1;
+    else if ($first_record < $second_record) return 1;
     else return 0;
 });
 
@@ -160,7 +160,7 @@ if (count($ID_check) > 8) { // 8명 초과인 경우, 상위 8명을 선별
 
 $update_sql = "UPDATE list_record 
                SET record_order = ? 
-               WHERE record_athlete_id = ? AND record_schedule_id = ? AND record_trial = ?
+               WHERE record_athlete_id = ? AND record_sports = ? AND record_round = ? AND record_gender = ? AND record_trial = ?
               ";
 
 if ($trial_count === '3') { # 3회차 후 버튼을 눌렀을 때 실행
@@ -168,7 +168,7 @@ if ($trial_count === '3') { # 3회차 후 버튼을 눌렀을 때 실행
         $record_order = 1;
         foreach ($ID_check as $value) {
             $stmt = $db->prepare($update_sql);
-            $stmt->bind_param("iiii", $record_order, $value['record_athlete_id'], $value['record_schedule_id'], $record_trial);
+            $stmt->bind_param("iisssi", $record_order, $value['record_athlete_id'], $name, $round, $gender, $record_trial);
             $stmt->execute();
             $result = $stmt->get_result();
             $stmt->close();
@@ -180,7 +180,7 @@ if ($trial_count === '3') { # 3회차 후 버튼을 눌렀을 때 실행
     $six = 6;
     foreach ($ID_check as $value) {
         $stmt = $db->prepare($update_sql);
-        $stmt->bind_param("iiii", $record_order, $value['record_athlete_id'], $value['record_schedule_id'], $six);
+        $stmt->bind_param("iisssi", $record_order, $value['record_athlete_id'], $name, $round, $gender, $six);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -200,10 +200,31 @@ echo '<script>
                // hidden_field.setAttribute("name", "schedule_id");
                // hidden_field.setAttribute("value","");
                const hidden_count = document.createElement("input");
+               const hidden_sports = document.createElement("input");
+               const hidden_round = document.createElement("input");
+               const hidden_gender = document.createElement("input");
+               const hidden_group = document.createElement("input");
                hidden_count.setAttribute("type", "hidden");
                hidden_count.setAttribute("name", "check");
                hidden_count.setAttribute("value","' . $trial_count . '");
+               hidden_sports.setAttribute("type", "hidden");
+               hidden_sports.setAttribute("name", "sports");
+               hidden_sports.setAttribute("value","' . $name . '");
+               hidden_round.setAttribute("type", "hidden");
+               hidden_round.setAttribute("name", "round");
+               hidden_round.setAttribute("value","' . $round . '");
+               hidden_gender.setAttribute("type", "hidden");
+               hidden_gender.setAttribute("name", "gender");
+               hidden_gender.setAttribute("value","' . $gender . '");
+               hidden_group.setAttribute("type", "hidden");
+               hidden_group.setAttribute("name", "group");
+               hidden_group.setAttribute("value","' . $heat . '");
                form.appendChild(hidden_count);
+               form.appendChild(hidden_sports);
+               form.appendChild(hidden_round);
+               form.appendChild(hidden_gender);
+               form.appendChild(hidden_group);
+              
                // form.appendChild(hidden_field);
                document.body.appendChild(form);
                form.submit();

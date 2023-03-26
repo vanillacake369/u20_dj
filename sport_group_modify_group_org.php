@@ -207,23 +207,41 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                             // END FOR (n명)
                             ?>
                         </table>
-                        <label>레인: <input type="text" class="number" id="group<?php echo $i ?>" value="<?php echo $i ?>" readonly></label>
-                        <label>순서: <input type="text" class="number" id="lane<?php echo $i ?>"></label>
-                        <label>선수이름:
-                            <select class='select-box' name="athlete" id="name<?php echo $i ?>" onchange="select_change_listener()" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                <?php
-                                echo '<option value="" disabled selected>선수 선택</option>';
-                                foreach ($athletes_data as $athlete) {
-                                    echo '<option value="' . $athlete["athlete_id"] . '">';
-                                    echo $athlete["athlete_name"] . '(' . $athlete["athlete_country"] . ')(' . $athlete["athlete_division"] . ')';
-                                    echo '</option>';
-                                }
-                                ?>
-                            </select>
-                        </label>
+                        <table class="entry_table changeMemberList">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="60%">
+                            </colgroup>
+                            <thead class="  result_table ">
+                                <tr>
+                                <th>레인</th>
+                                <th>순서</th>
+                                <th>선수이름</th>
+                                </tr>
+                                <tr class="filed2_bottom">
+                                </tr>
+                            </thead>
+                            <tbody class="grouping_body entry_table">
+                                <td> <input type="text" class="number" id="group<?php echo $i ?>" value="<?php echo $i ?>" readonly></td>
+                                <td> <input type="text" class="number" id="lane<?php echo $i ?>"></td>
+                                <td> <select class='select-box' name="athlete" id="name<?php echo $i ?>" onchange="select_change_listener()" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                    <?php
+                                    echo '<option value="" disabled selected>선수 선택</option>';
+                                    foreach ($athletes_data as $athlete) {
+                                        echo '<option value="' . $athlete["athlete_id"] . '">';
+                                        echo $athlete["athlete_name"] . '(' . $athlete["athlete_country"] . ')(' . $athlete["athlete_division"] . ')';
+                                        echo '</option>';
+                                    }
+                                    ?>
+                                    </select>
+                                </td>
+                            </tbody>
+                        </table>
                         <div class="filed_BTN2">
                             <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN" id="addBtn<?php echo $i ?>"><i class=" xi-plus"></i></button>
                         </div>
+
                     </div>
                 </div>
                 <script>

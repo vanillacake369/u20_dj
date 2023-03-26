@@ -120,15 +120,14 @@ while ($row = mysqli_fetch_array($result)) {
                                     <p><?php echo htmlspecialchars($athlete_personal["athlete_village"]) ?></p>
                                 </li>
                                 <li class="row">
-                                <span>경기장 접근 허용</span>
+                                    <span>경기장 접근 허용</span>
                                     <div class="full_div">
                                         <?php
-                                            $sector_row = explode(",",htmlspecialchars($athlete_personal["athlete_sector"]));
-                                            $i = 0;
-                                            foreach ($sector_row as $sector)
-                                            {
-                                                echo "<p>" . $sector . "</p>";
-                                            }
+                                        $sector_row = explode(",", htmlspecialchars($athlete_personal["athlete_sector"]));
+                                        $i = 0;
+                                        foreach ($sector_row as $sector) {
+                                            echo "<p>" . $sector . "</p>";
+                                        }
                                         ?>
                                     </div>
                                 </li>
@@ -160,14 +159,16 @@ while ($row = mysqli_fetch_array($result)) {
                                     </thead>
                                     <tbody class="table_tbody entry_table">
                                         <?php
-                                        // function str_contains($haystack, $needle)
-                                        // {
-                                        //     if (is_string($haystack) && is_string($needle)) {
-                                        //         return '' === $needle || false !== strpos($haystack, $needle);
-                                        //     } else {
-                                        //         return false;
-                                        //     }
-                                        // }
+                                        // str_contains 는 php 8에서만 유효한 함수이므로 아래와 같이 명시선언을 해줘야합니다!
+                                        // @author 임지훈 @vanillacake369
+                                        function str_contains($haystack, $needle)
+                                        {
+                                            if (is_string($haystack) && is_string($needle)) {
+                                                return '' === $needle || false !== strpos($haystack, $needle);
+                                            } else {
+                                                return false;
+                                            }
+                                        }
                                         // 선수 경기 이력이 있다면 기록과 증명서 출력, 없다면 기록만 출력
                                         if ($athlete_info_arr) {
                                             $schedule_sports = $athlete_info_arr[0]["athlete_schedule"];

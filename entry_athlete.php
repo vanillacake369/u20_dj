@@ -12,6 +12,7 @@ require_once "security/input_filtering.php";
 require_once "action/module/entry_athlete_search.php";
 // 로그 기능
 require_once "backheader.php";
+require_once "console_log.php";
 
 if (!authCheck($db, "authEntrysRead")) {
     exit("<script>
@@ -29,7 +30,6 @@ if (isset($categoryValue) && isset($orderValue)) {
     $sql_order = makeOrderBy($columnStartsWith, $categoryValue, $orderValue);
     $sql = $sql . $sql_order;
 }
-
 ?>
 <script type="text/javascript" src="./assets/js/jquery-1.12.4.min.js"></script>
 </head>
@@ -161,7 +161,7 @@ if (isset($categoryValue) && isset($orderValue)) {
                     </colgroup>
                     <thead class="table_head entry_table">
                         <tr>
-                        <th scope="col">
+                            <th scope="col">
                                 <input type="checkbox" name="checkAll" id="checkAll" onclick="toggle(this)">
                             </th>
                             <th scope="col">AD카드</th>
@@ -189,7 +189,7 @@ if (isset($categoryValue) && isset($orderValue)) {
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
-                    <?php
+                        <?php
                         // 행 번호
                         $num = 0;
                         // 조회 결과가 있는 경우

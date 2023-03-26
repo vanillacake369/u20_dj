@@ -119,12 +119,12 @@ if ($_FILES['main_photo']["size"] == 0) {
         athlete_venue_access=?,
         athlete_seats=?,
         athlete_village=?,
-        athlete_bib=?
+        athlete_bib=?,
         WHERE athlete_id=?";
     $stmt = $db->prepare($sql);
 
     $stmt->bind_param(
-        "sssssssssssssssssis",
+        "sssssssssssssssssii",
         $athlete_name,
         $athlete_country,
         $athlete_region,
@@ -202,11 +202,11 @@ if ($_FILES['main_photo']["size"] == 0) {
         athlete_venue_access=?,
         athlete_seats=?,
         athlete_village=?,
-        athlete_bib=?,
+        athlete_bib=?
         WHERE athlete_id=?";
     $stmt = $db->prepare($sql);
     $stmt->bind_param(
-        "sssssssssssssis",
+        "ssssssssssssssssssii",
         $athlete_name,
         $athlete_country,
         $athlete_region,
@@ -217,7 +217,7 @@ if ($_FILES['main_photo']["size"] == 0) {
         $athlete_sector,
         $athlete_schedule,
         $athlete_attendance,
-        $athlete_profile,
+        $athlete_image,
         $athlete_sb_json_str,
         $athlete_pb_json_str,
         $athlete_eat,
@@ -234,4 +234,4 @@ if ($_FILES['main_photo']["size"] == 0) {
 // 로그 생성
 logInsert($db, $_SESSION['Id'], '선수 수정', $athlete_name . "-" . $athlete_country . "-" . $athlete_schedule);
 
-echo "<script>alert('수정되었습니다.');window.close();</script>";
+// echo "<script>alert('수정되었습니다.');window.close();</script>";

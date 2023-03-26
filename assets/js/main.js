@@ -45,40 +45,40 @@ for (let i = 0; i < gnbItem.length; i++) {
 // 메뉴 클릭 이벤트
 
 for (let i = 0; i < gnbItem.length; i++) {
-  gnbItem[i].addEventListener('click', () => {
+  gnbItem[i].addEventListener("click", () => {
     for (let j = 0; j < gnbItem.length; j++) {
       if (j !== i) {
-        gnbItem[j].classList.remove('gnb_active');
-        gnbItem[j].classList.remove('gnbBack');
+        gnbItem[j].classList.remove("gnb_active");
+        gnbItem[j].classList.remove("gnbBack");
       }
     }
-    gnbItem[i].classList.remove('gnb_active');
-    gnbItem[i].classList.add('gnbBack');
-
+    gnbItem[i].classList.remove("gnb_active");
+    gnbItem[i].classList.add("gnbBack");
   });
 }
 
-
-let menu = document.querySelectorAll('.gnbList>li');
+let menu = document.querySelectorAll(".gnbList>li");
 
 for (let i = 0; i < menu.length; i++) {
-  let currentMenu;
+  let currentMenu
+  console.log("1");
   function inactivate(elem) {
-    elem.classList.remove('gnbBack');
+    elem.classList.remove("gnbBack");
   }
 
   function activate(elem) {
-    elem.classList.add('gnbBack');
+    elem.classList.add("gnbBack");
     currentMenu = elem;
   }
-  function clickHandler() {    // 보통 이벤트 handler 안에 길게 쓰기 보다 함수를 쓴다.
+  function clickHandler() {
+    // 보통 이벤트 handler 안에 길게 쓰기 보다 함수를 쓴다.
     if (currentMenu) {
       inactivate(currentMenu);
     }
     activate(menu[i]);
   }
 
-  menu[i].addEventListener('click', clickHandler);
+  menu[i].addEventListener("click", clickHandler);
 }
 // 메뉴 햄버거 버튼 이벤트
 
@@ -352,6 +352,7 @@ function select_change_listener() {
     );
     select_object.appendChild(selected_option);
     // hidden에 athlete_id 추가
+    // const hidden = action_list[i].parentNode.children[2];
     const hidden = action_list[i].parentNode.parentNode.children[1];
     hidden.value = selected_label_key[i];
     // select 된 option을 제외하고 추가
@@ -376,11 +377,9 @@ for (let i = 0; i < addColumnBtns.length; i++) {
     const Cell1 = newRow.insertCell(0);
     const Cell2 = newRow.insertCell(1);
 
-    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]"></td>`;
-    // Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]" disabled></td>`;
+    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]" disabled></td>`;
     Cell2.innerHTML =
-      '<td><div class="copy-value"><select name="playerid[]"></select></div></td>';
-
+      '<td><div class="copy-value"><select class="select-box select2-hidden-accessible" name="athlete" onchange="select_change_listener()"></select></div></td><input type="hidden" class="hidden-input" id="player_id" name="player_id[]" value="">';
     // option 복제
     const options = $("#copy-value select option").clone();
     const select = $(Cell2).find("select");
@@ -441,12 +440,16 @@ for (let i = 0; i < filed_item.length; i++) {
 }
 
 // 조 편성 수정 > 클릭클릭으로 선수 SWAP 기능
-if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) {
+if (
+  document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
+) {
   let clickedInput = null;
-  const inputs = document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]');
+  const inputs = document.querySelectorAll(
+    '.filed2_swap>tbody>tr>td>input[name="name[]"]'
+  );
   const athlete = document.querySelectorAll('input[name="athlete_id[]"]');
   for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener('click', () => {
+    inputs[i].addEventListener("click", () => {
       if (!clickedInput) {
         clickedInput = inputs[i];
         athleteInput = athlete[i];
@@ -457,23 +460,22 @@ if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) 
         athleteInput.value = athlete[i].value;
         inputs[i].value = tempValue;
         athlete[i].value = athleteValue;
-        clickedInput.setAttribute('value', clickedInput.value);
-        inputs[i].setAttribute('value', inputs[i].value);
-        athleteInput.setAttribute('value', athleteInput.value);
-        athlete[i].setAttribute('value', athlete[i].value);
+        clickedInput.setAttribute("value", clickedInput.value);
+        inputs[i].setAttribute("value", inputs[i].value);
+        athleteInput.setAttribute("value", athleteInput.value);
+        athlete[i].setAttribute("value", athlete[i].value);
         clickedInput = null;
         athleteInput = null;
       }
     });
   }
-  document.addEventListener('click', (event) => {
+  document.addEventListener("click", (event) => {
     // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
     // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
-    if (event.target.name !== 'name[]') {
+    if (event.target.name !== "name[]") {
       clickedInput = null;
       athleteInput = null;
     }
-
   });
 }
 
@@ -957,7 +959,9 @@ function confirmDelete(account, table) {
   }
 }
 
-if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) {
+if (
+  document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
+) {
   let clickedInput = null;
   const inputs = document.querySelectorAll(
     '.filed2_swap>tbody>tr>td>input[name="name[]"]'
@@ -1000,7 +1004,7 @@ if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) 
       athleteInput = null;
     }
   });
-} 
+}
 
 //일정 상세정보 접근할 수 없게 하는 함수
 //@potatoeunbi

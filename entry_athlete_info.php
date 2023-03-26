@@ -60,7 +60,13 @@ while ($row = mysqli_fetch_array($result)) {
                 <form action="">
                     <div class="UserProfile_modify info_img Participant_img">
                         <div>
-                            <img src="<?php echo "/assets/img/athlete_img/" . $athlete_personal["athlete_profile"] ?>" alt="avatar">
+                            <?php if (!isset($athlete_personal["athlete_profile"]) || $athlete_personal["athlete_profile"] == "")
+                            {
+                            ?>
+                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <?php }else{?>
+                            <img src=<?php echo "./assets/img/athlete_img/" . $athlete_personal["athlete_profile"] ?> alt="avatar" />
+                            <?php }?>
                         </div>
                         <div>
                             <ul class=" UserDesc infoDesc Participant_list">

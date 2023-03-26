@@ -1,6 +1,6 @@
 <?php
 require_once "head.php";
-if (!$_POST['director_id']) {
+if (!$_GET['id']) {
     echo "<script>alert('잘못된 유입경로입니다.')</script>";
     exit();
 }
@@ -21,7 +21,7 @@ $sql = "SELECT *
             FROM list_director
             INNER JOIN list_country  
             ON director_country=country_code
-            where director_id=" . $_POST['director_id'];
+            where director_id=" . $_GET['id'];
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 $birth = explode('-', $row["director_birth"]); //생일 정보 나눔
@@ -42,11 +42,17 @@ $birth = explode('-', $row["director_birth"]); //생일 정보 나눔
                 <form action="./action/module/director_update.php" method="post" class="form" enctype="multipart/form-data">
                     <div class="UserProfile_modify coachArea Participant_img ptp_img">
                         <div>
-                            <img src=<?php echo "./assets/img/director_img/" . $row["director_profile"] ?> alt="avatar" />
+                            <?php if (!isset($row["director_profile"]) || $row["director_profile"] == "")
+                            {
+                            ?>
+                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <?php }else{?>
+                            <img src=<?php echo "./assets/img/athlete_img/" . $row["director_profile"] ?> alt="avatar" />
+                            <?php }?>
                         </div>
                         <div>
                             <ul class="UserDesc Participant_list">
-                                <input type='hidden' name='director_id' value=<?php echo $_POST['director_id'] ?>>
+                                <input type='hidden' name='director_id' value=<?php echo$_GET['id'] ?>>
                                 <?php
                                 $name = explode(" ", $row["director_name"]);
                                 $secondName = isset($name[0]) ? $name[0] : NULL;
@@ -152,13 +158,13 @@ $birth = explode('-', $row["director_birth"]); //생일 정보 나눔
                                             <option value="VA" <?php echo $row["director_village"] == 'VA' ? "selected" : "";?>>선수촌 전구역(거주 불허)</option>
                                         </select>
                                 </li>
-                                <li class="row full_width">
+                                <li class="row full_width director_sector">
                                 <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
                                         <?php
                                         for ($value = 1; $value <= count($sector_dic); $value++) {
                                             echo "<label>";
-                                            echo '<input type="checkbox" name="director_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '"/>';
+                                            echo '<input type="checkbox" name="director_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '" autocomplete="off"/>';
                                             echo "<span>" . current($sector_dic) . "</span>";
                                             echo "</label>";
                                             next($sector_dic);
@@ -178,10 +184,11 @@ $birth = explode('-', $row["director_birth"]); //생일 정보 나눔
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="/assets/js/main.js?ver=8"></script>
-</body>
-<?php
+    <script type="text/javascript" src="/assets/js/main.js?ver=12"></script>
+    <?php
 require_once "action/module/director_modify_selected.php";
 ?>
+</body>
+
 
 </html>

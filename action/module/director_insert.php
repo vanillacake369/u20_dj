@@ -1,22 +1,25 @@
 <?php
 require_once __DIR__ . "/../../backheader.php";
 require_once __DIR__ . "/../../class-image.php";
+require_once __DIR__ . "/../../includes/auth/config.php";
+require_once "./imgUpload.php"; //B:데이터베이스 연결
+require_once "./dictionary.php"; //B:서치 select 태크 사용하기 위한 자료구조
+
 if (
-	!isset($_POST["director_first_name"]) ||
-	!isset($_POST["director_second_name"]) ||
-	!isset($_POST["director_country"]) ||
-	!isset($_POST["director_division"]) ||
-	!isset($_POST["director_gender"]) ||
-	!isset($_POST["director_birth_year"]) ||
-	!isset($_POST["director_birth_month"]) ||
-	!isset($_POST["director_birth_day"]) ||
-	!isset($_POST["director_age"]) ||
-	!isset($_POST["director_duty"]) ||
-	!isset($_POST["director_sector"]) ||
-	!isset($_POST["director_village"]) ||
-	!isset($_POST["director_seats"]) ||
-	!isset($_POST["director_sector"]) ||
-	!isset($_POST["director_venue_access"])
+    (!isset($_POST["director_first_name"]) || $_POST["director_first_name"] == "") ||
+    (!isset($_POST["director_second_name"]) || $_POST["director_second_name"] == "") ||
+    (!isset($_POST["director_country"]) || $_POST["director_country"] == "") ||
+    (!isset($_POST["director_division"]) || $_POST["director_division"] == "") ||
+    (!isset($_POST["director_gender"]) || $_POST["director_gender"] == "") ||
+    (!isset($_POST["director_birth_year"]) || $_POST["director_birth_year"] == "") ||
+    (!isset($_POST["director_birth_month"]) || $_POST["director_birth_month"] == "") ||
+    (!isset($_POST["director_birth_day"]) || $_POST["director_birth_day"] == "") ||
+    (!isset($_POST["director_age"]) || $_POST["director_age"] == "") ||
+    (!isset($_POST["director_duty"]) || $_POST["director_duty"] == "") ||
+	(!isset($_POST["director_village"]) || $_POST["director_village"] == "") ||
+	(!isset($_POST["director_seats"]) || $_POST["director_seats"] == "") ||
+	(!isset($_POST["director_sector"]) || $_POST["director_sector"] == "") ||
+	(!isset($_POST["director_venue_access"]) ||  $_POST["director_venue_access"] == "")
 	// !isset($_POST["director_schedules"]) ||
 	// !isset($_POST["attendance_sports"])
 ) {
@@ -24,9 +27,7 @@ if (
 	exit;
 }
 // 데이터베이스 연결 :: auth 내부에서 auth 확인 후 db 연결
-require_once __DIR__ . "/../../includes/auth/config.php";
-require_once "./imgUpload.php"; //B:데이터베이스 연결
-require_once "./dictionary.php"; //B:서치 select 태크 사용하기 위한 자료구조
+
 
 // $schedule = implode(',', $_POST["director_schedules"]);
 // $attendance_id = implode(',', $_POST["attendance_sports"]);

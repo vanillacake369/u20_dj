@@ -1,33 +1,34 @@
 <?php
 require_once __DIR__ . "/../../backheader.php";
 require_once __DIR__ . "/../../class-image.php";
-
-if (
-    !isset($_POST["coach_first_name"]) ||
-    !isset($_POST["coach_second_name"]) ||
-    !isset($_POST["coach_country"]) ||
-    !isset($_POST["coach_division"]) ||
-    !isset($_POST["coach_region"]) ||
-    !isset($_POST["coach_gender"]) ||
-    !isset($_POST["coach_birth_year"]) ||
-    !isset($_POST["coach_birth_month"]) ||
-    !isset($_POST["coach_birth_day"]) ||
-    !isset($_POST["coach_age"]) ||
-    !isset($_POST["coach_duty"]) ||
-	!isset($_POST["coach_village"]) ||
-	!isset($_POST["coach_seats"]) ||
-	!isset($_POST["coach_venue_access"])||
-    !isset($_POST["coach_sector"])
-    // !isset($_POST["coach_schedules"]) ||
-    // !isset($_POST["attendance_sports"])
-) {
-    echo "<script>alert('기입하지 않은 정보가 있습니다.');window.close();</script>";
-    exit;
-}
-// 데이터베이스 연결 :: auth 내부에서 auth 확인 후 db 연결
 require_once __DIR__ . "/../../includes/auth/config.php";
 require_once "./imgUpload.php"; //B:데이터베이스 연결
 require_once "./dictionary.php"; //B:서치 select 태크 사용하기 위한 자료구조
+
+if (
+    (!isset($_POST["coach_first_name"]) || $_POST["coach_first_name"] == "") ||
+    (!isset($_POST["coach_second_name"]) || $_POST["coach_second_name"] == "") ||
+    (!isset($_POST["coach_country"]) || $_POST["coach_country"] == "") ||
+    (!isset($_POST["coach_division"]) || $_POST["coach_division"] == "") ||
+    (!isset($_POST["coach_region"]) || $_POST["coach_region"] == "") ||
+    (!isset($_POST["coach_gender"]) || $_POST["coach_gender"] == "") ||
+    (!isset($_POST["coach_birth_year"]) || $_POST["coach_birth_year"] == "") ||
+    (!isset($_POST["coach_birth_month"]) || $_POST["coach_birth_month"] == "") ||
+    (!isset($_POST["coach_birth_day"]) || $_POST["coach_birth_day"] == "") ||
+    (!isset($_POST["coach_age"]) || $_POST["coach_age"] == "") ||
+    (!isset($_POST["coach_duty"]) || $_POST["coach_duty"] == "") ||
+	(!isset($_POST["coach_village"]) || $_POST["coach_village"] == "") ||
+	(!isset($_POST["coach_seats"]) || $_POST["coach_seats"] == "") ||
+	(!isset($_POST["coach_venue_access"])|| $_POST["coach_venue_access"] == "") ||
+    (!isset($_POST["coach_sector"]) || $_POST["coach_sector"] == "")
+    // !isset($_POST["coach_schedules"]) ||
+    // !isset($_POST["attendance_sports"])
+) {
+    echo "<script>alert('기입하지 않은 정보가 있습니다.');history.back();</script>";
+    exit;
+}
+// 데이터베이스 연결 :: auth 내부에서 auth 확인 후 db 연결
+
 
 // $schedule = implode(',', $_POST["coach_schedules"]);
 // $attendance_id = implode(',', $_POST["attendance_sports"]);

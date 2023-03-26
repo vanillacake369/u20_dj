@@ -220,12 +220,12 @@ if (isset($categoryValue) && isset($orderValue)) {
                             echo "</td>";
                             // 참가자 상세 보기
                             echo "<td>";
-                            echo "<input type='button' onclick=" . "\"createPopupWin('entry_director_info.php?id=" . $row["director_id"] . "'" . ",'상세내용 보기',1100,500);\"" . "value='보기' class='BTN_DarkBlue defaultBtn'>";
+                            echo "<input type='button' onclick=" . "\"createPopupWin('entry_director_info.php?id=" . $row["director_id"] . "'" . ",'상세내용 보기',1100,700);\"" . "value='보기' class='BTN_DarkBlue defaultBtn'>";
                             echo "</td>";
                             // 참가자 수정
                             echo "<td>";
                             if (authCheck($db, "authEntrysUpdate")) {
-                                echo "<input type='button' onclick=" . "updatePop(" . $row["director_id"] . ",'director_id',\"entry_director_modify.php\")" . " value='수정' class='BTN_Blue defaultBtn'>";
+                                echo "<input type='button' onclick=" . "\"createPopupWin('entry_director_modify.php?id=" . $row["director_id"] . "'" . ",'수정',1100,900);\"" . " value='수정' class='BTN_Blue defaultBtn'>";
                             }
                             echo "</td>";
                             // 참가자 삭제
@@ -288,7 +288,7 @@ if (isset($categoryValue) && isset($orderValue)) {
         </div>
     </div>
 
-    <script src="/assets/js/main.js?ver=10"></script>
+    <script src="/assets/js/main.js?ver=11"></script>
     <script>
         // active browser에 대한 auto refresh 함수
         reloadWhenVisibilityChange();

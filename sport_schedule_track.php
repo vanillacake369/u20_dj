@@ -191,7 +191,7 @@ function islane($schedule_sports, $what)
                 <?php
                             // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                             if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
-                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" ';
+                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
                                 if ( $schedule_sports == " 4x100mR" || $schedule_sports == "4x400mR") {
                                     echo "/record/track_relay_result_view.php";
                                 } else {
@@ -410,7 +410,7 @@ function islane($schedule_sports, $what)
         <?php
                             // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                             if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
-                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" ';
+                                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
                                 if ( $schedule_sports == " 4x100mR" || $schedule_sports == "4x400mR") {
                                     echo "/record/track_relay_result_view.php";
                                 } else {

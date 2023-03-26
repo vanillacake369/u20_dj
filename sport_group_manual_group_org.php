@@ -154,7 +154,7 @@ if (($sport_code === "decathlon" || $sport_code === "heptathlon") && $round === 
                                             </td>
                                             <td>
                                                 <div id="copy-value">
-                                                    <select class='select-box' name="athlete" onchange="select_change_listener()" required class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                    <select class='select-box' name="athlete" onchange="select_change_listener()" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                                                         <?php
                                                         if ($create_type === "수동") {
                                                             echo '<option value="" disabled selected>선수 선택</option>';

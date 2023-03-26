@@ -86,13 +86,13 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 </li>
                                 <li class="row input_row row_item row_date">
                                     <span>생년월일</span>
-                                    <input type="number" name="athlete_birth_year" class="input_text_row_b" placeholder="연" mexlength="4" required>
-                                    <input type="number" name="athlete_birth_month" class="input_text_row_b" placeholder="월" mexlength="2" required>
-                                    <input type="number" name="athlete_birth_day" class="input_text_row_b" placeholder="일" mexlength="2" required>
+                                    <input type="number" name="athlete_birth_year" class="input_text_row_b" placeholder="연" maxlength="4" oninput="maxLengthCheck(this)" required>
+                                    <input type="number" name="athlete_birth_month" class="input_text_row_b" placeholder="월" maxlength="2" oninput="maxLengthCheck(this)" required>
+                                    <input type="number" name="athlete_birth_day" class="input_text_row_b" placeholder="일" maxlength="2" oninput="maxLengthCheck(this)" required>
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>나이</span>
-                                    <input type="number" name="athlete_age" id="athlete_age" value="" mexlength="3" placeholder="나이를 입력해 주세요" required />
+                                    <input type="number" name="athlete_age" id="athlete_age" value="" maxlength="2" oninput="maxLengthCheck(this)" placeholder="나이를 입력해 주세요" required />
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>이미지 변경</span>
@@ -158,7 +158,7 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>등번호</span>
-                                    <input type="number" name="athlete_bib" id="athlete_bib" value="" placeholder="등번호를 입력해 주세요" required />
+                                    <input type="number" name="athlete_bib" id="athlete_bib" value="" placeholder="등번호를 입력해 주세요" required maxlength="5" oninput="maxLengthCheck(this)" />
                                 </li>
                             </ul>
                         </div>
@@ -340,8 +340,15 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
             }
         })
         }
-  }
+    }
     </script>
+    <script type="text/javascript">
+    function maxLengthCheck(object){
+      if (object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+      }    
+    }
+  </script>
 </body>
 
 </html>

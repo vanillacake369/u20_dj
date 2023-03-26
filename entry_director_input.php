@@ -64,13 +64,13 @@ require_once "action/module/dictionary.php";
                                 </li>
                                 <li class="row input_row row_item row_date">
                                     <span>생년월일</span>
-                                    <input type="number" name="director_birth_year" class="input_text_row_b" placeholder="연" required>
-                                    <input type="number" name="director_birth_month" class="input_text_row_b" placeholder="월" required>
-                                    <input type="number" name="director_birth_day" class="input_text_row_b" placeholder="일" required>
+                                    <input type="number" name="director_birth_year" class="input_text_row_b" placeholder="연" required maxlength="4" oninput="maxLengthCheck(this)">
+                                    <input type="number" name="director_birth_month" class="input_text_row_b" placeholder="월" required maxlength="2" oninput="maxLengthCheck(this)">
+                                    <input type="number" name="director_birth_day" class="input_text_row_b" placeholder="일" required maxlength="2" oninput="maxLengthCheck(this)">
                                 </li>
                                 <li class="row input_row">
                                     <span>나이</span>
-                                    <input type="number" name="director_age" id="director_age" value="" placeholder="나이를 입력해 주세요" required />
+                                    <input type="number" name="director_age" id="director_age" value="" placeholder="나이를 입력해 주세요" required maxlength="2" oninput="maxLengthCheck(this)" />
                                 </li>
                                 <li class="row input_row">
                                     <span>이미지 변경</span>
@@ -216,6 +216,13 @@ require_once "action/module/dictionary.php";
         }
         }
     </script>
+    <script type="text/javascript">
+    function maxLengthCheck(object){
+      if (object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+      }    
+    }
+  </script>
 </body>
 
 </html>

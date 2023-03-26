@@ -105,13 +105,13 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
                                 </li>
                                 <li class="row input_row row_item row_date">
                                     <span>생년월일</span>
-                                    <input type="number" value=<?= htmlspecialchars($birth[0]) ?> name="coach_birth_year" placeholder="연">
-                                    <input type="number" value=<?= htmlspecialchars($birth[1]) ?> name="coach_birth_month" placeholder="월">
-                                    <input type="number" value=<?= htmlspecialchars($birth[2]) ?> name="coach_birth_day" placeholder="일">
+                                    <input type="number" value=<?= htmlspecialchars($birth[0]) ?> name="coach_birth_year" placeholder="연" maxlength="4" oninput="maxLengthCheck(this)" required>
+                                    <input type="number" value=<?= htmlspecialchars($birth[1]) ?> name="coach_birth_month" placeholder="월" maxlength="2" oninput="maxLengthCheck(this)" required>
+                                    <input type="number" value=<?= htmlspecialchars($birth[2]) ?> name="coach_birth_day" placeholder="일" maxlength="2" oninput="maxLengthCheck(this)" required>
                                 </li>
                                 <li class="row">
                                     <span>나이</span>
-                                    <input type="number" name="coach_age" id="coach_age" value=<?php echo htmlspecialchars($row["coach_age"]) ?> />
+                                    <input type="number" name="coach_age" id="coach_age" maxlength="2" oninput="maxLengthCheck(this)" value=<?php echo htmlspecialchars($row["coach_age"]) ?> required />
                                 </li>
                                 <li class="row">
                                     <span>이미지 변경</span>
@@ -185,9 +185,15 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
         </div>
     </div>
     <script src="/assets/js/main.js?ver=9"></script>
+    <?php
+    require_once "action/module/coach_modify_selected.php";
+    ?>
+    <script type="text/javascript">
+    function maxLengthCheck(object){
+      if (object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+      }    
+    }
+  </script>
 </body>
-<?php
-require_once "action/module/coach_modify_selected.php";
-?>
-
 </html>

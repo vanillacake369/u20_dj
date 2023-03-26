@@ -1,6 +1,7 @@
 <?php
 //일반 트랙 경기용
 require_once __DIR__ . "/../../includes/auth/config.php";
+require_once __DIR__ . "/../../console_log.php";
 require_once __DIR__ . "/../module/record_worldrecord.php";
 date_default_timezone_set('Asia/Seoul'); //timezone 설정
 global $db;
@@ -23,8 +24,9 @@ $newrecord = $_POST['newrecord'];
 //echo $gender." ".$round." ".$heat." ".$name.'<br>';
 $starttime = $_POST['starttime'];
 $db->query("update list_record set record_start ='" . $starttime . "' where record_sports='$name' and record_gender='$gender' and record_round='$round' and record_group='$heat'");
-// $judgeresult=$db->query("select judge_id from list_judge where judge_name='$judge_name'"); //심판 아이디 쿼리
-// $judge=mysqli_fetch_array($judgeresult);
+$judgeresult = $db->query("select * from list_judge where judge_id=1"); //아이디 = 1인 심판으로 고정
+// $judgeresult = $db->query("select judge_id from list_judge where judge_name='$judge_name'"); //심판 이름에 의한 아이디 쿼리
+$judge = mysqli_fetch_array($judgeresult);
 $new = 'n';
 $res1 = $db->query("SELECT * FROM list_schedule 
 join list_record
@@ -72,7 +74,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
     }
     if (strpos($memo[$i], '참고 기록') !== TRUE) {
         if ($comprecord[$i] != $record[$i]) { //기존 기록과 변경된 기록이 같은 지 비교
-            $memo[$i] = changePbSb($row[0], $record[$i], $sport, $gender, $round, $memo[$i], $check_round, 't');
+            $memo[$i] = changePbSb($row['athlete_id'], $record[$i], $sport, $gender, $round, $memo[$i], $check_round, 't');
             if ($row1['record_state'] === 'y') { //경기가 끝났는 지 판단
                 if ($rerow[0] === 'y') {
                     $arr = modify_worldrecord($athlete_name[$i], $row[1], $record[$i], $wind, $sport, $gender, $round, $check_round);
@@ -161,9 +163,9 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             record_" . $result_type1 . "_record='$record[$i]', record_new='$new',record_memo='" . $memo[$i] . "',record_medal=" . $medal . ",record_reaction_time='$reactiontime[$i]'
             ,record_wind='$wind',record_status='" . $result_type2 . "'" . $plus . " WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'";
     // UPDATE INCLUDING JUDGE        
-    // $savequery = "UPDATE list_record SET record_pass='$pass[$i]', record_" . $result_type1 . "_result='$result[$i]', record_judge='$judge[0]',
-    //         record_" . $result_type1 . "_record='$record[$i]', record_new='$new',record_memo='" . $memo[$i] . "',record_medal=" . $medal . ",record_reaction_time='$reactiontime[$i]'
-    //         ,record_wind='$wind',record_status='" . $result_type2 . "'" . $plus . " WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'";
+    $savequery = "UPDATE list_record SET record_pass='$pass[$i]', record_" . $result_type1 . "_result='$result[$i]', record_judge='$judge[0]',
+            record_" . $result_type1 . "_record='$record[$i]', record_new='$new',record_memo='" . $memo[$i] . "',record_medal=" . $medal . ",record_reaction_time='$reactiontime[$i]'
+            ,record_wind='$wind',record_status='" . $result_type2 . "'" . $plus . " WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'";
 
     $db->query($savequery);
 }

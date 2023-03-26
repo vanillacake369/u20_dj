@@ -16,9 +16,9 @@ $group = $_POST['group'];
 $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
 $result = $db->query($sql);
 $rows = mysqli_fetch_assoc($result);
-// $judgesql = "select distinct judge_name from list_judge  join list_record ON  record_judge = judge_id and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'";
-// $judgeresult = $db->query($judgesql);
-// $judgerow = mysqli_fetch_array($judgeresult);
+$judgesql = "select distinct judge_name from list_judge  join list_record ON  record_judge = judge_id and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'";
+$judgeresult = $db->query($judgesql);
+$judgerow = mysqli_fetch_array($judgeresult);
 $longname = ['1500m', '3000m', '3000mSC', '5000m', '10000m', 'racewalk'];
 if ($rows['record_status'] == 'o') {
     $result_type = 'official';
@@ -157,13 +157,13 @@ if ($rows['record_status'] == 'o') {
                                     maxlength="16" required="" readonly />';
                                     ?>
                                 </li>
-                                <!-- <li class="row input_row throw_row">
+                                <li class="row input_row throw_row">
                                     <span>심판 이름</span>
                                     <?php
-                                    // echo '<input placeholder="심판 이름" type="text" name="refereename"value="' . ($judgerow['judge_name'] ?? null) . '";
-                                    //     maxlength="30" required="" readonly />';
+                                    echo '<input placeholder="심판 이름" type="text" name="refereename"value="' . ($judgerow['judge_name'] ?? null) . '";
+                                        maxlength="30" required="" readonly />';
                                     ?>
-                                </li> -->
+                                </li>
                                 <li class="row input_row throw_row">
                                     <span>풍속</span>
                                     <?php
@@ -287,9 +287,9 @@ if ($rows['record_status'] == 'o') {
                                 echo '<td><input placeholder="국가" type="text" name="country" 
                                 value="' . $row['athlete_country'] . '" maxlength="30" required="" readonly /></td>';
                                 echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="9"
-                                required="" onkeyup="trackFinal(this)" style="float: left; width: auto; padding-right: 5px" />';
+                                required="" onkeyup="trackResultForm(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="9"
-                                required="" onkeyup="trackFinal(this)" style="float: left; width: auto; padding-right: 5px" />';
+                                required="" onkeyup="trackReactionTimeForm(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 echo '<input type="hidden" name="compresult[]" value="' . ($row['record_' . $result_type . '_record'] ?? null) . '"/></td>';
                                 echo '<td><input placeholder="비고를 입력해주세요" type="text" name="bigo[]" value="' . ($row['record_memo'] ? $row['record_memo'] : null) . '" maxlength="100" /></td>';
                                 if ($rows['schedule_name'] === 'Decathlon' || $rows['schedule_name'] === 'Heptathlon') {

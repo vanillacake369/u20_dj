@@ -215,9 +215,9 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                             </colgroup>
                             <thead class="  result_table ">
                                 <tr>
-                                <th>레인</th>
-                                <th>순서</th>
-                                <th>선수이름</th>
+                                    <th>조</th>
+                                    <th>순서</th>
+                                    <th>선수이름</th>
                                 </tr>
                                 <tr class="filed2_bottom">
                                 </tr>
@@ -226,14 +226,14 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                                 <td> <input type="text" class="number" id="group<?php echo $i ?>" value="<?php echo $i ?>" readonly></td>
                                 <td> <input type="text" class="number" id="lane<?php echo $i ?>"></td>
                                 <td> <select class='select-box' name="athlete" id="name<?php echo $i ?>" onchange="select_change_listener()" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                                    <?php
-                                    echo '<option value="" disabled selected>선수 선택</option>';
-                                    foreach ($athletes_data as $athlete) {
-                                        echo '<option value="' . $athlete["athlete_id"] . '">';
-                                        echo $athlete["athlete_name"] . '(' . $athlete["athlete_country"] . ')(' . $athlete["athlete_division"] . ')';
-                                        echo '</option>';
-                                    }
-                                    ?>
+                                        <?php
+                                        echo '<option value="" disabled selected>선수 선택</option>';
+                                        foreach ($athletes_data as $athlete) {
+                                            echo '<option value="' . $athlete["athlete_id"] . '">';
+                                            echo $athlete["athlete_name"] . '(' . $athlete["athlete_country"] . ')(' . $athlete["athlete_division"] . ')';
+                                            echo '</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </td>
                             </tbody>

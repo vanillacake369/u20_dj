@@ -91,11 +91,11 @@ for ($i = 0; $i < count($athlete_pb); $i++) {
 $athlete_pb_json_str = json_encode($athlete_pb_json);
 
 if ($_POST["athlete_birth_month"] > 12 || $_POST["athlete_birth_month"] < 0) {
-    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 if ($month_dic[$_POST["athlete_birth_month"]] < $_POST["athlete_birth_day"]) {
-    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 

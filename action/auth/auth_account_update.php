@@ -61,7 +61,7 @@ if (mysqli_fetch_array($key)) {
         $stmt->bind_param("ss", $form, $id);
         $stmt->execute();
         logInsert($db, $_SESSION['Id'], '계정 권한 수정', $id);
-        echo "<script>alert('권한 수정되었습니다.'); location.href='../../account_list.php';</script>";
+        echo "<script>alert('권한 수정되었습니다.'); opener.location.reload(); window.close();</script>";
         exit;
     } else {
         echo "<script>alert('해당 계정의 권한이 설정되지 않았습니다.'); history.back();</script>";

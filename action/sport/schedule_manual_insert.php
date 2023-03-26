@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../../console_log.php";
 require_once __DIR__ . "/../../includes/auth/config.php";
 require_once __DIR__ . "/../../security/security.php";
 global $db;
@@ -20,7 +21,7 @@ if (isset($_POST["order"])) {
 if (!isset($athlete, $lane, $group, $round, $gender, $count, $sports, $category)) {
     // 필수 적인 값들이 안들어오면 창 종료
     mysqli_close($db);
-    exit ('<script>alert("모두 입력하세요.");history.back();</script>');
+    exit('<script>alert("모두 입력하세요.");history.back();</script>');
 }
 
 // 중복 생성 확인 코드
@@ -43,8 +44,17 @@ $round_count = 0;
 for ($athlete_count = 0; $athlete_count < count($athlete); $athlete_count++) {
     $athlete_ids[] = $athlete[$athlete_count];
 }
-
 $ac = array_replace($athlete_ids, array_fill_keys(array_keys($athlete_ids, null), ''));
+// Loop through the array and remove empty string values
+foreach ($ac as $key => $value) {
+    if ($value === '') {
+        unset($ac[$key]);
+    } else if ($value === "") {
+        unset($ac[$key]);
+    } else if ($value === null) {
+        unset($ac[$key]);
+    }
+}
 $arr = array_count_values($ac);
 $filter_result = array_filter($arr, "isOne");
 
@@ -176,7 +186,7 @@ try {
         }
     }
 
-    if(in_array($sports, ["decathlon", "heptathlon"])) {
+    if (in_array($sports, ["decathlon", "heptathlon"])) {
         // 종합경기 (7종, 10종)은 선수들의 종합 점수 넣는 record 칸이 존재해야한다.
         $query = 'SELECT COUNT(*) AS count FROM list_record WHERE record_round = "final" AND record_sports = ? AND record_gender = ?';
         $stmt = $db->prepare($query);
@@ -188,7 +198,7 @@ try {
         if ($result["count"] === 0) {
             // 점수 넣는 칸이 생성되어 있지 않으면 생성
             $insert_query = 'INSERT INTO `list_record` (`record_athlete_id`, `record_round`, `record_sports`, `record_gender`) VALUES (?,?,?,?)';
-            for($i = 0; $i < count($athlete); $i++) {
+            for ($i = 0; $i < count($athlete); $i++) {
                 $insert_data = [
                     $athlete[$i],   // 0: record_athlete_id
                     "final",        // 1: record_round

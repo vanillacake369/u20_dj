@@ -45,10 +45,22 @@ if ($row1['record_status'] === 'o') { //schedule_result에 따른 수정 및 저
     $result_type1 = 'live';
     $result_type2 = 'l';
 }
+
+// 선수 입력 값 제거하는 코드
+for ($i = 0; $i < count($athlete_name); $i++) {
+    if ($athlete_name[$i] === null) {
+        // 만약 선수 id 값이 null 이면 삭제
+        unset($athlete_name[$i]);
+    }
+}
+
 for ($i = 0; $i < count($athlete_name); $i++) {
     $tempmemo = '';
     $medal = 0;
-    $re = $db->query("SELECT athlete_id,athlete_country FROM list_athlete join list_record on record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender' and athlete_name = '" . $athlete_name[$i] . "' and record_athlete_id=athlete_id");
+    $athlete_name[$i] = trim($athlete_name[$i]);
+    $select_athlete_query = "SELECT athlete_id,athlete_country FROM list_athlete join list_record on record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender' and athlete_name = '" . $athlete_name[$i] . "' and record_athlete_id=athlete_id";
+    $re = $db->query($select_athlete_query);
+
     $row = mysqli_fetch_array($re);
     if ($round == 'final') {
         switch ($result[$i]) {
@@ -74,6 +86,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
     }
     if (strpos($memo[$i], '참고 기록') !== TRUE) {
         if ($comprecord[$i] != $record[$i]) { //기존 기록과 변경된 기록이 같은 지 비교
+
             $memo[$i] = changePbSb($row['athlete_id'], $record[$i], $sport, $gender, $round, $memo[$i], $check_round, 't');
             if ($row1['record_state'] === 'y') { //경기가 끝났는 지 판단
                 if ($rerow[0] === 'y') {

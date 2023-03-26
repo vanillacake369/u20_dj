@@ -441,6 +441,9 @@ input::placeholder {
   overflow: hidden;
 }
 
+.align {
+  padding-left: 2rem;
+}
 /* checkBox */
 input[type="checkbox"][disabled]:checked {
   appearance: none;

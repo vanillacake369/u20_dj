@@ -1,7 +1,7 @@
 <?php
 echo "<script>";
 // DB 저장된 국가값 => select-box의 국가 : selected
-echo "setSelectBoxByValue('judge_country', '" . $row["judge_country"] . "');";
+echo "setSelectBoxByValue('judge_country', '" . strtoupper($row["judge_country"]) . "');";
 echo "</script>";
 
 echo "<script>";

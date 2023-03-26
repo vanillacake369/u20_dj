@@ -324,7 +324,7 @@ while ($row = mysqli_fetch_array($result)) {
             </div>
         </div>
     </div>
-    <script src="assets/js/main.js?ver=5"></script>
+    <script src="assets/js/main.js?ver=7"></script>
 </body>
 
 </html>

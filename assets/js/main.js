@@ -60,7 +60,7 @@ for (let i = 0; i < gnbItem.length; i++) {
 let menu = document.querySelectorAll(".gnbList>li");
 
 for (let i = 0; i < menu.length; i++) {
-  let currentMenu;
+  let currentMenu
   console.log("1");
   function inactivate(elem) {
     elem.classList.remove("gnbBack");
@@ -1051,31 +1051,4 @@ if (document.querySelector(".ID_Print ")) {
       alert("하나를 선택해주세요");
     }
   });
-}
-
-if (
-  document.querySelectorAll(
-    '.athlete_sector>div>label>input[name="athlete_sector[]"]'
-  )
-) {
-  const allow_access = document.querySelectorAll(
-    '.athlete_sector>div>label>input[name="athlete_sector[]"]'
-  );
-  let checkcnt = 0;
-
-  for (let i = 0; i < allow_access.length; i++) {
-    allow_access[i].addEventListener("click", () => {
-      if (allow_access[i].checked) {
-        checkcnt++;
-      } else {
-        checkcnt--;
-      }
-      console.log(checkcnt);
-      if (checkcnt >= 4) {
-        alert("4개 이상 선택이 불가능합니다");
-        allow_access[i].checked = false;
-        checkcnt--;
-      }
-    });
-  }
 }

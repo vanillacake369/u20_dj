@@ -7,22 +7,21 @@ require_once __DIR__ . "/imgUpload.php"; //B:데이터베이스 연결
 require_once __DIR__ . "/dictionary.php"; //B:서치 select 태크 사용하기 위한 자료구조
 
 if (
-    !isset($_POST["judge_first_name"]) ||
-    !isset($_POST["judge_second_name"]) ||
-    !isset($_POST["judge_country"]) ||
-    !isset($_POST["judge_division"]) ||
-    !isset($_POST["judge_gender"]) ||
-    !isset($_POST["judge_birth_year"]) ||
-    !isset($_POST["judge_birth_month"]) ||
-    !isset($_POST["judge_birth_day"]) ||
-    !isset($_POST["judge_age"]) ||
-    !isset($_POST["judge_duty"]) ||
-    !isset($_POST["judge_sector"]) ||
-    !isset($_POST["judge_schedules"])||
-	!isset($_POST["judge_village"]) ||
-	!isset($_POST["judge_seats"]) ||
-	!isset($_POST["judge_sector"]) ||
-	!isset($_POST["judge_venue_access"])
+    (!isset($_POST["judge_first_name"]) || $_POST["judge_first_name"] == "" ) ||
+    (!isset($_POST["judge_second_name"]) || $_POST["judge_second_name"] == "" ) ||
+    (!isset($_POST["judge_country"]) || $_POST["judge_country"] == "" ) ||
+    (!isset($_POST["judge_division"]) || $_POST["judge_division"] == "" ) ||
+    (!isset($_POST["judge_gender"]) || $_POST["judge_gender"] == "" ) ||
+    (!isset($_POST["judge_birth_year"]) || $_POST["judge_birth_year"] == "" ) ||
+    (!isset($_POST["judge_birth_month"]) || $_POST["judge_birth_month"] == "" ) ||
+    (!isset($_POST["judge_birth_day"]) || $_POST["judge_birth_day"] == "" ) ||
+    (!isset($_POST["judge_age"]) || $_POST["judge_age"] == "" ) ||
+    (!isset($_POST["judge_duty"]) || $_POST["judge_duty"] == "" ) ||
+    (!isset($_POST["judge_sector"]) || $_POST["judge_sector"] == "" ) ||
+    (!isset($_POST["judge_schedules"]) || $_POST["judge_schedules"] == "" ) ||
+	(!isset($_POST["judge_village"]) || $_POST["judge_village"] == "" ) ||
+	(!isset($_POST["judge_seats"]) || $_POST["judge_seats"] == "" ) ||
+	(!isset($_POST["judge_venue_access"]) || $_POST["judge_venue_access"] == "" )
     // || !isset($_POST["attendance_sports"]))
 ) {
     echo "<script>alert('기입하지 않은 정보가 있습니다.');window.close(); </script>";
@@ -186,8 +185,6 @@ else
         $judge_village
     );
 }
-
-
 
 $stmt->execute();
 

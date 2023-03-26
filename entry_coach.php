@@ -224,12 +224,12 @@ if (isset($categoryValue) && isset($orderValue)) {
                             echo "</td>";
                             // 참가자 상세 보기
                             echo "<td>";
-                            echo "<input type='button' onclick=" . "\"createPopupWin('entry_coach_info.php?id=" . $row["coach_id"] . "'" . ",'상세내용 보기',1100,500);\"" . "value='보기' class='BTN_DarkBlue defaultBtn'>";
+                            echo "<input type='button' onclick=" . "\"createPopupWin('entry_coach_info.php?id=" . $row["coach_id"] . "'" . ",'상세내용 보기',1100,700);\"" . "value='보기' class='BTN_DarkBlue defaultBtn'>";
                             echo "</td>";
                             // 참가자 수정
                             echo "<td>";
                             if (authCheck($db, "authEntrysUpdate")) {
-                                echo "<input type='button' onclick=" . "updatePop(" . $row["coach_id"] . ",'coach_id',\"entry_coach_modify.php\")" . " value='수정' class='BTN_Blue defaultBtn'>";
+                                echo "<input type='button' onclick=" . "\"createPopupWin('entry_coach_modify.php?id=" . $row["coach_id"] . "'" . ",'수정',1100,900);\"" . " value='수정' class='BTN_Blue defaultBtn'>";
                             }
                             echo "</td>";
                             // 참가자 삭제
@@ -289,7 +289,7 @@ if (isset($categoryValue) && isset($orderValue)) {
         </div>
     </div>
 
-    <script src="/assets/js/main.js?ver=4"></script>
+    <script src="/assets/js/main.js?ver=5"></script>
 </body>
 <script>
     // active browser에 대한 auto refresh 함수

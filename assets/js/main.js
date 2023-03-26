@@ -332,7 +332,10 @@ function select_change_listener() {
   const selected_label_no_duplicated = new Set(selected_label_key);
   for (const index of selected_label_no_duplicated) {
     // 선택된 label 삭제
-    delete label_dictionary[getKeyByValue(label_dictionary, index)];
+    if (index !== "") {
+      //  선수 선택은 값이 "". 이건 default로 갖고 있어야하므로 ""이 아닌 값만 삭제
+      delete label_dictionary[getKeyByValue(label_dictionary, index)];
+    }
   }
   for (let i = 0; i < action_list.length; i++) {
     const select_object = action_list[i];
@@ -370,12 +373,13 @@ for (let i = 0; i < addColumnBtns.length; i++) {
     const filedTables = document.querySelectorAll(".filed2_Table");
     const currentTable = filedTables[i];
     const rowsCount = currentTable.rows.length - 1;
+    const groupCount = i + 1;
 
     const newRow = currentTable.insertRow();
     const Cell1 = newRow.insertCell(0);
     const Cell2 = newRow.insertCell(1);
 
-    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]"></td>`;
+    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]"><input type="hidden" class="number" value="${groupCount}" name="group[]"></td>`;
     Cell2.innerHTML =
       '<td><div class="copy-value"><select class="select-box select2-hidden-accessible" name="athlete" onchange="select_change_listener()"></select></div></td><input type="hidden" class="hidden-input" id="player_id" name="player_id[]" value="">';
     // option 복제

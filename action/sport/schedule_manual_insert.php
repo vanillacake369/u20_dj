@@ -31,6 +31,21 @@ if (mysqli_num_rows($schedule_result) != 0) {
     exit('<script>alert("해당 종목과 라운드에 대한 조가 이미 생성되어있습니다."); window.close();</script>');
 }
 
+// 선수 입력 값 제거하는 코드
+foreach ($athlete as $index => $value) {
+    if ($value === "") {
+        // 만약 선수 id 값이 "" 이면 group, athlete, lane에 해당하는 배열 전부 삭제
+        unset($athlete[$index]);
+        unset($group[$index]);
+        unset($lane[$index]);
+    }
+}
+
+// 인덱스 가 순차적이지 않으므로 reindexing
+$athlete = array_values($athlete);
+$group = array_values($group);
+$lane = array_values($lane);
+
 // $start = $date = date("Y-m-d");
 //$id = array();
 //$lane = array();
@@ -44,17 +59,8 @@ $round_count = 0;
 for ($athlete_count = 0; $athlete_count < count($athlete); $athlete_count++) {
     $athlete_ids[] = $athlete[$athlete_count];
 }
+// print_r($athlete_ids);
 $ac = array_replace($athlete_ids, array_fill_keys(array_keys($athlete_ids, null), ''));
-// Loop through the array and remove empty string values
-foreach ($ac as $key => $value) {
-    if ($value === '') {
-        unset($ac[$key]);
-    } else if ($value === "") {
-        unset($ac[$key]);
-    } else if ($value === null) {
-        unset($ac[$key]);
-    }
-}
 $arr = array_count_values($ac);
 $filter_result = array_filter($arr, "isOne");
 

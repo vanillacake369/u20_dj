@@ -1,6 +1,6 @@
 <?php
 require_once "head.php";
-if (!$_POST['athlete_id']) {
+if (!$_GET['id']) {
     echo "<script>alert('잘못된 유입경로입니다.')</script>";
     exit();
 }
@@ -21,7 +21,7 @@ $sql = "SELECT *
         FROM list_athlete
         INNER JOIN list_country  
         ON athlete_country=country_code
-        where athlete_id=" . $_POST['athlete_id'];
+        where athlete_id=" . $_GET['id'];
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 $birth = explode('-', $row["athlete_birth"]); //생일 정보 나눔
@@ -66,10 +66,16 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                     </p>
                     <div class="UserProfile_modify Participant_img ptp_img">
                         <div>
-                            <img src=<?php echo "./assets/img/athlete_img/" . $row["athlete_profile"] ?> alt="avatar" />
+                            <?php if (!isset($row["athlete_profile"]) && $row["athlete_profile"] == "")
+                            {
+                            ?>
+                                <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <?php }else{?>
+                                <img src=<?php echo "./assets/img/athlete_img/" . $row["athlete_profile"] ?> alt="avatar" />
+                            <?php }?>
                         </div>
                         <div>
-                            <input type='hidden' name='athlete_id' value=<?= $_POST['athlete_id'] ?>>
+                            <input type='hidden' name='athlete_id' value=<?= $_GET['id'] ?>>
                             <?php
                             $name = explode(" ", $row["athlete_name"]);
                             $secondName = isset($name[0]) ? $name[0] : NULL;
@@ -95,8 +101,9 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                         <option value="non" hidden>국가 선택</option>
                                         <?php
                                         foreach ($country_code_dic as $key => $value)
-                                            echo "<option value=" . $value . ">" . $key . "</option>";
+                                            echo '<option value=' . '"' . $value  . '"' . '>' . $key . '</option>';
                                         ?>
+                                        
                                     </select>
                                 </li>
                                 <li class="row">
@@ -159,7 +166,6 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                         <option value="T2" <?php echo $row["athlete_transport"] == 'T2' ? "selected" : ""; ?>>2인 1차량</option>
                                         <option value="TA" <?php echo $row["athlete_transport"] == 'TA' ? "selected" : ""; ?>>선수임원수송버스</option>
                                         <option value="TF" <?php echo $row["athlete_transport"] == 'TF' ? "selected" : ""; ?>>기술임원 수송버스</option>
-
                                     </select>
                                 </li>
                                 <li class="row input_row row_item input_width">
@@ -170,13 +176,13 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                         <option value="VA" <?php echo $row["athlete_village"] == 'VA' ? "selected" : ""; ?>>선수촌 전구역(거주 불허)</option>
                                     </select>
                                 </li>
-                                <li class="row full_width">
+                                <li class="row full_width athlete_sector">
                                     <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
                                         <?php
                                         for ($value = 1; $value <= count($sector_dic); $value++) {
                                             echo "<label>";
-                                            echo '<input type="checkbox" name="athlete_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '"/>';
+                                            echo '<input type="checkbox" name="athlete_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '" autocomplete="off"/>';
                                             echo "<span>" . current($sector_dic) . "</span>";
                                             echo "</label>";
                                             next($sector_dic);
@@ -185,11 +191,9 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                         ?>
                                     </div>
                                 </li>
-                                <li class="row full_width">
-                                    <span class="full_span">등번호</span>
-                                    <div class="full_div">
-                                        <input type="text" name="athlete_bib" value="<?php echo $row["athlete_bib"] ?>">
-                                    </div>
+                                <li class="row input_row row_item">
+                                    <span>등번호</span>
+                                    <input type="number" name="athlete_bib" id="athlete_bib" value="<?php echo $row["athlete_bib"] ?>" placeholder="등번호를 입력해 주세요" required />
                                 </li>
                             </ul>
                         </div>
@@ -370,10 +374,12 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
             </div>
         </form>
     </div>
-    <script src="/assets/js/main.js?v=6"></script>
+    <script src="/assets/js/main.js?v=8"></script>
+    <?php
+        require_once "action/module/athlete_modify_selected.php";
+    ?>
+    
 </body>
-<?php
-require_once "action/module/athlete_modify_selected.php";
-?>
+
 
 </html>

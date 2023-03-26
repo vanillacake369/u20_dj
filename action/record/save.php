@@ -27,6 +27,12 @@ $athletics = [];
 $worldrecord = [];
 $trial_count = $_POST["count"];
 
+if ($trial_count === "no_more_regroup") {
+    // 6회차 때, 순서 재정렬 할 시 -> 경고문 출력후, 뒤로가기
+    mysqli_close($db);
+    exit('<script>alert("6회차에서는 순서 재정렬을 할 수 없습니다."); history.back();</script>');
+}
+
 $windrecord = [$_POST["wind1"] ?? null,
   $_POST["wind2"] ?? null,
   $_POST["wind3"] ?? null,

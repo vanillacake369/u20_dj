@@ -2433,6 +2433,23 @@ input::-webkit-inner-spin-button {
 .grouping_body>tr>td {
   text-align: center;
   vertical-align: middle;
+  border-left: 1px solid var(--colorBorder);
+}
+
+.grouping_body>tr>td>select {
+  border: 0;
+  width: 100%;
+  padding: 2rem 1rem;
+}
+
+.grouping_body>tr>td>select:focus {
+  background-color: var(--colorPink2);
+  outline: 0;
+}
+
+.grouping_body>tr>td>select>option {
+  background-color: var(--colorWhite);
+  outline: 0;
 }
 
 .grouping_body>tr>td:first-child {
@@ -2442,7 +2459,7 @@ input::-webkit-inner-spin-button {
 .grouping_body>tr>td>input {
   border: 0;
   text-align: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
   width: 100%;
   background-color: transparent;
 }
@@ -2881,6 +2898,9 @@ input::-webkit-inner-spin-button {
 }
 
 /* 조편성 목록에 인원 추가 select2 부분 */
+.changeMemberList {
+  margin-top: 3rem;
+}
 
 @media (max-width: 1440px) {
   .gnb>.gnbList {

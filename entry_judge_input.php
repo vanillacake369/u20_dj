@@ -147,7 +147,7 @@ if (!authCheck($db, "authEntrysRead")) {
                                             <option value="VA">선수촌 전구역(거주 불허)</option>
                                         </select>
                                 </li>
-                                <li class="row full_width">
+                                <li class="row full_width judge_sector">
                                 <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
                                         <label><input type="checkbox" name="judge_sector[]" value="0" id="All Area"><span>경기장 내 전
@@ -160,7 +160,7 @@ if (!authCheck($db, "authEntrysRead")) {
                                             id="Administration & Operation zone"><span>경기운영구역
                                             zone</span></label>
                                         <label><input type="checkbox" name="judge_sector[]" value="4"
-                                            id="International Officials' Zone"><span>국제임원 업무구역</span>
+                                            id="International Officials' Zone"><span>국제임원 업무구역</span></label>
                                         <label><input type="checkbox" name="judge_sector[]" value="5"
                                             id="VIP Area"><span>VIP구역(3F)</span></label>
                                         <label><input type="checkbox" name="judge_sector[]" value="6"
@@ -201,6 +201,34 @@ if (!authCheck($db, "authEntrysRead")) {
             </div>
         </div>
     </div>
+    <script src="/assets/js/main.js?ver=9"></script>
+    <script>
+        if (document.querySelectorAll('.judge_sector>div>label>input[name="judge_sector[]"]')) {
+
+        const allow_access = document.querySelectorAll('.judge_sector>div>label>input[name="judge_sector[]"]');
+        let checkcnt = document.querySelectorAll('.judge_sector>div>label>input[name="judge_sector[]"]:checked').length;
+
+        for (let i = 0; i < allow_access.length; i++) {
+        if (allow_access[i].checked)
+            checkcnt++;
+        }
+
+        for (let i = 0; i < allow_access.length; i++) {
+            allow_access[i].addEventListener("click", () => {
+            if (allow_access[i].checked)  {
+                checkcnt++;
+            } else{
+                checkcnt--;
+            }
+            if (checkcnt > 4) {
+                allow_access[i].checked = false;
+                checkcnt--;
+                alert('5개 이상 선택이 불가능합니다');
+            }
+        })
+        }
+        }
+    </script>
 </body>
 
 </html>

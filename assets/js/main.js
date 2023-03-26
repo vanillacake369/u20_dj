@@ -958,7 +958,9 @@ function confirmDelete(account, table) {
   }
 }
 
-if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) {
+if (
+  document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
+) {
   let clickedInput = null;
   const inputs = document.querySelectorAll(
     '.filed2_swap>tbody>tr>td>input[name="name[]"]'
@@ -1001,7 +1003,7 @@ if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) 
       athleteInput = null;
     }
   });
-} 
+}
 
 //일정 상세정보 접근할 수 없게 하는 함수
 //@potatoeunbi

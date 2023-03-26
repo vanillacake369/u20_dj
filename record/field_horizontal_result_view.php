@@ -90,6 +90,13 @@
                     <input type="hidden" name="gender" value="<?= $gender ?>">
                     <input type="hidden" name="round" value="<?= $schedule_round ?>">
                     <input type="hidden" name="group" value="<?= $group ?>">
+                    <?php
+                        if ($_POST["check"] ?? null === "3") {
+                          echo '<input type="hidden" name="count" value= "5">';
+                        } else {
+                          echo '<input type="hidden" name="count" value= "3">';
+                        }
+                    ?>
                     <div class="UserProfile_modify UserProfile_input thorw_main">
                         <div>
                             <ul class="UserDesc throwDesc">

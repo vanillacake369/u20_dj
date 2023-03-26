@@ -376,16 +376,16 @@ function check_exclude_column(string $colum)
     global $role;
     switch ($role) {
         case "athlete":
-            if (in_array($colum, ["athlete_profile", "athlete_bib", "athlete_isIssued", "athlete_sector", "athlete_sb", "athlete_pb", "country_code", "country_name", "country_name_kr"])) return true;
+            if (in_array($colum, ["athlete_profile", "athlete_bib", "athlete_isIssued", "athlete_sector", "athlete_sb", "athlete_pb", "country_code", "country_name", "country_name_kr", "athlete_venue_access", "athlete_village", "athlete_seats", "athlete_transport", "athlete_eat"])) return true;
             return false;
         case "coach":
-            if (in_array($colum, ["coach_profile", "coach_isIssued", "coach_sector", "country_code", "country_name", "country_name_kr"])) return true;
+            if (in_array($colum, ["coach_profile", "coach_isIssued", "coach_sector", "country_code", "country_name", "country_name_kr", "coach_venue_access", "coach_village", "coach_seats", "coach_transport", "coach_eat"])) return true;
             return false;
         case "judge":
-            if (in_array($colum, ["judge_profile", "judge_account", "judge_password", "judge_latest_datetime", "judge_latest_ip", "judge_latest_session", "judge_isIssued", "judge_sector", "country_code", "country_name", "country_name_kr"])) return true;
+            if (in_array($colum, ["judge_profile", "judge_account", "judge_password", "judge_latest_datetime", "judge_latest_ip", "judge_latest_session", "judge_isIssued", "judge_sector", "country_code", "country_name", "country_name_kr", "judge_venue_access", "judge_village", "judge_seats", "judge_transport", "judge_eat"])) return true;
             return false;
         case "director":
-            if (in_array($colum, ["director_profile", "director_isIssued", "director_sector", "country_code", "country_name", "country_name_kr"])) return true;
+            if (in_array($colum, ["director_profile", "director_isIssued", "director_sector", "country_code", "country_name", "country_name_kr", "director_venue_access", "director_village", "director_seats", "director_transport", "director_eat"])) return true;
             return false;
         case "result_management":
             if (in_array($colum, ["record_live_record", "record_schedule_id", "schedule_sports"])) return true;

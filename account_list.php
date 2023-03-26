@@ -232,7 +232,7 @@ $total_count = mysqli_num_rows($count);
                             echo "</td>";
 
                             if (authCheck($db, "authAccountsUpdate")) {
-                                echo  "<td><input type='button' onclick=location.href='./account_change_auth.php?id=" . $row["admin_account"] . "' value='수정' class='BTN_Blue defaultBtn'></td>";
+                                echo  "<td><input type='button' onclick=" . "\"createPopupWin('./account_change_auth.php?id=" . $row["admin_account"] . "'" . ",'상세내용 보기',1100,1000);\"" . " value='수정' class='BTN_Blue defaultBtn'></td>";
                             }
                             if (authCheck($db, "authAccountsDelete")) {
                                 echo "<td scope='col'><input type='button' onclick=" . "confirmDelete('" . $row["admin_account"] . "','admin')" . " value='삭제' class='BTN_Red defaultBtn'></td>";

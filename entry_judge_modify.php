@@ -125,13 +125,13 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                                 </li>
                                 <li class="row input_row row_item row_date">
                                     <span>생년월일</span>
-                                    <input type="number" value=<?php echo htmlspecialchars($birth[0]) ?> name="judge_birth_year" class="input_text_row_b" placeholder="연">
-                                    <input type="number" value=<?php echo htmlspecialchars($birth[1]) ?> name="judge_birth_month" class="input_text_row_b" placeholder="월">
-                                    <input type="number" value=<?php echo htmlspecialchars($birth[2]) ?> name="judge_birth_day" class="input_text_row_b" placeholder="일">
+                                    <input type="number" value=<?php echo htmlspecialchars($birth[0]) ?> name="judge_birth_year" class="input_text_row_b" placeholder="연" required maxlength="4" oninput="maxLengthCheck(this)">
+                                    <input type="number" value=<?php echo htmlspecialchars($birth[1]) ?> name="judge_birth_month" class="input_text_row_b" placeholder="월" required maxlength="2" oninput="maxLengthCheck(this)">
+                                    <input type="number" value=<?php echo htmlspecialchars($birth[2]) ?> name="judge_birth_day" class="input_text_row_b" placeholder="일" required maxlength="2" oninput="maxLengthCheck(this)">
                                 </li>
                                 <li class="row">
                                     <span>나이</span>
-                                    <input type="number" name="judge_age" id="judge_age" value=<?php echo htmlspecialchars($row["judge_age"]) ?> />
+                                    <input type="number" name="judge_age" id="judge_age" value=<?php echo htmlspecialchars($row["judge_age"]) ?> required maxlength="2" oninput="maxLengthCheck(this)" />
                                 </li>
                                 <li class="row">
                                     <span>이미지 변경</span>
@@ -226,6 +226,13 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
     </div>
     <script src="/assets/js/main.js?ver=9"></script>
     <?php require_once "action/module/judge_modify_selected.php"; ?>
+    <script type="text/javascript">
+    function maxLengthCheck(object){
+      if (object.value.length > object.maxLength){
+        object.value = object.value.slice(0, object.maxLength);
+      }    
+    }
+  </script>
 </body>
 
 </html>

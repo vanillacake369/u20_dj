@@ -24,7 +24,7 @@ if (
 	(!isset($_POST["judge_venue_access"]) || $_POST["judge_venue_access"] == "" )
     // || !isset($_POST["attendance_sports"]))
 ) {
-    echo "<script>alert('기입하지 않은 정보가 있습니다.');window.close(); </script>";
+    echo "<script>alert('기입하지 않은 정보가 있습니다.');history.back(); </script>";
     exit;
 }
 
@@ -61,12 +61,12 @@ if (isset($_POST["is_using_tablet"]) && $_POST["is_using_tablet"] != "")
 
 // month 0 이하 12 초과 필터링
 if ($_POST["judge_birth_month"] > 12 || $_POST["judge_birth_month"] < 0) {
-    echo "<script>alert('생일을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 // month의 최대일수를 넘긴 경우 필터링
 if ($month_dic[$_POST["judge_birth_month"]] < $_POST["judge_birth_day"]) {
-    echo "<script>alert('생일을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 

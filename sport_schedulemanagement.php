@@ -386,6 +386,27 @@ $total_count = mysqli_num_rows($count);
                             $substmt->bind_param("sss", $S_row['schedule_sports'],$S_row['schedule_round'], $S_row['schedule_gender']);
                             $substmt->execute();
 
+
+                            //높이뛰기와 장대높이뛰기일 경우 선수별로 하나의 record투플를 제외한 나머지를 삭제
+                            if($S_row['schedule_sports'] =='highjump' || $S_row['schedule_sports'] =='polevault' || $S_row['schedule_round']  =='polevault' || $S_row['schedule_round']  =='highjump'){
+                                $distinctsql="DELETE FROM list_record 
+                                WHERE record_id IN (
+                                  SELECT record_id 
+                                  FROM (
+                                    SELECT record_id,
+                                           ROW_NUMBER() OVER (
+                                             PARTITION BY record_sports, record_round, record_gender,record_athlete_id
+                                             ORDER BY record_sports
+                                           ) AS cnt 
+                                 FROM list_record WHERE record_sports=? and record_round=? and record_gender=?
+                                  ) AS subquery 
+                                  WHERE cnt > 1
+                                );";
+                                $substmt = $db->prepare($subsql);
+                                $substmt->bind_param("sss", $S_row['schedule_sports'],$S_row['schedule_round'], $S_row['schedule_gender']);
+                                $substmt->execute();
+                            }
+
                             //@Potatoeunbi
                             //경기 삭제(생성된 대분류, 소분류 모두)
                             $sql = "DELETE FROM list_schedule WHERE schedule_sports=? AND schedule_round=? AND schedule_gender=?;";

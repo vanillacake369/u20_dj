@@ -41,7 +41,7 @@ if (mysqli_fetch_array($key)) {
         $date_month = trim($_POST['date_month']);
         $date_day = trim($_POST['date_day']);
 
-
+        $db->query("update list_record set record_judge=1");
         $checkresult=$db->query("SELECT * FROM list_record WHERE record_sports='$sports' AND record_round='$round' AND record_gender='$gender'");
         if(mysqli_num_rows($checkresult)==0){
             echo "<script>alert('해당 경기에 대한 조가 없습니다.'); history.back();</script>";     
@@ -49,7 +49,6 @@ if (mysqli_fetch_array($key)) {
         // $start = date("Y-m-d H:i:s");
         $date = $date_year . "-" . $date_month . "-" . $date_day;
         // var_dump($date);
-
         $start = $date_year . "-" . $date_month . "-" . $date_day . " " . $start_hour . ":" . $start_minute . ":00";
         //$start = DateTime::createFromFormat('Y-m-d H:i:s', $start)->format('Y-m-d h:i:s');
         $sql = "SELECT COUNT(*) as cnt from list_schedule where schedule_sports='" . $sports . "'  and schedule_gender='" . $gender . "' and schedule_round='" . $round . "';";

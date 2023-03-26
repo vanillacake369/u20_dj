@@ -32,6 +32,7 @@ const Wrapper = document.querySelector(".Area");
 const gnbMask_right = document.querySelector(".gnbMask_right");
 const gnbMask = document.querySelector(".gnbMask");
 const gnbItem = document.querySelectorAll(".gnbItem");
+
 for (let i = 0; i < gnbItem.length; i++) {
   Wrapper.addEventListener("click", () => {
     gnbItem[i].classList.remove("gnbBack");
@@ -44,38 +45,41 @@ for (let i = 0; i < gnbItem.length; i++) {
 // 메뉴 클릭 이벤트
 
 for (let i = 0; i < gnbItem.length; i++) {
-  gnbItem[i].addEventListener("click", () => {
+  gnbItem[i].addEventListener('click', () => {
     for (let j = 0; j < gnbItem.length; j++) {
       if (j !== i) {
-        gnbItem[j].classList.remove("gnb_active");
+        gnbItem[j].classList.remove('gnb_active');
+        gnbItem[j].classList.remove('gnbBack');
       }
     }
-    gnbItem[i].classList.remove("gnb_active");
+    gnbItem[i].classList.remove('gnb_active');
+    gnbItem[i].classList.add('gnbBack');
+
   });
 }
 
-var menu = document.querySelectorAll(".gnbList>li");
+
+let menu = document.querySelectorAll('.gnbList>li');
 
 for (let i = 0; i < menu.length; i++) {
-  var currentMenu;
-
+  let currentMenu
+  console.log("1");
   function inactivate(elem) {
-    elem.classList.remove("gnbBack");
+    elem.classList.remove('gnbBack');
   }
 
   function activate(elem) {
-    elem.classList.add("gnbBack");
+    elem.classList.add('gnbBack');
     currentMenu = elem;
   }
-  function clickHandler() {
-    // 보통 이벤트 handler 안에 길게 쓰기 보다 함수를 쓴다.
+  function clickHandler() {    // 보통 이벤트 handler 안에 길게 쓰기 보다 함수를 쓴다.
     if (currentMenu) {
       inactivate(currentMenu);
     }
     activate(menu[i]);
   }
 
-  menu[i].addEventListener("click", clickHandler);
+  menu[i].addEventListener('click', clickHandler);
 }
 // 메뉴 햄버거 버튼 이벤트
 
@@ -438,16 +442,12 @@ for (let i = 0; i < filed_item.length; i++) {
 }
 
 // 조 편성 수정 > 클릭클릭으로 선수 SWAP 기능
-if (
-  document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
-) {
+if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) {
   let clickedInput = null;
-  const inputs = document.querySelectorAll(
-    '.filed2_swap>tbody>tr>td>input[name="name[]"]'
-  );
+  const inputs = document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]');
   const athlete = document.querySelectorAll('input[name="athlete_id[]"]');
   for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener("click", () => {
+    inputs[i].addEventListener('click', () => {
       if (!clickedInput) {
         clickedInput = inputs[i];
         athleteInput = athlete[i];
@@ -458,22 +458,23 @@ if (
         athleteInput.value = athlete[i].value;
         inputs[i].value = tempValue;
         athlete[i].value = athleteValue;
-        clickedInput.setAttribute("value", clickedInput.value);
-        inputs[i].setAttribute("value", inputs[i].value);
-        athleteInput.setAttribute("value", athleteInput.value);
-        athlete[i].setAttribute("value", athlete[i].value);
+        clickedInput.setAttribute('value', clickedInput.value);
+        inputs[i].setAttribute('value', inputs[i].value);
+        athleteInput.setAttribute('value', athleteInput.value);
+        athlete[i].setAttribute('value', athlete[i].value);
         clickedInput = null;
         athleteInput = null;
       }
     });
   }
-  document.addEventListener("click", (event) => {
+  document.addEventListener('click', (event) => {
     // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
     // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
-    if (event.target.name !== "name[]") {
+    if (event.target.name !== 'name[]') {
       clickedInput = null;
       athleteInput = null;
     }
+
   });
 }
 
@@ -1047,4 +1048,26 @@ if (document.querySelector(".ID_Print ")) {
       alert("하나를 선택해주세요");
     }
   });
+}
+
+if (document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]')) {
+
+  const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]');
+  let checkcnt = 0;
+
+  for (let i = 0; i < allow_access.length; i++) {
+    allow_access[i].addEventListener("click", () => {
+      if (allow_access[i].checked) {
+        checkcnt++;
+      } else {
+        checkcnt--;
+      }
+      console.log(checkcnt);
+      if (checkcnt >= 4) {
+        alert('4개 이상 선택이 불가능합니다');
+        allow_access[i].checked = false;
+        checkcnt--;
+      }
+    })
+  }
 }

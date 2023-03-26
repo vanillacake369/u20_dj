@@ -1,30 +1,30 @@
 <?php
-    require_once __DIR__ . "/../backheader.php";
-    require_once __DIR__ . "/../action/module/record_worldrecord.php";
-    require_once __DIR__ . "/../includes/auth/config.php";//B:데이터베이스 연결 
-    // 수정 권한 시에만 기록 전환 접근 가능
-    if (!authCheck($db, "authRecordsUpdate")) {
-        exit("<script>
+require_once __DIR__ . "/../backheader.php";
+require_once __DIR__ . "/../action/module/record_worldrecord.php";
+require_once __DIR__ . "/../includes/auth/config.php"; //B:데이터베이스 연결 
+// 수정 권한 시에만 기록 전환 접근 가능
+if (!authCheck($db, "authRecordsUpdate")) {
+    exit("<script>
         alert('수정 권한이 없습니다.');
         history.back();
     </script>");
-    }
-    $sports = $_POST['sports'];
-    $round = $_POST['round'];
-    $gender = $_POST['gender'];
-    $group = $_POST['group'];
-    $sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
-    $result = $db->query($sql);
-    $rows = mysqli_fetch_assoc($result);
-    $judgesql = "select distinct judge_name from list_judge  join list_record ON  record_judge = judge_id and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'";
-    $judgeresult = $db->query($judgesql);
-    $judgerow = mysqli_fetch_array($judgeresult);
-    $longname = ['1500m', '3000m', '3000mSC', '5000m', '10000m', 'racewalk'];
-    if ($rows['record_status'] == 'o') {
-        $result_type = 'official';
-    } else {
-        $result_type = 'live';
-    }
+}
+$sports = $_POST['sports'];
+$round = $_POST['round'];
+$gender = $_POST['gender'];
+$group = $_POST['group'];
+$sql = "SELECT DISTINCT * FROM list_record  join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
+$result = $db->query($sql);
+$rows = mysqli_fetch_assoc($result);
+// $judgesql = "select distinct judge_name from list_judge  join list_record ON  record_judge = judge_id and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'";
+// $judgeresult = $db->query($judgesql);
+// $judgerow = mysqli_fetch_array($judgeresult);
+$longname = ['1500m', '3000m', '3000mSC', '5000m', '10000m', 'racewalk'];
+if ($rows['record_status'] == 'o') {
+    $result_type = 'official';
+} else {
+    $result_type = 'live';
+}
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -44,86 +44,86 @@
     <script type="text/javascript" src="/assets/js/change_athletics.js"></script>
     <script type="text/javascript" src="/action/record/result_track_single_execute_excel.js"></script>
     <script>
-    function openTextFile() {
-        var input = document.createElement("input");
-        input.type = "file";
-        input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
-        input.onchange = function(event) {
-            processFile(event.target.files[0]);
-        };
-        input.click();
-    }
+        function openTextFile() {
+            var input = document.createElement("input");
+            input.type = "file";
+            input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
+            input.onchange = function(event) {
+                processFile(event.target.files[0]);
+            };
+            input.click();
+        }
 
-    function processFile(file) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            let ddd = reader.result.split("\r\n");
-            let wind = document.querySelector('[name=\"wind\"]')
-            // let check = document.getElementsByTagName('th')[1].textContent;
-            let val = ddd[0].split(',')[4];
-            if (val != '') {
-                wind.value = val;
-            } else {
-                wind.value = '0'
-            }
-            console.log(ddd.length)
-            for (i = 1; i < ddd.length; i++) {
-                let k = ddd[i].split(",")
-                let on;
-                console.log("k1: " + k[2])
-                if (!document.querySelector("#id" + k[1]) && !document.querySelector(
-                        "#rane" + k[2])) {
-                    console.log("없는 레인")
-                    continue;
-                }
-                if (!document.querySelector("#id" + k[1])) {
-                    if (!k[1]) continue;
-                    on = document.querySelector("#rane" + k[2]).children
+        function processFile(file) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                let ddd = reader.result.split("\r\n");
+                let wind = document.querySelector('[name=\"wind\"]')
+                // let check = document.getElementsByTagName('th')[1].textContent;
+                let val = ddd[0].split(',')[4];
+                if (val != '') {
+                    wind.value = val;
                 } else {
-                    if (!k[1]) continue;
-                    on = document.querySelector("#id" + k[1]).children
+                    wind.value = '0'
                 }
-                if (k[6]) {
-                    on['gamepass[]'].value = 'p'
-                    on[5].firstElementChild.value = k[6]
-                } else if (k[0] == 'DNS') {
-                    on['gamepass[]'].value = 'n'
-                    on[5].firstElementChild.value = 0
-                    on[7].firstElementChild.value = k[0]
-                } else if (k[0] == 'DNF') {
-                    on['gamepass[]'].value = 'n'
-                    on[5].firstElementChild.value = 0
-                    on[7].firstElementChild.value = k[0]
-                } else {
-                    on['gamepass[]'].value = 'd'
-                    on[5].firstElementChild.value = 0
-                    on[7].firstElementChild.value = 'DQ'
+                console.log(ddd.length)
+                for (i = 1; i < ddd.length; i++) {
+                    let k = ddd[i].split(",")
+                    let on;
+                    console.log("k1: " + k[2])
+                    if (!document.querySelector("#id" + k[1]) && !document.querySelector(
+                            "#rane" + k[2])) {
+                        console.log("없는 레인")
+                        continue;
+                    }
+                    if (!document.querySelector("#id" + k[1])) {
+                        if (!k[1]) continue;
+                        on = document.querySelector("#rane" + k[2]).children
+                    } else {
+                        if (!k[1]) continue;
+                        on = document.querySelector("#id" + k[1]).children
+                    }
+                    if (k[6]) {
+                        on['gamepass[]'].value = 'p'
+                        on[5].firstElementChild.value = k[6]
+                    } else if (k[0] == 'DNS') {
+                        on['gamepass[]'].value = 'n'
+                        on[5].firstElementChild.value = 0
+                        on[7].firstElementChild.value = k[0]
+                    } else if (k[0] == 'DNF') {
+                        on['gamepass[]'].value = 'n'
+                        on[5].firstElementChild.value = 0
+                        on[7].firstElementChild.value = k[0]
+                    } else {
+                        on['gamepass[]'].value = 'd'
+                        on[5].firstElementChild.value = 0
+                        on[7].firstElementChild.value = 'DQ'
+                    }
+                    // if (k[3]) {
+                    //     on[7].firstElementChild.value = k[3]
+                    // } else {
+                    //     on[7].firstElementChild.value = '';
+                    // }
                 }
-                // if (k[3]) {
-                //     on[7].firstElementChild.value = k[3]
-                // } else {
-                //     on[7].firstElementChild.value = '';
-                // }
-            }
-            rankcal1()
-        };
-        reader.readAsText(file, /* optional */ "utf-8");
-    }
+                rankcal1()
+            };
+            reader.readAsText(file, /* optional */ "utf-8");
+        }
 
-    function input_time() {
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = ('0' + (today.getMonth() + 1)).slice(-2);
-        var day = ('0' + today.getDate()).slice(-2);
-        var dateString = year + '-' + month + '-' + day;
-        var hours = ('0' + today.getHours()).slice(-2);
-        var minutes = ('0' + today.getMinutes()).slice(-2);
-        var seconds = ('0' + today.getSeconds()).slice(-2);
-        var timeString = hours + ':' + minutes + ':' + seconds;
-        let total = dateString + " " + timeString;
-        let intime = document.querySelector("input[name='starttime']")
-        intime.value = total
-    }
+        function input_time() {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+            var dateString = year + '-' + month + '-' + day;
+            var hours = ('0' + today.getHours()).slice(-2);
+            var minutes = ('0' + today.getMinutes()).slice(-2);
+            var seconds = ('0' + today.getSeconds()).slice(-2);
+            var timeString = hours + ':' + minutes + ':' + seconds;
+            let total = dateString + " " + timeString;
+            let intime = document.querySelector("input[name='starttime']")
+            intime.value = total
+        }
     </script>
 </head>
 
@@ -136,7 +136,7 @@
             </div>
             <div class="UserProfile">
                 <p class="UserProfile_tit tit_left_blue">
-                    <?=$rows['schedule_name']?>
+                    <?= $rows['schedule_name'] ?>
                 </p>
                 <form action="../action/record/track_normal_result_insert.php" method="post">
                     <input type="hidden" name="sports" value="<?= $sports ?>">
@@ -148,8 +148,7 @@
                             <ul class="UserDesc throwDesc">
                                 <li class="row input_row throw_row">
                                     <span>경기 이름</span>
-                                    <input placeholder="경기 이름" type="text" name="gamename"
-                                        value="<?=$rows['record_sports']?>" maxlength="16" required="" readonly />
+                                    <input placeholder="경기 이름" type="text" name="gamename" value="<?= $rows['record_sports'] ?>" maxlength="16" required="" readonly />
                                 </li>
                                 <li class="row input_row throw_row">
                                     <span>라운드</span>
@@ -158,35 +157,35 @@
                                     maxlength="16" required="" readonly />';
                                     ?>
                                 </li>
-                                <li class="row input_row throw_row">
+                                <!-- <li class="row input_row throw_row">
                                     <span>심판 이름</span>
                                     <?php
-                                    echo '<input placeholder="심판 이름" type="text" name="refereename"value="' . ($judgerow['judge_name']??null) . '"
-                                        maxlength="30" required="" readonly />';
+                                    // echo '<input placeholder="심판 이름" type="text" name="refereename"value="' . ($judgerow['judge_name'] ?? null) . '";
+                                    //     maxlength="30" required="" readonly />';
                                     ?>
-                                </li>
+                                </li> -->
                                 <li class="row input_row throw_row">
                                     <span>풍속</span>
                                     <?php
-                                    if($rows['record_state']==='y'){
-                                        echo '<input placeholder="풍속을 입력해주세요." type="text" name="wind" value="'.$rows['record_wind'].'" maxlength="16"
+                                    if ($rows['record_state'] === 'y') {
+                                        echo '<input placeholder="풍속을 입력해주세요." type="text" name="wind" value="' . $rows['record_wind'] . '" maxlength="16"
                                             required="" />';
-                                    }else{
-                                        
+                                    } else {
+
                                         echo '<input placeholder="풍속을 입력해주세요." type="text" name="wind" value="" maxlength="16"
                                             required="" />';
-                                        }
+                                    }
                                     ?>
                                 </li>
                                 <li class="row input_row throw_row">
                                     <span>경기 시작 시간</span>
                                     <?php
-                                echo '<input placeholder="시작 시간" type="text" name="starttime" value="'. ($rows['record_start']) .'"
+                                    echo '<input placeholder="시작 시간" type="text" name="starttime" value="' . ($rows['record_start']) . '"
                                 maxlength="30" required="" />';
-                                if ($rows['record_state'] != 'y') {
-                                    echo '<input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />';
-                                }
-                                ?>
+                                    if ($rows['record_state'] != 'y') {
+                                        echo '<input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />';
+                                    }
+                                    ?>
                                 </li>
                             </ul>
                         </div>
@@ -200,7 +199,7 @@
                                     if ($rows['record_state'] != 'y') {
                                         echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
                                     }
-                                ?>
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -208,27 +207,27 @@
                     <table class="box_table">
                         <colgroup>
                             <?php
-                                if (in_array($rows['schedule_sports'], $longname)) {
-                                    echo '<col style="width: 7%" />';
-                                    echo '<col style="width: 7%" />';
-                                    echo '<col style="width: 25%" />
+                            if (in_array($rows['schedule_sports'], $longname)) {
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 25%" />
                                     <col style="width: 7%" />
                                     <col style="width: 15%" />
                                     <col style="width: 10%" />
                                     <col style="width: 16%" />
                                     <col style="width: 10%" />';
-                                } else {
-                                    echo '<col style="width: 7%" />';
-                                    echo '<col style="width: 7%" />';
-                                    echo '<col style="width: 10%" />';
-                                    echo '<col style="width: 21%" />';
-                                    echo '<col style="width: 7%" />';
-                                    echo '<col style="width: 15%" />';
-                                    echo '<col style="width: 10%" />';
-                                    echo '<col style="width: 10%" />';
-                                    echo '<col style="width: 10%" />';
-                                }
-                                ?>
+                            } else {
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 10%" />';
+                                echo '<col style="width: 21%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 10%" />';
+                                echo '<col style="width: 10%" />';
+                                echo '<col style="width: 10%" />';
+                            }
+                            ?>
                         </colgroup>
                         <thead class="result_table entry_table">
                             <tr>
@@ -253,14 +252,14 @@
                         <tbody class="table_tbody De_tbody entry_table">
                             <?php
                             $num = 0;
-                             $relm = 'record_' . $result_type . '_result,record_' . $result_type . '_record,record_pass,record_memo,record_new,record_reaction_time,athlete_name,athlete_bib, record_order,athlete_country';
-                             if ($rows['record_state'] == 'y') {
-                                 $order = 'record_' . $result_type . '_result';
-                             } else if (in_array($rows['schedule_sports'], $longname)) {
-                                 $order = 'athlete_bib';
-                             } else {
+                            $relm = 'record_' . $result_type . '_result,record_' . $result_type . '_record,record_pass,record_memo,record_new,record_reaction_time,athlete_name,athlete_bib, record_order,athlete_country';
+                            if ($rows['record_state'] == 'y') {
+                                $order = 'record_' . $result_type . '_result';
+                            } else if (in_array($rows['schedule_sports'], $longname)) {
+                                $order = 'athlete_bib';
+                            } else {
                                 $order = 'record_order';
-                             }
+                            }
                             $sql = "SELECT " . $relm . " FROM list_record 
                             INNER JOIN list_athlete ON list_athlete.athlete_id = list_record.record_athlete_id 
                             and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'
@@ -269,11 +268,12 @@
                             $result = $db->query($sql);
                             while ($row = mysqli_fetch_array($result)) {
                                 if (in_array($rows['schedule_sports'], $longname)) {
-                                    echo '<tr id="id' . $row['athlete_bib'] .'"';
+                                    echo '<tr id="id' . $row['athlete_bib'] . '"';
                                 } else {
-                                    echo '<tr id="rane' . $row['record_order'].'"';
+                                    echo '<tr id="rane' . $row['record_order'] . '"';
                                 }
-                                if ($num % 2 == 1) echo ' class="Ranklist_Background">'; else echo ">";
+                                if ($num % 2 == 1) echo ' class="Ranklist_Background">';
+                                else echo ">";
                                 echo '<td><input type="number" name="rank[]" id="rank" value="' . $row['record_' . $result_type . '_result'] . '" min="1" required="" /></td>';
                                 if (in_array($rows['schedule_sports'], $longname)) {
                                     echo '<td hidden><input type="number" name="rain[]" value="' . $row['record_order'] . '" min="1" required="" readonly /></td>';
@@ -334,37 +334,33 @@
                     </table>
             </div>
             <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-            <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
-                value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
+            <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text" value="<?= ($rows['schedule_memo'] ?? null) ?>" maxlength=" 100" />
 
             <div class="modify_Btn input_Btn result_Btn">
                 <?php
-                    if ($rows["record_state"] != "y") {
-                      echo '<div class="signup_submit" style="width:100%;">
+                if ($rows["record_state"] != "y") {
+                    echo '<div class="signup_submit" style="width:100%;">
                                   <button type="submit" class="defaultBtn BTN_Blue full_width" name="addresult"
                                       formaction="../action/record/track_normal_result_insert.php">
                                       <span>확인</span>
                                   </button>
                               </div>';
-                          }else{
-                            if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                <div class="modify_Btn input_Btn result_Btn">
-                    <button type="submit" class="BTN_Blue full_width" name="addresult"
-                        formaction="../action/record/track_normal_result_insert.php">
-                        <span>확인</span>
-                    </button>
-                </div>
+                } else {
+                    if (authCheck($db, "authSchedulesUpdate")) {  ?>
+                        <div class="modify_Btn input_Btn result_Btn">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/track_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
+                    <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                        <div class="modify_Btn input_Btn result_Btn">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/track_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
                 <?php }
-                          elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                <div class="modify_Btn input_Btn result_Btn">
-                    <button type="submit" class="BTN_Blue full_width" name="addresult"
-                        formaction="../action/record/track_normal_result_insert.php">
-                        <span>확인</span>
-                    </button>
-                </div>
-                <?php } 
-                      }
-                    ?>
+                }
+                ?>
             </div>
             </form>
         </div>

@@ -8,7 +8,7 @@ require_once "action/module/dictionary.php";
 
 require_once "backheader.php";
 
-if (!$_POST['judge_id']) {
+if (!$_GET['id']) {
     echo "<script>alert('잘못된 유입경로입니다.')</script>";
     exit();
 }
@@ -25,7 +25,7 @@ $sql = "SELECT *
             FROM list_judge
             INNER JOIN list_country  
             ON judge_country=country_code
-            where judge_id=" . $_POST['judge_id'];
+            where judge_id=" . $_GET['id'];
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
@@ -48,12 +48,17 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                 <form action="./action/module/judge_update.php" method="post" class="form" enctype="multipart/form-data">
                     <div class="UserProfile_modify coachArea Participant_img ptp_img">
                         <div>
-                            <img src=<?php echo "./assets/img/judge_img/" . $row["judge_profile"] ?> alt="avatar" />
-
+                            <?php if (!isset($row["judge_profile"]) || $row["judge_profile"] == "")
+                            {
+                            ?>
+                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <?php }else{?>
+                            <img src=<?php echo "./assets/img/athlete_img/" . $row["judge_profile"] ?> alt="avatar" />
+                            <?php }?>
                         </div>
                         <div>
                             <span id="message" style="padding-left: 10px;" style="display:none"></span>
-                            <input type='hidden' name='judge_id' value=<?php echo $_POST['judge_id'] ?>>
+                            <input type='hidden' name='judge_id' value=<?php echo $_GET['id'] ?>>
                             <?php
                             $name = explode(" ", $row["judge_name"]);
                             $secondName = isset($name[0]) ? $name[0] : NULL;
@@ -174,13 +179,13 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                                             <option value="VA" <?php echo $row["judge_village"] == 'VA' ? "selected" : "";?>>선수촌 전구역(거주 불허)</option>
                                         </select>
                                 </li>
-                                <li class="row full_width">
+                                <li class="row full_width judge_sector">
                                 <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
                                         <?php
                                         for ($value = 1; $value <= count($sector_dic); $value++) {
                                             echo "<label>";
-                                            echo '<input type="checkbox" name="judge_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '"/>';
+                                            echo '<input type="checkbox" name="judge_sector[]"' . 'value="' . key($sector_dic) . '"' . 'id="' . key($sector_dic) . '" autocomplete="off"/>';
                                             echo "<span>" . current($sector_dic) . "</span>";
                                             echo "</label>";
                                             next($sector_dic);
@@ -200,7 +205,7 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
                                     <?php
                                     for ($value = 1; $value <= count($judge_sport_dic); $value++) {
                                         echo '<li><label>';
-                                        echo '<input type="checkbox" name="judge_schedules[]"' . 'value="' . key($judge_sport_dic) . '"' . 'id="' . "sports_" . key($judge_sport_dic) . '"/>';
+                                        echo '<input type="checkbox" name="judge_schedules[]"' . 'value="' . key($judge_sport_dic) . '"' . 'id="' . "sports_" . key($judge_sport_dic) . '" autocomplete="off"/>';
                                         echo "<span>" . current($judge_sport_dic) . "</span>";
                                         echo "</label></li>";
                                         next($judge_sport_dic);
@@ -219,7 +224,7 @@ $birth = explode('-', $row["judge_birth"]); //생일 정보 나눔
             </div>
         </div>
     </div>
-    <script src="/assets/js/main.js?ver=7"></script>
+    <script src="/assets/js/main.js?ver=9"></script>
     <?php require_once "action/module/judge_modify_selected.php"; ?>
 </body>
 

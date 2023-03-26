@@ -36,7 +36,7 @@ if (!authCheck($db, "authEntrysRead")) {
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>성</span>
-                                    <input type="text" name="athlete_first_name" id="athlete_name" value="" placeholder="성을 입력해 주세요" required />
+                                    <input type="text" name="athlete_first_name" id="athlete_name" value="" placeholder="성을 입력해 주세요"/>
                                 </li>
                                 <li class="row input_row row_item input_width">
                                     <span>국가</span>
@@ -120,7 +120,7 @@ if (!authCheck($db, "authEntrysRead")) {
                                         <option value="VA">선수촌 전구역(거주 불허)</option>
                                     </select>
                                 </li>
-                                <li class="row full_width">
+                                <li class="row full_width athlete_sector">
                                     <span class="full_span">경기장 내 접근 허용</span>
                                     <div class="full_div">
                                         <label><input type="checkbox" name="athlete_sector[]" value="0" id="All Area"><span>경기장 내 전
@@ -136,11 +136,9 @@ if (!authCheck($db, "authEntrysRead")) {
                                             <label><input type="checkbox" name="athlete_sector[]" value="8" id="TIC(Technical Information Center)"><span>기술정보센터(2F)</span></label>
                                     </div>
                                 </li>
-                                <li class="row full_width">
-                                    <span class="full_span">등번호</span>
-                                    <div class="full_div">
-                                        <input type="text" name="athlete_bib" value="">
-                                    </div>
+                                <li class="row input_row row_item">
+                                    <span>등번호</span>
+                                    <input type="number" name="athlete_bib" id="athlete_bib" value="" placeholder="등번호를 입력해 주세요" required />
                                 </li>
                             </ul>
                         </div>
@@ -275,13 +273,30 @@ if (!authCheck($db, "authEntrysRead")) {
         </div>
     </div>
     </div>
+    <script src="/assets/js/main.js?v=8"></script>
     <script>
-        function check() {
-            if ($("input:checkbox[name='athlete_sector[]']").is(":checked") == false) {
-                alert("하나 이상은 선택하세요.");
-                return;
+    if (document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]')) {
+    const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]');
+    let checkcnt = 0;
+    for (let i = 0; i < allow_access.length; i++) {
+        if (allow_access[i].checked == true)
+            checkcnt++;
+    }
+    for (let i = 0; i < allow_access.length; i++) {
+        allow_access[i].addEventListener("click", () => {
+            if (allow_access[i].checked)  {
+                checkcnt++;
+            } else{
+                checkcnt--;
             }
+            if (checkcnt > 4) {
+                allow_access[i].checked = false;
+                checkcnt--;
+                alert('5개 이상 선택이 불가능합니다');
+            }
+        })
         }
+  }
     </script>
 </body>
 

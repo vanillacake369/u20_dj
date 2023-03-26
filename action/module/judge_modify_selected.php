@@ -27,6 +27,36 @@ foreach ($athlete_sectors as $sec) {
     echo "</script>";
 }
 
+echo "<script>";
+echo '
+if (document.querySelectorAll(\'.judge_sector>div>label>input[name="judge_sector[]"]\')) {
+
+  const allow_access = document.querySelectorAll(\'.judge_sector>div>label>input[name="judge_sector[]"]\');
+  let checkcnt = document.querySelectorAll(\'.judge_sector>div>label>input[name="judge_sector[]"]:checked\').length;
+
+  for (let i = 0; i < allow_access.length; i++) {
+    if (allow_access[i].checked)
+      checkcnt++;
+  }
+
+  for (let i = 0; i < allow_access.length; i++) {
+    allow_access[i].addEventListener("click", () => {
+        if (allow_access[i].checked)  {
+            checkcnt++;
+        } else{
+            checkcnt--;
+        }
+        if (checkcnt > 4) {
+            allow_access[i].checked = false;
+            checkcnt--;
+            alert("5개 이상 선택이 불가능합니다");
+        }
+    })
+    }
+}';
+
+echo "</script>";
+
 // DB 저장된 참가예정경기 => checkbox 의 참가예정경기 : checked
 echo "<script>";
 $judge_schedules = explode(',', $row["judge_schedule"]); //체크 박스

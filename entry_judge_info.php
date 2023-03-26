@@ -41,9 +41,14 @@ $row = mysqli_fetch_array($result);
                 <form action="">
                     <div class="UserProfile_modify Participant_img">
                         <div>
-                            <img src=<?php echo "./assets/img/judge_img/" . $row["judge_profile"] ?> class="image_resize" alt="avatar" />
+                            <?php if (!isset($row["judge_profile"]) || $row["judge_profile"] == "")
+                            {
+                            ?>
+                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <?php }else{?>
+                            <img src=<?php echo "./assets/img/athlete_img/" . $row["judge_profile"] ?> alt="avatar" />
+                            <?php }?>
                         </div>
-
                         <div>
                             <ul class="UserDesc infoDesc Participant_list">
                                 <li class="row">

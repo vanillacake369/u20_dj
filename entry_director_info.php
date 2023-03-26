@@ -39,7 +39,13 @@ $row = mysqli_fetch_array($result);
                 <form action="">
                     <div class="UserProfile_modify Participant_img">
                         <div>
-                            <img src=<?php echo "./assets/img/director_img/" . $row["director_profile"] ?> alt="avatar" />
+                            <?php if (!isset($row["director_profile"]) || $row["director_profile"] == "")
+                            {
+                            ?>
+                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <?php }else{?>
+                            <img src=<?php echo "./assets/img/athlete_img/" . $row["director_profile"] ?> alt="avatar" />
+                            <?php }?>
                         </div>
                         <div>
                             <ul class="UserDesc infoDesc Participant_list">
@@ -126,7 +132,7 @@ $row = mysqli_fetch_array($result);
             </div>
         </div>
     </div>
-    <script src="assets/js/main.js?ver=5"></script>
+    <script src="assets/js/main.js?ver=11"></script>
 </body>
 
 </html>

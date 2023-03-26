@@ -275,12 +275,12 @@ zend_version()
                             echo "</td>";
                             // 참가자 상세 보기
                             echo "<td>";
-                            echo "<input type='button' onclick=" . "\"createPopupWin('entry_judge_info.php?id=" . $row["judge_id"] . "'" . ",'상세내용 보기',1100,900);\"" . "value='보기' class='BTN_DarkBlue defaultBtn'>";
+                            echo "<input type='button' onclick=" . "\"createPopupWin('entry_judge_info.php?id=" . $row["judge_id"] . "'" . ",'상세내용 보기',1100,1000);\"" . "value='보기' class='BTN_DarkBlue defaultBtn'>";
                             echo "</td>";
                             // 참가자 수정
                             echo "<td>";
                             if (authCheck($db, "authEntrysUpdate")) {
-                                echo "<input type='button' onclick=" . "updatePop(" . $row["judge_id"] . ",'judge_id',\"entry_judge_modify.php\")" . " value='수정' class='BTN_Blue defaultBtn'>";
+                                echo "<input type='button' onclick=" ."\"createPopupWin('entry_judge_modify.php?id=" . $row["judge_id"] . "'" . ",'수정',1100,900);\"". " value='수정' class='BTN_Blue defaultBtn'>";
                             }
                             echo "</td>";
                             // 참가자 삭제

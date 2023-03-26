@@ -143,10 +143,12 @@ function input_time() {
             echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit"
                 formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
             }
-            if ($_POST['check'] ?? null === '3') {
-            echo '<input type="hidden" name="count" value="5">';
-            } else {
-            echo '<input type="hidden" name="count" value="3">';
+            if (($_POST['check'] ?? null) === null) {
+                echo '<input type="hidden" name="count" value="3">';
+            } else if (($_POST['check'] ?? null) === "3") {
+                echo '<input type="hidden" name="count" value="5">';
+            } else if (($_POST['check'] ?? null) === "5") {
+                echo '<input type="hidden" name="count" value="no_more_regroup">';
             }?>
         </div>
         <table class="box_table">
@@ -216,15 +218,15 @@ function input_time() {
                             if ($rows["record_state"] === "y") {
                                 $order = "record_" . $result_type . "_result";
                                 $check = 'record_' . $result_type . '_result>0';
-                            } elseif ($_POST["check"] ?? null === "5") {
+                            } elseif (($_POST["check"] ?? null) === "5") {
                                 $trial = 6;
-                                $check = 'record_trial =' . $trial . '';
-                            } elseif ($_POST["check"] ?? null === "3") {
+                                $check = 'record_trial =\'' . $trial . '\'';
+                            } elseif (($_POST["check"] ?? null) === "3") {
                                 $trial = 4;
-                                $check = 'record_trial =' . $trial . '';
+                                $check = 'record_trial =\'' . $trial . '\'';
                             } else {
                                 $trial = 1;
-                                $check = 'record_trial =' . $trial . '';
+                                $check = 'record_trial =\'' . $trial . '\'';
                             }
                             $sql2 =
                                 "SELECT DISTINCT  " .
@@ -241,7 +243,7 @@ function input_time() {
                                 else echo ">";
                                 echo '<td><input type="number" name="rank[]" class="input_text" id="rank" value="' . ($id['record_' . $result_type . '_result'] ?? null) . '" min="1" required="" /></td>';
                                 echo '<td><input type="number" name="rain[]" class="input_text" value="';
-                                if ($id['record_order'] >= 9 && $_POST["check"] ?? null >= 3) {
+                                if ($id['record_order'] >= 9 && ($_POST["check"] ?? null) >= 3) {
                                     echo '-';
                                 } else {
                                     echo $id['record_order'];

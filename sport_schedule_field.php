@@ -156,6 +156,7 @@ if (empty($total_count)) {
                                 formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_normal_result_eng_pdf.php">PDF(영) 출력</button>
+                            <button type="submit" formaction="/action/record/result_execute_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
                                 formaction="/record/field_normal_result_word.php">워드 출력</button>
                         </div>
@@ -268,7 +269,7 @@ if (empty($total_count)) {
                 echo "<tr";
                 if ($num%2 == 0) echo ' class="Ranklist_Background">'; else echo ">";
                 echo "<td rowspan='2'><input type='number' name='rain[]' value='" .
-                    ($row['r_order'] ?? null) .
+                    ($row['record_order'] ?? null) .
                     "' min='1' max='12' required='' readonly /></td>";
                 echo "<td rowspan='2'><input placeholder='등수' type='number' name='rank[]' id='rank' value='" .
                     ($row['result'] ?? null) .
@@ -366,6 +367,7 @@ if (empty($total_count)) {
                                 formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_normal_result_eng_pdf.php">PDF(영) 출력</button>
+                            <button type="submit" formaction="/action/record/result_execute_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
                                 formaction="/record/field_normal_result_word.php">워드 출력</button>
                         </div>

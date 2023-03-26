@@ -68,11 +68,11 @@ $judge_sector = implode(',', $_POST["judge_sector"]);
 $judge_venue_access = trim($_POST["judge_venue_access"]);
 
 if ($_POST["judge_birth_month"] > 12 || $_POST["judge_birth_month"] < 0) {
-    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 if ($month_dic[$_POST["judge_birth_month"]] < $_POST["judge_birth_day"]) {
-    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 

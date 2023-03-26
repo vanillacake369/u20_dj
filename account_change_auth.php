@@ -19,7 +19,7 @@ require_once "head.php";
 require_once "includes/auth/config.php";
 
 $account = $_GET['id'];
-$sql = " SELECT admin_level, admin_name FROM list_admin WHERE admin_account = '$account';";
+$sql = " SELECT admin_level, admin_name, admin_account FROM list_admin WHERE admin_account = '$account';";
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 ?>
@@ -31,7 +31,7 @@ $row = mysqli_fetch_array($result);
         <div class="Wrapper">
             <div class="result_tit">
                 <div class="result_list2">
-                    <p class=" tit_left_blue"><?= htmlspecialchars($row["admin_name"]); ?></p>
+                    <p class=" tit_left_blue"><?= htmlspecialchars($row["admin_name"]); ?>(<?= htmlspecialchars($row["admin_account"]); ?>)</p>
                 </div>
             </div>
             <div class="MainRank coachList defaultList">

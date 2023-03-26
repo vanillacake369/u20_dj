@@ -25,7 +25,7 @@ if (
 	// !isset($_POST["coach_schedules"]) ||
 	// !isset($_POST["attendance_sports"])
 ) {
-	echo "<script>alert('기입하지 않은 정보가 있습니다.');window.close();</script>";
+	echo "<script>alert('기입하지 않은 정보가 있습니다.');history.back();</script>";
 	exit;
 }
 
@@ -37,12 +37,12 @@ $profile = strtolower($_POST["coach_second_name"]) . $birth_day . "_profile";
 
 // month 0 이하 12 초과 필터링
 if ($_POST["coach_birth_month"] > 12 || $_POST["coach_birth_month"] < 0) {
-	echo "<script>alert('생일을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+	echo "<script>alert('생일을 입력을 잘못 입력하셨습니다.');history.back();</script>";
 	exit;
 }
 // month의 최대일수를 넘긴 경우 필터링
 if ($month_dic[$_POST["coach_birth_month"]] < $_POST["coach_birth_day"]) {
-	echo "<script>alert('생일을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+	echo "<script>alert('생일을 입력을 잘못 입력하셨습니다.');history.back();</script>";
 	exit;
 }
 

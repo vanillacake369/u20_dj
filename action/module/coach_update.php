@@ -62,11 +62,11 @@ $coach_venue_access = trim($_POST["coach_venue_access"]);
 // $coach_attendance = trim($attendance_id);
 
 if ($_POST["coach_birth_month"] > 12 || $_POST["coach_birth_month"] < 0) {
-    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 if ($month_dic[$_POST["coach_birth_month"]] < $_POST["coach_birth_day"]) {
-    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');window.close();</script>";
+    echo "<script>alert('생일 항목을 입력을 잘못 입력하셨습니다.');history.back();</script>";
     exit;
 }
 

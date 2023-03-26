@@ -12,8 +12,28 @@ if (!authCheck($db, "authEntrysRead")) {
             history.back();
         </script>");
 }
+// 10종,7종 선택 옵션
+unset($sport_dic["decathlon"]);
+unset($sport_dic["heptathlon"]);
+$sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
+$sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
+$sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
+$sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
+$sport_dic["decathlon(400m)"] = "Decathlon(400m)";
+$sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
+$sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
+$sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
+$sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
+$sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
+$sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
+$sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
+$sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
+$sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
+$sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
+$sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./assets/js/main.js"></script>
 </head>
 
 <body>
@@ -206,7 +226,7 @@ if (!authCheck($db, "authEntrysRead")) {
                                         reset($sport_dic);
                                         ?>
                                     </select>
-                                    <input type="text" name="athlete_sb[]" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" />
+                                    <input type="text" name="athlete_sb[]" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" onkeyup="heightFormat(this)" />
                                     <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-sb"><i class="xi-minus"></i></button>
                                 </ul>
                             </div>
@@ -230,7 +250,7 @@ if (!authCheck($db, "authEntrysRead")) {
                                         reset($sport_dic);
                                         ?>
                                     </select>
-                                    <input type="text" name="athlete_pb[]" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" />
+                                    <input type="text" name="athlete_pb[]" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" onkeyup="heightFormat(this)" />
                                     <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
                                 </ul>
                             </div>
@@ -263,6 +283,30 @@ if (!authCheck($db, "authEntrysRead")) {
                             $(document).ready(function() {
                                 $(document).on("click", '#delete-pb', function() {
                                     $(this).parent().remove();
+                                });
+                            });
+                            // sb 7종, 10종 선택 시, 입력값 형식강제 풀어버림 @author 임지훈 @vanillacake369
+                            $(document).ready(function() {
+                                $(document).on("change", '#sb-sports-select', function() {
+                                    if ($(this).val().indexOf('heptathlon') !== -1) {
+                                        $(this).siblings('#athlete_sb').removeAttr('onkeyup');
+                                    } else if ($(this).val().indexOf('decathlon') !== -1) {
+                                        $(this).siblings('#athlete_sb').removeAttr('onkeyup');
+                                    } else {
+                                        $(this).siblings('#athlete_sb').attr('onkeyup', 'heightFormat(this)');
+                                    }
+                                });
+                            });
+                            // pb 7종, 10종 선택 시, 입력값 형식강제 풀어버림 @author 임지훈 @vanillacake369
+                            $(document).ready(function() {
+                                $(document).on("change", '#pb-sports-select', function() {
+                                    if ($(this).val().indexOf('heptathlon') !== -1) {
+                                        $(this).siblings('#athlete_pb').removeAttr('onkeyup');
+                                    } else if ($(this).val().indexOf('decathlon') !== -1) {
+                                        $(this).siblings('#athlete_pb').removeAttr('onkeyup');
+                                    } else {
+                                        $(this).siblings('#athlete_pb').attr('onkeyup', 'heightFormat(this)');
+                                    }
                                 });
                             });
                         </script>

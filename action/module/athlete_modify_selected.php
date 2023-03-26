@@ -3,7 +3,7 @@
 echo "<script>";
 
 // DB 저장된 국가값 => select-box의 국가 : selected
-echo "setSelectBoxByValue('athlete_country', '" . $row["athlete_country"] . "');";
+echo "setSelectBoxByValue('athlete_country', '" . strtoupper($row["athlete_country"]) . "');";
 echo "</script>";
 echo "<script>";
 // DB 저장된 성별 => select-box의 성별 : selected

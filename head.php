@@ -8,5 +8,5 @@
     <link rel="stylesheet" href="/assets/css/xeicon.min.css">
     <link rel="stylesheet" href="/assets/css/swiper.min.css">
     <link rel="stylesheet" href="/assets/css/reset.css?v=1">
-    <link rel="stylesheet" href="/assets/css/style.css?v=44">
+    <link rel="stylesheet" href="/assets/css/style.css?v=45">
     <title>u20 관리자 페이지</title>

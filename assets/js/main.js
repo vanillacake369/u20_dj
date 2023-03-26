@@ -48,11 +48,9 @@ for (let i = 0; i < gnbItem.length; i++) {
   gnbItem[i].addEventListener("click", () => {
     for (let j = 0; j < gnbItem.length; j++) {
       if (j !== i) {
-        gnbItem[j].classList.remove("gnb_active");
         gnbItem[j].classList.remove("gnbBack");
       }
     }
-    gnbItem[i].classList.remove("gnb_active");
     gnbItem[i].classList.add("gnbBack");
   });
 }

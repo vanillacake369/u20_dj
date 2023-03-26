@@ -103,7 +103,6 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                         foreach ($country_code_dic as $key => $value)
                                             echo '<option value=' . '"' . $value  . '"' . '>' . $key . '</option>';
                                         ?>
-                                        
                                     </select>
                                 </li>
                                 <li class="row">

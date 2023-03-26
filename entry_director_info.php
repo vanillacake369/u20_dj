@@ -107,7 +107,7 @@ $row = mysqli_fetch_array($result);
                                 </li>
                                 <li class="row">
                                 <span>경기장 접근 허용</span>
-                                    <div class="full_div">
+                                    <div class="full_div align">
                                         <?php
                                             $sector_row = explode(",",htmlspecialchars($row["director_sector"]));
                                             $i = 0;

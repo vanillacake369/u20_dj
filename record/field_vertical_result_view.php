@@ -8,17 +8,17 @@
         history.back();
     </script>");
     }
-    $schedule_sports=$POST['sports'];
-    $schedule_round=$POST['round'];
-    $gender=$POST['gender'];
-    $group=$POST['group'];
+    $schedule_sports=$_POST['sports'];
+    $schedule_round=$_POST['round'];
+    $gender=$_POST['gender'];
+    $group=$_POST['group'];
 
     require_once __DIR__ . "/../action/module/record_worldrecord.php";
     require_once __DIR__ . "/../includes/auth/config.php"; //B:데이터베이스 연결 
     $sql = "SELECT DISTINCT * FROM list_record join list_schedule where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
     $result = $db->query($sql);
     $rows = mysqli_fetch_assoc($result);
-    if ($rows['schedule_result'] == 'o') {
+    if ($rows['record_status'] == 'o') {
       $result_type = 'official';
     } else {
       $result_type = 'live';
@@ -135,6 +135,7 @@
                                   echo '<input placeholder="시작 시간" type="text" name="starttime" value="'. ($rows['record_start']) .'"
                                   maxlength="30" required="" />';
                                   ?>
+                                  <input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />
                               </div>
                             </ul>
                         </div>
@@ -142,18 +143,8 @@
                     <div class="Thorw_result">
                         <div class="relay_result">
                             <div class="result_BTN">
-                                <h1 class="tit_padding tit_left_green">결과</h1>
-                                <div>
-                                <?php
-                                    if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
-                                    } else {
-                                        echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
-                                    }
-                                    if ($rows['record_state'] != 'y') {
-                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
-                                    }
-                                ?>
-                                </div>
+                                <h1 class="UserProfile_tit tit_left_green tit_padding">결과</h1>
+
                             </div>
                         </div>
                     </div>
@@ -393,7 +384,7 @@
                         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
                       <div class="modify_Btn input_Btn result_Btn">
                     <?php
-                    if ($rows["schedule_status"] != "y") {
+                    if ($rows["record_state"] != "y") {
                       echo '<div class="signup_submit" style="width:49%;>
                                     <button type="submit" class="BTN_Red full_width" name="addtempresult"
                                         formaction="../action/record/field_vertical_result_insert.php">

@@ -341,7 +341,7 @@ if (isset($categoryValue) && isset($orderValue)) {
             </div>
         </div>
     </div>
-    <script src="/assets/js/main.js?v=5"></script>
+    <script src="/assets/js/main.js?v=7"></script>
     <script>
         // active browser에 대한 auto refresh 함수
         reloadWhenVisibilityChange();

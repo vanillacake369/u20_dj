@@ -60,8 +60,8 @@ for (let i = 0; i < gnbItem.length; i++) {
 let menu = document.querySelectorAll(".gnbList>li");
 
 for (let i = 0; i < menu.length; i++) {
-  let currentMenu
-  console.log("1");
+  let currentMenu;
+
   function inactivate(elem) {
     elem.classList.remove("gnbBack");
   }
@@ -377,7 +377,7 @@ for (let i = 0; i < addColumnBtns.length; i++) {
     const Cell1 = newRow.insertCell(0);
     const Cell2 = newRow.insertCell(1);
 
-    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]" disabled></td>`;
+    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]"></td>`;
     Cell2.innerHTML =
       '<td><div class="copy-value"><select class="select-box select2-hidden-accessible" name="athlete" onchange="select_change_listener()"></select></div></td><input type="hidden" class="hidden-input" id="player_id" name="player_id[]" value="">';
     // option 복제

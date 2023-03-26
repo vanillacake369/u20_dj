@@ -60,8 +60,8 @@ for (let i = 0; i < gnbItem.length; i++) {
 let menu = document.querySelectorAll(".gnbList>li");
 
 for (let i = 0; i < menu.length; i++) {
-  let currentMenu
-  console.log("1");
+  let currentMenu;
+
   function inactivate(elem) {
     elem.classList.remove("gnbBack");
   }

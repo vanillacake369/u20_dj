@@ -259,13 +259,13 @@
                              } else if (in_array($rows['schedule_sports'], $longname)) {
                                  $order = 'athlete_bib';
                              } else {
-                                 $order = 'record_order';
+                                $order = 'record_order';
                              }
-                             $sql = "SELECT " . $relm . " FROM list_record 
-                             INNER JOIN list_athlete ON list_athlete.athlete_id = list_record.record_athlete_id 
-                             and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'
-                             ORDER BY " . $order . " ASC ";
-                             $count = 0;
+                            $sql = "SELECT " . $relm . " FROM list_record 
+                            INNER JOIN list_athlete ON list_athlete.athlete_id = list_record.record_athlete_id 
+                            and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'
+                            ORDER BY " . $order . " ASC ";
+                            $count = 0;
                             $result = $db->query($sql);
                             while ($row = mysqli_fetch_array($result)) {
                                 if (in_array($rows['schedule_sports'], $longname)) {
@@ -286,9 +286,9 @@
                                 value="' . $row['athlete_name'] . '" maxlength="30" required="" readonly /></td>';
                                 echo '<td><input placeholder="국가" type="text" name="country" 
                                 value="' . $row['athlete_country'] . '" maxlength="30" required="" readonly /></td>';
-                                echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="8"
+                                echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="9"
                                 required="" onkeyup="trackFinal(this)" style="float: left; width: auto; padding-right: 5px" />';
-                                echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="8"
+                                echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="9"
                                 required="" onkeyup="trackFinal(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 echo '<input type="hidden" name="compresult[]" value="' . ($row['record_' . $result_type . '_record'] ?? null) . '"/></td>';
                                 echo '<td><input placeholder="비고를 입력해주세요" type="text" name="bigo[]" value="' . ($row['record_memo'] ? $row['record_memo'] : null) . '" maxlength="100" /></td>';

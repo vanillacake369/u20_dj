@@ -76,10 +76,10 @@ function highFormat(obj) {
 
 function comma(str) {
     str = String(str);
-    if (str.length < 5) {
-        return str.replace(/(\B)(?=(?:\d{2})+(?!\d))/g, "$1.");
+    if (str.length <= 5) {
+      return str.replace(/(\B)(?=(?:\d{3})+(?!\d))/g, "$1.");
     } else {
-        return str.replace(/(\d+)(\d{2})(\d{2})/g, "$1:$2.$3");
+      return str.replace(/(\d+)(\d{2})(\d{3})/g, "$1:$2.$3");
     }
 }
 

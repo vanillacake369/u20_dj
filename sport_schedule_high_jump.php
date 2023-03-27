@@ -63,12 +63,13 @@ if ($rows['record_status'] == 'o') {
         echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
         ?>
                 </div>
-        <form action="" method="post">
+                <form action="" method="post">
                     <input name="round" value="<?=$round?>" hidden>
                     <input name="sports" value="<?=$sports?>" hidden>
                     <input name="gender" value="<?=$gender?>" hidden>
                     <input name="group" value="<?=$schedule_group?>" hidden>
-                    <input name="name" value="<?=$schedule_name?>" hidden>
+                    <!--<input name="name" value="--><?php //=$schedule_name?>
+                    <!--" hidden>-->
                     <input name="result" value="<?=$schedule_result?>" hidden>
                     <table class="box_table">
                         <colgroup>
@@ -121,7 +122,10 @@ if ($rows['record_status'] == 'o') {
                             <tr id="col2">
                                 <?php if ($cnt1 == 12) {
                   $cnt2 = 0;
-                  $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record FROM list_record where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 limit 12,12");
+                  $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record 
+                  FROM list_record 
+                  where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 
+                  limit 12,12");
                   while ($highrow = mysqli_fetch_array($highresult)) {
                     echo '<th style="background: none"><input placeholder="높이" type="text" name="trial[]"
                                                     class="input_trial" id="trial" value="' .
@@ -160,7 +164,7 @@ if ($rows['record_status'] == 'o') {
               }
               $result = $db->query("SELECT DISTINCT ".$obj."record_order,record_new,athlete_name,athlete_bib FROM list_record 
                             INNER JOIN list_athlete ON athlete_id = record_athlete_id 
-                            and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'
+                            and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'".$jo."
                             ORDER BY ".$order." ASC , record_".$result_type."_record ASC"
               );
               $cnt = 1;
@@ -192,7 +196,7 @@ if ($rows['record_status'] == 'o') {
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'AND record_".$result_type."_record>0
-                      ORDER BY record_".$result_type."_record ASC limit 12"
+                      ORDER BY cast(record_".$result_type."_record as int) ASC limit 12"
                 ); //선수별 기록 찾는 쿼리
                 while ($recordrow = mysqli_fetch_array($record)) {
                   echo "<td>";
@@ -223,7 +227,7 @@ if ($rows['record_status'] == 'o') {
                 echo '<tr id=col2';
                   if ($num % 2 == 0) echo ' class="Ranklist_Background">';
                   else echo ">";
-                if ($cnt3 == 12) {
+                if ($cnt3 == 13) {
                   //13번째 기록부터
                   $record = $db->query(
                       "SELECT record_trial,record_athlete_id FROM list_record
@@ -231,7 +235,7 @@ if ($rows['record_status'] == 'o') {
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND record_" . $result_type . "_record>0
-                      ORDER BY record_" . $result_type . "_record ASC limit 12,12"
+                      ORDER BY cast(record_" . $result_type . "_record as int) ASC limit 12,12"
                     );//선수별 기록 찾는 쿼리
                   while ($recordrow = mysqli_fetch_array($record)) {
                     echo "<td>";
@@ -289,14 +293,24 @@ if ($rows['record_status'] == 'o') {
                     </table>
                     <div class="filed_BTN">
                         <div>
-                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
-                            <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                                formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                                보기</button>
+                            <?php if ($schedule_round == 'final') { ?>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                                formaction="award_ceremony.php">시상식 보기</button>
+                            <?php } ?>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(한)
+                                출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영)
+                                출력</button>
+                            <button type="submit" formaction="/action/record/result_execute_vertical_excel.php"
+                                class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드
+                                출력</button>
+
                         </div>
-                        
+
                         <div>
                             <?php
               // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
@@ -317,23 +331,14 @@ if ($rows['record_status'] == 'o') {
                         }
                       }
               ?>
-                      </div>  
+                        </div>
                     </div>
 
+            </div>
+            <button type="button" class="changePwBtn defaultBtn">확인</button>
         </div>
-        <!-- <div class="BTNform">
-            <button type="button" class="nextBTN BTN_blue2 defaultBtn"
-                onclick="window.open('/sport_schedule_group_next.php?id=<?= $id ?>', 'window_name', 'width=800, height=750, location=no, status=no, scrollbars=yes')">다음
-                조 편성</button>
-            <form action="" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?= $id ?>">
-                <button type="submit" class="resetBTN BTN_Orange2 defaultBtn" name="">모든 조 초기화</button>
-            </form>
-        </div> -->
-        <button type="button" class="changePwBtn defaultBtn">확인</button>
-    </div>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/restrict.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script src="assets/js/restrict.js"></script>
 </body>
 
 

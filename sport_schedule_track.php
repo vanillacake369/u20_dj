@@ -174,6 +174,7 @@ function islane($schedule_sports, $what)
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                         else echo 'normal'; ?>_result_eng_pdf.php">PDF(영)
                                 출력</button>
+                            <button type="submit" formaction="/action/record/result_execute_track_field_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                             else echo 'normal'; ?>_result_word.php">워드
                                 출력</button>
@@ -376,17 +377,11 @@ function islane($schedule_sports, $what)
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                             else echo 'normal'; ?>_result_eng_pdf.php">PDF(영)
                                     출력</button>
+                                <button type="submit" formaction="/action/record/result_execute_track_field_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                                 else echo 'normal'; ?>_result_word.php">워드
                                     출력</button>
-                                <?php /*<form action="./execute_excel.php" method="post" enctype="multipart/form-data">
-                                    <input type="submit" name="query" id="execute_excel" value="<?php echo $excel ?>"
-                    hidden />
-                    <?php if (count($bindarray) !== 0) echo '<input type="text" name="keyword" value="' . implode(',', $bindarray) . '" hidden />' ?>
-                    <input type="text" name="role" value="schedule_management" hidden />
-                    <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
-                        출력</label>
-        </form>*/ ?>
+
                             </div>
                             <div>
                                 <?php

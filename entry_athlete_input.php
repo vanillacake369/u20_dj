@@ -56,7 +56,7 @@ if (!authCheck($db, "authEntrysRead")) {
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>성</span>
-                                    <input type="text" name="athlete_first_name" id="athlete_name" value="" placeholder="성을 입력해 주세요"/>
+                                    <input type="text" name="athlete_first_name" id="athlete_name" value="" placeholder="성을 입력해 주세요" />
                                 </li>
                                 <li class="row input_row row_item input_width">
                                     <span>국가</span>
@@ -341,12 +341,12 @@ if (!authCheck($db, "authEntrysRead")) {
     }
     </script>
     <script type="text/javascript">
-    function maxLengthCheck(object){
-      if (object.value.length > object.maxLength){
-        object.value = object.value.slice(0, object.maxLength);
-      }    
-    }
-  </script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.maxLength) {
+                object.value = object.value.slice(0, object.maxLength);
+            }
+        }
+    </script>
 </body>
 
 </html>

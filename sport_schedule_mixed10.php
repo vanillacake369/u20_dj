@@ -19,7 +19,6 @@ $statussql = "SELECT distinct record_round, schedule_sports,record_status, sched
 where schedule_sports='$sports' and schedule_gender ='$gender' AND record_sports=schedule_sports AND record_gender=schedule_gender
 ORDER BY FIELD(record_round,'final','100m','longjump','shotput','highjump','400m','100mh','discusthrow','polevault','javelinthrow','1500m'),FIELD(record_status,'o','l','n')";
 $statusresult = $db->query($statussql);
-echo $statussql;
 $statusrow = mysqli_fetch_array($statusresult);
 $schedule_result = $statusrow['record_status'];
 $schedule_round = $statusrow['record_round'];
@@ -63,6 +62,7 @@ $total_count = mysqli_num_rows($result);
 $groupsql="SELECT distinct record_round AS r,(select count(distinct record_group) FROM list_record WHERE record_sports='decathlon' and record_gender ='m' AND record_round= r)AS cnt FROM list_record WHERE record_sports='decathlon' and record_gender ='m' 
 AND record_sports=record_sports AND record_gender=record_gender AND record_round!='final'
 ORDER BY FIELD(record_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m')";
+
 $groupresult = $db->query($groupsql);
 
 $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70px', '60px', '30px');
@@ -134,7 +134,7 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                     for ($i = 0; $i < 10; $i++) {
                                         echo '<th rowspan="2" >';
                                         $grouprow = mysqli_fetch_assoc($groupresult);
-                                        for($t=1;$t<=$grouprow['cnt'];$t++){
+                                        for($t=1;$t<=($grouprow['cnt'] ?? 0);$t++){
                                             echo '<form action="" method="post">';
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
                                             echo '<input name="gender" value="' . $gender . '" hidden>';
@@ -240,10 +240,11 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                     </table>
                     <div class="filed_BTN">
                         <div>
-                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                                보기</button>
+                            <?php if ($schedule_round == 'final') { ?>
+                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
+                            <?php } ?>
                             <?php
                             echo '<form action="" method="post">';
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
@@ -254,7 +255,9 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                             echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
                                             echo '</form>';
                             ?>
-                            <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
                         </div>
                     </div>
             </div>

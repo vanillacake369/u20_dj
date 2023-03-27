@@ -384,7 +384,7 @@ if (empty($total_count)) {
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
                                 formaction="/record/field_horizontal_result_word.php">워드 출력</button>
-                            <?}else if ($sports=='longjump' || $sports=='triplejump'){?>
+                            <?}else{?>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"

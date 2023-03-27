@@ -42,7 +42,7 @@ echo '<script>history.go(-1); location.reload();</script>';
 function translate_format(array &$data)
 {
     for ($i = 0; $i < count($data); $i++)
-        $data[$i] = iconv("euc-kr", "utf-8", $data[$i]);
+        $data[$i] = iconv("euc-kr", "utf-8", str_replace(" ", "", $data[$i]));
 }
 
 /**
@@ -69,13 +69,14 @@ function CSVtoMember(string $file_path, string $role)
         case "athlete": // 참가자 관리 - 선수 목록 - 엑셀 출력
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 translate_format($data);
-                translate_sports_word_to_code($data[7]); // 참가 예정 경기
-                translate_sports_word_to_code($data[8]); // 참석 확정 경기
-                $trans_result = translate_gender_to_code($data[4]);      // 성별
+                $sports1 = $data[8]; // 참가 예정 경기
+                $sports2 = $data[9]; // 참석 확정 경기
+                $trans_result = translate_gender_to_code($data[5]);      // 성별
                 //$data[2] 비밀번호, 헤쉬 암호화 필요
+                $name = $data[0] . ' ' . $data[1];
                 $sql = "SELECT COUNT(athlete_id) as id_count FROM list_athlete WHERE athlete_name = ? AND athlete_country = ?";
                 $stmt = $db->prepare($sql);
-                $stmt->bind_param("ss", $data[0], $data[1]);
+                $stmt->bind_param("ss", $name, $data[2]);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $count = mysqli_fetch_assoc($result);
@@ -84,7 +85,7 @@ function CSVtoMember(string $file_path, string $role)
                     $sql = "INSERT INTO `list_athlete` (`athlete_name`, `athlete_country`, `athlete_region`, `athlete_division`, `athlete_gender`, `athlete_birth`, `athlete_age`, `athlete_schedule`, `athlete_attendance`) VALUES (?,?,?,?,?,?,?,?,?)";
                     $stmt = $db->prepare($sql);
                     //$stmt -> bind_param("Foo","CHN","Tian","소속2","m","2021-09-29",23,"/img/profile1","4");
-                    $bind_result = $stmt->bind_param("ssssssiss", ...$data);
+                    $bind_result = $stmt->bind_param("ssssssiss", $name, $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9] );
                     if ($bind_result) {
                         $stmt->execute();
                     } else {
@@ -102,23 +103,21 @@ function CSVtoMember(string $file_path, string $role)
         case "coach": // 참가자 관리 - 코치 목록 - 엑셀 입력
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 translate_format($data);
-                translate_sports_word_to_code($data[8]);        // 참가 예정 경기
-                translate_sports_word_to_code($data[9]);        // 참석 확정 경기
-                $trans_result = translate_gender_to_code($data[5]);             // 성별
-                $data[4] = $data[4] === "헤드 코치" ? 'h' : 's'; // 코치 종류
-
+                $trans_result = translate_gender_to_code($data[6]);             // 성별
+                $data[5] = $data[5] === "헤드 코치" ? 'h' : 's'; // 코치 종류
+                $name = $data[0] . ' ' . $data[1];
                 $sql = "SELECT COUNT(coach_id) as id_count FROM list_coach WHERE coach_name = ? AND coach_country = ?";
                 $stmt = $db->prepare($sql);
-                $stmt->bind_param("ss", $data[0], $data[1]);
+                $stmt->bind_param("ss", $name, $data[2]);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $count = mysqli_fetch_assoc($result);
 
                 if ($count['id_count'] == 0 && $trans_result) {
-                    $sql = "INSERT INTO `list_coach` (`coach_name`, `coach_country`, `coach_region`, `coach_division`, coach_duty, `coach_gender`, `coach_birth`, `coach_age`, `coach_schedule`,`coach_attendance`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+                    $sql = "INSERT INTO `list_coach` (`coach_name`, `coach_country`, `coach_region`, `coach_division`, coach_duty, `coach_gender`, `coach_birth`, `coach_age`) VALUES (?,?,?,?,?,?,?,?)";
                     $stmt = $db->prepare($sql);
                     //$stmt -> bind_param("smith","IDN","Delhi","소속1","감독","m","1999-12-22","25","25");
-                    $bind_result = $stmt->bind_param("sssssssiss", ...$data);
+                    $bind_result = $stmt->bind_param("sssssssi", $name, $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8]);
                     if ($bind_result) {
                         $stmt->execute();
                     } else {
@@ -136,23 +135,21 @@ function CSVtoMember(string $file_path, string $role)
         case "judge": // 참가자 관리 - 임원 목록 - 엑셀 출력
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 translate_format($data);
-                translate_sports_word_to_code($data[7]); // 참가 예정 경기
-                translate_sports_word_to_code($data[8]); // 참석 확정 경기
-                $trans_result = translate_gender_to_code($data[3]);      // 성별
-                $data[10] = hash('sha256', $data[10]);   // 비밀번호
-
+                $trans_result = translate_gender_to_code($data[4]);      // 성별
+                $name = $data[0] . ' ' . $data[1];
+                $password = hash("sha256", $data[9]);
                 $sql = "SELECT COUNT(judge_id) as id_count FROM list_judge WHERE judge_name = ? AND judge_country = ?";
                 $stmt = $db->prepare($sql);
-                $stmt->bind_param("ss", $data[0], $data[1]);
+                $stmt->bind_param("ss", $name, $data[2]);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $count = mysqli_fetch_assoc($result);
-
+                
                 if ($count['id_count'] == 0 && $trans_result) {
-                    $sql = "INSERT INTO `list_judge` (`judge_name`, `judge_country`, `judge_division`, `judge_gender`, `judge_birth`, `judge_age`, `judge_duty`, `judge_schedule`, `judge_attendance`, `judge_account`, `judge_password`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    $sql = "INSERT INTO `list_judge` (`judge_name`, `judge_country`, `judge_division`, `judge_gender`, `judge_birth`, `judge_age`, `judge_duty`, `judge_account`, `judge_password`) VALUES (?,?,?,?,?,?,?,?,?)";
                     $stmt = $db->prepare($sql);
                     //$stmt -> bind_param("James","KOR","Seoul","m","2021-09-29",23,"직무1","2");
-                    $bind_result = $stmt->bind_param("sssssisssss", ...$data);
+                    $bind_result = $stmt->bind_param("sssssisss", $name, $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $password);
                     if ($bind_result) {
                         $stmt->execute();
                     } else {
@@ -170,22 +167,20 @@ function CSVtoMember(string $file_path, string $role)
         case "director": // 참가자 관리 - 임원 목록 - 엑셀 출력
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 translate_format($data);
-                translate_sports_word_to_code($data[7]); // 참가 예정 경기
-                translate_sports_word_to_code($data[8]); // 참석 확정 경기
-                $trans_result = translate_gender_to_code($data[3]);      // 성별
-
+                $trans_result = translate_gender_to_code($data[4]);      // 성별
+                $name = $data[0] . ' ' . $data[1];
                 $sql = "SELECT COUNT(director_id) as id_count FROM list_director WHERE director_name = ? AND director_country = ?";
                 $stmt = $db->prepare($sql);
-                $stmt->bind_param("ss", $data[0], $data[1]);
+                $stmt->bind_param("ss", $name, $data[2]);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $count = mysqli_fetch_assoc($result);
 
                 if ($count['id_count'] == 0 && $trans_result) {
-                    $sql = "INSERT INTO `list_director` (`director_name`, `director_country`, `director_division`, `director_gender`, `director_birth`, `director_age`, `director_duty`, `director_schedule`, `director_attendance`) VALUES (?,?,?,?,?,?,?,?,?)";
+                    $sql = "INSERT INTO `list_director` (`director_name`, `director_country`, `director_division`, `director_gender`, `director_birth`, `director_age`, `director_duty`) VALUES (?,?,?,?,?,?,?)";
                     $stmt = $db->prepare($sql);
                     //$stmt -> bind_param("smith","IDN","Delhi","m", "1999-12-22","25","임원1","1");
-                    $bind_result = $stmt->bind_param("sssssisss", ...$data);
+                    $bind_result = $stmt->bind_param("sssssis", $name, $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
                     if ($bind_result) {
                         $stmt->execute();
                     } else {
@@ -219,6 +214,8 @@ function translate_sports_word_to_code(&$sport_words)
         $sport_ids[] = array_search($word, $sport_dic);
     }
     $sport_words = implode(', ', $sport_ids);
+
+    return $sprts_words;
 }
 
 /**

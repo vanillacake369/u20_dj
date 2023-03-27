@@ -53,9 +53,8 @@ $director_duty = trim($_POST["director_duty"]);
 $director_gender = trim($_POST["director_gender"]);
 $director_birth = trim($birth_day);
 $director_age = trim($_POST["director_age"]);
-$director_sector = trim($sector);
 $director_profile = trim($profile);
-if ($_POST["director_eat"] != "")
+if (isset($_POST["director_eat"]) && $_POST["director_eat"] != "")
 	$director_eat = "y";
 else
 	$director_eat = "n";
@@ -133,6 +132,6 @@ $stmt->bind_param(
 $stmt->execute();
 
 // 로그 생성
-logInsert($db, $_SESSION['Id'], '임원 생성', $director_name . "-" . $director_country . "-" . $director_schedule);
+logInsert($db, $_SESSION['Id'], '임원 생성', $director_name . "-" . $director_country);
 
 echo "<script>alert('등록되었습니다.');window.close();</script>";

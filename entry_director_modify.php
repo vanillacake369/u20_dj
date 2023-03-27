@@ -42,12 +42,12 @@ $birth = explode('-', $row["director_birth"]); //생일 정보 나눔
                 <form action="./action/module/director_update.php" method="post" class="form" enctype="multipart/form-data">
                     <div class="UserProfile_modify coachArea Participant_img ptp_img">
                         <div>
-                            <?php if (!isset($row["director_profile"]) || $row["director_profile"] == "")
+                            <?php if ((!isset($row["director_profile"]) || $row["director_profile"] == "")|| !file_exists("./assets/img/director_img/" . $row["director_profile"]))
                             {
                             ?>
-                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <img src=<?php echo "./assets/img/profile.jpg" ?> alt="avatar" />
                             <?php }else{?>
-                            <img src=<?php echo "./assets/img/athlete_img/" . $row["director_profile"] ?> alt="avatar" />
+                            <img src=<?php echo "./assets/img/director_img/" . $row["director_profile"] ?> alt="avatar" />
                             <?php }?>
                         </div>
                         <div>
@@ -112,8 +112,8 @@ $birth = explode('-', $row["director_birth"]); //생일 정보 나눔
                                     <span>나이</span>
                                     <input type="number" name="director_age" id="director_age" value=<?php echo htmlspecialchars($row["director_age"]) ?> required maxlength="2" oninput="maxLengthCheck(this)"/>
                                 </li>
-                                <li class="row full_width">
-                                    <span class="full_span">이미지 변경</span>
+                                <li class="row">
+                                    <span>이미지 변경</span>
                                     <input type="file" name="main_photo" />
                                 </li>
                                 <li class="row input_row row_item">

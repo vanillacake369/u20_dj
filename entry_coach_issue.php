@@ -39,7 +39,13 @@ if (!$_POST['coach_id']) {
                     <img src="assets/images/pink_front.png" alt="">
                 </div>
                 <div class="AD_front_User">
-                    <img src="<?php echo " ./assets/img/coach_img/" . $row["coach_profile"] ?>" alt="">
+                <?php if ((!isset($row["coach_profile"]) || $row["coach_profile"] == "") || !file_exists("./assets/img/coach_img/" . $row["coach_profile"]))
+                            {
+                            ?>
+                            <img src=<?php echo "./assets/img/profile.jpg" ?> alt="avatar" />
+                            <?php }else{?>
+                            <img src=<?php echo "./assets/img/coach_img/" . $row["coach_profile"] ?> alt="avatar" />
+                            <?php }?>
                 </div>
                 <div class="AD_country">
                     <p><?php echo $row["country_code"] ?></p>
@@ -95,7 +101,13 @@ if (!$_POST['coach_id']) {
                     <img src="assets/images/pink_back.png" alt="">
                 </div>
                 <div class="AD_back_User">
-                    <img src="<?php echo " ./assets/img/coach_img/" . $row["coach_profile"] ?>" alt="">
+                <?php if ((!isset($row["coach_profile"]) || $row["coach_profile"] == "") || !file_exists("./assets/img/coach_img/" . $row["coach_profile"]))
+                            {
+                            ?>
+                            <img src=<?php echo "./assets/img/profile.jpg" ?> alt="avatar" />
+                            <?php }else{?>
+                            <img src=<?php echo "./assets/img/coach_img/" . $row["coach_profile"] ?> alt="avatar" />
+                            <?php }?>
                 </div>
                 <div class="AD_back_name">
                     <!-- 이름 -->

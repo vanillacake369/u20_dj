@@ -86,23 +86,23 @@ if ($row['cnt'] > 0)
 	echo "<script>alert('중복되는 BIB가 있습니다.');history.back();</script>";
 	exit;
 }
-if (isset($_POST["athlete_sb_sports"]) &&  $_POST["athlete_sb_sports"] != "")
+if ((isset($_POST["athlete_sb_sports"]) &&  $_POST["athlete_sb_sports"] != "")&&(isset($_POST["athlete_sb"]) &&  $_POST["athlete_sb"] != "")){
 	$athlete_sb_sports = $_POST["athlete_sb_sports"];
-else
-	$athlete_sb_sports = "";
-if (isset($_POST["athlete_sb"]) &&  $_POST["athlete_sb"] != "")
 	$athlete_sb = $_POST["athlete_sb"];
-else
+}
+else{
 	$athlete_sb = "";
+	$athlete_sb_sports = "";
+}
 
-if (isset($_POST["athlete_pb_sports"]) &&  $_POST["athlete_pb_sports"] != "")
-	$athlete_pb_sports = $_POST["athlete_pb_sports"];
-else
-	$athlete_pb_sports = "";
-if (isset($_POST["athlete_pb"]) &&  $_POST["athlete_pb"] != "")
+if ((isset($_POST["athlete_pb_sports"]) &&  $_POST["athlete_pb_sports"] != "") && (isset($_POST["athlete_pb"]) &&  $_POST["athlete_pb"] != "")){
 	$athlete_pb = $_POST["athlete_pb"];
-else
+	$athlete_pb_sports = $_POST["athlete_pb_sports"];
+}
+else {
 	$athlete_pb = "";
+	$athlete_pb_sports = "";
+}	
 
 $athlete_sb_json = array();
 $athlete_pb_json = array();

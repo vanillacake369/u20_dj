@@ -39,12 +39,12 @@ $row = mysqli_fetch_array($result);
                 <form action="">
                     <div class="UserProfile_modify Participant_img">
                         <div>
-                            <?php if (!isset($row["director_profile"]) || $row["director_profile"] == "")
+                            <?php if ((!isset($row["director_profile"]) || $row["director_profile"] == "") || !file_exists("./assets/img/director_img/" . $row["director_profile"]))
                             {
                             ?>
-                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <img src=<?php echo "./assets/img/profile.jpg" ?> alt="avatar" />
                             <?php }else{?>
-                            <img src=<?php echo "./assets/img/athlete_img/" . $row["director_profile"] ?> alt="avatar" />
+                            <img src=<?php echo "./assets/img/director_img/" . $row["director_profile"] ?> alt="avatar" />
                             <?php }?>
                         </div>
                         <div>

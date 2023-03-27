@@ -13,24 +13,24 @@ if (!authCheck($db, "authEntrysRead")) {
         </script>");
 }
 // 10종,7종 선택 옵션
-unset($sport_dic["decathlon"]);
-unset($sport_dic["heptathlon"]);
-$sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
-$sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
-$sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
-$sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
-$sport_dic["decathlon(400m)"] = "Decathlon(400m)";
-$sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
-$sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
-$sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
-$sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
-$sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
-$sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
-$sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
-$sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
-$sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
-$sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
-$sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
+// unset($sport_dic["decathlon"]);
+// unset($sport_dic["heptathlon"]);
+// $sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
+// $sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
+// $sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
+// $sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
+// $sport_dic["decathlon(400m)"] = "Decathlon(400m)";
+// $sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
+// $sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
+// $sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
+// $sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
+// $sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
+// $sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
+// $sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
+// $sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
+// $sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
+// $sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
+// $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./assets/js/main.js"></script>
@@ -156,9 +156,9 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                             <label><input type="checkbox" name="athlete_sector[]" value="8" id="TIC(Technical Information Center)"><span>기술정보센터(2F)</span></label>
                                     </div>
                                 </li>
-                                <li class="row input_row row_item">
-                                    <span>등번호</span>
-                                    <input type="number" name="athlete_bib" id="athlete_bib" value="" placeholder="등번호를 입력해 주세요" required maxlength="5" oninput="maxLengthCheck(this)" />
+                                <li class="row input_row row_item full_width">
+                                    <span class="full_span">등번호</span>
+                                    <input type="number" class="full_width2" name="athlete_bib" id="athlete_bib" value="" placeholder="등번호를 입력해 주세요" required maxlength="5" oninput="maxLengthCheck(this)" />
                                 </li>
                             </ul>
                         </div>
@@ -319,14 +319,12 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
     </div>
     <script src="/assets/js/main.js?v=8"></script>
     <script>
-    if (document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]')) {
-    const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]');
-    let checkcnt = 0;
-    for (let i = 0; i < allow_access.length; i++) {
-        if (allow_access[i].checked == true)
-            checkcnt++;
-    }
-    for (let i = 0; i < allow_access.length; i++) {
+    if (document.querySelectorAll('.athlete_sector>div>label>input[name="coach_sector[]"]')) {
+
+        const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="coach_sector[]"]');
+        let checkcnt = 0;
+
+        for (let i = 0; i < allow_access.length; i++) {
         allow_access[i].addEventListener("click", () => {
             if (allow_access[i].checked)  {
                 checkcnt++;

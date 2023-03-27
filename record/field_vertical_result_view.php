@@ -265,7 +265,7 @@
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group'AND record_".$result_type."_record>0
-                      ORDER BY record_".$result_type."_record ASC limit 12"
+                      ORDER BY cast(record_".$result_type."_record as int) ASC limit 12"
                             ); //선수별 기록 찾는 쿼리
                             while ($recordrow = mysqli_fetch_array($record)) {
                               echo "<td>";
@@ -312,7 +312,7 @@
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' AND record_" . $result_type . "_record>0
-                      ORDER BY record_" . $result_type . "_record ASC limit 12,12"
+                      ORDER BY cast(record_" . $result_type . "_record as int) ASC limit 12,12"
                     ); //선수별 기록 찾는 쿼리                 
                     while ($recordrow = mysqli_fetch_array($record)) {
                       echo "<td>";

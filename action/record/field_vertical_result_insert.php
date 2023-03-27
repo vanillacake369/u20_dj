@@ -4,7 +4,6 @@ include __DIR__ . "/../module/record_worldrecord.php";
 include __DIR__ . "/../../includes/auth/config.php";
 date_default_timezone_set('Asia/Seoul'); //timezone 설정
 global $db;
-print_r($_POST);
 $athlete_name = $_POST["playername"];
 $round=$_POST['round'];
 $gender = $_POST['gender'];
@@ -25,7 +24,7 @@ $judge=mysqli_fetch_array($judgeresult);
 $res1 = $db->query("SELECT * FROM list_schedule 
 join list_record
 where record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round");
-echo "SELECT * FROM list_schedule join list_record where record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
+// echo "SELECT * FROM list_schedule join list_record where record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round";
 $row1 = mysqli_fetch_array($res1);
 if($name==='decathlon' || $name ==='heptathlon'){
   $sports_code=$row1['sports_code'];
@@ -80,6 +79,7 @@ for ($i = 0; $i < count($high); $i++) {
 }
 
 for ($j = 0; $j < count($athlete_name); $j++) {
+  echo '<br>';
   $tempmemo='';
   $medal = 0;
   $best = 0; //선수별 최고 기록
@@ -87,7 +87,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
   // echo "SELECT athlete_id,athlete_country FROM list_athlete join list_record on record_schedule_id = '$s_id' and athlete_name = '" . $athlete_name[$j] . "' and record_athlete_id=athlete_id".'<br>';
   $row = mysqli_fetch_array($re);
   $highresult=$db->query("SELECT DISTINCT record_".$result_type1."_record 
-      FROM list_record WHERE record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_athlete_id = ".$row['athlete_id']." AND record_".$result_type1."_record > 0 ORDER BY record_".$result_type1."_record ");
+      FROM list_record WHERE record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_athlete_id = ".$row['athlete_id']." AND record_".$result_type1."_record > 0 ORDER BY cast(record_".$result_type1."_record as int)");
   $checkhigh=$db->query("SELECT DISTINCT record_".$result_type1."_record 
       FROM list_record WHERE record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' and record_athlete_id='".$row['athlete_id']."'");
   for ($i = 0; $i < $highcnt; $i++) {
@@ -141,33 +141,33 @@ for ($j = 0; $j < count($athlete_name); $j++) {
         $new = $rerow[0];
       }
       //---------------------------- 신기록 시작
-      if(strpos($memo[$j],'참고 기록')!==TRUE){   
-       if($comprecord[$j] != $best){ //기존 기록과 변경된 기록이 같은 지 비교
-           print_r($row);
-         $memo[$j]=changePbSb($row[0],$best,$name, $gender, $round,$memo[$j],$check_round,'f');
-         if($row1['record_state']==='y'){ //경기가 끝났는 지 판단
-           if($rerow[0]==='y'){
-             $arr=modify_worldrecord($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
-             $tempmemo=change_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round,$arr);
-           }else{
-             $arr2=insert_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
-             $tempmemo=$arr2[0];
-             $new=$arr2[1];
-           }
-         }else{
-           $arr2=insert_worldrecord_dec($athlete_name[$j],$row['athlete_country'],$best,0,$name, $gender, $round,$check_round);
-           $tempmemo=$arr2[0];
-           $new=$arr2[1];
-         }
-       }
-      if( $tempmemo!=''){
-        if(strlen($memo[$j])>=1){
-            $memo[$j]=$memo[$j].",".$tempmemo;
-        }else{
-            $memo[$j]=$tempmemo;
-        }
-      }
-    }
+    //   if(strpos($memo[$j],'참고 기록')!==TRUE){   
+    //    if($comprecord[$j] != $best){ //기존 기록과 변경된 기록이 같은 지 비교
+    //        print_r($row);
+    //      $memo[$j]=changePbSb($row[0],$best,$name, $gender, $round,$memo[$j],$check_round,'f');
+    //      if($row1['record_state']==='y'){ //경기가 끝났는 지 판단
+    //        if($rerow[0]==='y'){
+    //          $arr=modify_worldrecord($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
+    //          $tempmemo=change_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round,$arr);
+    //        }else{
+    //          $arr2=insert_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
+    //          $tempmemo=$arr2[0];
+    //          $new=$arr2[1];
+    //        }
+    //      }else{
+    //        $arr2=insert_worldrecord_dec($athlete_name[$j],$row['athlete_country'],$best,0,$name, $gender, $round,$check_round);
+    //        $tempmemo=$arr2[0];
+    //        $new=$arr2[1];
+    //      }
+    //    }
+    //   if( $tempmemo!=''){
+    //     if(strlen($memo[$j])>=1){
+    //         $memo[$j]=$memo[$j].",".$tempmemo;
+    //     }else{
+    //         $memo[$j]=$tempmemo;
+    //     }
+    //   }
+    // }
       //--------------------------- 신기록 끝
       if($row1['record_state']==='y'){
         $highrow=mysqli_fetch_array($highresult);

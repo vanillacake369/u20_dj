@@ -247,10 +247,10 @@ for ($j = 0; $j < count($athlete_name); $j++) {
             WHERE record_athlete_id ='".$row["athlete_id"] ."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record='$best'"; //최종기록에 등수 및 메달 업데이트
           }
         }
-        // echo $savequery.'<br>';
-        // echo $updatequery.'<br>';
-      mysqli_query($db, $savequery);
-      mysqli_query($db, $updatequery);
+         echo $savequery.'<br>';
+         echo $updatequery.'<br>';
+//      mysqli_query($db, $savequery);
+//      mysqli_query($db, $updatequery);
       break;
     }
     //------- ↑최종기록에 등수 및 메달등 삽입
@@ -282,25 +282,25 @@ for ($j = 0; $j < count($athlete_name); $j++) {
                           VALUES ('$pass','$high[$i]','$memo[$j]','$ruf','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]')";
         }
     }
-    // echo $savequery.'<br>';
-      mysqli_query($db, $savequery);
+     echo $savequery.'<br>';
+//      mysqli_query($db, $savequery);
     }
 }
-if($row1['record_status']!='o'  && $tempstore =='0'){
-  $finishcnt=0;
-  $db->query("UPDATE list_record set record_end='".date("Y-m-d H:i:s")."',record_state='y' where record_sports= '$name' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'"); // 경기 종료 스케쥴에 반영
-  $db->query("UPDATE list_schedule set schedule_memo='".$_POST['bibigo']."' where schedule_sports= '$name' AND schedule_round= '$round' AND schedule_gender='$gender'"); // 경기 종료 스케쥴에 반영
-}
-if($row1['record_state']!='y'){
-    logInsert($db, $_SESSION['Id'], '기록 등록', $name . "-" . $row1['record_gender'] . "-" . $round. "-" .$row1['record_group']);
-}else{
-    logInsert($db, $_SESSION['Id'], '기록 수정', $name . "-" . $row1['record_gender'] . "-" . $round. "-" .$row1['record_group']);
-
-}
+//if($row1['record_status']!='o'  && $tempstore =='0'){
+//  $finishcnt=0;
+//  $db->query("UPDATE list_record set record_end='".date("Y-m-d H:i:s")."',record_state='y' where record_sports= '$name' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'"); // 경기 종료 스케쥴에 반영
+//  $db->query("UPDATE list_schedule set schedule_memo='".$_POST['bibigo']."' where schedule_sports= '$name' AND schedule_round= '$round' AND schedule_gender='$gender'"); // 경기 종료 스케쥴에 반영
+//}
+//if($row1['record_state']!='y'){
+//    logInsert($db, $_SESSION['Id'], '기록 등록', $name . "-" . $row1['record_gender'] . "-" . $round. "-" .$row1['record_group']);
+//}else{
+//    logInsert($db, $_SESSION['Id'], '기록 수정', $name . "-" . $row1['record_gender'] . "-" . $round. "-" .$row1['record_group']);
+//
+//}
 // echo "<script>
 //   opener.parent.location.reload();
-//   window.close(); 
+//   window.close();
 //   </script>";
 // echo "<script>
-//   location.replace('../../record/field_vertical_result_view.php?id=".$s_id."') 
+//   location.replace(document.referrer)
 // </script>";

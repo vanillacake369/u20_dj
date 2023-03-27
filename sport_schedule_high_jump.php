@@ -68,7 +68,7 @@ if ($rows['record_status'] == 'o') {
                     <input name="sports" value="<?=$sports?>" hidden>
                     <input name="gender" value="<?=$gender?>" hidden>
                     <input name="group" value="<?=$schedule_group?>" hidden>
-                    <input name="name" value="<?=$schedule_name?>" hidden>
+                    <!--<input name="name" value="--><?php //=$schedule_name?><!--" hidden>-->
                     <input name="result" value="<?=$schedule_result?>" hidden>
                     <table class="box_table">
                         <colgroup>
@@ -160,7 +160,7 @@ if ($rows['record_status'] == 'o') {
               }
               $result = $db->query("SELECT DISTINCT ".$obj."record_order,record_new,athlete_name,athlete_bib FROM list_record 
                             INNER JOIN list_athlete ON athlete_id = record_athlete_id 
-                            and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'
+                            and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'".$jo."
                             ORDER BY ".$order." ASC , record_".$result_type."_record ASC"
               );
               $cnt = 1;
@@ -296,7 +296,7 @@ if ($rows['record_status'] == 'o') {
                     <?php } ?>
                     <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(한) 출력</button>
                     <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                    <button type="submit" formaction="" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                    <button type="submit" formaction="/action/record/result_execute_vertical_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                     <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
 
                 </div>

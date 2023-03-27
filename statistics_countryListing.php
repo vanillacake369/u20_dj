@@ -155,7 +155,8 @@
                 <div class="searchArea">
                     <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
                         <div class="page_size">
-                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
                                 echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
@@ -193,7 +194,8 @@
                     </colgroup>
                     <thead class="table_head entry_table">
                         <tr>
-                            <th onclick="sortTable(0)"><a href="<?= Get_Sort_Link("medal", $pageValue, $link, $orderValue) ?>">순위</a></th>
+                            <th onclick="sortTable(0)"><a
+                                    href="<?= Get_Sort_Link("medal", $pageValue, $link, $orderValue) ?>">순위</a></th>
                             <th onclick="sortTable(1)">국가</th>
                             <th onclick="sortTable(2)">금
                             </th>
@@ -201,11 +203,12 @@
                             </th>
                             <th onclick="sortTable(4)">동
                             </th>
-                            <th onclick="sortTable(5)"><a href="<?= Get_Sort_Link("medal", $pageValue, $link, $orderValue) ?>">합계</a></th>
+                            <th onclick="sortTable(5)"><a
+                                    href="<?= Get_Sort_Link("medal", $pageValue, $link, $orderValue) ?>">합계</a></th>
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
-                    <?php
+                        <?php
                         $num = 0;
                         while ($row = mysqli_fetch_array($result)) {
 
@@ -276,9 +279,9 @@
                                 $last_key = end($goldWonMatches_f);
                                 foreach ($goldWonMatches_f as $g) {
                                     if ($g == $last_key) {
-                                        echo htmlspecialchars($g);
+                                        echo htmlspecialchars($g) ;
                                     } else {
-                                        echo htmlspecialchars($g) . "<br>";
+                                        echo htmlspecialchars($g) .",". "<br>";
                                     }
                                 }
                             }
@@ -308,7 +311,7 @@
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . "<br>";
+                                        echo htmlspecialchars($g) ."," . "<br>";
                                     }
                                 }
                             }
@@ -338,7 +341,7 @@
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . "<br>";
+                                        echo htmlspecialchars($g) ."," . "<br>";
                                     }
                                 }
                             }
@@ -368,7 +371,7 @@
                                     if ($g == $last_key) {
                                         echo htmlspecialchars($g);
                                     } else {
-                                        echo htmlspecialchars($g) . "<br>";
+                                        echo htmlspecialchars($g)."," . "<br>";
                                     }
                                 }
                             }

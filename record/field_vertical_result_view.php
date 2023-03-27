@@ -68,6 +68,7 @@
             rankcal2()
         }
         $(document).on("click", "button[name='addtempresult']", function() {
+            console.log('11');
             $(".signup_submit").append("<input type='hidden' name=tempstore value='1'>");
         });
         $(document).on("click", "button[name='addresult']", function() {
@@ -102,7 +103,7 @@
                 <p class="UserProfile_tit tit_left_blue">
                     <?=$rows['schedule_name']?>
                 </p>
-                <form action="../action/record/track_normal_result_insert.php" method="post">
+                <form action="#" method="post">
                     <input type="hidden" name="sports" value="<?= $schedule_sports ?>">
                     <input type="hidden" name="gender" value="<?= $gender ?>">
                     <input type="hidden" name="round" value="<?= $schedule_round ?>">
@@ -138,7 +139,6 @@
                                   <input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />
                               </div>
                             </ul>
-                        </div>
                     </div>
                     <div class="Thorw_result">
                         <div class="relay_result">
@@ -241,7 +241,7 @@
                             $obj .
                             "record_order,record_new,athlete_name FROM list_record 
                             INNER JOIN list_athlete ON athlete_id = record_athlete_id 
-                            and record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group'
+                            and record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group'".$jo."
                             ORDER BY ".$order." ASC , record_".$result_type."_record ASC"
                         );
                         $cnt = 1;
@@ -378,14 +378,13 @@
                 </tr>
                         </tbody>
                     </table>
-                    </div>
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
                     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
                         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
                       <div class="modify_Btn input_Btn result_Btn">
                     <?php
                     if ($rows["record_state"] != "y") {
-                      echo '<div class="signup_submit" style="width:49%;>
+                      echo '<div class="signup_submit" style="width:49%">
                                     <button type="submit" class="BTN_Red full_width" name="addtempresult"
                                         formaction="../action/record/field_vertical_result_insert.php">
                                         <span>임시저장</span>

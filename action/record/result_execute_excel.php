@@ -12,11 +12,11 @@ require_once __DIR__ . '/../../includes/auth/config.php';
 require_once __DIR__ . '/../module/dictionary.php';
 global $db, $categoryOfSports_dic;
 
-$sports = $_POST['schedule_sports'];
-$round = $_POST['schedule_round'];
-$gender = $_POST['schedule_gender'];
-$group = $_POST['schedule_group'];
-$schedule_result = $_POST['schedule_result'];
+$sports = $_POST['sports'];
+$round = $_POST['round'];
+$gender = $_POST['gender'];
+$group = $_POST['group'];
+$schedule_result = $_POST['result'];
 $category = $categoryOfSports_dic[$sports];
 switch ($schedule_result) {
     case 'l':
@@ -81,7 +81,7 @@ function pre_work(string &$html, string $category, string $sports)
             $record_result_data = get_data_merge($merge_data, count($rain));
             break;
         case '필드경기':
-            $order = $_POST["order"];
+            $order = $_POST["rain"];
             $rank = $_POST["rank"];
             $player_bib = $_POST["playerbib"];
             $player_name = $_POST["playername"];
@@ -93,7 +93,7 @@ function pre_work(string &$html, string $category, string $sports)
                 $attempt = [];
                 $result_idx = 1;
                 while (($_POST["gameresult" . $result_idx] ?? null) != null) {
-                    $attempt[] = $_POST["gameresult" . $result_idx][0];
+                    $attempt = array_merge($attempt, $_POST["gameresult" . $result_idx]);
                     $result_idx += 1;
                 }
             }

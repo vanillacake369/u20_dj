@@ -300,9 +300,11 @@ if ($rows['record_status'] == 'o') {
                             <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 formaction="award_ceremony.php">시상식 보기</button>
                             <?php } ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(한)
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_vertical_result_pdf.php">PDF(한)
                                 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영)
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_vertical_result_eng_pdf.php">PDF(영)
                                 출력</button>
                             <button type="submit" formaction="/action/record/result_execute_vertical_excel.php"
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>

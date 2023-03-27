@@ -243,6 +243,7 @@ if ($rows['record_status'] == 'o') {
                                 <th style="background: none">국가</th>
                                 <th style="background: none">경기 결과</th>
                                 <th style="background: none">reaction time</th>
+                                <th style="background: none">통과여부</th>
                                 <th style="background: none">비고</th>
                                 <th style="background: none">신기록</th>
                             </tr>
@@ -290,6 +291,9 @@ if ($rows['record_status'] == 'o') {
                                 required="" onkeyup="trackResultForm(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="9"
                                 required="" onkeyup="trackReactionTimeForm(this)" style="float: left; width: auto; padding-right: 5px" />';
+                                // 경기 통과 여부 셀렉션
+                                echo '<td><select class="input_class" name="gamepass[]"><option value="p">통과</option><option value="l">탈락</option><option value="d">실격</option><option value="w">기권</option><option value="n">시작안함</option></select></td>';
+                                // echo '<input placeholder="경기 통과 여부" type="hidden" name="gamepass[]" value="' . $row['record_pass'] . '" maxlength="50" required="" />';
                                 echo '<input type="hidden" name="compresult[]" value="' . ($row['record_' . $result_type . '_record'] ?? null) . '"/></td>';
                                 echo '<td><input placeholder="비고를 입력해주세요" type="text" name="bigo[]" value="' . ($row['record_memo'] ? $row['record_memo'] : null) . '" maxlength="100" /></td>';
                                 if ($rows['schedule_name'] === 'Decathlon' || $rows['schedule_name'] === 'Heptathlon') {
@@ -325,7 +329,6 @@ if ($rows['record_status'] == 'o') {
                                 } else {
                                     echo '<td><input placeholder="선택" type="text" name="newrecord[]"  value="" maxlength="100" ath="' . $row['athlete_name'] . '" sports=' . $sport_code . ' record_round="' . $round . '" and record_gender ="' . $gender . '" and record_group="' . $group . '" record="' . $row['record_' . $result_type . '_record'] . '" readonly/></td>';
                                 }
-                                echo '<input placeholder="경기 통과 여부" type="hidden" name="gamepass[]" value="' . $row['record_pass'] . '" maxlength="50" required="" />';
                                 $count++;
                             }
                             ?>

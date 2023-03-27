@@ -122,7 +122,10 @@ if ($rows['record_status'] == 'o') {
                             <tr id="col2">
                                 <?php if ($cnt1 == 12) {
                   $cnt2 = 0;
-                  $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record FROM list_record where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 limit 12,12");
+                  $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record 
+                  FROM list_record 
+                  where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 
+                  limit 12,12");
                   while ($highrow = mysqli_fetch_array($highresult)) {
                     echo '<th style="background: none"><input placeholder="높이" type="text" name="trial[]"
                                                     class="input_trial" id="trial" value="' .
@@ -193,7 +196,7 @@ if ($rows['record_status'] == 'o') {
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'AND record_".$result_type."_record>0
-                      ORDER BY record_".$result_type."_record ASC limit 12"
+                      ORDER BY cast(record_".$result_type."_record as int) ASC limit 12"
                 ); //선수별 기록 찾는 쿼리
                 while ($recordrow = mysqli_fetch_array($record)) {
                   echo "<td>";
@@ -232,7 +235,7 @@ if ($rows['record_status'] == 'o') {
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND record_" . $result_type . "_record>0
-                      ORDER BY record_" . $result_type . "_record ASC limit 12,12"
+                      ORDER BY cast(record_" . $result_type . "_record as int) ASC limit 12,12"
                     );//선수별 기록 찾는 쿼리
                   while ($recordrow = mysqli_fetch_array($record)) {
                     echo "<td>";
@@ -332,15 +335,6 @@ if ($rows['record_status'] == 'o') {
                     </div>
 
             </div>
-            <!-- <div class="BTNform">
-            <button type="button" class="nextBTN BTN_blue2 defaultBtn"
-                onclick="window.open('/sport_schedule_group_next.php?id=<?= $id ?>', 'window_name', 'width=800, height=750, location=no, status=no, scrollbars=yes')">다음
-                조 편성</button>
-            <form action="" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?= $id ?>">
-                <button type="submit" class="resetBTN BTN_Orange2 defaultBtn" name="">모든 조 초기화</button>
-            </form>
-        </div> -->
             <button type="button" class="changePwBtn defaultBtn">확인</button>
         </div>
         <script src="assets/js/main.js"></script>

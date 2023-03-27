@@ -153,57 +153,48 @@ function input_time() {
         </div>
         <table class="box_table">
             <colgroup>
-                <col style="width: 5%" />
-                <col style="width: 5%" />
-                <col style="width: 14%" />
+                <col style="width: 4%" />
+                <col style="width: 4%" />
+                <col style="width: 7%" />
+                <col style="width: 12%" />
+                <?php
+                            if ($rows['schedule_name'] === 'Decathlon' || $rows['schedule_name'] === 'Heptathlon') {
+                                echo '<col style="width: 12%" />';
+                                echo '<col style="width: 12%" />';
+                                echo '<col style="width: 12%" />';
+                                echo '<col style="width: 12%" />';
+                            } else {
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                                echo '<col style="width: 7%" />';
+                            }
+                            ?>
                 <col style="width: 6%" />
-                <col style="width: 10%" />
-                <col style="width: 9%;">
-                <col style="width: 9%;">
-                <col style="width: 9%;">
-                <?php
-                            if ($check_round != 'y') {
-                                echo '<col style="width: 9%;">';
-                                echo '<col style="width: 9%;">';
-                                echo '<col style="width: 9%;">';
-                            }
-                            ?>
-                <col style="width: 9%;">
-                <col style="width: 9%" />
-                <?php
-                            if ($check_round == 'y') {
-                                echo '<col style="width: 9%;">';
-                                echo '<col style="width: 9%;">';
-                            }
-                            ?>
+                <col style="width: 12%" />
             </colgroup>
             <thead class="result_table entry_table">
                 <tr>
-                    <th rowspan="2">순위</th>
-                    <th rowspan="2">등번호</th>
-                    <th rowspan="2">성명</th>
-                    <th rowspan="2">국가</th>
-                    <th rowspan="2">출생년도</th>
-                    <th rowspan="2">1차시기</th>
-                    <th rowspan="2">2차시기</th>
-                    <th rowspan="2">3차시기</th>
+                    <th>등수</th>
+                    <th>순서</th>
+                    <th>BIB</th>
+                    <th>이름</th>
+                    <th>1차 시기</th>
+                    <th>2차 시기</th>
+                    <th>3차 시기</th>
                     <?php
-                                if ($check_round != 'y') {
-                                    echo '<th rowspan="2">4차시기</th>';
-                                    echo '<th rowspan="2">5차시기</th>';
-                                    echo '<th rowspan="2">6차시기</th>';
+                                if ($rows['schedule_name'] === 'Decathlon' || $rows['schedule_name'] === 'Heptathlon') {
+                                } else {
+                                    echo '<th>4차 시기</th>';
+                                    echo '<th>5차 시기</th>';
+                                    echo '<th>6차 시기</th>';
                                 }
                                 ?>
-                    <th rowspan="2">기록</th>
+                    <th>기록</th>
                     <th>비고</th>
-                    <?php
-                                if ($check_round == 'y') {
-                                    echo '<th rowspan="2">점수</th>';
-                                    echo '<th rowspan="2">종합 점수</th>';
-                                }
-                                ?>
-                </tr>
-                <tr>
                     <th>신기록</th>
                 </tr>
             </thead>
@@ -257,7 +248,7 @@ function input_time() {
                                 while ($row = mysqli_fetch_array($answer)) {
                                     echo '<td>';
                                     echo '<input placeholder="경기 결과" type="text" name="gameresult' . ($i) . '[]" class="input_text" value="' . ($row['record_' . $result_type . '_record'] ?? null) . '"
-                                        maxlength="5" onkeyup="field1Format(this)"
+                                        maxlength="6" onkeyup="field1Format(this)"
                                         style="float: left; width: auto; padding-right: 5px"/>';
                                     echo '</td>';
                                     $i++;
@@ -272,13 +263,13 @@ function input_time() {
                                     echo '<input placeholder="경기 결과" type="text" name="gameresult' .
                                         $j .
                                         '[]" class="input_text" value=""
-                                    maxlength="5" onkeyup="field1Format(this)"';
+                                    maxlength="6" onkeyup="field1Format(this)"';
                                     echo 'style="float: left; width: auto; padding-right: 5px" />';
                                     echo "</td>";
                                 }
                                 echo '<td>';
                                 echo '<input placeholder="경기 결과" id="result" type="text" name="gameresult[]" class="input_text"
-                                    value="' . ($id["record_" . $result_type . "_record"] ?? null) . '" maxlength="5" required="" onkeyup="field1Format(this)"
+                                    value="' . ($id["record_" . $result_type . "_record"] ?? null) . '" maxlength="6" required="" onkeyup="field1Format(this)"
                                     style="float: left; width: auto; padding-right: 5px" />';
                                 echo '<input type="hidden" name="compresult[]" value="' . ($id["record_" . $result_type . "_record"] ?? null) . '"/>';
                                 echo '</td>';
@@ -364,7 +355,7 @@ function input_time() {
 </div>
 </div>
 </div>
-<script src="../assets/js/main.js?ver=7"></script>
+<!-- <script src="../assets/js/main.js?ver=7"></script> -->
 </body>
 
 </html>

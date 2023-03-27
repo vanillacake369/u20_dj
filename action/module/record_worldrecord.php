@@ -299,67 +299,118 @@ function changePbSb($athlete_id, $record, $sport_code, $gender, $round, $memo, $
     $pb = json_decode($row[0], true);
     $sb = json_decode($row[1], true);
 
-    foreach ($pb as $sports => $myrecord) {
-        if ($sports == $sport_code) {
-            if ($type == 'f') {
-                if (changeresult($myrecord) <= changeresult($record)) {
-                    $pb[$sports] = $record;
-                    if (strpos($memo, 'pb') === false) {
-                        if (strlen($memo) >= 1) {
-                            $memo = $memo . ', pb';
-                        } else {
-                            $memo = 'pb';
+    if ($pb === null) {
+        // 선수의 athlete_pb에 기록이 아에 없는 경우
+        // 새로 json을 만들어 update. 무조건 pb 갱신이니 memo에 작성
+        if (strlen($memo) >= 1) {
+            // 메모에 무엇인가 있다면 추가
+            $memo = $memo . ', pb';
+        } else {
+            // 없다면 생성
+            $memo = 'pb';
+        }
+        // 신규 pb_json 생성
+        $pb = array($sport_code => $record);
+    } else if (in_array($sport_code, array_keys($pb))) {
+        // 선수 athlete_pb에 해당 종목이 있다면 해당 종목을 찾아서 방금 새운 기록과 비교하여 update 유/무 판단
+        foreach ($pb as $sports => $myrecord) {
+            if ($sports == $sport_code) {
+                if ($type == 'f') {
+                    if (changeresult($myrecord) <= changeresult($record)) {
+                        $pb[$sports] = $record;
+                        if (strpos($memo, 'pb') === false) {
+                            if (strlen($memo) >= 1) {
+                                $memo = $memo . ', pb';
+                            } else {
+                                $memo = 'pb';
+                            }
                         }
+                    } else if (strpos($memo, 'pb') !== false) {
+                        str_replace("pb", "", $memo);
                     }
-                } else if (strpos($memo, 'pb') !== false) {
-                    str_replace("pb", "", $memo);
-                }
-            } else {
-                if (changeresult($myrecord) >= changeresult($record)) {
-                    $pb[$sports] = $record;
-                    if (strpos($memo, 'pb') === false) {
-                        if (strlen($memo) >= 1) {
-                            $memo = $memo . ', pb';
-                        } else {
-                            $memo = 'pb';
+                } else {
+                    if (changeresult($myrecord) >= changeresult($record)) {
+                        $pb[$sports] = $record;
+                        if (strpos($memo, 'pb') === false) {
+                            if (strlen($memo) >= 1) {
+                                $memo = $memo . ', pb';
+                            } else {
+                                $memo = 'pb';
+                            }
                         }
+                    } else if (strpos($memo, 'pb') !== false) {
+                        str_replace("pb", "", $memo);
                     }
-                } else if (strpos($memo, 'pb') !== false) {
-                    str_replace("pb", "", $memo);
                 }
             }
         }
+    } else if (!in_array($sport_code, array_keys($pb))) {
+        // json 형식이나, 선수의 athlete_pb에 기록을 새운 종목이 없는 경우 -> 기록을 추가하여 생성
+        // 기록이 아에 없는 경우와 마찬가지로 memo에 무조건 pb 생성
+        $pb[$sport_code] = $record;
+        if (strlen($memo) >= 1) {
+            // 메모에 무엇인가 있다면 추가
+            $memo = $memo . ', pb';
+        } else {
+            // 없다면 생성
+            $memo = 'pb';
+        }
     }
 
-    foreach ($sb as $sports => $myrecord) {
-        if ($sports == $sport_code) {
-            if ($type == 'f') {
-                if (changeresult($myrecord) <= changeresult($record)) {
-                    $sb[$sports] = $record;
-                    if (strpos($memo, 'sb') === false) {
-                        if (strlen($memo) >= 1) {
-                            $memo = $memo . ', sb';
-                        } else {
-                            $memo = 'sb';
+    if ($sb === null) {
+        // 선수의 athlete_sb에 기록이 아에 없는 경우
+        // 새로 json을 만들어 update. 무조건 sb 갱신이니 memo에 작성
+        if (strlen($memo) >= 1) {
+            // 메모에 무엇인가 있다면 추가
+            $memo = $memo . ', sb';
+        } else {
+            // 없다면 생성
+            $memo = 'sb';
+        }
+        $sb = array($sport_code=>$record);
+    } else if (in_array($sport_code, array_keys($sb))) {
+        // 선수 athlete_sb에 해당 종목이 있다면 해당 종목을 찾아서 방금 새운 기록과 비교하여 update 유/무 판단
+        foreach ($sb as $sports => $myrecord) {
+            if ($sports == $sport_code) {
+                if ($type == 'f') {
+                    if (changeresult($myrecord) <= changeresult($record)) {
+                        $sb[$sports] = $record;
+                        if (strpos($memo, 'sb') === false) {
+                            if (strlen($memo) >= 1) {
+                                $memo = $memo . ', sb';
+                            } else {
+                                $memo = 'sb';
+                            }
                         }
+                    } else if (strpos($memo, 'sb') !== false) {
+                        str_replace("sb", "", $memo);
                     }
-                } else if (strpos($memo, 'sb') !== false) {
-                    str_replace("sb", "", $memo);
-                }
-            } else {
-                if (changeresult($myrecord) >= changeresult($record)) {
-                    $sb[$sports] = $record;
-                    if (strpos($memo, 'sb') === false) {
-                        if (strlen($memo) >= 1) {
-                            $memo = $memo . ', sb';
-                        } else {
-                            $memo = 'sb';
+                } else {
+                    if (changeresult($myrecord) >= changeresult($record)) {
+                        $sb[$sports] = $record;
+                        if (strpos($memo, 'sb') === false) {
+                            if (strlen($memo) >= 1) {
+                                $memo = $memo . ', sb';
+                            } else {
+                                $memo = 'sb';
+                            }
                         }
+                    } else if (strpos($memo, 'sb') !== false) {
+                        str_replace("sb", "", $memo);
                     }
-                } else if (strpos($memo, 'sb') !== false) {
-                    str_replace("sb", "", $memo);
                 }
             }
+        }
+    } else if (!in_array($sport_code, array_keys($sb))) {
+        // json 형식이나, 선수의 athlete_pb에 기록을 새운 종목이 없는 경우 -> 기록을 추가하여 생성
+        // 기록이 아에 없는 경우와 마찬가지로 memo에 무조건 pb 생성
+        $sb[$sport_code] = $record;
+        if (strlen($memo) >= 1) {
+            // 메모에 무엇인가 있다면 추가
+            $memo = $memo . ', sb';
+        } else {
+            // 없다면 생성
+            $memo = 'sb';
         }
     }
 

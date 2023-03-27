@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
     <script src="../assets/fontawesome/js/all.min.js"></script>
     <script>
-        window.print()
+    window.print()
     </script>
     <!--Data Tables-->
     <title>U20</title>
@@ -27,12 +27,14 @@
             <?php
             require_once __DIR__ . "/../action/module/record_worldrecord.php";
             require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결 
-            $schedule_sports=$POST['sports'];
-            $schedule_round=$POST['round'];
-            $gender=$POST['gender'];
-            $group=$POST['group'];
+            $sports=$_POST['sports'];
+            $round=$_POST['round'];
+            $gender=$_POST['gender'];
+            $group=$_POST['group'];
 
-            $sql = "SELECT DISTINCT * FROM list_record join list_schedule where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
+            $sql = "SELECT DISTINCT * FROM list_record join list_schedule 
+                where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' 
+                and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
             $result = $db->query($sql);
             $row = mysqli_fetch_assoc($result);
             if ($row['schedule_sports'] == 'decathlon' || $row['schedule_sports'] == 'heptathlon') {

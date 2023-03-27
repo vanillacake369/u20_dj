@@ -14,7 +14,7 @@ if (!authCheck($db, "authSchedulesRead")) {
 $sports=$_GET['sports'];
 $gender=$_GET['gender'];
 $round=$_GET['round'];
-$sql = "SELECT DISTINCT * FROM list_record join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
+$sql = "SELECT DISTINCT * FROM list_record join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender and if(record_state='y',record_live_result>0,'1')";
 $result = $db->query($sql);
 $rows = mysqli_fetch_assoc($result);
 $schedule_sports = $rows['schedule_sports'];

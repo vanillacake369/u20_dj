@@ -1,0 +1,221 @@
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 100;
+  src: local("Noto Sans Light"), local("NotoSans-Light"),
+    url(./fonts/NotoSans-Light.eot);
+  src: url(./fonts/NotoSans-Light.eot?#iefix) format("embedded-opentype"),
+    url(./fonts/NotoSans-Light.woff2) format("woff2"),
+    url(./fonts/NotoSans-Light.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Noto Sans Regular"), local("NotoSans-Regular"),
+    url(./fonts/NotoSans-Regular.eot);
+  src: url(./fonts/NotoSans-Regular.eot?#iefix) format("embedded-opentype"),
+    url(./fonts/NotoSans-Regular.woff2) format("woff2"),
+    url(./fonts/NotoSans-Regular.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Noto Sans Medium"), local("NotoSans-Medium"),
+    url(./fonts/NotoSans-Medium.eot);
+  src: url(./fonts/NotoSans-Medium.eot?#iefix) format("embedded-opentype"),
+    url(./fonts/NotoSans-Medium.woff2) format("woff2"),
+    url(./fonts/NotoSans-Medium.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Noto Sans Bold"), local("NotoSans-Bold"),
+    url(./fonts/NotoSans-Bold.eot);
+  src: url(./fonts/NotoSans-Bold.eot?#iefix) format("embedded-opentype"),
+    url(./fonts/NotoSans-Bold.woff2) format("woff2"),
+    url(./fonts/NotoSans-Bold.woff) format("woff");
+}
+
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body {
+  /* min-height: 120vh !important; */
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif !important;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  width: 21cm;
+  min-height: 29.7cm;
+  padding: 1.5cm 1cm 2cm 1cm;
+  border: 2px solid salmon;
+  text-align: center;
+}
+
+.logo_img {
+  height: 40px;
+  width: auto;
+  float: right;
+}
+
+.top {
+  height: 50px;
+  border-bottom: 1px solid #000;
+}
+
+.middle {
+  text-align: left;
+  width: 100%;
+}
+
+.exp {
+  font-size: 12px;
+  width: 330px;
+  margin: 4px 0px 4px 0px;
+}
+
+.total {
+  width: 18cm;
+  bottom: 80px;
+  left: 1.5cm;
+}
+
+.total > p {
+  text-align: left;
+}
+
+table.team_table {
+  /*border: 1px solid #ccc;*/
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+  border-top: 2px solid #000;
+}
+
+table.team_table caption,
+table.modal_table caption {
+  display: none;
+}
+
+table.team_table tr {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 0.35em;
+}
+
+table.team_table th,
+table.team_table td {
+  padding: 0.825em;
+  text-align: center;
+}
+
+table.team_table tbody tr.border_bg,
+table.modal_table tr.border_bg {
+  background: #fff;
+}
+
+table.team_table th {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #2f2f2f;
+  white-space: nowrap;
+}
+
+table.team_table td {
+  font-size: 12px;
+  position: relative;
+  /* white-space: nowrap; */
+}
+
+table.team_table > tbody > tr:hover {
+  background-color: #f9d8e6;
+  /*#bbdefd;*/
+  color: #333;
+}
+
+/*Modified by KJLEE at 2018.03.27*/
+table.team_table td[data-th]::before {
+  display: none;
+  text-transform: uppercase;
+  content: attr(data-th);
+}
+
+table.team_table tr.tb_title_top01 th,
+table.team_table tr.tb_title_top02 td {
+  text-align: left;
+  padding-left: 18px;
+  background: #1565c0;
+  color: #fff;
+}
+
+table.team_table tbody tr.tb_title_top02 td.sm_td_title {
+  display: none;
+}
+
+table.team_table.center {
+  width: 70%;
+  border: 1px solid #ddd;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+table.tab1 th {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+table.tab1 td {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+table.tab2 th {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+table.tab2 td {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* overflow: hidden; */
+  }
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    height: 297mm;
+    background: initial;
+    page-break-after: avoid;
+  }
+}

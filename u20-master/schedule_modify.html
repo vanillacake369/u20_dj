@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/xeicon.min.css">
+  <link rel="stylesheet" href="/assets/css/swiper.min.css">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style_dh.css">
+  <title>일정 수정</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="athlete">
+      <div class="profile_logo">
+        <img src="/assets/images/logo.png">
+      </div>
+      <div class="UserProfile">
+        <p class="UserProfile_tit tit_left_blue">
+          일정 수정
+        </p>
+        <form action="">
+          <div class="UserProfile_modify UserProfile_input">
+            <div>
+              <ul class="UserDesc">
+                <li class="row input_row Desc_item">
+                  <span>경기 종목 코드</span>
+                  <input type="text" placeholder="경기 종목 코드를 입력해주세요" value="shotput">
+                </li>
+                <li class="row input_row Desc_item">
+                  <span>경기 이름</span>
+                  <input type="text" placeholder="경기 이름을 입력해주세요" value="투포환">
+                </li>
+                <li class="row input_row Desc_item input_width">
+                  <span>성별</span>
+                  <select title="성별" name="gender">
+                    <option value="non" hidden="">경기 성별</option>
+                    <option value="P">혼성</option>
+                    <option value="Man" selected>남성</option>
+                    <option value="Woman">여성</option>
+                  </select>
+                </li>
+                <li class="row input_row Desc_item">
+                  <span>경기 라운드</span>
+                  <input type="text" placeholder="라운드을 입력하세요" value="결승">
+                </li>
+                <li class="row input_row Desc_item">
+                  <span>경기 장소</span>
+                  <input type="text" placeholder="장소을 입력하세요" value="B필드">
+                </li>
+                <li class="row input_row Desc_item">
+                  <span>경기 시간</span>
+                  <div>
+                    <input type="number" value="10" placeholder="시을 입력하세요">
+                    <span>:</span>
+                    <input type="number" value="15" placeholder="분을 입력하세요">
+                  </div>
+                </li>
+                <li class="row input_row Desc_item input_width">
+                  <span>성별</span>
+                  <select title="성별" name="game_time">
+                    <option value="non" hidden="">경기 진행 상태</option>
+                    <option value="n">준비</option>
+                    <option value="c">취소됨</option>
+                    <option value="o" selected>경기중</option>
+                    <option value="y">마감</option>
+                  </select>
+                </li>
+                <li class="row input_row Desc_item">
+                  <span>경기날짜</span>
+                  <input type="date" placeholder="생년월일을 찾아주세요." value="2023-06-07">
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+        <div class="modify_Btn input_Btn Participant_Btn">
+          <button type="button">등록하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

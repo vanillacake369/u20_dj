@@ -1,0 +1,41 @@
+wind: -1.1m
+400m
+rane6 44.28
+rane5 45.44
+rane2 45.54
+rane1 45.71
+rane3 45.73
+rane8 45.86
+rane9 45.89
+rane4 46.21
+rane7 46.69
+800m
+rane6 43.64
+rane9 43.87
+rane8 43.95
+rane5 44.54
+rane2 44.70
+rane3 45.19
+rane1 45.28
+rane4 44.85
+rane7 44.49
+1200m
+rane6 43.82
+rane8 44.79
+rane5 44.67
+rane3 43.91
+rane9 46.16
+rane1 45.20
+rane2 46.13
+rane4 45.92
+rane7 46.08
+1600m
+rane6 44.43
+rane8 43.98
+rane5 44.07
+rane3 44.68
+rane9 44.11
+rane1 43.95
+rane2 44.98
+rane4 44.65
+rane7 45.25

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/xeicon.min.css">
+  <link rel="stylesheet" href="/assets/css/swiper.min.css">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style_dh.css">
+  <title>선수 정보 수정</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="athlete">
+      <div class="profile_logo">
+        <img src="/assets/images/logo.png">
+      </div>
+      <div class="UserProfile">
+        <p class="UserProfile_tit tit_left_blue">
+          참가자 정보
+        </p>
+        <form action="">
+          <div class="UserProfile_modify Participant_img ptp_img">
+            <div>
+              <img src="/assets/images/son.png">
+            </div>
+            <div>
+              <ul class="UserDesc Participant_list">
+                <li class="row">
+                  <span>이름</span>
+                  <input type="text" value="Son" placeholder="이름을 입력하세요">
+                </li>
+                <li class="row">
+                  <span>성</span>
+                  <input type="text" value="Son" placeholder="성을 입력하세요">
+                </li>
+                <li class="row modify_input">
+                  <span>국가</span>
+                  <select title="국가" name="athleteCountry">
+                    <option value="non" hidden>국가 선택</option>
+                    <option value="IRQ">이라크</option>
+                    <option value="KOR">대한민국</option>
+                    <option value="JPN">일본</option>
+                    <option value="ARE">아랍에미리트</option>
+                  </select>
+                </li>
+                <li class="row">
+                  <span>지역</span>
+                  <input type="text" value="Seoul" placeholder="지역을 입력하세요">
+                </li>
+                <li class="row">
+                  <span>소속</span>
+                  <input type="text" value="Korea" placeholder="소속을 입력하세요">
+                </li>
+                <li class="row modify_input">
+                  <span>성별</span>
+                  <select title="성별" name="gender">
+                    <option value="Man">남성</option>
+                    <option value="Woman">여성</option>
+                  </select>
+                </li>
+                <li class="row">
+                  <span>생년월일</span>
+                  <input type="date" value="1998-04-21">
+                </li>
+                <li class="row">
+                  <span>이미지 변경</span>
+                  <input type="file" name="athlete_imgFile">
+                </li>
+                <li class="row">
+                  <span>최고기록</span>
+                  <input type="text" value="25" placeholder="최고기록를 입력하세요">
+                </li>
+                <li class="row">
+                  <span>가장 최근기록</span>
+                  <input type="text" value="25" placeholder="최근기록를 입력하세요">
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="modifyform">
+            <div class="modify_check">
+              <div class="modify_enter modify_tit_color">
+                <p class="tit_left_red">참석 경기</p>
+                <ul class="modify_checkList">
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>10000m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>100m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>100m 허들</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>110m 허들</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>1500m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>200m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>3000m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>3000m 장애물</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>200m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>400m 허들</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>4x100m 릴레이</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>4x400m 릴레이</span>
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>5000m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>800m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>10종경기(남)</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>원반던지기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>해머던지기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>7종경기(여)</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>높이뛰기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>창던지기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>멀리뛰기</span>
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>장대 높이뛰기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>경보</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>투포환</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>세단뛰기</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modify_check">
+              <div class="modify_enter">
+                <p class="tit_left_green">참가 경기</p>
+                <ul class="modify_checkList">
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>10000m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>100m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>100m 허들</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>110m 허들</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>1500m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>200m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>3000m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>3000m 장애물</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>200m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>400m 허들</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>4x100m 릴레이</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>4x400m 릴레이</span>
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>5000m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>800m</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>10종경기(남)</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>원반던지기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>해머던지기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>7종경기(여)</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>높이뛰기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>창던지기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>멀리뛰기</span>
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>장대 높이뛰기</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>경보</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>투포환</span>
+                    </label>
+                  </li>
+                  <li>
+                    <label>
+                      <input type="checkbox">
+                      <span>세단뛰기</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modify_Btn input_Btn Participant_Btn">
+        <button class="BTN_blue2" type="button">수정하기</button>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

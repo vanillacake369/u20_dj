@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
     <script src="../assets/fontawesome/js/all.min.js"></script>
     <script>
-        window.print()
+    window.print()
     </script>
     <!--Data Tables-->
     <title>U20</title>
@@ -26,40 +26,36 @@
             <p style="margin:10px 0px 0px 0px; text-align:center;">RESULT</p>
             <?php
             require_once __DIR__ . "/../action/module/record_worldrecord.php";
-            require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결 
-            $sports=$_POST['sports'];
-            $round=$_POST['round'];
-            $gender=$_POST['gender'];
-            $group=$_POST['group'];
-            //B:데이터베이스 연결
-            $sql = "SELECT DISTINCT * FROM list_record join list_schedule where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' and record_sports=schedule_sports and record_round=schedule_round and record_gender =schedule_gender";
-            $result=$db->query($sql);
+            require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결
+            $sports = $_POST['sports'];
+            $round = $_POST['round'];
+            $gender = $_POST['gender'];
+            $group = $_POST['group'];
+            $sql = "select 
+                            *,athlete_bib, athlete_country, athlete_birth, record_end, record_wind
+                            from list_schedule JOIN list_athlete  JOIN list_record
+                            where record_gender = schedule_gender AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
+
+            $result = $db->query($sql);
             $row = mysqli_fetch_assoc($result);
-            if ($row['schedule_sports'] == 'decathlon' || $row['schedule_sports'] == 'heptathlon') {
-                $check_round = 'y';
-            } else {
-                $check_round = 'n';
-            }
             ?>
             <div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">SPORTS: ' . $row['schedule_name'] . '</p>';
-                    echo '<p style="font-size:12px; width:330px">LOCATION: ' . $row['schedule_location'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Event: ' . $_POST['name'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Location: ' . $row['schedule_location'] . '</p>';
                     ?>
                 </div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">GENDER: ';
-                    echo $row['schedule_gender'] == 'm' ? 'MEN' : ($row['schedule_gender'] == 'f' ? 'WOMEN' : 'MIXED');
-                    echo '</p>';
-                    echo '<p style="font-size:12px; width:330px">DATE: ' . $row['schedule_date'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Gender: ' . $row['schedule_gender'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Date: ' . $row['schedule_date'] . '</p>';
                     ?>
                 </div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">ROUND: ' . $row['schedule_round'] . '</p>';
-                    echo '<p style="font-size:12px; width:330px">WIND: ' . $row['record_wind'] . 'm/s</p>';
+                    echo '<p style="font-size:12px; width:330px">Round: ' . $_POST['round'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Wind: ' . $row['record_wind'] . '</p>';
                     ?>
                 </div>
             </div>
@@ -77,32 +73,39 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>Rank</th>
-                            <th>Num</th>
-                            <th>Name</th>
-                            <th>Country</th>
-                            <th>Rain</th>
-                            <th>Record</th>
-                            <th>Note</th>
-                            <th>New Record</th>
+                            <th>PLACE</th>
+                            <th>BIB</th>
+                            <th>NAME</th>
+                            <th>COUNTRY</th>
+                            <th>LANE</th>
+                            <th>RESULT</th>
+                            <th>NOTE</th>
+                            <th>RECORDS</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $j = 0;
+                        $v = 0;
                         $b = 3;
                         for ($i = 0; $i < count($_POST['rain']); $i++) {
                             echo '<tr>';
                             echo '<td>' . $_POST['rank'][$i] . '</td>';
+                            // echo '<td>';
+                            // if ($b = 3) {
+                            //     echo $row['athlete_bib'] . '<br>';
+                            // }
+                            // for ($a = 0; $a < $b; $a++) {
+                            //     $row = mysqli_fetch_array($result);
+                            //     echo $row['athlete_bib'] . '<br>';
+                            // }
+                            // $b = 4;
+                            // echo '</td>';
+                            $s = $v + 4;
                             echo '<td>';
-                            if ($b = 3) {
-                                echo $row['athlete_bib'] . '<br>';
+                            for ($d; $v < $s; $v++) {
+                                echo $_POST['playerbib'][$v] . '<br>';
                             }
-                            for ($a = 0; $a < $b; $a++) {
-                                $row = mysqli_fetch_array($result);
-                                echo $row['athlete_bib'] . '<br>';
-                            }
-                            $b = 4;
                             echo '</td>';
                             $k = $j + 4;
                             echo '<td>';
@@ -126,11 +129,12 @@
             </div>
         </div>
         <div>
-            <p style="margin:0px 30px 0px 0px; text-align:right;">Refree Signature :
-                ______________________</p>
+            <p style="margin:0px 30px 0px 0px; text-align:right;">referee signature :
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(signature)
+            </p>
         </div>
         <div class="total">
-            <p>Overall Record</p>
+            <p>TOP LIST</p>
             <div class="table_area">
                 <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab2">
                     <colgroup>
@@ -143,16 +147,21 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>Division</th>
-                            <th>Record</th>
-                            <th>Wind</th>
-                            <th>Country</th>
-                            <th>Affiliation</th>
-                            <th>Date</th>
+                            <th>RECORDS</th>
+                            <th>RESULT</th>
+                            <th>WIND</th>
+                            <th>NAME</th>
+                            <th>COUNTRY</th>
+                            <th>DATE</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
+                        if ($row['schedule_sports'] == 'decathlon' || $row['schedule_sports'] == 'heptathlon') {
+                            $check_round = 'y';
+                        } else {
+                            $check_round = 'n';
+                        }
                         $world = check_worldrecord($sports, $gender, $round, $check_round, $row['record_end']);
                         foreach ($world as $k) {
                             echo '<tr>';

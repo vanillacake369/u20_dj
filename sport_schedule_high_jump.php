@@ -287,15 +287,19 @@ if ($rows['record_status'] == 'o') {
               ?>
                         </tbody>
                     </table>
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
-                            <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
-                        </div>
+            <div class="filed_BTN">
+                <div>
+                    <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                        보기</button>
+                    <?php if ($schedule_round == 'final') { ?>
+                        <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
+                    <?php } ?>
+                    <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(한) 출력</button>
+                    <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
+                    <button type="submit" formaction="" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                    <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
+
+                </div>
                         
                         <div>
                             <?php

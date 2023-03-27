@@ -174,7 +174,7 @@ function islane($schedule_sports, $what)
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                         else echo 'normal'; ?>_result_eng_pdf.php">PDF(영)
                                 출력</button>
-                            <button type="submit" formaction="/action/record/result_execute_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" formaction="/action/record/result_execute_track_field_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                             else echo 'normal'; ?>_result_word.php">워드
                                 출력</button>
@@ -377,7 +377,7 @@ function islane($schedule_sports, $what)
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                             else echo 'normal'; ?>_result_eng_pdf.php">PDF(영)
                                     출력</button>
-                                <button type="submit" formaction="/action/record/result_execute_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                                <button type="submit" formaction="/action/record/result_execute_track_field_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                                 <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/track_<?php if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR') echo 'relay';
                                                                                                                                 else echo 'normal'; ?>_result_word.php">워드
                                     출력</button>

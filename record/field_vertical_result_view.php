@@ -34,8 +34,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=1" />
+    <link rel="stylesheet" href="../assets/css/reset.css" />
     <script src="../assets/fontawesome/js/all.min.js"></script>
     <!--Data Tables-->
     <script type="text/javascript" src="../assets/js/jquery-1.12.4.min.js"></script>
@@ -226,7 +226,6 @@
                             <tr class="filed2_bottom">
                             </tr>
                         </thead>
-                        <tbody class="table_tbody entry_table">
                             <?php
                         if ($rows["record_state"] === "y") {
                           $order = "record_".$result_type."_result";
@@ -247,6 +246,7 @@
                         );
                         $cnt = 1;
                         while ($row = mysqli_fetch_array($result)) {
+                            echo '<tbody class="high_jump_table field3_hover entry_table">';
                           echo '<tr id=col1 class="col1_' . $cnt . '">';
                           echo '<td rowspan="2"><input type="number" name="rank[]" class="input_text" id="rank" value="' .
                             ($row["record_".$result_type."_result"] ?? null) .
@@ -274,8 +274,7 @@
                                 '[]" class="input_text" value="' .
                                 $recordrow["record_trial"] .
                                 '"
-                              maxlength="3" onkeyup="highFormat(this)"
-                              style="float: left; width: auto; padding-right: 5px" />';
+                              maxlength="3" onkeyup="highFormat(this)" />';
                     echo "</td>";
                     $cnt3++;
                   }
@@ -285,8 +284,7 @@
                     echo '<input placeholder="" type="text" name="gameresult' .
                       $a .
                       '[]" class="input_text" value=""
-                                      maxlength="3" onkeyup="highFormat(this)"
-                                      style="float: left; width: auto; padding-right: 5px" />';
+                                      maxlength="3" onkeyup="highFormat(this)"/>';
                     echo "</td>";
                   }
 
@@ -295,8 +293,7 @@
                   echo '<input placeholder="결과" id="result" type="text" name="gameresult[]" class="input_text"
                                     value="' .
                     ($row["record_" . $result_type . "_record"] ?? null) .
-                    '" maxlength="5" required=""
-                                    style="float: left; width: auto; padding-right: 5px" />';
+                    '" maxlength="5" required="" />';
                   echo "</td>";
                   echo '<input type="hidden" name="compresult[]" value="' . ($row["record_" . $result_type . "_record"] ?? null) . '"/>';
                   echo '<td><input placeholder="비고" type="text" name="bigo[]" class="input_text" value="' .
@@ -321,8 +318,7 @@
                         '[]" class="input_text" value="' .
                         $recordrow["record_trial"] .
                         '"
-                              maxlength="3" onkeyup="highFormat(this)"
-                              style="float: left; width: auto; padding-right: 5px" />';
+                              maxlength="3" onkeyup="highFormat(this)" />';
                       echo "</td>";
                       $cnt3++;
                     }
@@ -335,8 +331,7 @@
                     echo '<input placeholder="" type="text" name="gameresult' .
                       $a .
                       '[]" class="input_text" value=""
-                                        maxlength="3" onkeyup="highFormat(this)"
-                                        style="float: left; width: auto; padding-right: 5px" />';
+                                        maxlength="3" onkeyup="highFormat(this)" />';
                     echo "</td>";
                   }
                   if ($rows['record_sports'] === 'decathlon' || $rows['record_sports'] === 'heptathlon') {
@@ -375,9 +370,6 @@
                   $cnt++;
                 }
                 ?>
-                            </tr>
-                            </tr>
-                        </tbody>
                     </table>
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
                     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"

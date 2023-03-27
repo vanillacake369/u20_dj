@@ -1109,6 +1109,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   display: flex !important;
   justify-content: space-between;
   padding-top: 2rem;
+  gap: 20px;
 }
 
 .input_Btn {
@@ -3581,4 +3582,18 @@ input::-webkit-inner-spin-button {
     width: 75%;
   }
 
+}
+
+
+.signup_submit{
+  width:100%
+}
+
+.modify_Btn>.signup_submit>button {
+  height: 50px;
+  width: 100%;
+  color: var(--colorWhite);
+  border: 0;
+  cursor: pointer;
+  border-radius: 10px;
 }

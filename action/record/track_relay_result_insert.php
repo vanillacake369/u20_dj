@@ -58,6 +58,15 @@ $db->query("update list_record set record_start ='" . $starttime . "' where reco
                     $tempmemo='';
                     $new='n';
                     // 신기록 계산
+                    if($memo[$in]=='DNS'){
+                        $pass[$in]='n';
+                    }else if($memo[$in]=='DNF'){
+                        $pass[$in]='n';
+                    }else if($memo[$in]=='DQ'){
+                        $pass[$in]='d';
+                    }else{
+                        $pass[$in]='p';
+                    }
                     if($row1['record_state']==='y'){
                         $newre=$db->query("select record_new from list_record where record_athlete_id ='".$row['athlete_id']."' AND record_sports= '$sports' AND record_round= '$round' AND record_group='$heat' and record_gender='$gender'");
                         $rerow=mysqli_fetch_array($newre);

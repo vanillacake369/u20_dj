@@ -66,18 +66,18 @@
             <div class="table_area" style="margin-bottom: 20px;">
                 <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab1">
                     <colgroup>
-                        <col style="width: 5%" />
-                        <col style="width: 5%" />
-                        <col style="width: 13%" />
                         <col style="width: 7%" />
-                        <col style="width: 10%" />
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
+                        <col style="width: 7%" />
+                        <col style="width: 11%" />
+                        <col style="width: 9%" />
+                        <col style="width: 8%" />
+                        <col style="width: 7%;">
+                        <col style="width: 7%;">
+                        <col style="width: 7%;">
+                        <col style="width: 7%;">
+                        <col style="width: 7%;">
+                        <col style="width: 7%;">
+                        <col style="width: 7%;">
                         <col style="width: 13%" />
                     </colgroup>
                     <thead>
@@ -87,12 +87,12 @@
                             <th rowspan="2">NAME</th>
                             <th rowspan="2">Country</th>
                             <th rowspan="2">Birth</th>
-                            <th>Attempt 1</th>
-                            <th>Attempt 2</th>
-                            <th>Attempt 3</th>
-                            <th>Attempt 4</th>
-                            <th>Attempt 5</th>
-                            <th>Attempt 6/th>
+                            <th>1st</th>
+                            <th>2nd</th>
+                            <th>3rd</th>
+                            <th>4th</th>
+                            <th>5th</th>
+                            <th>6th</th>
                             <th>RESULT</th>
                             <th>NOTE</th>
                         </tr>

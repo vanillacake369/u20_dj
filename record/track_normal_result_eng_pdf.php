@@ -146,7 +146,7 @@
             </p>
         </div>
         <div class="total">
-            <p>Overall Record</p>
+            <p>TOP LIST</p>
             <div class="table_area">
                 <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab2">
                     <colgroup>

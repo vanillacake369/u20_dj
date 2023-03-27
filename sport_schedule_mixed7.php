@@ -47,7 +47,7 @@ ORDER BY " . $order_val . ",record_trial;";
 $result = $db->query($sql);
 
 $total_count = mysqli_num_rows($result);
-$groupsql="SELECT distinct record_round AS r,(select count(distinct record_group) FROM list_record WHERE record_sports='heptathlon' and record_gender ='f' AND record_round= r)AS cnt FROM list_record WHERE record_sports='decathlon' and record_gender ='m' 
+$groupsql="SELECT distinct record_round AS r,(select count(distinct record_group) FROM list_record WHERE record_sports='heptathlon' and record_gender ='f' AND record_round= r)AS cnt FROM list_record WHERE record_sports='heptathlon' and record_gender ='f' 
 AND record_sports=record_sports AND record_gender=record_gender AND record_round!='final'
 ORDER BY FIELD(record_round, '100mh','highjump','200m','shotput','longjump','javelinthrow','800m')";
 $groupresult = $db->query($groupsql);
@@ -209,7 +209,7 @@ $groupresult = $db->query($groupsql);
                                 {
                                     echo "<td></td>";
                                 }
-                                echo "</tr></tbody>";
+                                echo "</tr>";
                                 $table_count = 0;
                                 $people++;
                             } ?>
@@ -221,7 +221,16 @@ $groupresult = $db->query($groupsql);
                                 onclick="window.open('/award_ceremony.html')">전광판 보기</button>
                             <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 onclick="window.open('/electronic_display.html')">시상식 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_Red filedBTN">PDF 출력</button>
+                            <?php
+                            echo '<form action="" method="post">';
+                                            echo '<input name="sports" value="' . $sports . '" hidden>';
+                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
+                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
+                                            echo 'formaction =';
+                                            echo '\'/record/mix7_pdf.php\'';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
+                                            echo '</form>';
+                            ?>
                             <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                         </div>
                     </div>

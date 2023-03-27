@@ -308,7 +308,8 @@ if ($rows['record_status'] == 'o') {
                                 출력</button>
                             <button type="submit" formaction="/action/record/result_execute_vertical_excel.php"
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
+                                formaction="/record/field_vertical_result_word.php">워드
                                 출력</button>
 
                         </div>

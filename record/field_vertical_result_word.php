@@ -22,25 +22,46 @@
             <p style="margin:10px 0px 0px 0px; text-align:center;">RESULT[경기결과]</p>
             <?php
             require_once __DIR__ . "/../action/module/record_worldrecord.php";
-            require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결 
-            /* word 다운을 위한 해더 */
+            require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결
+            global $db;
 
+            $sports=$_POST['sports'];
+            $round=$_POST['round'];
+            $gender=$_POST['gender'];
+            $group=$_POST['group'];
+            $schedule_result = $_POST['result'];
+            switch ($schedule_result) {
+                case 'l':
+                    $schedule_result = "Live Result";
+                    break;
+                case 'o':
+                    $schedule_result = "Official Result";
+                    break;
+                case 'n':
+                    $schedule_result = "Not Start";
+                    break;
+            }
+
+
+            $FILE_NAME = $sports . '_' . $gender . '_' . $round . '_' . $group . 'group(' . $schedule_result . ').doc';
+            /* word 다운을 위한 해더 */
             header("Content-type: application/vnd.ms-word;charset=UTF-8");
-            header("Content-Disposition: attachment; filename=word_download_test.doc");
+            header("Content-Disposition: attachment; filename=".$FILE_NAME);
             header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
             header("Pragma: no-cache");
             header("Expires: 0");
             print("<meta http-equiv=\"Content-Type\" content=\"application/vnd.ms-word; charset=utf-8\">");
-            
 
-            $schedule_sports=$_POST['sports'];
-            $schedule_round=$_POST['round'];
-            $gender=$_POST['gender'];
-            $group=$_POST['group'];
-
-            $sql = "SELECT DISTINCT * FROM list_record join list_schedule where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
+            $sql = "SELECT DISTINCT * FROM list_record join list_schedule 
+                    where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' 
+                    and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
             $result = $db->query($sql);
             $row = mysqli_fetch_assoc($result);
+            if ($row['schedule_sports'] == 'decathlon' || $row['schedule_sports'] == 'heptathlon') {
+                $check_round = 'y';
+            } else {
+                $check_round = 'n';
+            }
             ?>
             <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table">
                 <tr>
@@ -66,54 +87,65 @@
                 <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab2" style="border-top: 2px solid black">
                     <colgroup>
                         <col style="width: 5%" />
+                        <col style="width: 6%" />
+                        <col style="width: 11%" />
+                        <col style="width: 6%" />
+                        <col style="width: 8%" />
                         <col style="width: 5%" />
-                        <col style="width: 13%" />
-                        <col style="width: 7%" />
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 8%;">
-                        <col style="width: 13%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 5%" />
+                        <col style="width: 4%" />
+                        <col style="width: 8%" />
                     </colgroup>
                     <thead>
                         <tr>
                             <th style="border-bottom: 1px solid gray" rowspan="2">순위</th>
-                            <th style="border-bottom: 1px solid gray" rowspan="2">순번</th>
+                            <th style="border-bottom: 1px solid gray" rowspan="2">등번호</th>
                             <th style="border-bottom: 1px solid gray" rowspan="2">성명</th>
                             <th style="border-bottom: 1px solid gray" rowspan="2">국가</th>
-                            <th style="border-bottom: 1px solid gray" rowspan="2">1차시기</th>
-                            <th style="border-bottom: 1px solid gray" rowspan="2">2차시기</th>
-                            <th style="border-bottom: 1px solid gray" rowspan="2">3차시기</th>
-                            <th style="border-bottom: 1px solid gray" rowspan="2">4차시기</th>
-                            <th style="border-bottom: 1px solid gray" rowspan="2">5차시기</th>
-                            <th style="border-bottom: 1px solid gray" rowspan="2">6차시기</th>
+                            <th style="border-bottom: 1px solid gray" rowspan="2">출생년도</th>
+                            <?php
+                            for ($j = 0; $j < 12; $j++) {
+                                echo '<th style="border-bottom: 1px solid gray">' . $_POST['trial'][$j] . '</th>';
+                            }
+                            ?>
                             <th style="border-bottom: 1px solid gray" rowspan="2">기록</th>
                             <th style="border-bottom: 1px solid gray">비고</th>
                         </tr>
                         <tr>
+                            <?php
+                            for ($j = 12; $j <= 23; $j++) {
+                                echo '<th style="border-bottom: 1px solid gray">' . $_POST['trial'][$j] . '</th>';
+                            }
+                            ?>
                             <th style="border-bottom: 1px solid gray">신기록</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         for ($i = 0; $i < count($_POST['rank']); $i++) {
-                            $country = $db->query("select athlete_country from list_athlete where athlete_name ='" . $_POST['playername'][$i] . "'");
+                            $country = $db->query("select athlete_bib,athlete_country,athlete_birth from list_athlete where athlete_name ='" . $_POST['playername'][$i] . "'");
                             // echo "select athlete_country from list_athlete where athlete_name =".$_POST['playername'][$i]."";
                             $row1 = mysqli_fetch_array($country);
                             echo '<tr>';
                             echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['rank'][$i] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['rain'][$i] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['playername'][$i] . '</td>';
                             echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[0] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult1'][$i] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult2'][$i] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult3'][$i] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult4'][$i] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult5'][$i] . '</td>';
-                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult6'][$i] . '</td>';
+                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['playername'][$i] . '</td>';
+                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[1] . '</td>';
+                            echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[2] . '</td>';
+                            for ($j = 1; $j <= 12; $j++) {
+                                $str = 'gameresult' . $j;
+                                echo '<td style="border-bottom: 1px solid gray">' . $_POST[$str][$i] . '</td>';
+                            }
                             echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult'][$i] . '</td>';
                             echo '<td style="border-bottom: 1px solid gray">';
                             if ($_POST['bigo'][$i] == '') {
@@ -124,6 +156,10 @@
                             echo '</td>';
                             echo '</tr>';
                             echo '<tr>';
+                            for ($j = 12; $j <= 23; $j++) {
+                                $str = 'gameresult' . $j;
+                                echo '<td style="border-bottom: 1px solid gray">' . $_POST[$str][$i] . '</td>';
+                            }
                             echo '<td style="border-bottom: 1px solid gray">' . (mb_strlen($_POST['newrecord'][$i]) > 0 ? $_POST['newrecord'][$i] : '&nbsp;') . '</td>';
                             echo '</tr>';
                         }
@@ -132,25 +168,31 @@
                 </table>
             </div>
         </div>
-        <div class="total">
+        <div>
+            <p style="margin:0px 30px 0px 0px; text-align:right;">심판 서명 :
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(인)</p>
+        </div>
+        <div class=" total">
             <p>종합신기록</p>
             <div class="table_area">
-                <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab2" style="border-top: 2px solid black">
+                <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab2">
                     <colgroup>
                         <col style="width: 20%" />
                         <col style="width: 15%" />
-                        <col style="width: 35%" />
                         <col style="width: 10%" />
-                        <col style="width: 20%" />
+                        <col style="width: 30%" />
+                        <col style="width: 10%" />
+                        <col style="width: 15%" />
                     </colgroup>
                     <thead>
-                        <tr>
-                            <th style="border-bottom: 1px solid gray">구분</th>
-                            <th style="border-bottom: 1px solid gray">기록</th>
-                            <th style="border-bottom: 1px solid gray">성명</th>
-                            <th style="border-bottom: 1px solid gray">소속</th>
-                            <th style="border-bottom: 1px solid gray">일자</th>
-                        </tr>
+                    <tr>
+                        <th style="border-bottom: 1px solid gray">구분</th>
+                        <th style="border-bottom: 1px solid gray">기록</th>
+                        <th style="border-bottom: 1px solid gray">바람</th>
+                        <th style="border-bottom: 1px solid gray">성명</th>
+                        <th style="border-bottom: 1px solid gray">소속</th>
+                        <th style="border-bottom: 1px solid gray">일자</th>
+                    </tr>
                     </thead>
                     <tbody>
                         <?php

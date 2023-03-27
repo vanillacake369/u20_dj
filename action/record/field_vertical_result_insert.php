@@ -197,14 +197,14 @@ for ($j = 0; $j < count($athlete_name); $j++) {
           }
           if($best=='0'){
             if(($zerorow[0]??null) != null){
-            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' 
+            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' ,record_new='$new'
                           WHERE record_id='$zerorow[0]'";
             }else{
               $updatequery="INSERT INTO list_record(record_pass, record_".$result_type1."_record,record_memo,record_trial,record_athlete_id,record_sports,record_round,record_gender,record_group,record_status,record_order,record_judge,record_".$result_type1."_result,record_multi_record)
                               VALUES ('$pass','$best','$memo[$j]','','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]','$result[$j]','$point')"; //최종기록에 등수 및 메달 업데이트
             }
           }else{
-            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' ,record_memo='$memo[$j]'
+            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' ,record_memo='$memo[$j]',record_new='$new'
                           WHERE record_athlete_id ='".$row["athlete_id"] ."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record='$best'";
           }
           if($row1['record_state']!='y'){
@@ -216,14 +216,14 @@ for ($j = 0; $j < count($athlete_name); $j++) {
           $point= (int)(0.2797*pow(((float)$best*100-100),1.35)); //polevault
           if($best=='0'){
             if(($zerorow[0]??null) != null){
-              $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' 
+              $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' ,record_new='$new'
                             WHERE record_id='$zerorow[0]'";
               }else{
                 $updatequery="INSERT INTO list_record(record_pass, record_".$result_type1."_record,record_memo,record_trial,record_athlete_id,record_sports,record_round,record_gender,record_group,record_status,record_order,record_judge,record_".$result_type1."_result,record_multi_record)
                               VALUES ('$pass','$best','$memo[$j]','','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]','$result[$j]','$point')";
               }
           }else{
-            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' 
+            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' ,record_new='$new'
                           WHERE record_athlete_id ='".$row["athlete_id"] ."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record='$best'";
           }
           if($row1['record_state']!='y'){
@@ -235,14 +235,14 @@ for ($j = 0; $j < count($athlete_name); $j++) {
           //일반 경기
           if($best=='0') {
             if(($zerorow[0]??null) != null){
-              $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_medal='$medal' 
+              $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_medal='$medal' ,record_new='$new'
               WHERE record_id='$zerorow[0]'"; //최종기록에 등수 및 메달 업데이트       
             }else{
-              $updatequery="INSERT INTO list_record(record_pass, record_".$result_type1."_record,record_memo,record_trial,record_athlete_id,record_sports,record_round,record_gender,record_group,record_status,record_order,record_judge,record_".$result_type1."_result)
-                              VALUES ('$pass','$best','$memo[$j]','','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]','$result[$j]')"; //최종기록에 등수 및 메달 업데이트
+              $updatequery="INSERT INTO list_record(record_pass, record_".$result_type1."_record,record_memo,record_trial,record_athlete_id,record_sports,record_round,record_gender,record_group,record_status,record_order,record_judge,record_".$result_type1."_result,record_new)
+                              VALUES ('$pass','$best','$memo[$j]','','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]','$result[$j]','$new')"; //최종기록에 등수 및 메달 업데이트
             }
           }else{
-            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_medal='$medal', record_memo='$memo[$j]'
+            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_medal='$medal', record_memo='$memo[$j]',record_new='$new'
             WHERE record_athlete_id ='".$row["athlete_id"] ."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record='$best'"; //최종기록에 등수 및 메달 업데이트
           }
         }

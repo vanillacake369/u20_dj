@@ -141,33 +141,32 @@ for ($j = 0; $j < count($athlete_name); $j++) {
         $new = $rerow[0];
       }
       //---------------------------- 신기록 시작
-    //   if(strpos($memo[$j],'참고 기록')!==TRUE){   
-    //    if($comprecord[$j] != $best){ //기존 기록과 변경된 기록이 같은 지 비교
-    //        print_r($row);
-    //      $memo[$j]=changePbSb($row[0],$best,$name, $gender, $round,$memo[$j],$check_round,'f');
-    //      if($row1['record_state']==='y'){ //경기가 끝났는 지 판단
-    //        if($rerow[0]==='y'){
-    //          $arr=modify_worldrecord($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
-    //          $tempmemo=change_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round,$arr);
-    //        }else{
-    //          $arr2=insert_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
-    //          $tempmemo=$arr2[0];
-    //          $new=$arr2[1];
-    //        }
-    //      }else{
-    //        $arr2=insert_worldrecord_dec($athlete_name[$j],$row['athlete_country'],$best,0,$name, $gender, $round,$check_round);
-    //        $tempmemo=$arr2[0];
-    //        $new=$arr2[1];
-    //      }
-    //    }
-    //   if( $tempmemo!=''){
-    //     if(strlen($memo[$j])>=1){
-    //         $memo[$j]=$memo[$j].",".$tempmemo;
-    //     }else{
-    //         $memo[$j]=$tempmemo;
-    //     }
-    //   }
-    // }
+       if(strpos($memo[$j],'참고 기록') !== TRUE){
+        if($comprecord[$j] != $best){ //기존 기록과 변경된 기록이 같은 지 비교
+          $memo[$j]=changePbSb($row[0],$best,$name, $gender, $round,$memo[$j],$check_round,'f');
+          if($row1['record_state']==='y'){ //경기가 끝났는 지 판단
+            if($rerow[0]==='y'){
+              $arr=modify_worldrecord($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
+              $tempmemo=change_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round,$arr);
+            }else{
+              $arr2=insert_worldrecord_dec($athlete_name[$j],$row[1],$best,0,$name, $gender, $round,$check_round);
+              $tempmemo=$arr2[0];
+              $new=$arr2[1];
+            }
+          }else{
+            $arr2=insert_worldrecord_dec($athlete_name[$j],$row['athlete_country'],$best,0,$name, $gender, $round,$check_round);
+            $tempmemo=$arr2[0];
+            $new=$arr2[1];
+          }
+        }
+       if( $tempmemo!=''){
+         if(strlen($memo[$j])>=1){
+             $memo[$j]=$memo[$j].",".$tempmemo;
+         }else{
+             $memo[$j]=$tempmemo;
+         }
+       }
+     }
       //--------------------------- 신기록 끝
       if($row1['record_state']==='y'){
         $highrow=mysqli_fetch_array($highresult);
@@ -186,8 +185,8 @@ for ($j = 0; $j < count($athlete_name); $j++) {
       WHERE record_athlete_id ='".$row["athlete_id"]."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record = '$checkrow[0]'";
         }else{
           $savequery =
-            "INSERT INTO list_record(record_pass, record_".$result_type1."_record,record_memo,record_trial,record_athlete_id,record_sports,record_round,record_gender,record_group,record_status,record_order,record_judge)
-                            VALUES ('$pass','$high[$i]','$memo[$j]','$ruf','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]')";
+            "INSERT INTO list_record(record_pass, record_".$result_type1."_record,record_trial,record_athlete_id,record_sports,record_round,record_gender,record_group,record_status,record_order,record_judge)
+                            VALUES ('$pass','$high[$i]','$ruf','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]')";
         }
       }
         if($round ==='highjump'){
@@ -205,7 +204,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
                               VALUES ('$pass','$best','$memo[$j]','','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]','$result[$j]','$point')"; //최종기록에 등수 및 메달 업데이트
             }
           }else{
-            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' 
+            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_".$result_type1."_result='$result[$j]',record_multi_record='$point' ,record_memo='$memo[$j]'
                           WHERE record_athlete_id ='".$row["athlete_id"] ."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record='$best'";
           }
           if($row1['record_state']!='y'){
@@ -234,7 +233,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
           }
         }else{
           //일반 경기
-          if($best=='0'){
+          if($best=='0') {
             if(($zerorow[0]??null) != null){
               $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_medal='$medal' 
               WHERE record_id='$zerorow[0]'"; //최종기록에 등수 및 메달 업데이트       
@@ -243,7 +242,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
                               VALUES ('$pass','$best','$memo[$j]','','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]','$result[$j]')"; //최종기록에 등수 및 메달 업데이트
             }
           }else{
-            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_medal='$medal' 
+            $updatequery="UPDATE list_record SET record_".$result_type1."_result='$result[$j]',record_medal='$medal', record_memo='$memo[$j]'
             WHERE record_athlete_id ='".$row["athlete_id"] ."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record='$best'"; //최종기록에 등수 및 메달 업데이트
           }
         }

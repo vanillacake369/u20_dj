@@ -1,10 +1,10 @@
 <!-- header -->
-<?php $url_now = explode(".", basename($_SERVER["PHP_SELF"]))[0];?>
+<?php $url_now = explode(".", basename($_SERVER["PHP_SELF"]))[0]; ?>
 <div class="headerWrapper">
     <header class="headerBody">
         <div class="headerBodyLayout">
             <div class="headerBodyArea">
-                <h1 class="logo"><a href="/index.php">예천U20</a></h1>
+                <h1 class="logo"><a href="./index.php">예천U20</a></h1>
                 <div class="gnbMask menuhide">
                     <div class="gnbsied">
                         <div class="gnb">

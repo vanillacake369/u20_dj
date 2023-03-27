@@ -27,7 +27,7 @@ function removeClassList(target, className) {
 }
 
 // 메뉴 이벤트
-
+if(document.querySelector(".Area")){
 const Wrapper = document.querySelector(".Area");
 const gnbMask_right = document.querySelector(".gnbMask_right");
 const gnbMask = document.querySelector(".gnbMask");
@@ -110,6 +110,7 @@ if (document.querySelector(".menuBtn") !== null) {
   gnbMask_right.addEventListener("click", () => {
     removeClassList(body, "prevent");
   });
+}
 }
 // 페이지 네이션 js
 

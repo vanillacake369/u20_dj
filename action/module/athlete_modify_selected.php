@@ -25,7 +25,6 @@ echo "<script>";
 echo 'if (document.querySelectorAll(\'.athlete_sector>div>label>input[name="athlete_sector[]"]\')) {
     const allow_access = document.querySelectorAll(\'.athlete_sector>div>label>input[name="athlete_sector[]"]\');
     let checkcnt = 0;
-    console.log(checkcnt);
     for (let i = 0; i < allow_access.length; i++) {
         if (allow_access[i].checked == true)
             checkcnt++;

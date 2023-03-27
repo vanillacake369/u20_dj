@@ -50,7 +50,7 @@ $sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
 $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="./assets/js/main.js"></script>
+
 </head>
 
 <body>

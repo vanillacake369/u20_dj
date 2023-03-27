@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
     <script src="../assets/fontawesome/js/all.min.js"></script>
     <script>
-        window.print()
+    window.print()
     </script>
     <!--Data Tables-->
     <title>U20</title>
@@ -18,7 +18,7 @@
 <body>
     <div class="page">
         <div class="top">
-            20TH ASIAN U20 ATHLETICS CHAMPIONSHIPS YECHEON 2023<!-- 제 20회 예천아시아 U20 육상경기선수권대회 -->
+            20TH ASIAN U20 ATHLETICS CHAMPIONSHIPS YECHEON 2023
             <img src="../assets/img/logo.png" alt="Logo" class="logo_img" /></a>
         </div>
 
@@ -27,32 +27,38 @@
             <?php
             require_once __DIR__ . "/../action/module/record_worldrecord.php";
             require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결 
-
-            $schedule_sports=$_POST['sports'];
-            $schedule_round=$_POST['round'];
+            $sports=$_POST['sports'];
+            $round=$_POST['round'];
             $gender=$_POST['gender'];
             $group=$_POST['group'];
 
-            $sql = "SELECT DISTINCT * FROM list_record join list_schedule where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
+            $sql = "SELECT DISTINCT * FROM list_record join list_schedule 
+                where record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' 
+                and schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender";
             $result = $db->query($sql);
-            $rows = mysqli_fetch_assoc($result);
+            $row = mysqli_fetch_assoc($result);
+            if ($row['schedule_sports'] == 'decathlon' || $row['schedule_sports'] == 'heptathlon') {
+                $check_round = 'y';
+            } else {
+                $check_round = 'n';
+            }
             ?>
             <div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">SPORTS: ' . $row['schedule_name'] . '</p>';
-                    echo '<p style="font-size:12px; width:330px">LOCATION: ' . $row['schedule_location'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Event: ' . $row['schedule_name'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Location: ' . $row['schedule_location'] . '</p>';
                     ?>
                 </div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">GENDER: ' . $row['schedule_gender'] . '</p>';
-                    echo '<p style="font-size:12px; width:330px">DATE: ' . $row['schedule_date'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Gender: ' . $row['schedule_gender'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Date: ' . $row['schedule_date'] . '</p>';
                     ?>
                 </div>
                 <div style="width: 100%; display: flex;">
                     <?php
-                    echo '<p style="font-size:12px; width:330px">ROUND: ' . $row['schedule_round'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">Round: ' . $row['schedule_round'] . '</p>';
                     echo '<p style="font-size:12px; width:330px"></p>';
                     ?>
                 </div>
@@ -61,9 +67,10 @@
                 <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab1">
                     <colgroup>
                         <col style="width: 5%" />
-                        <col style="width: 5%" />
+                        <col style="width: 6%" />
                         <col style="width: 12%" />
-                        <col style="width: 7%" />
+                        <col style="width: 5%" />
+                        <col style="width: 8%" />
                         <col style="width: 5%" />
                         <col style="width: 5%" />
                         <col style="width: 5%" />
@@ -76,22 +83,23 @@
                         <col style="width: 5%" />
                         <col style="width: 5%" />
                         <col style="width: 5%" />
-                        <col style="width: 5%" />
-                        <col style="width: 10%" />
+                        <col style="width: 4%" />
+                        <col style="width: 8%" />
                     </colgroup>
                     <thead>
                         <tr>
-                            <th rowspan="2">RANK</th>
-                            <th rowspan="2">NUM</th>
+                            <th rowspan="2">PLACE</th>
+                            <th rowspan="2">BIB</th>
                             <th rowspan="2">NAME</th>
                             <th rowspan="2">COUNTRY</th>
+                            <th rowspan="2">BIRTH</th>
                             <?php
                             for ($j = 0; $j < 12; $j++) {
                                 echo '<th>' . $_POST['trial'][$j] . '</th>';
                             }
                             ?>
-                            <th rowspan="2">Record</th>
-                            <th>비고</th>
+                            <th rowspan="2">RESULT</th>
+                            <th>NOTE</th>
                         </tr>
                         <tr>
                             <?php
@@ -99,20 +107,21 @@
                                 echo '<th>' . $_POST['trial'][$j] . '</th>';
                             }
                             ?>
-                            <th>New Record</th>
+                            <th>RECORDS</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         for ($i = 0; $i < count($_POST['rank']); $i++) {
-                            $country = $db->query("select athlete_country from list_athlete where athlete_name ='" . $_POST['playername'][$i] . "'");
+                            $country = $db->query("select athlete_bib,athlete_country,athlete_birth from list_athlete where athlete_name ='" . $_POST['playername'][$i] . "'");
                             // echo "select athlete_country from list_athlete where athlete_name =".$_POST['playername'][$i]."";
                             $row1 = mysqli_fetch_array($country);
                             echo '<tr>';
                             echo '<td rowspan="2">' . $_POST['rank'][$i] . '</td>';
-                            echo '<td rowspan="2">' . $_POST['rain'][$i] . '</td>';
-                            echo '<td rowspan="2">' . $_POST['playername'][$i] . '</td>';
                             echo "<td rowspan='2'>$row1[0]</td>";
+                            echo '<td rowspan="2">' . $_POST['playername'][$i] . '</td>';
+                            echo "<td rowspan='2'>$row1[1]</td>";
+                            echo "<td rowspan='2'>$row1[2]</td>";
                             for ($j = 1; $j <= 12; $j++) {
                                 $str = 'gameresult' . $j;
                                 echo '<td>' . $_POST[$str][$i] . '</td>';
@@ -140,11 +149,12 @@
             </div>
         </div>
         <div>
-            <p style="margin:0px 30px 0px 0px; text-align:right;">Refree Signiture :
-            ______________________</p>
+            <p style="margin:0px 30px 0px 0px; text-align:right;">referee signature :
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(signature)
+            </p>
         </div>
         <div class=" total">
-            <p>Overall Record</p>
+            <p>TOP LIST</p>
             <div class="table_area">
                 <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab2">
                     <colgroup>
@@ -157,12 +167,12 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>Division</th>
-                            <th>Record</th>
-                            <th>Wind</th>
-                            <th>Name</th>
-                            <th>Affiliation</th>
-                            <th>Date</th>
+                            <th>RECORDS</th>
+                            <th>RESULT</th>
+                            <th>WIND</th>
+                            <th>NAME</th>
+                            <th>COUNTRY</th>
+                            <th>DATE</th>
                         </tr>
                     </thead>
                     <tbody>

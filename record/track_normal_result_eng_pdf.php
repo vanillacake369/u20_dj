@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
     <script src="../assets/fontawesome/js/all.min.js"></script>
     <script>
-        window.print()
+    window.print()
     </script>
     <title>U20</title>
 </head>
@@ -17,7 +17,8 @@
 <body>
     <div class="page">
         <div class="top">
-            20TH ASIAN U20 ATHLETICS CHAMPIONSHIPS YECHEON 2023<!-- 제 20회 예천아시아 U20 육상경기선수권대회 -->
+            20TH ASIAN U20 ATHLETICS CHAMPIONSHIPS YECHEON 2023
+            <!-- 제 20회 예천아시아 U20 육상경기선수권대회 -->
             <img src="../assets/img/logo.png" alt="Logo" class="logo_img" /></a>
         </div>
         <?php
@@ -41,20 +42,20 @@
             <p style="margin:10px 0px 0px 0px; text-align:center;">RESULT</p>
             <div style="width: 100%; display: flex;">
                 <?php
-                echo '<p style="font-size:12px; width:330px">SPORTS: ' . $row['schedule_name'] . '</p>';
-                echo '<p style="font-size:12px; width:330px">LOCATION: ' . $row['schedule_location'] . '</p>';
+                echo '<p style="font-size:12px; width:330px">Event: ' . $row['schedule_name'] . '</p>';
+                echo '<p style="font-size:12px; width:330px">Location: ' . $row['schedule_location'] . '</p>';
                 ?>
             </div>
             <div style="width: 100%; display: flex;">
                 <?php
-                echo '<p style="font-size:12px; width:330px">GENDER: ' . $row['schedule_gender'] . '</p>';
-                echo '<p style="font-size:12px; width:330px">DATE: ' . $row['schedule_date'] . '</p>';
+                echo '<p style="font-size:12px; width:330px">Gender: ' . $row['schedule_gender'] . '</p>';
+                echo '<p style="font-size:12px; width:330px">Date: ' . $row['schedule_date'] . '</p>';
                 ?>
             </div>
             <div style="width: 100%; display: flex;">
                 <?php
-                echo '<p style="font-size:12px; width:330px">ROUND: ' . $row['schedule_round'] . '</p>';
-                echo '<p style="font-size:12px; width:330px">WIND: ' . $row['record_wind'] . '</p>';
+                echo '<p style="font-size:12px; width:330px">Round: ' . $row['schedule_round'] . '</p>';
+                echo '<p style="font-size:12px; width:330px">Wind: ' . $row['record_wind'] . '</p>';
                 ?>
             </div>
             <div class="table_area" style="margin-bottom: 50px;">
@@ -88,15 +89,15 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>Rank</th>
-                            <th>Num</th>
-                            <th>Rain</th>
-                            <th>Name</th>
+                            <th>PLACE</th>
+                            <th>BIB</th>
+                            <th>LANE</th>
+                            <th>NAME</th>
                             <th>Country</th>
-                            <th>Birth</th>
-                            <th>Record</th>
-                            <th>Note</th>
-                            <th>New Record</th>
+                            <th>BIRTH</th>
+                            <th>RESULT</th>
+                            <th>NOTE</th>
+                            <th>RECORDS</th>
                             <?php
                             if ($check_round == 'y') {
                                 echo '<th>점수</th>';
@@ -140,8 +141,9 @@
             </div>
         </div>
         <div>
-            <p style="margin:0px 30px 0px 0px; text-align:right;">Refree Signiture :
-            ______________________</p>
+            <p style="margin:0px 30px 0px 0px; text-align:right;">referee signature :
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(signature)
+            </p>
         </div>
         <div class="total">
             <p>Overall Record</p>
@@ -157,12 +159,12 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>Division</th>
-                            <th>Record</th>
-                            <th>Wind</th>
-                            <th>Name</th>
-                            <th>Affiliation</th>
-                            <th>Date</th>
+                            <th>RECORDS</th>
+                            <th>RESULT</th>
+                            <th>WIND</th>
+                            <th>NAME</th>
+                            <th>COUNTRY</th>
+                            <th>DATE</th>
                         </tr>
                     </thead>
                     <tbody>

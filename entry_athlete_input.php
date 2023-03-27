@@ -13,24 +13,24 @@ if (!authCheck($db, "authEntrysRead")) {
         </script>");
 }
 // 10종,7종 선택 옵션
-// unset($sport_dic["decathlon"]);
-// unset($sport_dic["heptathlon"]);
-// $sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
-// $sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
-// $sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
-// $sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
-// $sport_dic["decathlon(400m)"] = "Decathlon(400m)";
-// $sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
-// $sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
-// $sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
-// $sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
-// $sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
-// $sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
-// $sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
-// $sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
-// $sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
-// $sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
-// $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
+unset($sport_dic["decathlon"]);
+unset($sport_dic["heptathlon"]);
+$sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
+$sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
+$sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
+$sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
+$sport_dic["decathlon(400m)"] = "Decathlon(400m)";
+$sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
+$sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
+$sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
+$sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
+$sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
+$sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
+$sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
+$sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
+$sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
+$sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
+$sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./assets/js/main.js"></script>
@@ -319,26 +319,26 @@ if (!authCheck($db, "authEntrysRead")) {
     </div>
     <script src="/assets/js/main.js?v=8"></script>
     <script>
-    if (document.querySelectorAll('.athlete_sector>div>label>input[name="coach_sector[]"]')) {
+        if (document.querySelectorAll('.athlete_sector>div>label>input[name="coach_sector[]"]')) {
 
-        const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="coach_sector[]"]');
-        let checkcnt = 0;
+            const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="coach_sector[]"]');
+            let checkcnt = 0;
 
-        for (let i = 0; i < allow_access.length; i++) {
-        allow_access[i].addEventListener("click", () => {
-            if (allow_access[i].checked)  {
-                checkcnt++;
-            } else{
-                checkcnt--;
+            for (let i = 0; i < allow_access.length; i++) {
+                allow_access[i].addEventListener("click", () => {
+                    if (allow_access[i].checked) {
+                        checkcnt++;
+                    } else {
+                        checkcnt--;
+                    }
+                    if (checkcnt > 4) {
+                        allow_access[i].checked = false;
+                        checkcnt--;
+                        alert('5개 이상 선택이 불가능합니다');
+                    }
+                })
             }
-            if (checkcnt > 4) {
-                allow_access[i].checked = false;
-                checkcnt--;
-                alert('5개 이상 선택이 불가능합니다');
-            }
-        })
         }
-    }
     </script>
     <script type="text/javascript">
         function maxLengthCheck(object) {

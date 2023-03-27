@@ -128,16 +128,12 @@ function input_time() {
                                     required="" />';
                                     ?>
                             </li>
-
-                    </div>
-                    </ul>
-                </div>
-        </div>
-        <div class="Thorw_result">
-            <div class="relay_result">
-                <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
-            </div>
-            <?php
+                        </ul>
+                        <div class="Thorw_result">
+                            <div class="relay_result">
+                                <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
+                            </div>
+                            <?php
             if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
             } else {
             echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit"

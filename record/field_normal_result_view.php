@@ -128,16 +128,12 @@ function input_time() {
                                     required="" />';
                                     ?>
                             </li>
-
-                    </div>
-                    </ul>
-                </div>
-        </div>
-        <div class="Thorw_result">
-            <div class="relay_result">
-                <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
-            </div>
-            <?php
+                        </ul>
+                        <div class="Thorw_result">
+                            <div class="relay_result">
+                                <h3 class="UserProfile_tit tit_left_green tit_padding">결과</h3>
+                            </div>
+                            <?php
             if (($rows["schedule_name"] == 'Decathlon' || $rows["schedule_name"] == 'Heptathlon')) {
             } else {
             echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit"
@@ -150,14 +146,14 @@ function input_time() {
             } else if (($_POST['check'] ?? null) === "5") {
                 echo '<input type="hidden" name="count" value="no_more_regroup">';
             }?>
-        </div>
-        <table class="box_table">
-            <colgroup>
-                <col style="width: 4%" />
-                <col style="width: 4%" />
-                <col style="width: 7%" />
-                <col style="width: 12%" />
-                <?php
+                        </div>
+                        <table class="box_table">
+                            <colgroup>
+                                <col style="width: 4%" />
+                                <col style="width: 4%" />
+                                <col style="width: 7%" />
+                                <col style="width: 12%" />
+                                <?php
                             if ($rows['schedule_name'] === 'Decathlon' || $rows['schedule_name'] === 'Heptathlon') {
                                 echo '<col style="width: 12%" />';
                                 echo '<col style="width: 12%" />';
@@ -173,19 +169,19 @@ function input_time() {
                                 echo '<col style="width: 7%" />';
                             }
                             ?>
-                <col style="width: 6%" />
-                <col style="width: 12%" />
-            </colgroup>
-            <thead class="result_table entry_table">
-                <tr>
-                    <th>등수</th>
-                    <th>순서</th>
-                    <th>BIB</th>
-                    <th>이름</th>
-                    <th>1차 시기</th>
-                    <th>2차 시기</th>
-                    <th>3차 시기</th>
-                    <?php
+                                <col style="width: 6%" />
+                                <col style="width: 12%" />
+                            </colgroup>
+                            <thead class="result_table entry_table">
+                                <tr>
+                                    <th>등수</th>
+                                    <th>순서</th>
+                                    <th>BIB</th>
+                                    <th>이름</th>
+                                    <th>1차 시기</th>
+                                    <th>2차 시기</th>
+                                    <th>3차 시기</th>
+                                    <?php
                                 if ($rows['schedule_name'] === 'Decathlon' || $rows['schedule_name'] === 'Heptathlon') {
                                 } else {
                                     echo '<th>4차 시기</th>';
@@ -193,13 +189,13 @@ function input_time() {
                                     echo '<th>6차 시기</th>';
                                 }
                                 ?>
-                    <th>기록</th>
-                    <th>비고</th>
-                    <th>신기록</th>
-                </tr>
-            </thead>
-            <tbody class="table_tbody entry_table">
-                <?php
+                                    <th>기록</th>
+                                    <th>비고</th>
+                                    <th>신기록</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table_tbody entry_table">
+                                <?php
                             $i = 1;
                             $count = 0; //신기록 위치 관련 변수
                             $trial = 1;
@@ -313,13 +309,13 @@ function input_time() {
                                 $count++;
                             }
                             ?>
-            </tbody>
-        </table>
-    </div>
-    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
-        value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-    <?php
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
+                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
+                        value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
+                    <?php
                     if ($rows["record_state"] != "y") {
                         echo '<div class="signup_submit" style="width:49%;">
                         <button type="submit" class="BTN_Red full_width" name="addtempresult"
@@ -335,25 +331,25 @@ function input_time() {
                     </div>';
                     }else {
                         if (authCheck($db, "authSchedulesUpdate")) {  ?>
-    <div class="signup_submit" style="width:100%;">
-        <button type="submit" class="BTN_Blue full_width" name="addresult"
-            formaction="../action/record/field_normal_result_insert.php">
-            <span>확인</span>
-        </button>
-    </div>
-    <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-    <div class="signup_submit" style="width:100%;">
-        <button type="submit" class="BTN_Blue full_width" name="addresult"
-            formaction="../action/record/field_normal_result_insert.php">
-            <span>확인</span>
-        </button>
-    </div>
-    <?php }
+                    <div class="signup_submit" style="width:100%;">
+                        <button type="submit" class="BTN_Blue full_width" name="addresult"
+                            formaction="../action/record/field_normal_result_insert.php">
+                            <span>확인</span>
+                        </button>
+                    </div>
+                    <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                    <div class="signup_submit" style="width:100%;">
+                        <button type="submit" class="BTN_Blue full_width" name="addresult"
+                            formaction="../action/record/field_normal_result_insert.php">
+                            <span>확인</span>
+                        </button>
+                    </div>
+                    <?php }
                     }
                     ?>
-    </form>
-</div>
-</div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- <script src="../assets/js/main.js?ver=7"></script> -->
 </body>

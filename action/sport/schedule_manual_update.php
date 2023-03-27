@@ -4,8 +4,6 @@ require_once __DIR__ . "/../../security/security.php";
 require_once __DIR__ . "/../../console_log.php";
 global $db;
 
-console_log($_POST);
-
 /**
  * @author 임지훈 @vanillacake369
  * 세 종류의 로직을 처리해야함
@@ -15,9 +13,6 @@ console_log($_POST);
  */
 
 try {
-
-    console_log($_POST);
-
     $athlete = $_POST["athlete_id"] ?? null;                    // array: 참가하는 선수들 id
     $lane = $_POST["order"] ?? null;                            // array: 선수별 순서 or 레인
     $group = $_POST["group"] ?? null;                           // array: 선수 별 그룹 배정
@@ -61,22 +56,8 @@ try {
             // 중복키값 존재 시, UPDATE문 실행, 존재하지 않는 경우 INSERT문 실행
             $update_record_query = "INSERT INTO `list_record` 
                                     (`record_id`,`record_athlete_id`, `record_order`, `record_group`, `record_sports`, `record_round`, `record_gender`, `record_medal`) 
-                                    VALUES ($athlete[$idx],
-$lane[$idx],
-$group[$idx],
-$sports,
-$round,
-$gender,
-0,
-$lane[$idx],
-$group[$idx])
+                                    VALUES (?,?,?,?,?,?,?,?)
                                     ON DUPLICATE KEY UPDATE `record_order` = ?, `record_group` = ?;";
-
-            console_log($update_record_query);
-            // $update_record_query = "INSERT INTO `list_record` 
-            //                         (`record_id`,`record_athlete_id`, `record_order`, `record_group`, `record_sports`, `record_round`, `record_gender`, `record_medal`) 
-            //                         VALUES (?,?,?,?,?,?,?,?)
-            //                         ON DUPLICATE KEY UPDATE `record_order` = ?, `record_group` = ?;";
             $stmt = $db->prepare($update_record_query);
             $stmt->bind_param("iiiisssiii", ...$athlete_data);
             $stmt->execute();
@@ -177,4 +158,4 @@ $group[$idx])
     exit();
 }
 
-// // echo "<script>alert('수정되었습니다.'); window.close(); </script>";
+echo "<script>alert('수정되었습니다.'); window.close(); </script>";

@@ -56,7 +56,7 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 </li>
                                 <li class="row input_row row_item">
                                     <span>성</span>
-                                    <input type="text" name="athlete_first_name" id="athlete_name" value="" placeholder="성을 입력해 주세요"/>
+                                    <input type="text" name="athlete_first_name" id="athlete_name" value="" placeholder="성을 입력해 주세요" />
                                 </li>
                                 <li class="row input_row row_item input_width">
                                     <span>국가</span>
@@ -319,36 +319,36 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
     </div>
     <script src="/assets/js/main.js?v=8"></script>
     <script>
-    if (document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]')) {
-    const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]');
-    let checkcnt = 0;
-    for (let i = 0; i < allow_access.length; i++) {
-        if (allow_access[i].checked == true)
-            checkcnt++;
-    }
-    for (let i = 0; i < allow_access.length; i++) {
-        allow_access[i].addEventListener("click", () => {
-            if (allow_access[i].checked)  {
-                checkcnt++;
-            } else{
-                checkcnt--;
+        if (document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]')) {
+            const allow_access = document.querySelectorAll('.athlete_sector>div>label>input[name="athlete_sector[]"]');
+            let checkcnt = 0;
+            for (let i = 0; i < allow_access.length; i++) {
+                if (allow_access[i].checked == true)
+                    checkcnt++;
             }
-            if (checkcnt > 4) {
-                allow_access[i].checked = false;
-                checkcnt--;
-                alert('5개 이상 선택이 불가능합니다');
+            for (let i = 0; i < allow_access.length; i++) {
+                allow_access[i].addEventListener("click", () => {
+                    if (allow_access[i].checked) {
+                        checkcnt++;
+                    } else {
+                        checkcnt--;
+                    }
+                    if (checkcnt > 4) {
+                        allow_access[i].checked = false;
+                        checkcnt--;
+                        alert('5개 이상 선택이 불가능합니다');
+                    }
+                })
             }
-        })
         }
-    }
     </script>
     <script type="text/javascript">
-    function maxLengthCheck(object){
-      if (object.value.length > object.maxLength){
-        object.value = object.value.slice(0, object.maxLength);
-      }    
-    }
-  </script>
+        function maxLengthCheck(object) {
+            if (object.value.length > object.maxLength) {
+                object.value = object.value.slice(0, object.maxLength);
+            }
+        }
+    </script>
 </body>
 
 </html>

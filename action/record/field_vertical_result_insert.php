@@ -87,7 +87,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
   // echo "SELECT athlete_id,athlete_country FROM list_athlete join list_record on record_schedule_id = '$s_id' and athlete_name = '" . $athlete_name[$j] . "' and record_athlete_id=athlete_id".'<br>';
   $row = mysqli_fetch_array($re);
   $highresult=$db->query("SELECT DISTINCT record_".$result_type1."_record 
-      FROM list_record WHERE record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_athlete_id = ".$row['athlete_id']." AND record_".$result_type1."_record > 0 ORDER BY cast(record_".$result_type1."_record as int)");
+      FROM list_record WHERE record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_athlete_id = ".$row['athlete_id']." AND record_".$result_type1."_record > 0 ORDER BY cast(record_".$result_type1."_record as float)");
   $checkhigh=$db->query("SELECT DISTINCT record_".$result_type1."_record 
       FROM list_record WHERE record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' and record_athlete_id='".$row['athlete_id']."'");
   for ($i = 0; $i < $highcnt; $i++) {

@@ -196,7 +196,7 @@ if ($rows['record_status'] == 'o') {
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group'AND record_".$result_type."_record>0
-                      ORDER BY cast(record_".$result_type."_record as int) ASC limit 12"
+                      ORDER BY cast(record_".$result_type."_record as float) ASC limit 12"
                 ); //선수별 기록 찾는 쿼리
                 while ($recordrow = mysqli_fetch_array($record)) {
                   echo "<td>";
@@ -235,7 +235,7 @@ if ($rows['record_status'] == 'o') {
                       $row["athlete_id"] .
                       " AND athlete_id= record_athlete_id
                       and record_sports='$sports' and record_round='$round' and record_gender ='$gender' and record_group='$group' AND record_" . $result_type . "_record>0
-                      ORDER BY cast(record_" . $result_type . "_record as int) ASC limit 12,12"
+                      ORDER BY cast(record_" . $result_type . "_record as float) ASC limit 12,12"
                     );//선수별 기록 찾는 쿼리
                   while ($recordrow = mysqli_fetch_array($record)) {
                     echo "<td>";
@@ -300,9 +300,11 @@ if ($rows['record_status'] == 'o') {
                             <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 formaction="award_ceremony.php">시상식 보기</button>
                             <?php } ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(한)
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_vertical_result_pdf.php">PDF(한)
                                 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영)
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_vertical_result_eng_pdf.php">PDF(영)
                                 출력</button>
                             <button type="submit" formaction="/action/record/result_execute_vertical_excel.php"
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>

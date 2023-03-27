@@ -83,21 +83,21 @@ if ($rows['record_status'] == 'o') {
                         if (!k[1]) continue;
                         on = document.querySelector("#id" + k[1]).children
                     }
-                    if (k[6]) {
-                        on['gamepass[]'].value = 'p'
+                    if (k[6] != '') {
+                        on[6].value = 'p'
                         on[5].firstElementChild.value = k[6]
                     } else if (k[0] == 'DNS') {
-                        on['gamepass[]'].value = 'n'
+                        on[6].value = 'n'
                         on[5].firstElementChild.value = 0
-                        on[7].firstElementChild.value = k[0]
+                        on[8].firstElementChild.value = k[0]
                     } else if (k[0] == 'DNF') {
-                        on['gamepass[]'].value = 'n'
+                        on[6].value = 'n'
                         on[5].firstElementChild.value = 0
-                        on[7].firstElementChild.value = k[0]
+                        on[8].firstElementChild.value = k[0]
                     } else {
-                        on['gamepass[]'].value = 'd'
+                        on[6].value = 'd'
                         on[5].firstElementChild.value = 0
-                        on[7].firstElementChild.value = 'DQ'
+                        on[8].firstElementChild.value = 'DQ'
                     }
                     // if (k[3]) {
                     //     on[7].firstElementChild.value = k[3]
@@ -242,8 +242,8 @@ if ($rows['record_status'] == 'o') {
                                 <th style="background: none">이름</th>
                                 <th style="background: none">국가</th>
                                 <th style="background: none">경기 결과</th>
-                                <th style="background: none">reaction time</th>
                                 <th style="background: none">통과여부</th>
+                                <th style="background: none">reaction time</th>
                                 <th style="background: none">비고</th>
                                 <th style="background: none">신기록</th>
                             </tr>
@@ -289,10 +289,10 @@ if ($rows['record_status'] == 'o') {
                                 value="' . $row['athlete_country'] . '" maxlength="30" required="" readonly /></td>';
                                 echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="9"
                                 required="" onkeyup="trackResultForm(this)" style="float: left; width: auto; padding-right: 5px" />';
-                                echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="9"
-                                required="" onkeyup="trackReactionTimeForm(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 // 경기 통과 여부 셀렉션
                                 echo '<td><select class="input_class" name="gamepass[]"><option value="p">통과</option><option value="l">탈락</option><option value="d">실격</option><option value="w">기권</option><option value="n">시작안함</option></select></td>';
+                                echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="9"
+                                required="" onkeyup="trackReactionTimeForm(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 // echo '<input placeholder="경기 통과 여부" type="hidden" name="gamepass[]" value="' . $row['record_pass'] . '" maxlength="50" required="" />';
                                 echo '<input type="hidden" name="compresult[]" value="' . ($row['record_' . $result_type . '_record'] ?? null) . '"/></td>';
                                 echo '<td><input placeholder="비고를 입력해주세요" type="text" name="bigo[]" value="' . ($row['record_memo'] ? $row['record_memo'] : null) . '" maxlength="100" /></td>';

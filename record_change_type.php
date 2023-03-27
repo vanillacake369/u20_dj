@@ -23,8 +23,8 @@ function gap_time($start_date, $end_date)
     $diff = $diff - ($hours * 3600);
     $min = floor($diff / 60);
     $sec = $diff - ($min * 60);
-    // return array($diff, $min, $sec); //시연용 바로 통과
-    return array($hours, $min, $sec); //원래 꺼
+    return array($diff, $min, $sec); //시연용 바로 통과
+    // return array($hours, $min, $sec); //원래 꺼
 }
 $sports = $_POST['sports'];
 $round = $_POST['round'];

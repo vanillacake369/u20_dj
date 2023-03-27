@@ -67,12 +67,12 @@ if (!authCheck($db, "authSchedulesCreate")) {
                                             $("#sports").change(function() {
                                                 var val = $(this).val();
                                                 // 경기 선택 이벤트 발생 시 - 경기별 라운드 변경 이벤트
-                                                if (val == "heptathlon") {
+                                                if (val == "decathlon") {
                                                     // 10종 선택에 따른 라운드 셀렉트 박스 변경
-                                                    $("#round").html('<option value="final">final</option><option value="100m">100m</option><option value="longjump">longjump</option><option value="shotput">shotput</option><option value="highjump">highjump</option><option value="400m">400m</option><option value="110mH">110mH</option><option value="discusthrow">discusthrow</option><option value="polevault">polevault</option><option value="javelinthrow">javelinthrow</option><option value="1500m">1500m</option>');
-                                                } else if (val == "decathlon") {
+                                                    $("#round").html('<option value="final">결승</option><option value="100m">100m</option><option value="longjump">longjump</option><option value="shotput">shotput</option><option value="highjump">highjump</option><option value="400m">400m</option><option value="110mH">110mH</option><option value="discusthrow">discusthrow</option><option value="polevault">polevault</option><option value="javelinthrow">javelinthrow</option><option value="1500m">1500m</option>');
+                                                } else if (val == "heptathlon") {
                                                     // 7종 선택에 따른 라운드 셀렉트 박스 변경
-                                                    $("#round").html('<option value="final">final</option><option value="100mh">100mh</option><option value="longjump">longjump</option><option value="shotput">shotput</option><option value="200m">200m</option><option value="highjump">highjump</option><option value="discusthrow">discusthrow</option><option value="800m">800m</option>');
+                                                    $("#round").html('<option value="final">결승</option><option value="100mh">100mh</option><option value="longjump">longjump</option><option value="shotput">shotput</option><option value="200m">200m</option><option value="highjump">highjump</option><option value="discusthrow">discusthrow</option><option value="800m">800m</option>');
                                                 } else {
                                                     // 그 밖의 경기 시
                                                     // $("#count").html('<option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>');
@@ -80,10 +80,10 @@ if (!authCheck($db, "authSchedulesCreate")) {
                                                 }
 
                                                 // 경기 선택 이벤트 발생 시 - 경기별 성별 변경 이벤트
-                                                if (val == "heptathlon" || val == "110mh") {
+                                                if (val == "decathlon" || val == "110mh") {
                                                     // 10종 경기: gender 남자 고정
                                                     $("#gender").html('<option value="m">남자</option>');
-                                                } else if (val == "decathlon" || val == "100mh") {
+                                                } else if (val == "heptathlon" || val == "100mh") {
                                                     // 7종 경기: gender 여자 고정
                                                     $("#gender").html('<option value="f">여자</option>');
                                                 } else if (val == "4x400mR(Mixed)") {

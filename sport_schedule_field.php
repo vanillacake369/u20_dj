@@ -161,7 +161,7 @@ if (empty($total_count)) {
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
                                 formaction="/record/field_horizontal_result_word.php">워드 출력</button>
-                            <?}else if ($sports=='longjump' || $sports=='triplejump'){?>
+                            <?}else {?>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
@@ -369,31 +369,34 @@ if (empty($total_count)) {
                     <div class="filed_BTN">
                         <div>
                             <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                formaction="electronic_display<? echo $schedule_result=='o' ? '_official' : '';?>.php">전광판
+                                formaction="electronic_display<?php echo $schedule_result=='o' ? '_official' : '';?>.php">전광판
                                 보기</button>
-                            <? if ($schedule_result=='o'){?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                formaction="award_ceremony.php">시상식 보기</button>
-                            <?}?>
-                            <? if ($sports=='longjump' || $sports=='triplejump'){?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                            <?php if ($schedule_result=='o'){
+                                echo
+                            '<button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                                formaction="award_ceremony.php">시상식 보기</button>';
+                            }?>
+                            <?php if ($sports=='longjump' || $sports=='triplejump'){
+                                echo
+                            '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_horizontal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_horizontal_result_eng_pdf.php">PDF(영) 출력</button>
                             <button type="submit" formaction="/action/record/result_execute_track_field_excel.php"
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
-                                formaction="/record/field_horizontal_result_word.php">워드 출력</button>
-                            <?}else{?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
+                                formaction="/record/field_horizontal_result_word.php">워드 출력</button>';
+                            }else{
+                            echo
+                            '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_normal_result_eng_pdf.php">PDF(영) 출력</button>
                             <button type="submit" formaction="/action/record/result_execute_track_field_excel.php"
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
-                                formaction="/record/field_normal_result_word.php">워드 출력</button>
-                            <?}?>
+                                formaction="/record/field_normal_result_word.php">워드 출력</button>';
+                            }?>
                         </div>
                         <div>
                             <?php

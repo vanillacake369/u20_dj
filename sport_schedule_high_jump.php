@@ -63,12 +63,13 @@ if ($rows['record_status'] == 'o') {
         echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
         ?>
                 </div>
-        <form action="" method="post">
+                <form action="" method="post">
                     <input name="round" value="<?=$round?>" hidden>
                     <input name="sports" value="<?=$sports?>" hidden>
                     <input name="gender" value="<?=$gender?>" hidden>
                     <input name="group" value="<?=$schedule_group?>" hidden>
-                    <!--<input name="name" value="--><?php //=$schedule_name?><!--" hidden>-->
+                    <!--<input name="name" value="--><?php //=$schedule_name?>
+                    <!--" hidden>-->
                     <input name="result" value="<?=$schedule_result?>" hidden>
                     <table class="box_table">
                         <colgroup>
@@ -223,7 +224,7 @@ if ($rows['record_status'] == 'o') {
                 echo '<tr id=col2';
                   if ($num % 2 == 0) echo ' class="Ranklist_Background">';
                   else echo ">";
-                if ($cnt3 == 12) {
+                if ($cnt3 == 13) {
                   //13번째 기록부터
                   $record = $db->query(
                       "SELECT record_trial,record_athlete_id FROM list_record
@@ -287,20 +288,26 @@ if ($rows['record_status'] == 'o') {
               ?>
                         </tbody>
                     </table>
-            <div class="filed_BTN">
-                <div>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                        보기</button>
-                    <?php if ($schedule_round == 'final') { ?>
-                        <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                    <?php } ?>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(한) 출력</button>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                    <button type="submit" formaction="/action/record/result_execute_vertical_excel.php" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
-                    <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
+                    <div class="filed_BTN">
+                        <div>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                                formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                                보기</button>
+                            <?php if ($schedule_round == 'final') { ?>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                                formaction="award_ceremony.php">시상식 보기</button>
+                            <?php } ?>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(한)
+                                출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영)
+                                출력</button>
+                            <button type="submit" formaction="/action/record/result_execute_vertical_excel.php"
+                                class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드
+                                출력</button>
 
-                </div>
-                        
+                        </div>
+
                         <div>
                             <?php
               // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
@@ -321,11 +328,11 @@ if ($rows['record_status'] == 'o') {
                         }
                       }
               ?>
-                      </div>  
+                        </div>
                     </div>
 
-        </div>
-        <!-- <div class="BTNform">
+            </div>
+            <!-- <div class="BTNform">
             <button type="button" class="nextBTN BTN_blue2 defaultBtn"
                 onclick="window.open('/sport_schedule_group_next.php?id=<?= $id ?>', 'window_name', 'width=800, height=750, location=no, status=no, scrollbars=yes')">다음
                 조 편성</button>
@@ -334,10 +341,10 @@ if ($rows['record_status'] == 'o') {
                 <button type="submit" class="resetBTN BTN_Orange2 defaultBtn" name="">모든 조 초기화</button>
             </form>
         </div> -->
-        <button type="button" class="changePwBtn defaultBtn">확인</button>
-    </div>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/restrict.js"></script>
+            <button type="button" class="changePwBtn defaultBtn">확인</button>
+        </div>
+        <script src="assets/js/main.js"></script>
+        <script src="assets/js/restrict.js"></script>
 </body>
 
 

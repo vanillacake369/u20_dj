@@ -112,7 +112,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
                           VALUES ('$pass','$high[$i]','$memo[$j]','$ruf','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]')";
       }
       mysqli_query($db, $savequery);
-      // echo $savequery.'<br>';
+      // echo 'ㅌㅌㅌ'.$savequery.'<br>';
       break;
         }
       if ($round == "final") {
@@ -141,7 +141,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
         $new = $rerow[0];
       }
       //---------------------------- 신기록 시작
-      if(strpos($memo[$i],'참고 기록')!==TRUE){   
+      if(strpos($memo[$j],'참고 기록')!==TRUE){   
        if($comprecord[$j] != $best){ //기존 기록과 변경된 기록이 같은 지 비교
            print_r($row);
          $memo[$j]=changePbSb($row[0],$best,$name, $gender, $round,$memo[$j],$check_round,'f');
@@ -247,8 +247,8 @@ for ($j = 0; $j < count($athlete_name); $j++) {
             WHERE record_athlete_id ='".$row["athlete_id"] ."' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_".$result_type1."_record='$best'"; //최종기록에 등수 및 메달 업데이트
           }
         }
-//         echo $savequery.'<br>';
-//         echo $updatequery.'<br>';
+        // echo $savequery.'<br>';
+        // echo $updatequery.'<br>';
       mysqli_query($db, $savequery);
       mysqli_query($db, $updatequery);
       break;
@@ -282,7 +282,7 @@ for ($j = 0; $j < count($athlete_name); $j++) {
                           VALUES ('$pass','$high[$i]','$memo[$j]','$ruf','".$row["athlete_id"]."','$name','$round','$gender','$heat','l','$rane[$j]','$judge[0]')";
         }
     }
-//     echo $savequery.'<br>';
+    // echo $savequery.'<br>';
       mysqli_query($db, $savequery);
     }
 }

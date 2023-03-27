@@ -27,72 +27,73 @@
     $judgeresult = $db->query($judgesql);
     $judgerow = mysqli_fetch_array($judgeresult);
     ?>
-    <!DOCTYPE html>
-    <html lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
 
-    <head>
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="stylesheet" href="../assets/css/style.css" />
-      <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
-      <script src="../assets/fontawesome/js/all.min.js"></script>
-      <!--Data Tables-->
-      <script type="text/javascript" src="../assets/js/jquery-1.12.4.min.js"></script>
-      <script type="text/javascript" src="../assets/js/onlynumber.js"></script>
-      <script type="text/javascript" src="../assets/js/change_athletics.js"></script>
-      <script type="text/javascript" src="../action/record/result_field_vertical_execute_excel.js"></script>
-      <script type="text/javascript">
-        window.onload = function() {
-            for (k = 0; k < document.querySelectorAll('#name').length; k++) {
-                let a = document.querySelectorAll('#name')[k];
-                const rain = a.parentElement.parentElement.className.split("_")[1];
-                //성공시 처리 부분
-                let high = document.querySelectorAll('[name="trial[]"]'); // 높이 배열 가져오기
-                let index = document.querySelectorAll("#result");
-                let calcal = 0.0;
-                for (i = 1; i <= 24; i++) {
-                    let k = '[name="gameresult' + i + '[]"]';
-                    let temp = document.querySelectorAll(k)[rain - 1].value;
-                    if (temp.search("O") != -1) {
-                        if (
-                            calcal < parseFloat(high[i - 1].value) ||
-                            isNaN(parseFloat(index[rain - 1].value))
-                        ) {
-                            calcal = parseFloat(high[i - 1].value);
-                        }
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
+    <script src="../assets/fontawesome/js/all.min.js"></script>
+    <!--Data Tables-->
+    <script type="text/javascript" src="../assets/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../assets/js/onlynumber.js"></script>
+    <script type="text/javascript" src="../assets/js/change_athletics.js"></script>
+    <script type="text/javascript" src="../action/record/result_field_vertical_execute_excel.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        for (k = 0; k < document.querySelectorAll('#name').length; k++) {
+            let a = document.querySelectorAll('#name')[k];
+            const rain = a.parentElement.parentElement.className.split("_")[1];
+            //성공시 처리 부분
+            let high = document.querySelectorAll('[name="trial[]"]'); // 높이 배열 가져오기
+            let index = document.querySelectorAll("#result");
+            let calcal = 0.0;
+            for (i = 1; i <= 24; i++) {
+                let k = '[name="gameresult' + i + '[]"]';
+                let temp = document.querySelectorAll(k)[rain - 1].value;
+                if (temp.search("O") != -1) {
+                    if (
+                        calcal < parseFloat(high[i - 1].value) ||
+                        isNaN(parseFloat(index[rain - 1].value))
+                    ) {
+                        calcal = parseFloat(high[i - 1].value);
                     }
                 }
-                index[rain - 1].value = calcal; // 기존 값과 비교 후 성공 시 기록이 크면 바꾸기
             }
-            rankcal2()
+            index[rain - 1].value = calcal; // 기존 값과 비교 후 성공 시 기록이 크면 바꾸기
         }
-        $(document).on("click", "button[name='addtempresult']", function() {
-            console.log('11');
-            $(".signup_submit").append("<input type='hidden' name=tempstore value='1'>");
-        });
-        $(document).on("click", "button[name='addresult']", function() {
-            $(".signup_submit").append("<input type='hidden' name=tempstore value='0'>");
-        });
-        function input_time() {
-            var today = new Date();
-            var year = today.getFullYear();
-            var month = ('0' + (today.getMonth() + 1)).slice(-2);
-            var day = ('0' + today.getDate()).slice(-2);
-            var dateString = year + '-' + month + '-' + day;
-            var hours = ('0' + today.getHours()).slice(-2);
-            var minutes = ('0' + today.getMinutes()).slice(-2);
-            var seconds = ('0' + today.getSeconds()).slice(-2);
-            var timeString = hours + ':' + minutes + ':' + seconds;
-            let total = dateString + " " + timeString;
-            let intime = document.querySelector("input[name='starttime']")
-            intime.value = total
-        }
-      </script>
-      <title>U20</title>
-    </head>
+        rankcal2()
+    }
+    $(document).on("click", "button[name='addtempresult']", function() {
+        console.log('11');
+        $(".signup_submit").append("<input type='hidden' name=tempstore value='1'>");
+    });
+    $(document).on("click", "button[name='addresult']", function() {
+        $(".signup_submit").append("<input type='hidden' name=tempstore value='0'>");
+    });
 
-    <body>
+    function input_time() {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2);
+        var day = ('0' + today.getDate()).slice(-2);
+        var dateString = year + '-' + month + '-' + day;
+        var hours = ('0' + today.getHours()).slice(-2);
+        var minutes = ('0' + today.getMinutes()).slice(-2);
+        var seconds = ('0' + today.getSeconds()).slice(-2);
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        let total = dateString + " " + timeString;
+        let intime = document.querySelector("input[name='starttime']")
+        intime.value = total
+    }
+    </script>
+    <title>U20</title>
+</head>
+
+<body>
     <!-- contents 본문 내용 -->
     <div class="container">
         <div class="athlete">
@@ -132,13 +133,13 @@
                                 </li>
                                 <li class="row input_row throw_row">
                                     <span>경기 시작 시간</span>
-                                  <?php
+                                    <?php
                                   echo '<input placeholder="시작 시간" type="text" name="starttime" value="'. ($rows['record_start']) .'"
                                   maxlength="30" required="" />';
                                   ?>
-                                  <input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />
-                              </div>
-                            </ul>
+                                    <input type="button" onclick="input_time()" class="btn_add bold" value="현재 시간" />
+                        </div>
+                        </ul>
                     </div>
                     <div class="Thorw_result">
                         <div class="relay_result">
@@ -149,32 +150,32 @@
                         </div>
                     </div>
                     <table class="box_table">
-                      <colgroup>
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 14%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 5%" />
-                              <col style="width: 11%" />
-                      </colgroup>
+                        <colgroup>
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 14%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                            <col style="width: 11%" />
+                        </colgroup>
                         <thead class="result_table entry_table">
-                            
-                        <tr id="col1">
-                          <th rowspan="2">등수</th>
-                          <th rowspan="2">순서</th>
-                          <th rowspan="2">이름</th>
-                          <?php
+
+                            <tr id="col1">
+                                <th rowspan="2">등수</th>
+                                <th rowspan="2">순서</th>
+                                <th rowspan="2">이름</th>
+                                <?php
                             // 높이 찾는 쿼리
                             $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record FROM list_record where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 limit 12");
                             $cnt1 = 0;
@@ -192,12 +193,12 @@
                                               onkeyup="heightFormat(this)"></th>';
                             }
                             ?>
-                              <th rowspan="2">기록</th>
-                              <th>비고</th>
+                                <th rowspan="2">기록</th>
+                                <th>비고</th>
 
                             </tr>
                             <tr id="col2">
-                            <?php if ($cnt1 == 12) {
+                                <?php if ($cnt1 == 12) {
                               $cnt2 = 0;
                               $highresult = $db->query("SELECT DISTINCT record_".$result_type."_record FROM list_record where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 limit 12,12");
                               while ($highrow = mysqli_fetch_array($highresult)) {
@@ -223,10 +224,10 @@
                                 <th style="background: none">신기록</th>
                             </tr>
                             <tr class="filed2_bottom">
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody class="table_tbody entry_table">
-                        <?php
+                            <?php
                         if ($rows["record_state"] === "y") {
                           $order = "record_".$result_type."_result";
                           $obj = "record_".$result_type."_result,record_memo,athlete_id,record_".$result_type."_record,";
@@ -303,7 +304,7 @@
                     '" maxlength="100" /></td>';
                   //
                   echo '<tr id=col2 class="col2_' . $cnt . '">';
-                  if ($cnt3 == 12) {
+                  if ($cnt3 == 13) {
                     //13번째 기록부터
                     $record = $db->query(
                       "SELECT record_trial,record_athlete_id FROM list_record
@@ -312,7 +313,7 @@
                       " AND athlete_id= record_athlete_id
                       and record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' AND record_" . $result_type . "_record>0
                       ORDER BY record_" . $result_type . "_record ASC limit 12,12"
-                    ); //선수별 기록 찾는 쿼리
+                    ); //선수별 기록 찾는 쿼리                 
                     while ($recordrow = mysqli_fetch_array($record)) {
                       echo "<td>";
                       echo '<input placeholder="" type="text" name="gameresult' .
@@ -374,15 +375,15 @@
                   $cnt++;
                 }
                 ?>
-                </tr>
-                </tr>
+                            </tr>
+                            </tr>
                         </tbody>
                     </table>
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
                     <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
                         value="<?=($rows['schedule_memo']??null)?>" maxlength=" 100" />
-                      <div class="modify_Btn input_Btn result_Btn">
-                    <?php
+                    <div class="modify_Btn input_Btn result_Btn">
+                        <?php
                     if ($rows["record_state"] != "y") {
                       echo '<div class="signup_submit" style="width:49%">
                                     <button type="submit" class="BTN_Red full_width" name="addtempresult"
@@ -398,21 +399,21 @@
                               </div>';
                           }else{
                             if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                              <div class="modify_Btn input_Btn result_Btn">
-                                <button type="submit" class="BTN_Blue full_width" name="addresult"
-                                    formaction="../action/record/field_vertical_result_insert.php">
-                                    <span>확인</span>
-                                </button>
-                            </div>
-                          <?php }
+                        <div class="modify_Btn input_Btn result_Btn">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                formaction="../action/record/field_vertical_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
+                        <?php }
                           elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                              <div class="modify_Btn input_Btn result_Btn">
-                              <button type="submit" class="BTN_Blue full_width" name="addresult"
-                                  formaction="../action/record/field_vertical_result_insert.php">
-                                  <span>확인</span>
-                              </button>
-                          </div>
-                          <?php } 
+                        <div class="modify_Btn input_Btn result_Btn">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult"
+                                formaction="../action/record/field_vertical_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
+                        <?php } 
                       }
                     ?>
                     </div>
@@ -422,5 +423,5 @@
     </div>
     <script src="../assets/js/main.js?ver=7"></script>
 </body>
-    
+
 </html>

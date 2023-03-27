@@ -46,6 +46,7 @@ if (mysqli_fetch_array($key)) {
         if(mysqli_num_rows($checkresult)==0){
             echo "<script>alert('해당 경기에 대한 조가 없습니다.'); history.back();</script>";     
         }
+        exit;
         // $start = date("Y-m-d H:i:s");
         $date = $date_year . "-" . $date_month . "-" . $date_day;
         // var_dump($date);

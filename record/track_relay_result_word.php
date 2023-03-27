@@ -25,18 +25,20 @@
         <?php
         require_once __DIR__ . "/../action/module/record_worldrecord.php";
         require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결
+        $sports = $_POST['sports'];
+        $round = $_POST['round'];
+        $gender = $_POST['gender'];
+        $group = $_POST['group'];
+        $FILE_NAME = $sports . '_' . $gender . '_' . $round . '_' . $group . 'group.doc';
+
         /* word 다운을 위한 해더 */
         header("Content-type: application/vnd.ms-word;charset=UTF-8");
-        header("Content-Disposition: attachment; filename=word_download_test.doc");
+        header("Content-Disposition: attachment; filename=" . $FILE_NAME);
         header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
         header("Pragma: no-cache");
         header("Expires: 0");
         print("<meta http-equiv=\"Content-Type\" content=\"application/vnd.ms-word; charset=utf-8\">");
 
-        $sports = $_POST['sports'];
-        $round = $_POST['round'];
-        $gender = $_POST['gender'];
-        $group = $_POST['group'];
         $sql = "select 
                             *,athlete_bib, athlete_country, athlete_birth, record_end, record_wind
                             from list_schedule JOIN list_athlete  JOIN list_record

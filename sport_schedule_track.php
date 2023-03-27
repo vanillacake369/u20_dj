@@ -306,14 +306,14 @@ function islane($schedule_sports, $what)
                                              value="' . $athname[$t] . '" maxlength="30" required="" readonly style="margin-bottom: 10px;"/>';
                                             }
                                         }
-                                        echo '<td><input placeholder="소속" type="text" name="division"  value="' . $row['athlete_country'] . '"maxlength="50" required="" readonly/></td>';
+                                        echo '<td><input placeholder="소속" type="text" name="division[]"  value="' . $row['athlete_country'] . '"maxlength="50" required="" readonly/></td>';
                                         echo '<td>
                                 <input placeholder="경기 결과" type="text" id="result" name="gameresult[]" 
                                     value="' . (($athrecord[3] ?? null) ? $athrecord[3] : '') . '" maxlength="8"  onkeyup="trackFinal(this)" readonly/>
                                     </div>
                                     </div></td>';
                                         echo '<td>
-                                <input placeholder="" type="text" id="result" 
+                                <input placeholder="" type="text" id="result" name="reactiontime[]"
                                     value="' . (($row['record_reaction_time'] ?? null) ? $row['record_reaction_time'] : '') . '" maxlength="8"  onkeyup="trackFinal(this)" readonly/>
                                     </div>
                                     </div></td>';

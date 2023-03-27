@@ -59,18 +59,26 @@ function logInsert($db, $id, $activity, $sub_activity)
  */
 function authCheck($db, $activity)
 {
+    if (isset($_SESSION['Id']) &&  $_SESSION['Id'] != "")
+    {
+        $sql = " SELECT admin_level FROM list_admin WHERE admin_account = '" . $_SESSION['Id'] . "';";
+        $row = $db->query($sql);
+        $result = mysqli_fetch_array($row);
 
-    $sql = " SELECT admin_level FROM list_admin WHERE admin_account = '" . $_SESSION['Id'] . "';";
-    $row = $db->query($sql);
-    $result = mysqli_fetch_array($row);
-
-    if (!in_array($activity, explode(',', $result['admin_level']))) {
+        if (!in_array($activity, explode(',', $result['admin_level']))) {
+            return false;
+            exit;
+        } else {
+            return true;
+            exit;
+    }
+    }
+    else
+    {
         return false;
         exit;
-    } else {
-        return true;
-        exit;
     }
+    
 }
 
 /** @Potatoeunbi

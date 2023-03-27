@@ -367,6 +367,7 @@ function select_change_listener() {
   }
 }
 // 조 편성하기 추가 버튼
+if(document.querySelector(document.querySelector(".filed2_Table"))){
 const addColumnBtns = document.querySelectorAll(".add-column-btn");
 
 for (let i = 0; i < addColumnBtns.length; i++) {
@@ -414,7 +415,7 @@ for (let i = 0; i < deleteColumnBtns.length; i++) {
     deleteColumn(i);
   });
 }
-
+}
 // ad카드 부분
 if (document.querySelector(".AD_front_name") !== null) {
   const adFrontName = document.querySelector(".AD_front_name p");
@@ -552,12 +553,20 @@ function issueId(pageURL, entry_who) {
   // 체크된 참가자 id 값 가져오기 (input > value태그)
   var checkboxes = document.querySelectorAll("input.entry_check");
   var checkedId = [];
+  let checkedCount = 0;
   for (var i = 0, n = checkboxes.length; i < n; i++) {
     if (checkboxes[i].checked === true) {
       checkedId.push(checkboxes[i].value);
+      checkedCount++;
     }
   }
-  checkedId.forEach((entry) => updatePop(entry, entry_who, pageURL));
+  if (checkedCount === 0) {
+    alert("하나 이상 선택해주세요");
+  }
+  else
+  {
+    checkedId.forEach((entry) => updatePop(entry, entry_who, pageURL));
+  }
 }
 
 // 전체 선수를 선택 함수
@@ -717,12 +726,21 @@ function issueId(pageURL, entry_who) {
   // 체크된 참가자 id 값 가져오기 (input > value태그)
   var checkboxes = document.querySelectorAll("input.entry_check");
   var checkedId = [];
+  let checkedCount = 0;
   for (var i = 0, n = checkboxes.length; i < n; i++) {
     if (checkboxes[i].checked === true) {
       checkedId.push(checkboxes[i].value);
+      checkedCount++;
     }
   }
-  pdfPop(entry_who, checkedId, pageURL);
+  if (checkedCount === 0) {
+    alert("하나를 선택해주세요");
+  }
+  else
+  {
+    pdfPop(entry_who, checkedId, pageURL);
+  }
+  
 }
 
 function pdfPop(entry_who, checkedId, openURL) {
@@ -1039,19 +1057,3 @@ function reloadWhenVisibilityChange() {
   });
 }
 
-if (document.querySelector(".ID_Print ")) {
-  const ID_Print = document.querySelector(".ID_Print ");
-  const checklist = document.getElementsByName("checked[]");
-
-  ID_Print.addEventListener("click", () => {
-    let checkedCount = 0;
-    for (let i = 0; i < checklist.length; i++) {
-      if (checklist[i].checked === true) {
-        checkedCount++;
-      }
-    }
-    if (checkedCount === 0) {
-      alert("하나를 선택해주세요");
-    }
-  });
-}

@@ -139,9 +139,9 @@ if (!authCheck($db, "authEntrysRead")) {
                                             
                                         </select>
                                 </li>
-                                <li class="row input_row row_item input_width">
-                                    <span>선수촌</span>
-                                        <select name="judge_village" required>
+                                <li class="row input_row row_item input_width full_width">
+                                    <span class="full_span">선수촌</span>
+                                        <select class="full_width2"  name="judge_village" required>
                                             <option value='' selected disabled hidden>접근시설선택</option>
                                             <option value="AV">선수촌 거주 허용</option>
                                             <option value="VA">선수촌 전구역(거주 불허)</option>

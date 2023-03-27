@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../../backheader.php";
 require_once __DIR__ . "/../../class-image.php";
-require_once __DIR__ . "/../../auth/config.php"; // 데이터베이스 연결 :: auth 내부에서 auth 확인 후 db 연결
+require_once __DIR__ . "/../../includes/auth/config.php"; // 데이터베이스 연결 :: auth 내부에서 auth 확인 후 db 연결
 require_once __DIR__ . "/imgUpload.php"; //B:데이터베이스 연결
 require_once __DIR__ . "/dictionary.php"; //B:서치 select 태크 사용하기 위한 자료구조
 

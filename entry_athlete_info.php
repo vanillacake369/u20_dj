@@ -60,10 +60,10 @@ while ($row = mysqli_fetch_array($result)) {
                 <form action="">
                     <div class="UserProfile_modify info_img Participant_img">
                         <div>
-                            <?php if (!isset($athlete_personal["athlete_profile"]) || $athlete_personal["athlete_profile"] == "")
+                        <?php if ((!isset($row["athlete_profile"]) && $row["athlete_profile"] == "") || !file_exists("./assets/img/athlete_img/" . $row["athlete_profile"]))
                             {
                             ?>
-                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <img src=<?php echo "./assets/img/profile.jpg" ?> alt="avatar" />
                             <?php }else{?>
                             <img src=<?php echo "./assets/img/athlete_img/" . $athlete_personal["athlete_profile"] ?> alt="avatar" />
                             <?php }?>
@@ -240,6 +240,8 @@ while ($row = mysqli_fetch_array($result)) {
                                             $sports_id = explode(',', $athlete_personal["athlete_schedule"]);
                                             $attendingSports = explode(',', $athlete_personal["athlete_attendance"]);
                                             $num = 0;
+                                            if(isset($sports_id[0]) && $sports_id[0] != "")
+                                            {
                                             foreach ($sports_id as $id) {
                                                 $num++;
                                                 echo "<tr";
@@ -255,7 +257,7 @@ while ($row = mysqli_fetch_array($result)) {
                                                 echo "<td>" . htmlspecialchars($categoryOfSports_dic[trim($id)]) . ' ' . "</td>";
                                                 // 참가 경기
                                                 echo "<td>" . htmlspecialchars($sport_dic[trim($id)]) . ' ' . "</td>";
-                                                // 라운드
+                                                // 라운드 
                                                 echo "<td></td>";
                                                 // 참석 여부
                                                 if (in_array(trim($id), $attendingSports)) {
@@ -270,6 +272,7 @@ while ($row = mysqli_fetch_array($result)) {
                                                 // 비고
                                                 echo "<td></td>";
                                                 echo "</tr>";
+                                            }
                                             }
                                         }
                                         ?>

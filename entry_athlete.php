@@ -69,7 +69,11 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($athlete_country_dic as $key => $value) {
-                                        echo '<option value="' . $value . '" ' . ($isCountrySelected[$value] ?? NULL) . '>' . $key . '</option>';
+                                        echo '<option value="' . $value . '" ';
+                                        if (isset($isCountrySelected[$key]) && $isCountrySelected[$key] != "")
+                                            echo $isCountrySelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -80,7 +84,11 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($athlete_region_dic as $key) {
-                                        echo '<option value="' . $key . '" ' . ($isRegionSelected[$key] ?? NULL) . '>' . $key . '</option>';
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isRegionSelected[$key]) && $isRegionSelected[$key] != "")
+                                            echo $isRegionSelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -90,8 +98,12 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non" hidden="">소속</option>
                                     <option value="non">전체</option>
                                     <?php
-                                    foreach ($athlete_division_dic as $key) {
-                                        echo '<option value="' . $key . '" ' . ($isDivisionSelected[$key] ?? NULL) . '>' . $key . '</option>';
+                                    foreach ($director_division_dic as $key) {
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isDivisionSelected[$key]) && $isDivisionSelected[$key] != "")
+                                            echo $isDivisionSelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -103,7 +115,11 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <?php
                                     foreach ($athlete_gender_dic as $key) {
                                         $gender = ($key == 'm') ? '남성' : '여성';
-                                        echo '<option value="' . $key . '" ' . ($isGenderSelected[$key] ?? NULL) . '>' . $gender . '</option>';
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isGenderSelected[$key]) && $isGenderSelected[$key] != "")
+                                            echo $isGenderSelected[$key] .'>' . $gender . '</option>';
+                                        else
+                                            echo '>' . $gender . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -232,48 +248,80 @@ if (isset($categoryValue) && isset($orderValue)) {
                             echo "<td>" . htmlspecialchars($row["athlete_age"]) . "</td>";
                             // 참가자 참가 경기
                             echo '<td class="popup_BTN">';
-                            $sports = explode(',', $row["athlete_schedule"]);
-                            if (count($sports) > 1) {
-                                echo htmlspecialchars($sport_dic[$sports[0]]) . " 외 " . (count($sports) - 1) . "개";
-                            } else {
-                                echo htmlspecialchars($sport_dic[$sports[0]]);
+                            
+                            if (!isset($row["athlete_schedule"]) || $row["athlete_schedule"] == "")
+                            {
+                                $sports = "-";
+                                echo $sports;
+                                echo '<div class="item_popup" style="display: none;">';
+                                echo $sports;
+                                echo "</div>";
                             }
-                            echo '<div class="item_popup" style="display: none;">';
-                            foreach ($sports as $id) {
-                                if ($id == end($sports)) {
-                                    echo htmlspecialchars($sport_dic[trim($id)]);
+                               
+                            else{
+                                $sports = explode(',', $row["athlete_schedule"]);
+                                if (hasSearchedValue($sports)) {
+                                    if (count($sports) > 1) {
+                                        echo htmlspecialchars($sport_dic[$sports[0]]) . " 외 " . (count($sports) - 1) . "개";
+                                    } else {
+                                        echo htmlspecialchars($sport_dic[$sports[0]]);
+                                    }
                                 } else {
-                                    echo htmlspecialchars($sport_dic[trim($id)]) . '<br>';
+                                    echo htmlspecialchars(" - ");
+                                }
+
+                                echo '<div class="item_popup" style="display: none;">';
+                                if (hasSearchedValue($sports)) {
+                                    foreach ($sports as $attend) {
+                                        if ($attend == end($sports)) {
+                                            echo htmlspecialchars($sport_dic[trim($attend)]);
+                                        } else {
+                                            echo htmlspecialchars($sport_dic[trim($attend)]) . '<br>';
+                                        }
+                                    }
+                                } else {
+                                    echo htmlspecialchars(" - ");
                                 }
                             }
                             echo '</div>';
-                            echo "</>";
+                            echo "</td>";
                             // 참가자 참석 경기
                             // 클릭 시 모달창으로 보여줄 수 있게 하기
                             echo '<td class="popup_BTN">';
-                            $attendingSports = explode(',', $row["athlete_attendance"]);
-                            if (hasSearchedValue($attendingSports)) {
-                                if (count($attendingSports) > 1) {
-                                    echo htmlspecialchars($sport_dic[$attendingSports[0]]) . " 외 " . (count($attendingSports) - 1) . "개";
-                                } else {
-                                    echo htmlspecialchars($sport_dic[$attendingSports[0]]);
-                                }
-                            } else {
-                                echo htmlspecialchars(" - ");
+                            if (!isset($row["athlete_attendance"]) || $row["athlete_attendance"] == "")
+                            {
+                                $attendingSports = "-";
+                                echo $attendingSports;
+                                echo '<div class="item_popup" style="display: none;">';
+                                echo $attendingSports;
+                                echo "</div>";
                             }
-                            echo '<div class="item_popup" style="display: none;">';
-                            if (hasSearchedValue($attendingSports)) {
-                                foreach ($attendingSports as $attend) {
-                                    if ($attend == end($attendingSports)) {
-                                        echo htmlspecialchars($sport_dic[trim($attend)]);
+                               
+                            else{
+                                $attendingSports = explode(',', $row["athlete_attendance"]);
+                                if (hasSearchedValue($attendingSports)) {
+                                    if (count($attendingSports) > 1) {
+                                        echo htmlspecialchars($sport_dic[$attendingSports[0]]) . " 외 " . (count($attendingSports) - 1) . "개";
                                     } else {
-                                        echo htmlspecialchars($sport_dic[trim($attend)]) . '<br>';
+                                        echo htmlspecialchars($sport_dic[$attendingSports[0]]);
                                     }
+                                } else {
+                                    echo htmlspecialchars(" - ");
                                 }
-                            } else {
-                                echo htmlspecialchars(" - ");
+                                echo '<div class="item_popup" style="display: none;">';
+                                if (hasSearchedValue($attendingSports)) {
+                                    foreach ($attendingSports as $attend) {
+                                        if ($attend == end($attendingSports)) {
+                                            echo htmlspecialchars($sport_dic[trim($attend)]);
+                                        } else {
+                                            echo htmlspecialchars($sport_dic[trim($attend)]) . '<br>';
+                                        }
+                                    }
+                                } else {
+                                    echo htmlspecialchars("-");
+                                }
+                                
                             }
-
                             echo '</div>';
                             echo "</td>";
                             // 참가자 상세 보기

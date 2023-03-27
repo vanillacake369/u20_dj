@@ -30,24 +30,24 @@ $athlete_sb_arr = json_decode($row['athlete_sb'], true);
 // pb array
 $athlete_pb_arr = json_decode($row['athlete_pb'], true);
 // 10종,7종 선택 옵션
-unset($sport_dic["decathlon"]);
-unset($sport_dic["heptathlon"]);
-$sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
-$sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
-$sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
-$sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
-$sport_dic["decathlon(400m)"] = "Decathlon(400m)";
-$sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
-$sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
-$sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
-$sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
-$sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
-$sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
-$sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
-$sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
-$sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
-$sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
-$sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
+// unset($sport_dic["decathlon"]);
+// unset($sport_dic["heptathlon"]);
+// $sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
+// $sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
+// $sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
+// $sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
+// $sport_dic["decathlon(400m)"] = "Decathlon(400m)";
+// $sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
+// $sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
+// $sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
+// $sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
+// $sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
+// $sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
+// $sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
+// $sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
+// $sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
+// $sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
+// $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -66,10 +66,10 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                     </p>
                     <div class="UserProfile_modify Participant_img ptp_img">
                         <div>
-                            <?php if (!isset($row["athlete_profile"]) && $row["athlete_profile"] == "")
+                            <?php if ((!isset($row["athlete_profile"]) && $row["athlete_profile"] == "") || !file_exists("./assets/img/athlete_img/" . $row["athlete_profile"]))
                             {
                             ?>
-                                <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                                <img src=<?php echo "./assets/img/profile.jpg" ?> alt="avatar" />
                             <?php }else{?>
                                 <img src=<?php echo "./assets/img/athlete_img/" . $row["athlete_profile"] ?> alt="avatar" />
                             <?php }?>
@@ -242,6 +242,26 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                             // START FOR LOOP OF "SB"
                             // key($athlete_sb_arr) : sports_code
                             // current($athlete_sb_arr) : record
+                            if (empty($athlete_sb_arr))
+                            {?>
+                                <ul class="modify_checkList" id="sb-input">
+                                <select name="athlete_sb_sports[]" id="sb-sports-select">
+                                    <?php
+                                    // key($sport_dic) : sports_code
+                                    // current($sport_dic) : sports_name
+                                    for ($value = 1; $value <= count($sport_dic); $value++) {
+                                        echo '<option value="' . key($sport_dic) . '">' . current($sport_dic) . '</option>';
+                                        next($sport_dic);
+                                    }
+                                    reset($sport_dic);
+                                    ?>
+                                </select>
+                                <input type="text" name="athlete_sb[]" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" onkeyup="heightFormat(this)" />
+                                <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN " id="delete-sb"><i class="xi-minus"></i></button>
+                                </ul>
+                            <?php }
+                            else
+                            {
                             for ($i = 0; $i < count($athlete_sb_arr); $i++) {
                             ?>
                                 <ul class="modify_checkList" id="sb-input">
@@ -268,11 +288,12 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 next($athlete_sb_arr);
                             }
                             reset($athlete_sb_arr);
+                        }
                             // END FOR LOOP OF "SB"
                             ?>
                         </div>
                         <div class="filed_BTN2">
-                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-sb"><i class="xi-plus"></i></button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN" id="add-sb"><i class="xi-plus"></i></button>
                         </div>
                     </div>
                     <div class="modify_check">
@@ -282,6 +303,24 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                             // START FOR LOOP OF "PB"
                             // key($athlete_pb_arr) : sports_code
                             // current($athlete_pb_arr) : record
+                            if (empty($athlete_pb_arr))
+                            {?>
+                                <ul class="modify_checkList" id="pb-input">
+                                    <select name="athlete_pb_sports[]" id="pb-sports-select">
+                                        <?php
+                                        // key($sport_dic) : sports_code
+                                        // current($sport_dic) : sports_name
+                                        for ($value = 1; $value <= count($sport_dic); $value++) {
+                                            echo '<option value="' . key($sport_dic) . '">' . current($sport_dic) . '</option>';
+                                            next($sport_dic);
+                                        }
+                                        reset($sport_dic);
+                                        ?>
+                                    </select>
+                                    <input type="text" name="athlete_pb[]" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" />
+                                    <button type=" button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
+                                </ul>
+                            <?php } else {
                             for ($i = 0; $i < count($athlete_pb_arr); $i++) {
                             ?>
                                 <ul class="modify_checkList" id="pb-input">
@@ -301,20 +340,28 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                         ?>
                                     </select>
                                     <input type="text" name="athlete_pb[]" id="athlete_pb" value="<?php echo current($athlete_pb_arr) ?>" placeholder="PB를 입력해 주세요" />
-                                    <button type=" button" class="defaultBtn BIG_btn BTN_Blue filedBTN delete-column-btn" id="delete-pb"><i class="xi-minus"></i></button>
+                                    <button type="button" class="defaultBtn BIG_btn BTN_Blue filedBTN " id="delete-pb"><i class="xi-minus"></i></button>
                                 </ul>
                             <?php
                                 next($athlete_pb_arr);
                             }
                             reset($athlete_pb_arr);
+                        }
                             // END FOR LOOP OF "PB"
                             ?>
                         </div>
                         <div class="filed_BTN2">
-                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN add-column-btn" id="add-pb"><i class="xi-plus"></i></button>
+                            <button type="button" class="defaultBtn BIG_btn BTN_Orange2 filedBTN " id="add-pb"><i class="xi-plus"></i></button>
                         </div>
                     </div>
-                    <script>
+                </div>
+                <div class="modify_Btn input_Btn Participant_Btn">
+                    <button type="submit" class="BTN_blue2" type="button" name="athlete_edit">수정하기</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
                         // sb 추가 버튼 @author 임지훈 @vanillacake369
                         $(document).ready(function() {
                             $('#add-sb').click(function() {
@@ -329,16 +376,19 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 $('#pb-section').append(list); // Append the copy to the body of the document
                             });
                         });
+                        
                         // sb 삭제 버튼 @author 임지훈 @vanillacake369
                         $(document).ready(function() {
                             $(document).on("click", '#delete-sb', function() {
-                                $(this).parent().remove();
+                                if ($(this).parent().siblings().length > 1 )
+                                    $(this).parent().remove();
                             });
                         });
                         // pb 삭제 버튼 @author 임지훈 @vanillacake369
                         $(document).ready(function() {
                             $(document).on("click", '#delete-pb', function() {
-                                $(this).parent().remove();
+                                if ($(this).parent().siblings().length > 1 )
+                                    $(this).parent().remove();
                             });
                         });
                         // sb 7종, 10종 선택 시, 입력값 형식강제 풀어버림 @author 임지훈 @vanillacake369
@@ -366,14 +416,8 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                             });
                         });
                     </script>
-                </div>
-                <div class="modify_Btn input_Btn Participant_Btn">
-                    <button type="submit" class="BTN_blue2" type="button" name="athlete_edit">수정하기</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <script src="/assets/js/main.js?v=8"></script>
+    <script src="/assets/js/main.js?v=12"></script>
+
     <?php
         require_once "action/module/athlete_modify_selected.php";
     ?>

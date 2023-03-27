@@ -44,12 +44,12 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
                 <form action="./action/module/coach_update.php" method="post" class="form" enctype="multipart/form-data">
                     <div class="UserProfile_modify coachArea Participant_img ptp_img">
                         <div>
-                            <?php if (!isset($row["coach_profile"]) || $row["coach_profile"] == "")
+                            <?php if ((!isset($row["coach_profile"]) || $row["coach_profile"] == "") || !file_exists("./assets/img/coach_img/" . $row["coach_profile"]))
                             {
                             ?>
-                            <img src=<?php echo "./assets/img/athlete_img/profile.png" ?> alt="avatar" />
+                            <img src=<?php echo "./assets/img/profile.jpg" ?> alt="avatar" />
                             <?php }else{?>
-                            <img src=<?php echo "./assets/img/athlete_img/" . $row["coach_profile"] ?> alt="avatar" />
+                            <img src=<?php echo "./assets/img/coach_img/" . $row["coach_profile"] ?> alt="avatar" />
                             <?php }?>
                         </div>
                         <div>
@@ -151,9 +151,9 @@ $birth = explode('-', $row["coach_birth"]); //생일 정보 나눔
                                             
                                         </select>
                                 </li>
-                                <li class="row input_row row_item input_width">
-                                    <span>선수촌</span>
-                                        <select name="coach_village" required>
+                                <li class="row input_row row_item input_width full_width">
+                                    <span class="full_span">선수촌</span>
+                                        <select class="full_width2" name="coach_village" required>
                                             <option value='' selected disabled hidden>접근시설선택</option>
                                             <option value="AV" <?php echo $row["coach_village"] == 'AV' ? "selected" : "";?>>선수촌 거주 허용</option>
                                             <option value="VA" <?php echo $row["coach_village"] == 'VA' ? "selected" : "";?>>선수촌 전구역(거주 불허)</option>

@@ -376,19 +376,15 @@ $total_count = mysqli_num_rows($count);
                                 $worldstmt->execute();
                             }
 
-                            //@Potatoeunbi
-                            //삭제하려는 경기의 record 삭제
-                            $subsql = "UPDATE list_record SET record_pass ='n',record_official_result=null,record_live_result=null,record_official_record=NULL,record_live_record=NULL,
-                            record_multi_record=NULL,record_new='n',record_memo=NULL,record_medal=0,record_wind=NULL,record_weight=NULL,record_status='n',record_reaction_time=NULL,
-                            record_start=NULL,record_end=NULL,record_state='n' WHERE record_sports=? AND record_round=? AND record_gender=?";
-
-                            $substmt = $db->prepare($subsql);
-                            $substmt->bind_param("sss", $S_row['schedule_sports'],$S_row['schedule_round'], $S_row['schedule_gender']);
-                            $substmt->execute();
-
-
                             //높이뛰기와 장대높이뛰기일 경우 선수별로 하나의 record투플를 제외한 나머지를 삭제
                             if($S_row['schedule_sports'] =='highjump' || $S_row['schedule_sports'] =='polevault' || $S_row['schedule_round']  =='polevault' || $S_row['schedule_round']  =='highjump'){
+                                $subsql = "UPDATE list_record SET record_pass ='n',record_official_result=null,record_live_result=null,record_official_record=NULL,record_live_record=NULL,
+                            record_multi_record=NULL,record_new='n',record_memo=NULL,record_medal=0,record_wind=NULL,record_weight=NULL,record_status='n',record_reaction_time=NULL,
+                            record_start=NULL,record_end=NULL,record_state='n',record_trial=NULL WHERE record_sports=? AND record_round=? AND record_gender=?";
+                                $substmt = $db->prepare($subsql);
+                                $substmt->bind_param("sss", $S_row['schedule_sports'],$S_row['schedule_round'], $S_row['schedule_gender']);
+                                $substmt->execute();
+
                                 $distinctsql="DELETE FROM list_record 
                                 WHERE record_id IN (
                                   SELECT record_id 
@@ -402,6 +398,15 @@ $total_count = mysqli_num_rows($count);
                                   ) AS subquery 
                                   WHERE cnt > 1
                                 );";
+                                $substmt = $db->prepare($distinctsql);
+                                $substmt->bind_param("sss", $S_row['schedule_sports'],$S_row['schedule_round'], $S_row['schedule_gender']);
+                                $substmt->execute();
+                            }else{
+                                //@Potatoeunbi
+                                //삭제하려는 경기의 record 삭제
+                                $subsql = "UPDATE list_record SET record_pass ='n',record_official_result=null,record_live_result=null,record_official_record=NULL,record_live_record=NULL,
+                            record_multi_record=NULL,record_new='n',record_memo=NULL,record_medal=0,record_wind=NULL,record_weight=NULL,record_status='n',record_reaction_time=NULL,
+                            record_start=NULL,record_end=NULL,record_state='n' WHERE record_sports=? AND record_round=? AND record_gender=?";
                                 $substmt = $db->prepare($subsql);
                                 $substmt->bind_param("sss", $S_row['schedule_sports'],$S_row['schedule_round'], $S_row['schedule_gender']);
                                 $substmt->execute();

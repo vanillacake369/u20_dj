@@ -71,8 +71,11 @@ zend_version()
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($judge_country_dic as $key => $value) {
-                                        echo '<option value="' . $value . '" ' . $isCountrySelected[$value] . '>' . $key . '</option>';
-                                        
+                                        echo '<option value="' . $value . '" ';
+                                        if (isset($isCountrySelected[$key]) && $isCountrySelected[$key] != "")
+                                            echo $isCountrySelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -83,7 +86,11 @@ zend_version()
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($judge_division_dic as $key) {
-                                        echo '<option value="' . $key . '" ' . $isDivisionSelected[$key] . '>' . $key . '</option>';
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isDivisionSelected[$key]) && $isDivisionSelected[$key] != "")
+                                            echo $isDivisionSelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -95,7 +102,11 @@ zend_version()
                                     <?php
                                     foreach ($judge_gender_dic as $key) {
                                         $gender = ($key == 'm') ? '남성' : '여성';
-                                        echo '<option value="' . $key . '" ' . $isGenderSelected[$key] . '>' . $gender . '</option>';
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isGenderSelected[$key]) && $isGenderSelected[$key] != "")
+                                            echo $isGenderSelected[$key] .'>' . $gender . '</option>';
+                                        else
+                                            echo '>' . $gender . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -233,17 +244,25 @@ zend_version()
                             $sports = explode(',', $row["judge_schedule"]);
                             if (count($sports) > 1) {
                                 echo htmlspecialchars($judge_sport_dic[$sports[0]]) . " 외 " . (count($sports) - 1) . "개";
-                            } else {
+                            } else if (isset($sports[0]) && $sports[0] != ""){
                                 echo htmlspecialchars($judge_sport_dic[$sports[0]]);
                             }
+                            else
+                                echo "-";
                             echo '<div class="item_popup" style="display: none;">';
-                            foreach ($sports as $id) {
-                                if ($id == end($sports)) {
-                                    echo htmlspecialchars($judge_sport_dic[trim($id)]);
-                                } else {
-                                    echo htmlspecialchars($judge_sport_dic[trim($id)]) . '<br>';
+                            if (isset($sports[0]) && $sports[0] != "")
+                            {
+                                foreach ($sports as $id) {
+                                    if ($id == end($sports)) {
+                                        echo htmlspecialchars($judge_sport_dic[trim($id)]);
+                                    } else {
+                                        echo htmlspecialchars($judge_sport_dic[trim($id)]) . '<br>';
+                                    }
                                 }
                             }
+                            else
+                                echo "-";
+                                
                             echo '</div>';
                             echo "</td>";
                             // 참가자 참석 경기
@@ -342,7 +361,7 @@ zend_version()
     </div>
 
 
-    <script src="/assets/js/main.js?ver=6"></script>
+    <script src="/assets/js/main.js?ver=7"></script>
     <script>
         // active browser에 대한 auto refresh 함수
         reloadWhenVisibilityChange();

@@ -339,6 +339,10 @@
   width: 15% !important;
 }
 
+.full_width2 {
+  width: 85% !important;
+}
+
 .result_blueBTN {
   background: white;
   border: 2px solid #7074c9 !important;
@@ -441,9 +445,6 @@ input::placeholder {
   overflow: hidden;
 }
 
-.align {
-  padding-left: 2rem;
-}
 /* checkBox */
 input[type="checkbox"][disabled]:checked {
   appearance: none;
@@ -2903,6 +2904,55 @@ input::-webkit-inner-spin-button {
 /* 조편성 목록에 인원 추가 select2 부분 */
 .changeMemberList {
   margin-top: 3rem;
+}
+
+/* SB PB */
+.pb_sb {
+  display: flex;
+  gap: 20px;
+}
+
+.pb_sb_tit {
+  width: 50%;
+}
+
+.pb_sb_List {
+  display: flex;
+  gap: 20px;
+  padding: 1rem 0;
+}
+
+.pb_sb_List>select,
+.pb_sb_List>input {
+  border: 1px solid var(--colorBorder);
+  height: 100%;
+  width: 45%;
+  transition: all 0.5s ease 0s;
+  padding: 1rem;
+  height: 40px;
+}
+
+.pb_sb_List>input:focus {
+  background: var(--colorLogo);
+  transition: all .5s ease;
+  color: white;
+  text-decoration: underline;
+  text-underline-position: under;
+  outline: 0;
+}
+
+.pb_sb_List>select:focus {
+  background: var(--colorLogo);
+  transition: all .5s ease;
+  color: white;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+
+
+.pb_sb_List>select>option {
+  color: black;
+  background: white;
 }
 
 @media (max-width: 1440px) {

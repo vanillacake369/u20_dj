@@ -227,7 +227,7 @@ function jbSubmit() {
                                     echo '<option value="20"' . ($pagesizeValue == 20 ? 'selected' : '') . '>20개씩</option>';
                                     echo '<option value="100"' . ($pagesizeValue == 100 ? 'selected' : '') . '>100개씩</option>';
                                     if ($total_count != 0){
-                                        echo '<option value="' . $total_count . "\">모두</option>\"";
+                                        echo '<option value="' . $total_count . '"' .  ($pagesizeValue == $total_count ? 'selected' : '') . '>모두</option>';
                                     }
                                 ?>
                             </select>
@@ -258,13 +258,9 @@ function jbSubmit() {
                             <div class="defaultSelectBox">
                                 <select title="성별" name="worldrecord_gender">
                                     <option value="non">성별</option>
-                                    <?php
-                                    $sSql = "SELECT distinct schedule_gender FROM list_schedule;";
-                                    $sResult = $db->query($sSql);
-                                    while ($sRow = mysqli_fetch_array($sResult)) {
-                                        echo "<option value=" . $sRow['schedule_gender'] . ' ' . ($searchValue["worldrecord_gender"] == $sRow['schedule_gender'] ? 'selected' : '') . ">" . ($sRow['schedule_gender'] == 'm' ? '남' : ($sRow['schedule_gender'] == 'f' ? '여' : '혼성')) . "</option>";
-                                    }
-                                    ?>
+                                    <option value="m" <?php if(isset($_GET['worldrecord_gender']) && $_GET['worldrecord_gender'] == "m") echo " selected";?>>남성</option>
+                                    <option value="f" <?php if(isset($_GET['worldrecord_gender']) && $_GET['worldrecord_gender'] == "f") echo " selected";?>>여성</option>
+                                    <option value="c" <?php if(isset($_GET['worldrecord_gender']) && $_GET['worldrecord_gender'] == "c") echo " selected";?>>혼성</option>
                                 </select>
                             </div>
                             <div class="defaultSelectBox">

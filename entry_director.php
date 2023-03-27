@@ -71,7 +71,11 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($director_country_dic as $key => $value) {
-                                        echo '<option value="' . $value . '" ' . $isCountrySelected[$value] . '>' . $key . '</option>';
+                                        echo '<option value="' . $value . '" ';
+                                        if (isset($isCountrySelected[$key]) && $isCountrySelected[$key] != "")
+                                            echo $isCountrySelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -82,7 +86,11 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($director_division_dic as $key) {
-                                        echo '<option value="' . $key . '" ' . $isDivisionSelected[$key] . '>' . $key . '</option>';
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isDivisionSelected[$key]) && $isDivisionSelected[$key] != "")
+                                            echo $isDivisionSelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -94,7 +102,11 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <?php
                                     foreach ($director_gender_dic as $key) {
                                         $gender = ($key == 'm') ? '남성' : '여성';
-                                        echo '<option value="' . $key . '" ' . $isGenderSelected[$key] . '>' . $gender . '</option>';
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isGenderSelected[$key]) && $isGenderSelected[$key] != "")
+                                            echo $isGenderSelected[$key] .'>' . $gender . '</option>';
+                                        else
+                                            echo '>' . $gender . '</option>';
                                     }
                                     ?>
                                 </select>
@@ -105,7 +117,11 @@ if (isset($categoryValue) && isset($orderValue)) {
                                     <option value="non">전체</option>
                                     <?php
                                     foreach ($director_duty_dic as $key) {
-                                        echo '<option value="' . $key . '" ' . $isDutySelected[$key] . '>' . $key . '</option>';
+                                        echo '<option value="' . $key . '" ';
+                                        if (isset($isDutySelected[$key]) && $isDutySelected[$key] != "")
+                                            echo $isDutySelected[$key] .'>' . $key . '</option>';
+                                        else
+                                            echo '>' . $key . '</option>';
                                     }
                                     ?>
                                 </select>

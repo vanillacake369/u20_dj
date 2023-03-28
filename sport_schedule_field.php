@@ -24,7 +24,7 @@ $sql = "SELECT *,if(r.record_status='o',r.record_official_result,record_live_res
 JOIN list_schedule AS s on r.record_sports=s.schedule_sports AND r.record_gender=s.schedule_gender AND r.record_round=s.schedule_round AND if(r.record_status ='n', r.record_trial='1',if(r.record_status='o',r.record_official_result>0,record_live_result>0))
 JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id AND r.record_sports='$sports' AND r.record_gender='$gender' AND r.record_round='$round'
 ORDER BY record_group,if(r.record_status='n',record_order,result);";
-
+echo $sql;
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 $schedule_sports = $row['schedule_sports'];
@@ -357,14 +357,14 @@ if (empty($total_count)) {
                 if ($num%2 == 0) echo ' class="Ranklist_Background">'; else echo ">";
 
                 if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
+                    $wind = $db->query("SELECT record_wind FROM list_record
+                                INNER JOIN list_athlete ON record_athlete_id=" .
+                        $row["athlete_id"] .
+                        " AND athlete_id= record_athlete_id
+                                and record_sports='$sports' 
+                                    and record_round='$round' and record_gender='$gender' and record_group=".$row['record_group']."
+                                ORDER BY record_trial ASC limit 6 ");
                     for ($t = 0; $t <= $z; $t++) {
-                        $wind = $db->query("SELECT record_wind FROM list_record
-                                    INNER JOIN list_athlete ON record_athlete_id=" .
-                            $row["athlete_id"] .
-                            " AND athlete_id= record_athlete_id
-                                    and record_sports='$sports' 
-                                        and record_round='$round' and record_gender='$gender' and record_group=".$row['record_group']."
-                                    ORDER BY record_trial ASC limit 6 ");
                         $windrow = mysqli_fetch_array($wind);
                         if ($t % 7 == $z) {
                             echo "<td>";

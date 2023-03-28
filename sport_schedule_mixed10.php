@@ -87,20 +87,30 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
             </div>
         </div>
         <ul class="changeTableList">
-                    <li class="changeTableItem"><button class="changeBtn_color changeTableBtn" type="button">10종</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('100m', '/sport_schedule_track.php')">100m</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('longjump', '/sport_schedule_field.php')">멀리뛰기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('shotput', '/sport_schedule_field.php')">포환 던지기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('highjump', '/sport_schedule_high_jump.php')">높이뛰기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('400m', '/sport_schedule_track.php')">400m</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('100mh', '/sport_schedule_track.php')">110mh</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('discusthrow', '/sport_schedule_field.php')">원반 던지기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('polejump', '/sport_schedule_field.php')">장대 높이뛰기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('javelinthrow', '/sport_schedule_field.php')">창던지기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('1500m', '/sport_schedule_track.php')">1500m</button></li>
-                </ul>
-                <div class="schedule schedule_flex filed_high_flex  TableList">
-                <div class="schedule_filed filed_list_item decathlon_container">
+            <li class="changeTableItem"><button class="changeBtn_color changeTableBtn" type="button">10종</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('100m', '/sport_schedule_track.php')">100m</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('longjump', '/sport_schedule_field.php')">멀리뛰기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('shotput', '/sport_schedule_field.php')">포환 던지기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('highjump', '/sport_schedule_high_jump.php')">높이뛰기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('400m', '/sport_schedule_track.php')">400m</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('100mh', '/sport_schedule_track.php')">110mh</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('discusthrow', '/sport_schedule_field.php')">원반 던지기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('polejump', '/sport_schedule_field.php')">장대 높이뛰기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('javelinthrow', '/sport_schedule_field.php')">창던지기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('1500m', '/sport_schedule_track.php')">1500m</button></li>
+        </ul>
+        <div class="schedule schedule_flex filed_high_flex  TableList">
+            <div class="schedule_filed filed_list_item decathlon_container">
                 <div class="schedule_filed_tit">
                     <p class="tit_left_yellow">1조</p>
                     <?php echo '<span class="defaultBtn';
@@ -247,10 +257,12 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                     </table>
                     <div class="filed_BTN">
                         <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                                formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
                                 보기</button>
                             <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                                formaction="award_ceremony.php">시상식 보기</button>
                             <?php } ?>
                             <?php
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
@@ -262,62 +274,68 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                             echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/mix10_pdf_eng.php">PDF(영) 출력</button>';
                                             echo '</form>';
                             ?>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="/action/record/mix10_excel.php">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/mix10_word.php">워드 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀
+                                출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드
+                                출력</button>
                         </div>
-                            </div>
-                            </div>
-                </form>
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="100m_target">
-                    
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="longjump_target">
-                    
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="shotput_target">
-                    
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="highjump_target">
-                   
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="400m_target">
-                    
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="100mh_target">
-                    
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="discusthrow_target">
-                   
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="polejump_target">
-                    
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="javelinthrow_target">
-                    
-                </div>
-                <div class="schedule schedule_flex filed_high_flex  TableList" id="1500m_target">
-                    
-                </div>
+                    </div>
             </div>
-            </div>
-        <button type="button" class="changePwBtn defaultBtn">확인</button>
+            </form>
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="100m_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="longjump_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="shotput_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="highjump_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="400m_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="100mh_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="discusthrow_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="polejump_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="javelinthrow_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="1500m_target">
+
+        </div>
+    </div>
+    </div>
+    <button type="button" class="changePwBtn defaultBtn">확인</button>
     </div>
     <script src="assets/js/main.js?ver=10"></script>
     <script src="assets/js/restrict.js"></script>
     <script>
-        function result_ajax(data, url){
-            $.ajax({
-                url: url,
-                type:"GET",
-                data:{"sports" : "decathlon", "gender" : "m", "round" : data},
-                success: function(result) {
-                    let regex = /<form[^>]*>((.|[\n\r])*)<\/form>/i;
-                    let match = regex.exec(result);
-                    $("#"+ data + "_target").html(match[0]);
-                },
-            })
-        }
+    function result_ajax(data, url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                "sports": "decathlon",
+                "gender": "m",
+                "round": data
+            },
+            success: function(result) {
+                let regex = /<form[^>]*>((.|[\n\r])*)<\/form>/i;
+                let match = regex.exec(result);
+                $("#" + data + "_target").html(match[0]);
+            },
+        })
+    }
     </script>
 </body>
 

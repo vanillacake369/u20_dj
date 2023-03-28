@@ -11,7 +11,9 @@ $gender = $_POST['gender'];
 $name=$_POST['sports'];
 $heat = $_POST['group'];
 $medal = 0;
+$starttime=$_POST['starttime'];
 $result = $_POST["rank"];
+$weight = ($_POST['weight']??0);
 $record = $_POST["gameresult"];
 $memo = $_POST["bigo"];
 $rane = $_POST["rain"];
@@ -26,7 +28,7 @@ $row1 = mysqli_fetch_array($res1);
 $athletics = [];
 $worldrecord = [];
 $trial_count = $_POST["count"];
-
+$db->query("update list_record set record_start ='".$starttime."',record_weight=$weight where record_sports='$name' and record_gender='$gender' and record_round='$round' and record_group='$heat'");
 if ($trial_count === "no_more_regroup") {
     // 6회차 때, 순서 재정렬 할 시 -> 경고문 출력후, 뒤로가기
     mysqli_close($db);

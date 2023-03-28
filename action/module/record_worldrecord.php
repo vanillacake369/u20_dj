@@ -141,7 +141,9 @@ function check_my_record($athlete_name, $sport_code, $time)
 //더 낮은 신기록 입력(트랙)
 function insert_worldrecord_inc($athlete_name, $athlete_country, $record, $wind, $sport_code, $gender, $round, $check_round)
 {
-    if ($record == "0") {return ['', 'n'];}
+    if ($record == "0") {
+        return ['', 'n'];
+    }
     global $db;
     $memo = '';
     $new = 'n';
@@ -171,7 +173,9 @@ function insert_worldrecord_inc($athlete_name, $athlete_country, $record, $wind,
 //더 높은 신기록 입력(필드,10종&7종 최종 점수)
 function insert_worldrecord_dec($athlete_name, $athlete_country, $record, $wind, $sport_code, $gender, $round, $check_round)
 {
-    if ($record == "0") {return ['', 'n'];}
+    if ($record == "0") {
+        return ['', 'n'];
+    }
     global $db;
     $memo = '';
     $new = 'n';
@@ -201,7 +205,9 @@ function insert_worldrecord_dec($athlete_name, $athlete_country, $record, $wind,
 //신기록 수정
 function modify_worldrecord($athlete_name, $athlete_country, $record, $wind, $sport_code, $gender, $round, $check_round)
 {
-    if ($record == "0") {return array();}
+    if ($record == "0") {
+        return array();
+    }
     global $db;
     $schedule = check_schedule($sport_code, $gender, $round);
     $ath = array();
@@ -221,7 +227,9 @@ function modify_worldrecord($athlete_name, $athlete_country, $record, $wind, $sp
 
 function change_worldrecord_inc($athlete_name, $athlete_country, $record, $wind, $sport_code, $gender, $round, $check_round, &$ath)
 {
-    if ($record == "0") {return '';}
+    if ($record == "0") {
+        return '';
+    }
     global $db;
     $memo = '';
     $schedule = check_schedule($sport_code, $gender, $round);
@@ -252,7 +260,9 @@ function change_worldrecord_inc($athlete_name, $athlete_country, $record, $wind,
 
 function change_worldrecord_dec($athlete_name, $athlete_country, $record, $wind, $sport_code, $gender, $round, $check_round, &$ath)
 {
-    if ($record == "0") {return '';}
+    if ($record == "0") {
+        return '';
+    }
     global $db;
     $memo = '';
     $schedule = check_schedule($sport_code, $gender, $round);
@@ -267,7 +277,7 @@ function change_worldrecord_dec($athlete_name, $athlete_country, $record, $wind,
         foreach ($ccc as $c) {
             if ($k['athletics'] == $c) {
                 if (changeresult($record) <= $k['record']) {
-                    if (changeresult($record) == $k['record'])  {
+                    if (changeresult($record) == $k['record']) {
                         $memo = 'tie record';
                     }
                     $savesql = "insert into list_worldrecord(worldrecord_sports, worldrecord_location, worldrecord_gender,worldrecord_athlete_name,
@@ -283,7 +293,9 @@ function change_worldrecord_dec($athlete_name, $athlete_country, $record, $wind,
 
 function changePbSb($athlete_id, $record, $sport_code, $gender, $round, $memo, $check_round, $type)
 {
-    if ($record == '0') {return $memo;}
+    if ($record == '0') {
+        return $memo;
+    }
     global $db;
     $schedule = check_schedule($sport_code, $gender, $round);
     $wr = check_worldrecord($sport_code, $gender, $round, $check_round, $schedule['schedule_start']);
@@ -367,7 +379,7 @@ function changePbSb($athlete_id, $record, $sport_code, $gender, $round, $memo, $
             // 없다면 생성
             $memo = 'sb';
         }
-        $sb = array($sport_code=>$record);
+        $sb = array($sport_code => $record);
     } else if (in_array($sport_code, array_keys($sb))) {
         // 선수 athlete_sb에 해당 종목이 있다면 해당 종목을 찾아서 방금 새운 기록과 비교하여 update 유/무 판단
         foreach ($sb as $sports => $myrecord) {

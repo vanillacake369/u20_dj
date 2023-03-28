@@ -116,7 +116,7 @@ $groupresult = $db->query($groupsql);
                                     for ($i = 0; $i < 7; $i++) {
                                         echo '<th rowspan="2" >';
                                         $grouprow = mysqli_fetch_assoc($groupresult);
-                                        for($t=1;$t<=$grouprow['cnt'];$t++){
+                                        for($t=1;$t<=($grouprow['cnt'] ?? 0);$t++){
                                             echo '<form action="" method="post">';
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
                                             echo '<input name="gender" value="' . $gender . '" hidden>';
@@ -219,10 +219,11 @@ $groupresult = $db->query($groupsql);
                     </table>
                     <div class="filed_BTN">
                         <div>
-                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                                보기</button>
+                            <?php if ($schedule_round == 'final') { ?>
+                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
+                            <?php } ?>
                             <?php
                             echo '<form action="" method="post">';
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
@@ -230,10 +231,12 @@ $groupresult = $db->query($groupsql);
                                             echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
                                             echo 'formaction =';
                                             echo '\'/record/mix7_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(한) 출력</button>';
                                             echo '</form>';
                             ?>
-                            <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
                         </div>
                     </div>
             </div>

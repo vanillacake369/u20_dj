@@ -1,10 +1,14 @@
 <?php
 require_once "head.php";
 require_once "includes/auth/config.php";
+require_once "console_log.php";
 
 $sql = "SELECT schedule_sports,schedule_name,schedule_gender,schedule_round,schedule_location,schedule_start,record_state,schedule_date,record_state FROM list_schedule join list_record on record_sports=schedule_sports and record_gender=schedule_gender and record_round=schedule_round where schedule_sports='".$_GET['sports']."' and schedule_gender='".$_GET['gender']."' and schedule_round='".$_GET['round']."'";
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
+$datetime=$row['schedule_date'];
+$date=explode(' ',$datetime)[0];
+$date2=explode('-',$date);
 ?>
 
 <script src="assets/js/restrict.js"></script>
@@ -65,9 +69,13 @@ $row = mysqli_fetch_array($result);
                                 <li class="row input_row Desc_item">
                                     <span>경기 시간</span>
                                     <div>
-                                        <input placeholder="시를 입력하세요" type="number" name="start_hour" maxlength="2" required="" oninput="maxLengthCheck(this)" value="<?= date("H", strtotime($row["schedule_start"])) ?>" />
+                                        <input placeholder="시를 입력하세요" type="number" name="start_hour" maxlength="2"
+                                            required="" oninput="maxLengthCheck(this)"
+                                            value="<?= date("H", strtotime($row["schedule_start"])) ?>" />
                                         <span>:</span>
-                                        <input placeholder="분을 입력하세요" type="number" name="start_minute" maxlength="2" oninput="maxLengthCheck(this)" value="<?= date("i", strtotime($row["schedule_start"])) ?>" />
+                                        <input placeholder="분을 입력하세요" type="number" name="start_minute" maxlength="2"
+                                            oninput="maxLengthCheck(this)"
+                                            value="<?= date("i", strtotime($row["schedule_start"])) ?>" />
                                     </div>
                                 </li>
                                 <li class="row input_row Desc_item input_width">
@@ -75,10 +83,11 @@ $row = mysqli_fetch_array($result);
                                     <select title="경기 진행 상태" name="result" style="width: 200px;">
                                         <option value="non" hidden>경기 진행 상태</option>
                                         <?php
+                                        console_log($row['record_state']);
                                         echo '<option value="n"' . ($row['record_state'] == 'n' ? 'selected' : '') . '>준비</option>';
                                         echo '<option value="c"' . ($row['record_state'] == 'c' ? 'selected' : '') . '>취소됨</option>';
-                                        echo '<option value="l"' . ($row['record_state'] == 'l' ? 'selected' : '') . '>경기중</option>';
-                                        echo '<option value="o"' . ($row['record_state'] == 'o' ? 'selected' : '') . '>마감</option>';
+                                        echo '<option value="l"' . ($row['record_state'] == 'o' ? 'selected' : '') . '>경기중</option>';
+                                        echo '<option value="o"' . ($row['record_state'] == 'y' ? 'selected' : '') . '>마감</option>';
                                         ?>
                                     </select>
                                 </li>

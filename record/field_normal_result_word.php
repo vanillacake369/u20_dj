@@ -24,18 +24,34 @@
         <?php
         require_once __DIR__ . "/../action/module/record_worldrecord.php";
         require_once __DIR__ . "/../database/dbconnect.php"; //B:데이터베이스 연결
+        global $db;
+
+        $sports=$_POST['sports'];
+        $round=$_POST['round'];
+        $gender=$_POST['gender'];
+        $group=$_POST['group'];
+        $schedule_result = $_POST['result'];
+        switch ($schedule_result) {
+            case 'l':
+                $schedule_result = "Live Result";
+                break;
+            case 'o':
+                $schedule_result = "Official Result";
+                break;
+            case 'n':
+                $schedule_result = "Not Start";
+                break;
+        }
+
+        $FILE_NAME = $sports . '_' . $gender . '_' . $round . '_' . $group . 'group(' . $schedule_result . ').doc';
         /* word 다운을 위한 해더 */
         header("Content-type: application/vnd.ms-word;charset=UTF-8");
-        header("Content-Disposition: attachment; filename=word_download_test.doc");
+        header("Content-Disposition: attachment; filename=".$FILE_NAME);
         header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
         header("Pragma: no-cache");
         header("Expires: 0");
         print("<meta http-equiv=\"Content-Type\" content=\"application/vnd.ms-word; charset=utf-8\">");
 
-        $sports = $_POST['sports'];
-        $round = $_POST['round'];
-        $gender = $_POST['gender'];
-        $group = $_POST['group'];
         //print_r($_POST);
         $sql = "select *, record_weight, record_end from list_schedule inner join list_record ON (schedule_sports = record_sports)
                         where record_gender = schedule_gender AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
@@ -112,7 +128,7 @@
                     }
                     ?>
                     <th style="border-bottom: 1px solid gray" rowspan="2">기록</th>
-                    <td style="border-bottom: 1px solid gray">'비고</th>
+                    <th style="border-bottom: 1px solid gray">비고</th>
                     <?php
                     if ($check_round == 'y') {
                         echo '<th style="border-bottom: 1px solid gray" rowspan="2">점수</th>';
@@ -122,7 +138,7 @@
 
                 </tr>
                 <tr>
-                    <th>신기록</th>
+                    <th style="border-bottom: 1px solid gray">신기록</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -133,10 +149,10 @@
                     $row1 = mysqli_fetch_array($country);
                     echo '<tr>';
                     echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['rank'][$i] . '</td>';
-                    echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[0]. '</td>';
+                    echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[0] .'</td>';
                     echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['playername'][$i] . '</td>';
-                    echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[1]. '</td>';
-                    echo '<td rowspan="2" style="border-bottom: 1px solid gray">'. $row1[2]. '</td>';
+                    echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[1] . '</td>';
+                    echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $row1[2] . '</td>';
                     echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult1'][$i] . '</td>';
                     echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult2'][$i] . '</td>';
                     echo '<td rowspan="2" style="border-bottom: 1px solid gray">' . $_POST['gameresult3'][$i] . '</td>';
@@ -160,8 +176,8 @@
                         $totalrow = mysqli_fetch_array($totalid);
                         $totalpoint = $db->query("SELECT record_live_record from list_record where record_athlete_id ='$row1[1]' and record_schedule_id=$totalrow[0]");
                         $totalrow1 = mysqli_fetch_array($totalpoint);
-                        echo '<td style="border-bottom: 1px solid gray">' . $pointrow[0] . '</td>';
-                        echo '<td style="border-bottom: 1px solid gray">' . $totalrow1[0] . '</td>';
+                        echo '<td>' . $pointrow[0] . '</td>';
+                        echo '<td>' . $totalrow1[0] . '</td>';
                     }
                     echo '</tr>';
                     echo '<tr>';

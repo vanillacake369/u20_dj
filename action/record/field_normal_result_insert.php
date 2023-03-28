@@ -49,6 +49,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
     $highrecord = 0;
     $hightrial = 0;
     $medal = 0;
+    $cnt=0;
     $re = $db->query("SELECT athlete_id,athlete_country FROM list_athlete join list_record on record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' and athlete_name = '" . $athlete_name[$i] . "' and record_athlete_id=athlete_id");
     $row = mysqli_fetch_array($re);
     $newre = $db->query("select record_new,record_multi_record from list_record where record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_" . $result_type1 . "_result>0");
@@ -134,6 +135,10 @@ for ($i = 0; $i < count($athlete_name); $i++) {
                 }
                 $plus = ",record_multi_record='" . $point . "'";
             }
+            if($cnt==3){
+                $highrecord = 'X';
+                $hightrial = '3';
+            }
             $savequery = "UPDATE list_record SET record_" . $result_type1 . "_result='$result[$i]',record_judge='$judge[0]',
                 record_new='$new',record_medal=" . $medal . ",record_status='" . $result_type2 . "'" . $plus . ",record_memo='" . $memo[$i] . "'
                 WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_" . $result_type1 . "_record='$highrecord' and record_trial='$hightrial'";
@@ -143,7 +148,10 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $savequery = "UPDATE list_record SET record_pass='$pass',record_judge='$judge[0]',
                 record_" . $result_type1 . "_record='$ruf', record_new='$new',record_memo='" . $memo[$i] . "' ,record_medal=" . $medal . "
                 ,record_weight='$weight',record_status='" . $result_type2 . "' WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_trial='$k'";
-            if ($highrecord < $ruf && $ruf != 'X') {
+            if($result[$i]>=9 && $ruf == 'X'){
+                $cnt++;
+            }
+                if ((float)$highrecord < (float)$ruf && $ruf != 'X') {
                 $highrecord = $ruf;
                 $hightrial = $k;
             }

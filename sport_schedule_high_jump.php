@@ -22,6 +22,10 @@ $schedule_round = $rows['schedule_round'];
 $schedule_group= $rows['record_group'];
 $schedule_result = $rows['record_status'];
 $group=$rows['record_group'];
+$check_round='n';
+if($schedule_sports == 'decathlon' || $schedule_sports == 'heptathlon'){
+  $check_round='y';
+}
 if ($rows['record_status'] == 'o') {
   $result_type = 'official';
 } else {
@@ -52,7 +56,7 @@ if ($rows['record_status'] == 'o') {
             </div>
         </div>
         <div class="schedule schedule_flex">
-            <form action="" method="post" class="form schedule_filed filed_list_item">    
+            <form action="" method="post" class="form schedule_filed filed_list_item">
                 <div>
                     <div class="schedule_filed_tit">
                         <p class="tit_left_yellow">1조</p>
@@ -315,7 +319,7 @@ if ($rows['record_status'] == 'o') {
               // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                        if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
                          echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
-                        if ($schedule_sports == "polevault" || $schedule_sports == "highjump") {
+                        if ($schedule_sports == "polevault" || $schedule_sports == "highjump" || $check_round=='y') {
                             echo "/record/field_vertical_result_view.php";
                         } else if ($schedule_sports == "longjump" || $schedule_sports == "triplejump") {
                             echo "/record/field_horizontal_result_view.php";
@@ -332,13 +336,13 @@ if ($rows['record_status'] == 'o') {
               ?>
                         </div>
                     </div>
-            </div>
-            <button type="button" class="changePwBtn defaultBtn">확인</button>
-        </form>
+                </div>
+                <button type="button" class="changePwBtn defaultBtn">확인</button>
+            </form>
         </div>
-        </div>
-        <script src="assets/js/main.js"></script>
-        <script src="assets/js/restrict.js"></script>
+    </div>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/restrict.js"></script>
 </body>
 
 

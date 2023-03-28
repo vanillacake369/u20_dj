@@ -55,9 +55,10 @@ if ($rows['record_status'] == 'o') {
                 BTN_Blue">진행중</p>' : ' BTN_yellow ">대기중</p>'); ?>
             </div>
         </div>
-                <form action="" method="post">
-                <div class="schedule schedule_flex">
-                <div class="schedule_filed filed_list_item">
+        <div class="schedule schedule_flex">
+                <form action="" method="post" class="form schedule_filed filed_list_item">
+                
+                <div>
                     <div class="schedule_filed_tit">
                         <p class="tit_left_yellow">1조</p>
                         <?php echo '<span class="defaultBtn';

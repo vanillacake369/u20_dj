@@ -69,10 +69,7 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
 
 ?>
 <!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
 <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/assets/DataTables/datatables.min.js"></script>
-<script type="text/javascript" src="/assets/js/useDataTables.js"></script>
 </head>
 
 <body>
@@ -91,18 +88,18 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
         </div>
         <ul class="changeTableList">
                     <li class="changeTableItem"><button class="changeBtn_color changeTableBtn" type="button">10종</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('100m')">100m</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">멀리뛰기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">포환 던지기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">높이뛰기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">400m</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">110mh</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">원반 던지기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">장대 높이뛰기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">창던지기</button></li>
-                    <li class="changeTableItem"><button class="changeTableBtn" type="button">1500m</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('100m', '/sport_schedule_track.php')">100m</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('longjump', '/sport_schedule_field.php')">멀리뛰기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('shotput', '/sport_schedule_field.php')">포환 던지기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('highjump', '/sport_schedule_high_jump.php')">높이뛰기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('400m', '/sport_schedule_track.php')">400m</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('100mh', '/sport_schedule_track.php')">110mh</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('discusthrow', '/sport_schedule_field.php')">원반 던지기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('polejump', '/sport_schedule_field.php')">장대 높이뛰기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('javelinthrow', '/sport_schedule_field.php')">창던지기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('1500m', '/sport_schedule_track.php')">1500m</button></li>
                 </ul>
-        <div class="schedule schedule_flex filed_high_flex decathlon_flex TableList">
+                <div class="schedule schedule_flex filed_high_flex  TableList">
                 <div class="schedule_filed filed_list_item decathlon_container">
                 <div class="schedule_filed_tit">
                     <p class="tit_left_yellow">1조</p>
@@ -189,59 +186,61 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                 echo '<tbody class="table_tbody De_tbody entry_table';
                                 if ($num % 2 == 0) echo ' Ranklist_Background">'; else echo "\">";
                                 echo "<tr>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['record_' . $result_type . '_result']) . "</td>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['athlete_name']) . "</td>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['record_' . $result_type . '_record']) . "</td>";
+                                echo "<td >" . htmlspecialchars($row['record_' . $result_type . '_result']) . "</td>";
+                                echo "<td >" . htmlspecialchars($row['athlete_name']) . "</td>";
+                                echo "<td >" . htmlspecialchars($row['record_' . $result_type . '_record']) . "</td>";
                                 echo "</tr>";
-                                echo "<tr>";
+                                // echo "<tr>";
 
-                                //@Potatoeunbi
-                                //해당 경기의 모든 종목들 record 가져오는 sql문
-                                $multi = "SELECT distinct r.record_multi_record, r.record_" . $result_type . "_record, r.record_wind from list_record AS r 
-                                            join list_schedule AS s
-                                            JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id 
-                                            WHERE schedule_sports='$sports' and schedule_gender ='$gender' AND record_sports=schedule_sports AND record_gender=schedule_gender
-                                            AND r.record_multi_record is not NULL AND record_live_result>0
-                                            and athlete_id = '" . $row['athlete_id'] . "' 
-                                            ORDER BY FIELD(schedule_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m'), athlete_name;";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_multi_record']) . "</td>";
-                                    $table_count++;
-                                }
-                                for ($i = 0; $i < (10-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
+                                // //@Potatoeunbi
+                                // //해당 경기의 모든 종목들 record 가져오는 sql문
+                                // $multi = "SELECT distinct r.record_multi_record, r.record_" . $result_type . "_record, r.record_wind from list_record AS r 
+                                //             join list_schedule AS s
+                                //             JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id 
+                                //             WHERE schedule_sports='$sports' and schedule_gender ='$gender' AND record_sports=schedule_sports AND record_gender=schedule_gender
+                                //             AND r.record_multi_record is not NULL AND record_live_result>0
+                                //             and athlete_id = '" . $row['athlete_id'] . "' 
+                                //             ORDER BY FIELD(schedule_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m'), athlete_name;";
+                                // $answer = $db->query($multi);
+                                // while ($sub = mysqli_fetch_array($answer)) {
+                                //     echo "<td>" . htmlspecialchars($sub['record_multi_record']) . "</td>";
+                                //     $table_count++;
+                                // }
+                                // for ($i = 0; $i < (10-$table_count); $i++)
+                                // {
+                                //     echo "<td></td>";
+                                // }
 
-                                echo "<td>" . htmlspecialchars($row['record_memo']) . "</td>";
+                                // echo "<td>" . htmlspecialchars($row['record_memo']) . "</td>";
                                 
-                                echo "</tr>";
-                                echo "<tr>";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_' . $result_type . '_record']) . "</td>";
-                                }
-                                for ($i = 0; $i < (10-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
+                                // echo "</tr>";
+                                // echo "<tr>";
+                                // $answer = $db->query($multi);
+                                // while ($sub = mysqli_fetch_array($answer)) {
+                                //     echo "<td>" . htmlspecialchars($sub['record_' . $result_type . '_record']) . "</td>";
+                                // }
+                                // for ($i = 0; $i < (10-$table_count); $i++)
+                                // {
+                                //     echo "<td></td>";
+                                // }
                                 //@Potatoeunbi
                                 //include_once(__DIR__ . '/action/module/schedule_worldrecord.php');에 들어있는 함수.
                                 //신기록 출력하는 함수, @gwonsan 학생 신기록 출력 방식 그대로임.
-                                if ($row['record_' . $result_type . '_record']) world($db, $row['athlete_name'], $row['record_new'], $row['schedule_sports'], $row['record_' . $result_type . '_record']);
+                                // if ($row['record_' . $result_type . '_record']) world($db, $row['athlete_name'], $row['record_new'], $row['schedule_sports'], $row['record_' . $result_type . '_record']);
 
+                                // echo "</tr>";
+                                // echo "<tr>";
+                                // $answer = $db->query($multi);
+                                // while ($sub = mysqli_fetch_array($answer)) {
+                                //     echo "<td>" . htmlspecialchars($sub['record_wind'] == null ? ' ' : $sub['record_wind']) . "</td>";
+                                // }
+                                // for ($i = 0; $i < (10-$table_count); $i++)
+                                // {
+                                //     echo "<td></td>";
+                                // }
+                                
                                 echo "</tr>";
-                                echo "<tr>";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_wind'] == null ? ' ' : $sub['record_wind']) . "</td>";
-                                }
-                                for ($i = 0; $i < (10-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
-                                echo "</tr></tbody>";
+                                echo "</tbody>";
                                 $table_count = 0;
                                 $people++;
                             } ?>
@@ -269,225 +268,35 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                             </div>
                 </form>
                 </div>
-                <div class="schedule schedule_flex filed_high_flex decathlon_flex TableList" id="100m_target">
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="100m_target">
                     
                 </div>
-                <div class="schedule schedule_flex filed_high_flex decathlon_flex TableList" id="100m_target">
-                    <form action="" method="post">
-                        <input name="schedule_round" value="highjump" hidden>
-                        <input name="schedule_gender" value="m" hidden>
-                        <input name="schedule_group" value="1" hidden>
-                        <input name="schedule_sports" value="decathlon" hidden>
-
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                                보기</button>
-                            <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                            <?php } ?>
-                            <?php
-                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="longjump_target">
+                    
                 </div>
-                <div class="TableList">
-                    <form action="" method="post">
-                        <input name="schedule_round" value="400m" hidden>
-                        <input name="schedule_gender" value="m" hidden>
-                        <input name="schedule_group" value="1" hidden>
-                        <input name="schedule_sports" value="decathlon" hidden>
-
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                                보기</button>
-                            <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                            <?php } ?>
-                            <?php
-                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="shotput_target">
+                    
                 </div>
-                <div class="TableList">
-                    <form action="" method="post">
-                        <input name="schedule_round" value="110mh" hidden>
-                        <input name="schedule_gender" value="m" hidden>
-                        <input name="schedule_group" value="1" hidden>
-                        <input name="schedule_sports" value="decathlon" hidden>
-
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                                보기</button>
-                            <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                            <?php } ?>
-                            <?php
-                                echo '<form action="" method="post">';
-                                echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="highjump_target">
+                   
                 </div>
-                <div class="TableList">
-                    <form action="" method="post">
-                        <input name="schedule_round" value="discusthrow" hidden>
-                        <input name="schedule_gender" value="m" hidden>
-                        <input name="schedule_group" value="1" hidden>
-                        <input name="schedule_sports" value="decathlon" hidden>
-
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                                보기</button>
-                            <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                            <?php } ?>
-                            <?php
-                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="400m_target">
+                    
                 </div>
-                <div class="TableList">
-                    <form action="" method="post">
-                        <input name="schedule_round" value="polejump" hidden>
-                        <input name="schedule_gender" value="m" hidden>
-                        <input name="schedule_group" value="1" hidden>
-                        <input name="schedule_sports" value="decathlon" hidden>    
-
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                                보기</button>
-                            <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                            <?php } ?>
-                            <?php
-                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="100mh_target">
+                    
                 </div>
-                <div class="TableList">
-                    <form action="" method="post">
-                        <input name="schedule_round" value="javelinthrow" hidden>
-                        <input name="schedule_gender" value="m" hidden>
-                        <input name="schedule_group" value="1" hidden>
-                        <input name="schedule_sports" value="decathlon" hidden>
-
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                                보기</button>
-                            <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                            <?php } ?>
-                            <?php
-                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="discusthrow_target">
+                   
                 </div>
-                <div class="TableList">
-                    <form action="" method="post">
-                        <input name="schedule_round" value="1500m" hidden>
-                        <input name="schedule_gender" value="m" hidden>
-                        <input name="schedule_group" value="1" hidden>
-                        <input name="schedule_sports" value="decathlon" hidden>
-                        
-                    <div class="filed_BTN">
-                        <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
-                                보기</button>
-                            <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
-                            <?php } ?>
-                            <?php
-                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
-                        </div>
-                    </div>
-                    </form>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="polejump_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="javelinthrow_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="1500m_target">
+                    
                 </div>
             </div>
             </div>
@@ -504,11 +313,8 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                 success: function(result) {
                     let regex = /<form[^>]*>((.|[\n\r])*)<\/form>/i;
                     let match = regex.exec(result);
-                    $("#"+ data + "_target").html(match[1]);
+                    $("#"+ data + "_target").html(match[0]);
                 },
-                error: function(request,status,error) {
-                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                }
             })
         }
     </script>

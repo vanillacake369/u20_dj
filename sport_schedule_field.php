@@ -38,10 +38,7 @@ if (empty($total_count)) {
 ?>
 
 <!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
 <script src="/assets/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/assets/DataTables/datatables.min.js"></script>
-<script type="text/javascript" src="/assets/js/useDataTables.js"></script>
 </head>
 
 <body>
@@ -59,14 +56,13 @@ if (empty($total_count)) {
             </div>
         </div>
         <div class="schedule schedule_flex">
-        <form action="" method="post">
+        <form action="" method="post" class="form schedule_filed filed_list_item">
             <input name="round" value="<?php echo $schedule_round?>" hidden>
             <input name="sports" value="<?php echo $schedule_sports?>" hidden>
             <input name="gender" value="<?php echo $gender?>" hidden>
             <input name="group" value="<?php echo $row["record_group"] ?>" hidden>
             <input name="name" value="<?php echo $schedule_name?>" hidden>
             <input name="result" value="<?php echo $schedule_result?>" hidden>
-                <div class="schedule_filed filed_list_item">
                     <div class="schedule_filed_tit">
                         <p class="tit_left_yellow">1조</p>
                         <?php echo '<span class="defaultBtn';
@@ -107,20 +103,26 @@ if (empty($total_count)) {
                         jump($schedule_sports);
                         echo ">3차 시기</th>";
                         echo "<th rowspan=";
-                        jump($schedule_sports);
-                        echo ">4차 시기</th>";
-                        echo "<th rowspan=";
-                        jump($schedule_sports);
-                        echo ">5차 시기</th>";
-                        echo "<th rowspan=";
-                        jump($schedule_sports);
-                        echo ">6차 시기</th>";
-                        echo "<th rowspan=";
+                        if ($schedule_sports != 'decathlon' || $schedule_sports != 'heptathlon') {
+                            jump($schedule_sports);
+                            echo ">4차 시기</th>";
+                            echo "<th rowspan=";
+                            jump($schedule_sports);
+                            echo ">5차 시기</th>";
+                            echo "<th rowspan=";
+                            jump($schedule_sports);
+                            echo ">6차 시기</th>";
+                            echo "<th rowspan=";
+                        }
                         jump($schedule_sports);
                         echo ">기록</th>";
                         echo "<th>비고</th>";
                         echo "</tr>";
-                        if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
+                        if ($schedule_sports == 'decathlon' || $schedule_sports == 'heptathlon') {
+                            echo "<tr>";
+                            echo  "<th colspan='7'>풍속</th>";
+                        }
+                        else if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
                             echo "<tr>";
                             echo  "<th colspan='7'>풍속</th>";
                         }
@@ -146,13 +148,13 @@ if (empty($total_count)) {
                     <div class="filed_BTN">
                         <div>
                             <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                formaction="electronic_display<? echo $schedule_result=='o' ? '_official' : '';?>.php">전광판
+                                formaction="electronic_display<?php echo $schedule_result=='o' ? '_official' : '';?>.php">전광판
                                 보기</button>
-                            <? if ($schedule_result=='o'){?>
+                            <?php if ($schedule_result=='o'){?>
                             <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 formaction="award_ceremony.php">시상식 보기</button>
-                            <?}?>
-                            <? if ($sports=='longjump' || $sports=='triplejump'){?>
+                            <?php }?>
+                            <?php  if ($sports=='longjump' || $sports=='triplejump'){?>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_horizontal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
@@ -161,7 +163,7 @@ if (empty($total_count)) {
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
                                 formaction="/record/field_horizontal_result_word.php">워드 출력</button>
-                            <?}else {?>
+                            <?php }else {?>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_normal_result_pdf.php">PDF(한) 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
@@ -170,7 +172,7 @@ if (empty($total_count)) {
                                 class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN"
                                 formaction="/record/field_normal_result_word.php">워드 출력</button>
-                            <?}?>
+                            <?php }?>
                         </div>
                     </div>
                     <div>
@@ -192,7 +194,6 @@ if (empty($total_count)) {
                         }
                         ?>
                     </div>
-                </div>
             </div>
         </form>
         <?php
@@ -200,7 +201,7 @@ if (empty($total_count)) {
     if ($total_count != $j){
     $count=0;
     ?>
-        <form action="" method="post">
+        <form action="" method="post" class="form schedule_filed filed_list_item">
             <input name="round" value="<?php echo $schedule_round?>" hidden>
             <input name="sports" value="<?php echo $schedule_sports?>" hidden>
             <input name="gender" value="<?php echo $gender?>" hidden>
@@ -208,8 +209,7 @@ if (empty($total_count)) {
             <input name="name" value="<?php echo $schedule_name?>" hidden>
             <input name="result" value="<?php echo $schedule_result?>" hidden>
             <!-- <input name="weight" value="<?php echo $record_weight?>" hidden> -->
-            <div class="schedule schedule_flex">
-                <div class="schedule_filed filed_list_item">
+            
                     <div class="schedule_filed_tit">
                         <p class="tit_left_yellow"><?php echo $k?>조</p>
                         <?php echo '<span class="defaultBtn';
@@ -249,20 +249,26 @@ if (empty($total_count)) {
                     jump($schedule_sports);
                     echo ">3차 시기</th>";
                     echo "<th rowspan=";
-                    jump($schedule_sports);
-                    echo ">4차 시기</th>";
-                    echo "<th rowspan=";
-                    jump($schedule_sports);
-                    echo ">5차 시기</th>";
-                    echo "<th rowspan=";
-                    jump($schedule_sports);
-                    echo ">6차 시기</th>";
-                    echo "<th rowspan=";
+                    if ($schedule_sports != 'decathlon' || $schedule_sports != 'heptathlon') {
+                        jump($schedule_sports);
+                        echo ">4차 시기</th>";
+                        echo "<th rowspan=";
+                        jump($schedule_sports);
+                        echo ">5차 시기</th>";
+                        echo "<th rowspan=";
+                        jump($schedule_sports);
+                        echo ">6차 시기</th>";
+                        echo "<th rowspan=";
+                    }
                     jump($schedule_sports);
                     echo ">기록</th>";
                     echo "<th>비고</th>";
                     echo "</tr>";
-                    if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
+                    if ($schedule_sports == 'decathlon' || $schedule_sports == 'heptathlon') {
+                        echo "<tr>";
+                        echo  "<th colspan='7'>풍속</th>";
+                    }
+                    else if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
                         echo "<tr>";
                         echo  "<th colspan='7'>풍속</th>";
                     }
@@ -422,7 +428,6 @@ if (empty($total_count)) {
                     }?>
                         </div>
                     </div>
-                </div>
             </div>
         </form>
         <button type="button" class="changePwBtn defaultBtn">확인</button>

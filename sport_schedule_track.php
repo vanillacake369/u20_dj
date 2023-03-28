@@ -80,10 +80,6 @@ function islane($schedule_sports, $what)
 ?>
 <script type="text/javascript" src="./assets/js/onlynumber.js"></script>
 <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
-<!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
-<script type="text/javascript" src="/assets/DataTables/datatables.min.js"></script>
-<script type="text/javascript" src="/assets/js/useDataTables.js"></script>
 </head>
 
 <body>
@@ -104,16 +100,14 @@ function islane($schedule_sports, $what)
         </div>
         
         <div class="schedule schedule_flex filed_high_flex">
-           
-                <form action="#" method="post" class="form">
-                <div class="schedule_filed filed_list_item filed_container">
+            <form action="#" method="post" class="form schedule_filed filed_list_item filed_container">
                 <!-- class="contents something" -->
-                <div class="schedule_filed_tit">
-                    <p class="tit_left_yellow">1조</p>
-                    <?php echo '<span class="defaultBtn';
-                    echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
-                    ?>
-                </div>
+                    <div class="schedule_filed_tit">
+                        <p class="tit_left_yellow">1조</p>
+                        <?php echo '<span class="defaultBtn';
+                        echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
+                        ?>
+                    </div>
                     <table class="box_table">
                         <colgroup>
                             <col style="width: 7%;">
@@ -194,8 +188,8 @@ function islane($schedule_sports, $what)
                             <label for="execute_excel" class="defaultBtn BIG_btn2 excel_Print">엑셀
                                 출력</label>
                 </form>*/ ?>
-            </div>
-            <div>
+                        </div>
+                         <div>
                 <?php
                                     // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                                     if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
@@ -211,11 +205,9 @@ function islane($schedule_sports, $what)
                                         echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
                                     }
                             ?>
-            </div>
+                    </div>
+            </form>
         </div>
-        </form>
-    </div>
-
     <?php
                                     $k++;
                                     if ($total_count != $j) {
@@ -223,7 +215,8 @@ function islane($schedule_sports, $what)
 
             ?>
         
-        <div class="schedule_filed filed_list_item filed_container">
+
+        <form action="#" method="post" class="form schedule_filed filed_list_item filed_container">
         <!-- class="contents something" -->
         <div class="schedule_filed_tit">
             <p class="tit_left_yellow"><?php echo  $k ?>조</p>
@@ -233,7 +226,6 @@ function islane($schedule_sports, $what)
                 echo $row2['record_status'] == 'o' ? ' BTN_green">Official Result</span>' : ($row2['record_status'] == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
             ?>
         </div>
-        <form action="#" method="post" class="form">
             <table class="box_table">
                 <colgroup>
                     <col style="width: 7%;">
@@ -428,7 +420,6 @@ function islane($schedule_sports, $what)
                                     }
                                 ?>
                 </div>
-            </div>
         </form>
     </div>
     <?php }

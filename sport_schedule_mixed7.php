@@ -55,11 +55,7 @@ $groupresult = $db->query($groupsql);
 //     echo "<script>alert('세부 경기 일정이 없습니다.'); location.href='./sport_schedulemanagement.php';</script>";
 // }
 ?>
-<!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css" />
 <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="DataTables/datatables.min.js"></script>
-<script type="text/javascript" src="js/useDataTables.js"></script>
 </head>
 
 <body>
@@ -76,7 +72,24 @@ $groupresult = $db->query($groupsql);
                 BTN_Blue">진행중</p>' : ' BTN_yellow ">대기중</p>'); ?>
             </div>
         </div>
-        <div class="schedule schedule_flex filed_high_flex decathlon_flex">
+        <ul class="changeTableList">
+            <li class="changeTableItem"><button class="changeBtn_color changeTableBtn" type="button">7종</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('100mh', '/sport_schedule_track.php')">100m 허들</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('highjump', '/sport_schedule_high_jump.php')">높이뛰기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('200m', '/sport_schedule_track.php')">200m 허들</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('shotput', '/sport_schedule_field.php')">포환 던지기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('longjump', '/sport_schedule_high_jump.php')">멀리뛰기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('javelinthrow', '/sport_schedule_field.php')">창던지기</button></li>
+            <li class="changeTableItem"><button class="changeTableBtn" type="button"
+                    onclick="result_ajax('800m', '/sport_schedule_track.php')">800m</button></li>
+        </ul>
+        <div class="schedule schedule_flex filed_high_flex  TableList">
             <div class="schedule_filed filed_list_item decathlon_container">
                 <div class="schedule_filed_tit">
                     <p class="tit_left_yellow">1조</p>
@@ -105,46 +118,21 @@ $groupresult = $db->query($groupsql);
                         </colgroup>
                         <thead class="result_table entry_table">
                             <tr>
-                                <th rowspan='2'>순서</th>
-                                <th rowspan='2'>이름</th>
-                                <th rowspan='2'>총점</th>
+                                <th>순서</th>
+                                <th>이름</th>
+                                <th>총점</th>
                                 <?php
                                 //@Potatoeunbi
                                 //기록입력 버튼
                                 // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
                                 if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
                                     for ($i = 0; $i < 7; $i++) {
-                                        echo '<th rowspan="2" >';
-                                        $grouprow = mysqli_fetch_assoc($groupresult);
-                                        for($t=1;$t<=($grouprow['cnt'] ?? 0);$t++){
-                                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';
-                                            echo '<input name="round" value="' . $round[$i] . '" hidden>';
-                                            echo '<input name="group" value="'.$t.'" hidden>';
-                                            echo '<button type="submit" formaction="';
-                                            if ($round[$i] == "100mh" || $round[$i] == "200m" || $round[$i] == "800m") {
-                                                echo "/record/track_normal_result_view.php";
-                                            } else if ($round[$i] == "javelinthrow" || $round[$i] == "shotput") {
-                                                echo "/record/field_normal_result_view.php";
-                                            } else if ($round[$i] == "highjump") {
-                                                echo "/record/field_vertical_result_view.php";
-                                            } else if ($round[$i] == "longjump") {
-                                                echo "/record/field_horizontal_result_view.php";
-                                            }
-                                            echo '"class="result_tableBTN BTN_DarkBlue">기록 입력</button>';
-                                            echo '</br>';
-                                            echo '<input type="submit" formaction="';
-                                echo './record_change_type.php"';
-                                echo 'class="defaultBtn BIG_btn BTN_green filedBTN" value="기록 전환">';
-                                            echo '</form>';
-                                        }
-                                        echo '<br>' . $round[$i] . '</th>';
+                                        echo '<th>';
+                                        echo $round[$i] . '</th>';
                                     }
-                                } ?> <th>비고</th>
-                            </tr>
-                            <tr>
-                                <th rowspan="4">신기록</th>
+                                } ?>
+                                <th>비고</th>
+                                <th>신기록</th>
                             </tr>
                             <tr class="filed2_bottom">
                             </tr>
@@ -162,11 +150,9 @@ $groupresult = $db->query($groupsql);
                                 echo "<tr";
                                 if ($num % 2 == 0) echo ' class="Ranklist_Background">';
                                 else echo ">";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['record_' . $result_type . '_result']) . "</td>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['athlete_name']) . "</td>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['record_' . $result_type . '_record']) . "</td>";
-                                echo "</tr>";
-                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($row['record_' . $result_type . '_result']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['athlete_name']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['record_' . $result_type . '_record']) . "</td>";
 
                                 $multi = "SELECT distinct r.record_multi_record, r.record_" . $result_type . "_record, r.record_wind from list_record AS r 
                                             join list_schedule AS s
@@ -178,38 +164,17 @@ $groupresult = $db->query($groupsql);
                                 $answer = $db->query($multi);
                                 while ($sub = mysqli_fetch_array($answer)) {
                                     echo "<td>" . htmlspecialchars($sub['record_multi_record']) . "</td>";
-                                    $table_count++;
                                 }
                                 for ($i = 0; $i < (7-$table_count); $i++)
                                 {
                                     echo "<td></td>";
                                 }
                                 echo "<td>" . htmlspecialchars($row['record_memo']) . "</td>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_' . $result_type . '_record']) . "</td>";
-                                }
-                                for ($i = 0; $i < (7-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
                                 //@Potatoeunbi
                                 //include_once(__DIR__ . '/action/module/schedule_worldrecord.php');에 들어있는 함수.
                                 //신기록 출력하는 함수, @gwonsan 학생 신기록 출력 방식 그대로임.
                                 if ($row['record_' . $result_type . '_record']) {world($db, $row['athlete_name'], $row['record_new'], $sports, $row['record_' . $result_type . '_record']);}
-                                else echo "<td rowspan=2></td>";
-                                echo "</tr>";
-                                echo "<tr>";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_wind'] == null ? ' ' : $sub['record_wind']) . "</td>";
-                                }
-                                for ($i = 0; $i < (7-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
+                                else echo "<td></td>";
                                 echo "</tr>";
                                 echo "</tbody>";
                                 $table_count = 0;
@@ -246,10 +211,49 @@ $groupresult = $db->query($groupsql);
             </div>
         </div>
         </form>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="100mh_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="highjump_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="200m_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="shotput_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="longjump_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="javelinthrow_target">
+
+        </div>
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="800m_target">
+
+        </div>
         <button type="button" class="changePwBtn defaultBtn" onclick='window.close()'>확인</button>
     </div>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js?ver=10"></script>
     <script src="assets/js/restrict.js"></script>
+    <script>
+    function result_ajax(data, url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                "sports": "heptathlon",
+                "gender": "f",
+                "round": data
+            },
+            success: function(result) {
+                let regex = /<form[^>]*>((.|[\n\r])*)<\/form>/i;
+                let match = regex.exec(result);
+                $("#" + data + "_target").html(match[0]);
+            },
+        })
+    }
+    </script>
 </body>
 
 </html>

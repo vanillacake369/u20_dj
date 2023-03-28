@@ -12,25 +12,6 @@ if (!authCheck($db, "authEntrysRead")) {
             history.back();
         </script>");
 }
-// 10종,7종 선택 옵션
-unset($sport_dic["decathlon"]);
-unset($sport_dic["heptathlon"]);
-$sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
-$sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
-$sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
-$sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
-$sport_dic["decathlon(400m)"] = "Decathlon(400m)";
-$sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
-$sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
-$sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
-$sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
-$sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
-$sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
-$sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
-$sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
-$sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
-$sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
-$sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./assets/js/main.js"></script>
@@ -214,6 +195,26 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 <ul class="modify_checkList" id="sb-input">
                                     <select name="athlete_sb_sports[]" id="sb-sports-select">
                                         <?php
+                                        // sb,pb에는 아래와 같이 "종합(상세종목)" 으로 기입되어야 함
+                                        // 10종,7종 선택 옵션
+                                        unset($sport_dic["decathlon"]);
+                                        unset($sport_dic["heptathlon"]);
+                                        $sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
+                                        $sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
+                                        $sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
+                                        $sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
+                                        $sport_dic["decathlon(400m)"] = "Decathlon(400m)";
+                                        $sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
+                                        $sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
+                                        $sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
+                                        $sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
+                                        $sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
+                                        $sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
+                                        $sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
+                                        $sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
+                                        $sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
+                                        $sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
+                                        $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                         // key($sport_dic) : sports_code
                                         // current($sport_dic) : sports_name
                                         for ($value = 1; $value <= count($sport_dic); $value++) {

@@ -50,6 +50,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
   $medal = 0;
   $highwin = 0;
   $hightri=1;
+  $cnt=0;
   for ($j = 0; $j < $trialcnt; $j++) {
     $plus = '';
     $new = 'n';
@@ -125,9 +126,10 @@ for ($i = 0; $i < count($athlete_name); $i++) {
           $db->query("UPDATE list_record set record_".$result_type1."_record=record_".$result_type1."_record-$rerow[1]+$point where record_athlete_id ='".$row['athlete_id']."' AND $totalrow");
         }
       }
-      if ($highrecord == '0' && $ruf == "X") {
-        $highrecord = 'X';
-      }
+      if($cnt==3){
+                $highrecord = 'X';
+                $hightri = '3';
+            }
       $savequery = "UPDATE list_record SET record_" . $result_type1 . "_result='$result[$i]',record_judge='$judge[0]',record_new='$new',record_medal=" . $medal . ",record_status='" . $result_type2 . "'" . $plus . ",record_memo='" . $memo[$i] . "'
                     WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_" . $result_type1 . "_record='$highrecord' and record_trial ='$hightri'";
     } else {
@@ -145,9 +147,11 @@ for ($i = 0; $i < count($athlete_name); $i++) {
                 WHERE record_athlete_id ='" .
         $row["athlete_id"] .
         "' AND record_sports= '$name' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND record_trial='$k'";
-      if ($highrecord < $ruf && $ruf != 'X') {
+        if($result[$i]>=9 && $ruf == 'X'){
+                $cnt++;
+            }
+      if ((float)$highrecord < (float)$ruf && $ruf != 'X') {
         $highrecord = $ruf;
-        $hightrial = $k;
         $highwin = $win;
         $hightri = $j+1;
       }

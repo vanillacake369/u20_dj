@@ -351,7 +351,7 @@ if (empty($total_count)) {
                                 value="' . ($row["record"] ?? null) . '" maxlength="5" required="" onkeyup="field1Format(this)" readonly/>';
                 echo "</td>";
                 echo '<td><input type="text" placeholder ="비고"name="bigo[]" value="' .
-                    ($row["memo"] ?? null) .
+                    ($row["record_memo"] ?? null) .
                     '" maxlength="100"  readonly/></td>';
                 echo "<tr";
                 if ($num%2 == 0) echo ' class="Ranklist_Background">'; else echo ">";

@@ -99,11 +99,11 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
                     onclick="result_ajax('400m', '/sport_schedule_track.php')">400m</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
-                    onclick="result_ajax('100mh', '/sport_schedule_track.php')">110mh</button></li>
+                    onclick="result_ajax('110mh', '/sport_schedule_track.php')">110mh</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
                     onclick="result_ajax('discusthrow', '/sport_schedule_field.php')">원반 던지기</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
-                    onclick="result_ajax('polejump', '/sport_schedule_field.php')">장대 높이뛰기</button></li>
+                    onclick="result_ajax('polevault', '/sport_schedule_high_jump.php')">장대 높이뛰기</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
                     onclick="result_ajax('javelinthrow', '/sport_schedule_field.php')">창던지기</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
@@ -199,7 +199,7 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                 from list_record AS r 
                                 JOIN list_schedule AS s on r.record_sports=s.schedule_sports AND r.record_gender=s.schedule_gender
                                 JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id AND record_athlete_id='".$row['athlete_id']."'
-                                WHERE schedule_sports='decathlon' and schedule_gender ='m'AND record_round!='final' 
+                                WHERE schedule_sports='decathlon' and schedule_gender ='m'AND record_round!='final' AND record_multi_record IS NOT null
                                 ORDER BY " . $order_val . ",record_trial, FIELD(record_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m');";
                                 $multiresult=$db->query($multiscoresql);
                                 echo '<tbody class="table_tbody De_tbody entry_table';
@@ -316,13 +316,13 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
         <div class="schedule schedule_flex filed_high_flex  TableList" id="400m_target">
 
         </div>
-        <div class="schedule schedule_flex filed_high_flex  TableList" id="100mh_target">
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="110mh_target">
 
         </div>
         <div class="schedule schedule_flex filed_high_flex  TableList" id="discusthrow_target">
 
         </div>
-        <div class="schedule schedule_flex filed_high_flex  TableList" id="polejump_target">
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="polevault_target">
 
         </div>
         <div class="schedule schedule_flex filed_high_flex  TableList" id="javelinthrow_target">
@@ -335,7 +335,7 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
     </div>
     <button type="button" class="changePwBtn defaultBtn">확인</button>
     </div>
-    <script src="assets/js/main.js?ver=10"></script>
+    <script src="assets/js/main.js?ver=11"></script>
     <script src="assets/js/restrict.js"></script>
     <script>
     function result_ajax(data, url) {

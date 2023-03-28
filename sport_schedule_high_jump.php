@@ -22,6 +22,10 @@ $schedule_round = $rows['schedule_round'];
 $schedule_group= $rows['record_group'];
 $schedule_result = $rows['record_status'];
 $group=$rows['record_group'];
+$check_round='n';
+if($schedule_sports == 'decathlon' || $schedule_sports == 'heptathlon'){
+  $check_round='y';
+}
 if ($rows['record_status'] == 'o') {
   $result_type = 'official';
 } else {
@@ -32,11 +36,7 @@ if ($rows['record_status'] == 'o') {
     $judgerow = mysqli_fetch_array($judgeresult);
 
 ?>
-<!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="../assets/DataTables/datatables.min.css" />
 <script type="text/javascript" src="../assets/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="../assets/DataTables/datatables.min.js"></script>
-<script type="text/javascript" src="../assets/js/useDataTables.js"></script>
 <script type="text/javascript" src="../assets/js/onlynumber.js"></script>
 
 </head>
@@ -56,8 +56,7 @@ if ($rows['record_status'] == 'o') {
             </div>
         </div>
         <div class="schedule schedule_flex">
-                <form action="" method="post" class="form schedule_filed filed_list_item">
-                
+            <form action="" method="post" class="form schedule_filed filed_list_item">
                 <div>
                     <div class="schedule_filed_tit">
                         <p class="tit_left_yellow">1조</p>
@@ -128,7 +127,7 @@ if ($rows['record_status'] == 'o') {
                   where record_sports='$schedule_sports' and record_round='$schedule_round' and record_gender ='$gender' and record_group='$group' and record_".$result_type."_record>0 
                   limit 12,12");
                   while ($highrow = mysqli_fetch_array($highresult)) {
-                    echo '<th style="background: none"><input placeholder="높이" type="text" name="trial[]"
+                    echo '<th><input placeholder="높이" type="text" name="trial[]"
                                                     class="input_trial" id="trial" value="' .
                       $highrow["record_" . $result_type . "_record"] .
                       '" maxlength="4" 
@@ -318,9 +317,9 @@ if ($rows['record_status'] == 'o') {
                         <div>
                             <?php
               // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
-              if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
-                echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
-                        if ($schedule_sports == "polevault" || $schedule_sports == "highjump") {
+                       if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
+                         echo '<button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="';
+                        if ($schedule_sports == "polevault" || $schedule_sports == "highjump" || $check_round=='y') {
                             echo "/record/field_vertical_result_view.php";
                         } else if ($schedule_sports == "longjump" || $schedule_sports == "triplejump") {
                             echo "/record/field_horizontal_result_view.php";
@@ -337,12 +336,13 @@ if ($rows['record_status'] == 'o') {
               ?>
                         </div>
                     </div>
-
-            </div>
-            <button type="button" class="changePwBtn defaultBtn">확인</button>
+                </div>
+                <button type="button" class="changePwBtn defaultBtn">확인</button>
+            </form>
         </div>
-        <script src="assets/js/main.js"></script>
-        <script src="assets/js/restrict.js"></script>
+    </div>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/restrict.js"></script>
 </body>
 
 

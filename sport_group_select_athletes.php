@@ -58,7 +58,11 @@ if ($sports == 'decathlon' || $sports == 'heptathlon') {
         }
         $sports_result = $db->query("SELECT sports_category from list_sports where sports_code='$round'");
         $sports_row = mysqli_fetch_assoc($sports_result);
-        $round_condition="AND record_athlete_id=athlete_id AND record_round='final'";
+        $round_condition="and record_round='final' AND athlete_id not IN (
+            SELECT record_athlete_id 
+            FROM list_record 
+            WHERE record_memo LIKE '%DNS%' OR record_memo LIKE '%DQ%' OR record_memo LIKE '%DNF%'
+          )";
         $join_condition='join list_record';
     }
 }
@@ -94,7 +98,7 @@ if ($round == 'final') {
     }
     $round_condition = "AND athlete_id = (SELECT record_athlete_id from list_record where record_sports = '$sports' and record_gender='$gender' AND (record_memo like '%Q%') or (record_memo like '%q%') AND record_round='" . $check_round_row['schedule_round'] . "')";
 }
-$sql = "select athlete_id,athlete_name,athlete_country,athlete_schedule from list_athlete ".$join_condition." where (athlete_schedule  like '%$sports%')" . $gender_condition . $round_condition;
+$sql = "select distinct athlete_id,athlete_name,athlete_country,athlete_schedule from list_athlete ".$join_condition." where (athlete_schedule  like '%$sports%')" . $gender_condition . $round_condition;
 $result = $db->query($sql);
 $count=0;
 while($row=mysqli_fetch_array($result)){
@@ -159,72 +163,72 @@ if ($sports == 'decathlon' || $sports == 'heptathlon') {
     
 }
 ?>
-    <script src="/assets/js/restrict.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('input[name="athlete_id[]"]').change(
-                function() {
-                    let a = $('input[name="athlete_id[]"]:checked').length
-                    $('input[name="playercount"]').attr("value", a)
-                    $('input[name="groupcount"]').attr("value", Math.ceil(a / $('input[name="groupnumber"]').val()))
-                }
-            )
-            $('input[name="groupnumber"]').keyup(
-                function() {
-                    let a = $('input[name="athlete_id[]"]:checked').length
-                    $('input[name="playercount"]').attr("value", a)
-                    $('input[name="groupcount"]').attr("value", Math.ceil(a / $('input[name="groupnumber"]').val()))
-                }
-            )
-        })
-    </script>
+<script src="/assets/js/restrict.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('input[name="athlete_id[]"]').change(
+        function() {
+            let a = $('input[name="athlete_id[]"]:checked').length
+            $('input[name="playercount"]').attr("value", a)
+            $('input[name="groupcount"]').attr("value", Math.ceil(a / $('input[name="groupnumber"]').val()))
+        }
+    )
+    $('input[name="groupnumber"]').keyup(
+        function() {
+            let a = $('input[name="athlete_id[]"]:checked').length
+            $('input[name="playercount"]').attr("value", a)
+            $('input[name="groupcount"]').attr("value", Math.ceil(a / $('input[name="groupnumber"]').val()))
+        }
+    )
+})
+</script>
 </head>
 
 <body>
-  <!-- contents 본문 내용 -->
-  <div class="container pbottom--0">
-    <!-- <div class="contents something"> -->
-    <div class="something ptop--40 athlete">
-      <div class="groupSelect">
-        <div class="result_list2">
-          <p class="tit_left_blue ">참가 선수 목록</p>
-        </div>
-          <form action="<?php if ($name == '4x100mR' || $name == '4x400mR' || $name == '4x400mR(Mixed)') {
+    <!-- contents 본문 내용 -->
+    <div class="container pbottom--0">
+        <!-- <div class="contents something"> -->
+        <div class="something ptop--40 athlete">
+            <div class="groupSelect">
+                <div class="result_list2">
+                    <p class="tit_left_blue ">참가 선수 목록</p>
+                </div>
+                <form action="<?php if ($name == '4x100mR' || $name == '4x400mR' || $name == '4x400mR(Mixed)') {
               // 릴레이 경기 조 편성 페이지
               echo './sport_group_manual_relay_org.php';
           } else {
               // 릴레이 경기 이외의 조 편성 페이지
               echo './sport_group_manual_group_org.php';
           } ?>" method="post" class="form">
-          <div class="groupSelect_tit">
-            <ul class="headerBody">
-              <li>
-                <p>총 인원 </p>
-              </li>
-              <li>
-                <p>편성 가능한 조 </p>
-              </li>
-              <li>
-                <p>조 당 인원 </p>
-              </li>
-            </ul>
-            <ul>
-              <li>
-              <input type="number" name="playercount" value="<?php echo $count; ?>" readonly>
-              </li>
-              <li>
-              <input type="number" name="groupcount" value="<?php echo $groupcount; ?>"readonly>
+                    <div class="groupSelect_tit">
+                        <ul class="headerBody">
+                            <li>
+                                <p>총 인원 </p>
+                            </li>
+                            <li>
+                                <p>편성 가능한 조 </p>
+                            </li>
+                            <li>
+                                <p>조 당 인원 </p>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <input type="number" name="playercount" value="<?php echo $count; ?>" readonly>
+                            </li>
+                            <li>
+                                <input type="number" name="groupcount" value="<?php echo $groupcount; ?>" readonly>
 
-              </li>
-              <li>
-              <input type="number" name="groupnumber" value="<?php echo $group; ?>">
+                            </li>
+                            <li>
+                                <input type="number" name="groupnumber" value="<?php echo $group; ?>">
 
-              </li>
-            </ul>
-          </div>
-          <div class="grouptSelectList">
-            <?php
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="grouptSelectList">
+                        <?php
                         while ($row = mysqli_fetch_array($result)) {
                             if(in_array($sports,explode(',',$row['athlete_schedule']))){
                                 echo '<div>';
@@ -242,17 +246,17 @@ if ($sports == 'decathlon' || $sports == 'heptathlon') {
                         <input type="hidden" name='sports' value='<?php echo $sports ?>'>
                         <input type="hidden" name='round' value='<?php echo $round ?>'>
                         <input type="hidden" name='gender' value='<?php echo $gender ?>'>
-          </div>
-          <div class=" signup_submit">
-            <button type="submit" class="btn_login" name="signup">
-              <span>확인</span>
-            </button>
-          </div>
-        </form>
-      </div>
+                    </div>
+                    <div class=" signup_submit">
+                        <button type="submit" class="btn_login" name="signup">
+                            <span>확인</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-  <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>

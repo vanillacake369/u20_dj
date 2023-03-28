@@ -44,7 +44,8 @@ $sql = "SELECT r.*,a.*,r.record_group,s.schedule_sports,r.record_status
 from list_record AS r
 JOIN list_schedule AS s on r.record_sports=s.schedule_sports AND r.record_gender=s.schedule_gender AND r.record_round=s.schedule_round
 JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id AND r.record_sports='$sports' AND r.record_gender='$gender' AND r.record_round='$round'
-ORDER BY r.record_group ASC, $result_order ASC $relay_order ;";
+WHERE r.record_group != '' ORDER BY r.record_group ASC, $result_order ASC $relay_order ;";
+
 $result = $db->query($sql);
 $total_count = mysqli_num_rows($result);
 $athrecord = array();
@@ -101,8 +102,11 @@ function islane($schedule_sports, $what)
                     BTN_Blue">진행중</p>' : ' BTN_yellow ">대기중</p>'); ?>
             </div>
         </div>
+        
         <div class="schedule schedule_flex filed_high_flex">
-            <div class="schedule_filed filed_list_item filed_container">
+           
+                <form action="#" method="post" class="form">
+                <div class="schedule_filed filed_list_item filed_container">
                 <!-- class="contents something" -->
                 <div class="schedule_filed_tit">
                     <p class="tit_left_yellow">1조</p>
@@ -110,8 +114,6 @@ function islane($schedule_sports, $what)
                     echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
                     ?>
                 </div>
-
-                <form action="#" method="post" class="form">
                     <table class="box_table">
                         <colgroup>
                             <col style="width: 7%;">
@@ -220,15 +222,16 @@ function islane($schedule_sports, $what)
                                         $count = 0;
 
             ?>
-    <div class="schedule_filed filed_list_item filed_container">
+        
+        <div class="schedule_filed filed_list_item filed_container">
         <!-- class="contents something" -->
         <div class="schedule_filed_tit">
             <p class="tit_left_yellow"><?php echo  $k ?>조</p>
             <?php
-                                        $row2 = mysqli_fetch_array($result2);
-                                        echo '<span class="defaultBtn';
-                                        echo $row2['record_status'] == 'o' ? ' BTN_green">Official Result</span>' : ($row2['record_status'] == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
-                        ?>
+                $row2 = mysqli_fetch_array($result2);
+                echo '<span class="defaultBtn';
+                echo $row2['record_status'] == 'o' ? ' BTN_green">Official Result</span>' : ($row2['record_status'] == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
+            ?>
         </div>
         <form action="#" method="post" class="form">
             <table class="box_table">
@@ -253,9 +256,9 @@ function islane($schedule_sports, $what)
                         <th scope="col" colspan="1">등번호</th>
                         <th scope="col" colspan="1">이름</th>
                         <?php
-                                        if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR')
-                                            echo "<th scope='col' colspan='1'>국가</th>";
-                                    ?>
+                            if ($schedule_sports == '4x400mR' || $schedule_sports == '4x100mR')
+                                echo "<th scope='col' colspan='1'>국가</th>";
+                        ?>
                         <th scope="col" colspan="1">기록</th>
                         <th scope="col" colspan="1">Reaction Time</th>
                         <th scope="col" colspan="1">비고</th>
@@ -371,9 +374,9 @@ function islane($schedule_sports, $what)
                                 ?>
                     </tr>
                     <?php
-                                }
-                                $j++;
-                                if ($j == $total_count) { ?>
+                        }
+                        $j++;
+                        if ($j == $total_count) { ?>
                 </tbody>
             </table>
             <input type=hidden name=result value=<?php echo  $schedule_result ?>>
@@ -429,7 +432,7 @@ function islane($schedule_sports, $what)
         </form>
     </div>
     <?php }
-                            }
+        }
         ?>
     </div>
     <?php if ($row2['record_status'] === 'o' && $round !== 'final') {

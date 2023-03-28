@@ -58,6 +58,7 @@ if (empty($total_count)) {
                 BTN_Blue">진행중</p>':' BTN_yellow ">대기중</p>');?>
             </div>
         </div>
+        <div class="schedule schedule_flex">
         <form action="" method="post">
             <input name="round" value="<?php echo $schedule_round?>" hidden>
             <input name="sports" value="<?php echo $schedule_sports?>" hidden>
@@ -65,7 +66,6 @@ if (empty($total_count)) {
             <input name="group" value="<?php echo $row["record_group"] ?>" hidden>
             <input name="name" value="<?php echo $schedule_name?>" hidden>
             <input name="result" value="<?php echo $schedule_result?>" hidden>
-            <div class="schedule schedule_flex">
                 <div class="schedule_filed filed_list_item">
                     <div class="schedule_filed_tit">
                         <p class="tit_left_yellow">1조</p>

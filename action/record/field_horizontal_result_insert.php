@@ -150,7 +150,7 @@ for ($i = 0; $i < count($athlete_name); $i++) {
         if($result[$i]>=9 && $ruf == 'X'){
                 $cnt++;
             }
-      if ((float)$highrecord < (float)$ruf && $ruf != 'X') {
+      if ((float)$highrecord <= (float)$ruf && $ruf != 'X') {
         $highrecord = $ruf;
         $highwin = $win;
         $hightri = $j+1;

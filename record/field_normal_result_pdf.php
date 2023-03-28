@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
     <script src="../assets/fontawesome/js/all.min.js"></script>
     <script>
-        window.print()
+    window.print()
     </script>
     <title>U20</title>
 </head>
@@ -31,8 +31,9 @@
             $gender = $_POST['gender'];
             $group = $_POST['group'];
             //print_r($_POST);
-            $sql = "select *, record_weight, record_end from list_schedule inner join list_record ON (schedule_sports = record_sports)
-                        where record_gender = schedule_gender AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
+            $sql = "select *, record_weight, record_end from list_schedule join list_record ON (schedule_sports = record_sports)
+                        where record_sports = schedule_sports and record_round = schedule_round and record_gender = schedule_gender
+                         AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
             $result = $db->query($sql);
             $row = mysqli_fetch_assoc($result);
             if ($row['schedule_sports'] == 'decathlon' || $row['schedule_sports'] == 'heptathlon') {
@@ -57,7 +58,7 @@
                 <div style="width: 100%; display: flex;">
                     <?php
                     echo '<p style="font-size:12px; width:330px">라운드: ' . $_POST['round'] . '</p>';
-                    echo '<p style="font-size:12px; width:330px">용기구: ' . $row['record_weight'] . '</p>';
+                    echo '<p style="font-size:12px; width:330px">용기구: ' . $row['record_weight'] . 'm/s'.'</p>';
                     ?>
                 </div>
             </div>
@@ -79,14 +80,14 @@
                             echo '<col style="width: 9%;">';
                         }
                         ?>
-                        <col style="width: 9%;">
-                        <col style="width: 9%" />
                         <?php
                         if ($check_round == 'y') {
                             echo '<col style="width: 9%;">';
                             echo '<col style="width: 9%;">';
                         }
                         ?>
+                        <col style="width: 9%;">
+                        <col style="width: 9%" />
                     </colgroup>
                     <thead>
                         <tr>
@@ -122,9 +123,15 @@
                     <tbody>
                         <?php
                         for ($i = 0; $i < count($_POST['rank']); $i++) {
-                            $country = $db->query("select athlete_bib, athlete_country, athlete_birth from list_athlete INNER JOIN list_record ON athlete_id = record_athlete_id  where athlete_name ='" . $_POST['playername'][$i] . "'");
+                            $country = $db->query("select athlete_bib, athlete_country, athlete_birth, athlete_id from list_athlete INNER JOIN list_record ON athlete_id = record_athlete_id  where athlete_name ='" . $_POST['playername'][$i] . "'");
                             // echo "select athlete_country from list_athlete where athlete_name =".$_POST['playername'][$i]."";
                             $row1 = mysqli_fetch_array($country);
+                            $point = $db->query("SELECT record_multi_record from list_record where record_athlete_id ='$row1[3]' and record_sports='$sports'  AND record_multi_record IS NOT null");
+                            $pointrow = mysqli_fetch_array($point);
+                            $totalid = $db->query("select schedule_sports from list_schedule where schedule_sports= '$sports' and schedule_round='$round'");
+                            $totalrow = mysqli_fetch_array($totalid);
+                            $totalpoint = $db->query("SELECT record_live_record from list_record where record_athlete_id ='$row1[3]' and record_sports = '$totalrow[0]'");
+                            $totalrow1 = mysqli_fetch_array($totalpoint);
                             echo '<tr>';
                             echo '<td rowspan="2">' . $_POST['rank'][$i] . '</td>';
                             echo "<td rowspan='2'>$row1[0]</td>";
@@ -148,19 +155,13 @@
                             }
                             echo '</td>';
                             if ($check_round == 'y') {
-                                $point = $db->query("SELECT record_multi_record from list_record where record_athlete_id ='$row1[1]' and record_schedule_id=" . $_POST['schedule_id'] . " AND record_multi_record IS NOT null");
-                                $pointrow = mysqli_fetch_array($point);
-                                $totalid = $db->query("select schedule_id from list_schedule where schedule_name='" . $_POST['gamename'] . "' and schedule_round='final' and schedule_division='s'");
-                                $totalrow = mysqli_fetch_array($totalid);
-                                $totalpoint = $db->query("SELECT record_live_record from list_record where record_athlete_id ='$row1[1]' and record_schedule_id=$totalrow[0]");
-                                $totalrow1 = mysqli_fetch_array($totalpoint);
-                                echo '<td>' . $pointrow[0] . '</td>';
-                                echo '<td>' . $totalrow1[0] . '</td>';
+                                echo '<td rowspan="2">' . $pointrow[0] . '</td>';
+                                echo '<td rowspan="2">' . $totalrow1[0] . '</td>';
                             }
-                            echo '</tr>';
                             echo '<tr>';
                             echo '<td>' . (mb_strlen($_POST['newrecord'][$i]) > 0 ? $_POST['newrecord'][$i] : '&nbsp;') . '</td>';
                             echo '</tr>';
+                            // echo '</tr>';
                         }
                         ?>
                     </tbody>

@@ -270,11 +270,9 @@ if ($rows['record_status'] == 'o') {
                             $result = $db->query($sql);
                             while ($row = mysqli_fetch_array($result)) {
                                 // 장거리경기에 따라 경기 결과 입력 형식 바꾸기
-                                if (in_array($rows['schedule_sports'], $longname)) {
-                                    echo '<tr id="id' . $row['athlete_bib'] . '"';
-                                } else {
+
                                     echo '<tr id="rane' . $row['record_order'] . '"';
-                                }
+
                                 if ($num % 2 == 1) echo ' class="Ranklist_Background">';
                                 else echo ">";
                                 echo '<td><input type="number" name="rank[]" id="rank" value="' . $row['record_' . $result_type . '_result'] . '" min="1" required="" /></td>';

@@ -199,7 +199,7 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                 from list_record AS r 
                                 JOIN list_schedule AS s on r.record_sports=s.schedule_sports AND r.record_gender=s.schedule_gender
                                 JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id AND record_athlete_id='".$row['athlete_id']."'
-                                WHERE schedule_sports='decathlon' and schedule_gender ='m'AND record_round!='final' 
+                                WHERE schedule_sports='decathlon' and schedule_gender ='m'AND record_round!='final' AND record_multi_record IS NOT null
                                 ORDER BY " . $order_val . ",record_trial, FIELD(record_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m');";
                                 $multiresult=$db->query($multiscoresql);
                                 echo '<tbody class="table_tbody De_tbody entry_table';

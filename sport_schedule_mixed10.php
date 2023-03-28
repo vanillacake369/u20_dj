@@ -252,12 +252,12 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                             echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
                                             echo 'formaction =';
                                             echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(한) 출력</button>';
                                             echo '</form>';
                             ?>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="/action/record/mix10_excel.php">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/mix10_word.php">워드 출력</button>
                         </div>
                     </div>
             </div>

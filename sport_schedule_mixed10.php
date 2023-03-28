@@ -99,11 +99,11 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
                     onclick="result_ajax('400m', '/sport_schedule_track.php')">400m</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
-                    onclick="result_ajax('100mh', '/sport_schedule_track.php')">110mh</button></li>
+                    onclick="result_ajax('110mh', '/sport_schedule_track.php')">110mh</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
                     onclick="result_ajax('discusthrow', '/sport_schedule_field.php')">원반 던지기</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
-                    onclick="result_ajax('polejump', '/sport_schedule_field.php')">장대 높이뛰기</button></li>
+                    onclick="result_ajax('polevault', '/sport_schedule_high_jump.php')">장대 높이뛰기</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
                     onclick="result_ajax('javelinthrow', '/sport_schedule_field.php')">창던지기</button></li>
             <li class="changeTableItem"><button class="changeTableBtn" type="button"
@@ -316,13 +316,13 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
         <div class="schedule schedule_flex filed_high_flex  TableList" id="400m_target">
 
         </div>
-        <div class="schedule schedule_flex filed_high_flex  TableList" id="100mh_target">
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="110mh_target">
 
         </div>
         <div class="schedule schedule_flex filed_high_flex  TableList" id="discusthrow_target">
 
         </div>
-        <div class="schedule schedule_flex filed_high_flex  TableList" id="polejump_target">
+        <div class="schedule schedule_flex filed_high_flex  TableList" id="polevault_target">
 
         </div>
         <div class="schedule schedule_flex filed_high_flex  TableList" id="javelinthrow_target">

@@ -66,19 +66,31 @@
             <div class="table_area" style="margin-bottom: 20px;">
                 <table width="100%" cellspacing="0" cellpadding="0" class="table table-hover team_table tab1">
                     <colgroup>
+                        <col style="width: 6%" />
+                        <col style="width: 6%" />
+                        <col style="width: 15%" />
                         <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 11%" />
-                        <col style="width: 9%" />
-                        <col style="width: 8%" />
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
-                        <col style="width: 7%;">
-                        <col style="width: 13%" />
+                        <col style="width: 12%" />
+                        <?php
+                        if ($sports != 'decathlon' && $sports !='heptathlon') {
+                            
+                        echo '<col style="width: 7%;">';
+                        echo '<col style="width: 7%;">';
+                        echo '<col style="width: 7%;">';
+                        echo '<col style="width: 7%;">';
+                        echo '<col style="width: 7%;">';
+                        echo '<col style="width: 7%;">';
+                        echo '<col style="width: 7%;">';
+                        echo '<col style="width: 7%;">';
+                        }else{
+                        echo '<col style="width: 8%;">';
+                        echo '<col style="width: 8%;">';
+                        echo '<col style="width: 8%;">';
+                        echo '<col style="width: 8%;">';
+                        echo '<col style="width: 10%;">';
+                        echo '<col style="width: 8%;">';
+                        }
+                        ?>
                     </colgroup>
                     <thead>
                         <tr>
@@ -90,23 +102,46 @@
                             <th>1st</th>
                             <th>2nd</th>
                             <th>3rd</th>
-                            <th>4th</th>
-                            <th>5th</th>
-                            <th>6th</th>
-                            <th>RESULT</th>
-                            <th>NOTE</th>
+                            <?php
+                            if ($sports != 'decathlon' && $sports !='heptathlon') {
+                                echo'<th>4th</th>';
+                                echo'<th>5th</th>';
+                                echo'<th>6th</th>';
+                                echo'<th>RESULT</th>';
+                                echo'<th>NOTE</th>';
+                            }else{
+                                echo'<th>RESULT</th>';
+                                echo'<th>NOTE</th>';
+                                echo'<th>POINTS</th>';
+                                
+                            }
+                            ?>
                         </tr>
                         <tr>
-                            <th colspan="7">Wind</th>
-                            <th>RECORDS</th>
+                            <?php
+                        if ($sports != 'decathlon' && $sports !='heptathlon') {
+                            echo'<th colspan="7">Wind</th>';
+                            echo'<th>RECORDS</th>';
+                        }else{
+                            echo'<th colspan="4">Wind</th>';
+                            echo'<th>RECORDS</th>';
+                            echo'<th>TOTAL</th>';
+                        }
+                        ?>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         for ($i = 0; $i < count($_POST['rank']); $i++) {
-                            $country = $db->query("select athlete_bib, athlete_country, athlete_birth from list_athlete INNER JOIN list_record ON athlete_id = record_athlete_id where athlete_name ='" . $_POST['playername'][$i] . "'");
+                            $country = $db->query("select athlete_bib, athlete_country, athlete_birth, athlete_id from list_athlete INNER JOIN list_record ON athlete_id = record_athlete_id where athlete_name ='" . $_POST['playername'][$i] . "'");
                             // echo "select athlete_country from list_athlete where athlete_name =".$_POST['playername'][$i]."";
-                            $row1 = mysqli_fetch_array($country);
+                            $row1 = mysqli_fetch_array($country);                    
+                            $point = $db->query("SELECT record_multi_record from list_record where record_athlete_id ='$row1[3]' and record_round='$round' and record_gender ='$gender' and record_group='$group'  and record_multi_record IS NOT null");
+                            $pointrow = mysqli_fetch_array($point);
+                            $totalid = $db->query("SELECT schedule_sports from list_schedule where schedule_name='" . $row['schedule_name'] . "' and schedule_round='$round'");
+                            $totalrow = mysqli_fetch_array($totalid);
+                            $totalpoint = $db->query("SELECT record_live_record from list_record where record_athlete_id ='$row1[3]' and record_sports='$totalrow[0]'");
+                            $totalrow1 = mysqli_fetch_array($totalpoint);
                             echo '<tr>';
                             echo '<td rowspan="2">' . $_POST['rank'][$i] . '</td>';
                             echo "<td rowspan='2'>$row1[0]</td>";
@@ -116,6 +151,7 @@
                             echo '<td>' . $_POST['gameresult1'][$i] . '</td>';
                             echo '<td>' . $_POST['gameresult2'][$i] . '</td>';
                             echo '<td>' . $_POST['gameresult3'][$i] . '</td>';
+                            if ($sports != 'decathlon' && $sports !='heptathlon') {
                             echo '<td>' . $_POST['gameresult4'][$i] . '</td>';
                             echo '<td>' . $_POST['gameresult5'][$i] . '</td>';
                             echo '<td>' . $_POST['gameresult6'][$i] . '</td>';
@@ -127,16 +163,35 @@
                                 echo $_POST['bigo'][$i];
                             }
                             echo '</td>';
+                            }else{
+
+                                echo '<td>' . $_POST['gameresult'][$i] . '</td>';
+                                echo '<td>';
+                                if ($_POST['bigo'][$i] == '') {
+                                    echo '&nbsp;';
+                                } else {
+                                    echo $_POST['bigo'][$i];
+                                }
+                                echo '</td>';
+                                echo '<td>' . $pointrow[0] . '</td>';                               
+                            }
                             echo '</tr>';
                             echo '<tr>';
                             echo '<td>' . $_POST['wind1'][$i] . '</td>';
                             echo '<td>' . $_POST['wind2'][$i] . '</td>';
                             echo '<td>' . $_POST['wind3'][$i] . '</td>';
+                            if ($sports != 'decathlon' && $sports !='heptathlon') {
                             echo '<td>' . $_POST['wind4'][$i] . '</td>';
                             echo '<td>' . $_POST['wind5'][$i] . '</td>';
                             echo '<td>' . $_POST['wind6'][$i] . '</td>';
                             echo '<td>' . $_POST['lastwind'][$i] . '</td>';
                             echo '<td>' . (mb_strlen($_POST['newrecord'][$i]) > 0 ? $_POST['newrecord'][$i] : '&nbsp;') . '</td>';
+                            }else{
+                            echo '<td>' . $_POST['lastwind'][$i] . '</td>';
+                            echo '<td>' . (mb_strlen($_POST['newrecord'][$i]) > 0 ? $_POST['newrecord'][$i] : '&nbsp;') . '</td>';
+                            echo '<td>' . $totalrow1[0] . '</td>';
+                            }
+                            // echo '<td>' . $_POST['lastwind'][$i] . '</td>';
                             echo '</tr>';
                         }
                         ?>

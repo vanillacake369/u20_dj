@@ -8,7 +8,7 @@ global $db;
 $athlete = $_POST["player_id"] ?? null;             // array: 참가하는 선수들 id
 $lane = $_POST["lane"] ?? null;                     // array: 선수별 순서 or 레인
 $group = $_POST["group"] ?? null;                   // array: 선수 별 그룹 배정
-$sports = $_POST["sport_code"] ?? null;             // string: 스포츠 종목 명 (cleanInput 사용 시 4mr만 남음)
+$check_sports = $sports = $_POST["sport_code"] ?? null;             // string: 스포츠 종목 명 (cleanInput 사용 시 4mr만 남음)
 $round = cleanInput($_POST["round"]);               // string: 라운드(영어)
 $gender = cleanInput($_POST["gender"]);             // string: 경기 성별
 $count = cleanInput($_POST["count"]);               // string: 조 개수
@@ -22,6 +22,12 @@ if (!isset($athlete, $lane, $group, $round, $gender, $count, $sports, $category)
     // 필수 적인 값들이 안들어오면 창 종료
     mysqli_close($db);
     exit('<script>alert("모두 입력하세요.");history.back();</script>');
+}
+
+if (in_array($sports, ["decathlon", "heptathlon"])) {
+    // 7종 또는 10종 경기이면 sports 확인 변수에 round를 삽입
+    // 종합경기는 round가 sports_code
+    $check_sports = $round;
 }
 
 // 중복 생성 확인 코드
@@ -124,7 +130,7 @@ try {
     //@Potatoeunbi
     //154 ~ 251 line
     //record 생성
-    if (($category == '트랙경기' && ($sports != '4x400mR' && $sports != '4x100mR')) || $sports == 'highjump' || $sports == 'polevault') {
+    if (($category == '트랙경기' && ($check_sports != '4x400mR' && $check_sports != '4x100mR')) || $check_sports == 'highjump' || $check_sports == 'polevault') {
         //릴레이 경기가 아닌 트랙경기와 높이뛰기, 장대높이뛰기인 경우
         for ($idx = 0; $idx < count($athlete); $idx++) {  //선수 수만큼
             $athlete_data = [
@@ -143,7 +149,7 @@ try {
             $stmt->execute();
             $stmt->close();
         }
-    } else if ($category == '필드경기' && ($sports != 'highjump' || $sports != 'polevault')) {
+    } else if ($category == '필드경기' && ($check_sports != 'highjump' || $check_sports != 'polevault')) {
         //높이뛰기, 장대높이뛰기가 아닌 필드경기인 경우
         $MAX_TRIAL = in_array($sports, ["decathlon", "heptathlon"]) ? 3 : 6;
         for ($idx = 0; $idx < count($athlete); $idx++) {
@@ -166,7 +172,7 @@ try {
                 $stmt->close();
             }
         }
-    } else if ($sports == '4x400mR' || $sports == '4x100mR') {
+    } else if ($check_sports == '4x400mR' || $check_sports == '4x100mR') {
         //릴레이 경기일 경우
         $relay_lane = 0;
         for ($idx = 0; $idx < count($athlete); $idx++) {  //선수 수만큼

@@ -235,7 +235,7 @@ $groupresult = $db->query($groupsql);
                                             echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/mix7_pdf_eng.php">PDF(영) 출력</button>';
                                             echo '</form>';
                             ?>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="/action/record/mix7_excel.php">엑셀 출력</button>
                             <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/mix7_word.php">워드 출력</button>
                         </div>
                     </div>

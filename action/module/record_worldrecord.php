@@ -4,7 +4,7 @@ require_once __DIR__ . "/../../includes/auth/config.php";
 function changeresult($a)
 { //1분이상 경기 기록 변환
     // xx:xx.xx
-    if ((strlen($a) > 6)) {
+    if (preg_match("/^\d{2}:\d{2}.\d{2}$/", $a)) {
         $a = explode(':', $a);
         $a = (float)$a[0] * 60 + (float)$a[1];
     }

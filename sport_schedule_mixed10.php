@@ -335,7 +335,7 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
     </div>
     <button type="button" class="changePwBtn defaultBtn">확인</button>
     </div>
-    <script src="assets/js/main.js?ver=10"></script>
+    <script src="assets/js/main.js?ver=11"></script>
     <script src="assets/js/restrict.js"></script>
     <script>
     function result_ajax(data, url) {

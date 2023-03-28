@@ -136,7 +136,7 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
 <script>
     $("select[name=athlete]").select2();
 </script>
-<script src="assets/js/main.js?ver=13"></script>
+<script src="assets/js/main.js?ver=15"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="./assets/css/style.css">
 <link rel="stylesheet" href="./assets/css/style_dh.css">
@@ -149,10 +149,12 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
         <div class="schedule schedule_flex">
             <!-- n조 -->
             <?php
-            // START FOR (1~m조)   
+            // START FOR (1~m조)
+            $num = 0;
             $first_index_each_group_athletes_data = array_key_first($each_group_athletes_data);
             $last_index_each_group_athletes_data = array_key_last($each_group_athletes_data);
             for ($i = $first_index_each_group_athletes_data; $i <= $last_index_each_group_athletes_data; $i++) {
+                $num++;
             ?>
                 <div class="schedule_filed filed_list_item filed2">
                     <div class="profile_logo">

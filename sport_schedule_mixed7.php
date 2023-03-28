@@ -149,7 +149,7 @@ $groupresult = $db->query($groupsql);
                             <tr class="filed2_bottom">
                             </tr>
                         </thead>
-                        <tbody class="table_tbody De_tbody entry_table" id='body'>
+                        
                             <?php
                             $i = 1;
                             $count = 0; //신기록시 셀렉트 박스 찾는 용도
@@ -158,6 +158,7 @@ $groupresult = $db->query($groupsql);
                             $table_count = 0;
                             while ($row = mysqli_fetch_array($result)) {
                                 $num++;
+                                echo '<tbody class="table_tbody De_tbody entry_table">';
                                 echo "<tr";
                                 if ($num % 2 == 0) echo ' class="Ranklist_Background">';
                                 else echo ">";
@@ -210,10 +211,11 @@ $groupresult = $db->query($groupsql);
                                     echo "<td></td>";
                                 }
                                 echo "</tr>";
+                                echo "</tbody>";
                                 $table_count = 0;
                                 $people++;
                             } ?>
-                        </tbody>
+                        
                     </table>
                     <div class="filed_BTN">
                         <div>

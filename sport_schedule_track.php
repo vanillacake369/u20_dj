@@ -209,9 +209,9 @@ function islane($schedule_sports, $what)
             </div>
 
             <?php
-                                    $k++;
-                                    if ($total_count != $j) {
-                                        $count = 0;
+                $k++;
+                if ($total_count != $j) {
+                    $count = 0;
 
             ?>
                 <div class="schedule_filed filed_list_item filed_container">
@@ -219,9 +219,9 @@ function islane($schedule_sports, $what)
                     <div class="schedule_filed_tit">
                         <p class="tit_left_yellow"><?php echo  $k ?>조</p>
                         <?php
-                                        $row2 = mysqli_fetch_array($result2);
-                                        echo '<span class="defaultBtn';
-                                        echo $row2['record_status'] == 'o' ? ' BTN_green">Official Result</span>' : ($row2['record_status'] == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
+                            $row2 = mysqli_fetch_array($result2);
+                            echo '<span class="defaultBtn';
+                            echo $row2['record_status'] == 'o' ? ' BTN_green">Official Result</span>' : ($row2['record_status'] == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
                         ?>
                     </div>
                     <form action="#" method="post" class="form">

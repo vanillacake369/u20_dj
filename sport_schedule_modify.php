@@ -87,15 +87,15 @@ $row = mysqli_fetch_array($result);
                                     <div>
                                         <input placeholder="(YYYY)" type="number" name="date_year" maxlength="4"
                                             required="" oninput="maxLengthCheck(this)"
-                                            value="<?= date("Y", strtotime($row["schedule_date"])) ?>" />
+                                            value="<?= date("Y", strtotime($row["schedule_date"])) ?>" required />
                                         <span>:</span>
                                         <input placeholder="(mm)" type="number" name="date_month"
                                             maxlength="2" oninput="maxLengthCheck(this)"
-                                            value="<?= date("M", strtotime($row["schedule_date"])) ?>" />
+                                            value="<?= date("M", strtotime($row["schedule_date"])) ?>" required />
                                         <span>:</span>
                                         <input placeholder="(dd)" type="number" name="date_day"
                                             maxlength="2" oninput="maxLengthCheck(this)"
-                                            value="<?= date("D", strtotime($row["schedule_date"])) ?>" />
+                                            value="<?= date("D", strtotime($row["schedule_date"])) ?>" required/>
                                     </div>
                                 </li>
                             </ul>

@@ -444,16 +444,13 @@ for (let i = 0; i < filed_item.length; i++) {
 }
 
 // 조 편성 수정 > 클릭클릭으로 선수 SWAP 기능
-if (
-  document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
-) {
+if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) {
   let clickedInput = null;
-  const inputs = document.querySelectorAll(
-    '.filed2_swap>tbody>tr>td>input[name="name[]"]'
-  );
+  const inputs = document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]');
   const athlete = document.querySelectorAll('input[name="athlete_id[]"]');
   for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener("click", () => {
+    inputs[i].addEventListener('click', () => {
+      console.log(inputs[i]);
       if (!clickedInput) {
         clickedInput = inputs[i];
         athleteInput = athlete[i];
@@ -464,22 +461,23 @@ if (
         athleteInput.value = athlete[i].value;
         inputs[i].value = tempValue;
         athlete[i].value = athleteValue;
-        clickedInput.setAttribute("value", clickedInput.value);
-        inputs[i].setAttribute("value", inputs[i].value);
-        athleteInput.setAttribute("value", athleteInput.value);
-        athlete[i].setAttribute("value", athlete[i].value);
+        clickedInput.setAttribute('value', clickedInput.value);
+        inputs[i].setAttribute('value', inputs[i].value);
+        athleteInput.setAttribute('value', athleteInput.value);
+        athlete[i].setAttribute('value', athlete[i].value);
         clickedInput = null;
         athleteInput = null;
       }
     });
   }
-  document.addEventListener("click", (event) => {
+  document.addEventListener('click', (event) => {
     // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
     // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
-    if (event.target.name !== "name[]") {
+    if (event.target.name !== 'name[]') {
       clickedInput = null;
       athleteInput = null;
     }
+
   });
 }
 

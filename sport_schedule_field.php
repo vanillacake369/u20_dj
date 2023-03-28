@@ -24,10 +24,15 @@ $sql = "SELECT *,if(r.record_status='o',r.record_official_result,record_live_res
 JOIN list_schedule AS s on r.record_sports=s.schedule_sports AND r.record_gender=s.schedule_gender AND r.record_round=s.schedule_round AND if(r.record_status ='n', r.record_trial='1',if(r.record_status='o',r.record_official_result>0,record_live_result>0))
 JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id AND r.record_sports='$sports' AND r.record_gender='$gender' AND r.record_round='$round'
 ORDER BY record_group,if(r.record_status='n',record_order,result);";
-
 $result = $db->query($sql);
 $row = mysqli_fetch_array($result);
 $schedule_sports = $row['schedule_sports'];
+if($schedule_sports == 'decathlon' || $schedule_sports == 'heptathlon'){
+    $schedule_sports = $round;
+    $z=3;
+}else{
+    $z=6;
+}
 $schedule_result = $row['record_status'];
 $schedule_round = $row['schedule_round'];
 $schedule_name = $row['schedule_name'];
@@ -58,7 +63,7 @@ if (empty($total_count)) {
         <div class="schedule schedule_flex">
             <form action="" method="post" class="form schedule_filed filed_list_item">
                 <input name="round" value="<?php echo $schedule_round?>" hidden>
-                <input name="sports" value="<?php echo $schedule_sports?>" hidden>
+                <input name="sports" value="<?php echo $sports?>" hidden>
                 <input name="gender" value="<?php echo $gender?>" hidden>
                 <input name="group" value="<?php echo $row["record_group"] ?>" hidden>
                 <input name="name" value="<?php echo $schedule_name?>" hidden>
@@ -71,18 +76,28 @@ if (empty($total_count)) {
                 </div>
                 <table class="box_table">
                     <colgroup>
-                        <col style="width: 4%" />
-                        <col style="width: 4%" />
-                        <col style="width: 4%" />
-                        <col style="width: 15%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 7%" />
-                        <col style="width: 10%" />
+                        <col style="width: 3%" />
+                        <col style="width: 3%" />
+                        <col style="width: 6%" />
+                        <col style="width: 14%" />
+                        <?php
+                            if ($sports == 'decathlon' || $sports == 'heptathlon') {
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 14%" />';
+                            } else {
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 10%" />';
+                                echo '<col style="width: 10%" />';
+                            }
+                            ?>
                     </colgroup>
                     <thead class="result_table De_tbody entry_table">
                         <tr>
@@ -103,7 +118,7 @@ if (empty($total_count)) {
                         jump($schedule_sports);
                         echo ">3차 시기</th>";
                         echo "<th rowspan=";
-                        if ($schedule_sports != 'decathlon' || $schedule_sports != 'heptathlon') {
+                        if ($sports != 'decathlon' && $sports != 'heptathlon') {
                             jump($schedule_sports);
                             echo ">4차 시기</th>";
                             echo "<th rowspan=";
@@ -118,9 +133,9 @@ if (empty($total_count)) {
                         echo ">기록</th>";
                         echo "<th>비고</th>";
                         echo "</tr>";
-                        if ($schedule_sports == 'decathlon' || $schedule_sports == 'heptathlon') {
+                        if (($sports == 'decathlon' || $sports == 'heptathlon') && ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump')) {
                             echo "<tr>";
-                            echo  "<th colspan='7'>풍속</th>";
+                            echo  "<th colspan='4'>풍속</th>";
                         }
                         else if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
                             echo "<tr>";
@@ -141,6 +156,7 @@ if (empty($total_count)) {
                     $j = 0;
                     $result = $db->query($sql);
                     while ($row = mysqli_fetch_array($result)) {
+                        $i = 1;
                     if ($row['record_group'] != $k) {
                     ?>
                     </tbody>
@@ -154,7 +170,7 @@ if (empty($total_count)) {
                         <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                             formaction="award_ceremony.php">시상식 보기</button>
                         <?php }?>
-                        <?php  if ($sports=='longjump' || $sports=='triplejump'){?>
+                        <?php  if ($schedule_sports=='longjump' || $schedule_sports=='triplejump'){?>
                         <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                             formaction="/record/field_horizontal_result_pdf.php">PDF(한) 출력</button>
                         <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
@@ -203,7 +219,7 @@ if (empty($total_count)) {
     ?>
         <form action="" method="post" class="form schedule_filed filed_list_item">
             <input name="round" value="<?php echo $schedule_round?>" hidden>
-            <input name="sports" value="<?php echo $schedule_sports?>" hidden>
+            <input name="sports" value="<?php echo $sports?>" hidden>
             <input name="gender" value="<?php echo $gender?>" hidden>
             <input name="group" value="<?php echo $row['record_group']?>" hidden>
             <input name="name" value="<?php echo $schedule_name?>" hidden>
@@ -217,18 +233,28 @@ if (empty($total_count)) {
             </div>
             <table class="box_table">
                 <colgroup>
-                    <col style="width: 4%" />
-                    <col style="width: 4%" />
-                    <col style="width: 4%" />
-                    <col style="width: 15%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 7%" />
-                    <col style="width: 10%" />
+                    <col style="width: 3%" />
+                    <col style="width: 3%" />
+                    <col style="width: 6%" />
+                    <col style="width: 14%" />
+                    <?php
+                            if ($sports == 'decathlon' || $sports == 'heptathlon') {
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 15%" />';
+                                echo '<col style="width: 14%" />';
+                            } else {
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 9%" />';
+                                echo '<col style="width: 10%" />';
+                                echo '<col style="width: 10%" />';
+                            }
+                            ?>
                 </colgroup>
                 <thead class="result_table De_tbody entry_table">
                     <tr>
@@ -249,7 +275,7 @@ if (empty($total_count)) {
                     jump($schedule_sports);
                     echo ">3차 시기</th>";
                     echo "<th rowspan=";
-                    if ($schedule_sports != 'decathlon' || $schedule_sports != 'heptathlon') {
+                    if ($sports != 'decathlon' && $sports != 'heptathlon') {
                         jump($schedule_sports);
                         echo ">4차 시기</th>";
                         echo "<th rowspan=";
@@ -264,10 +290,10 @@ if (empty($total_count)) {
                     echo ">기록</th>";
                     echo "<th>비고</th>";
                     echo "</tr>";
-                    if ($schedule_sports == 'decathlon' || $schedule_sports == 'heptathlon') {
-                        echo "<tr>";
-                        echo  "<th colspan='7'>풍속</th>";
-                    }
+                     if (($sports == 'decathlon' || $sports == 'heptathlon') && ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump')) {
+                            echo "<tr>";
+                            echo  "<th colspan='4'>풍속</th>";
+                        }
                     else if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
                         echo "<tr>";
                         echo  "<th colspan='7'>풍속</th>";
@@ -331,19 +357,19 @@ if (empty($total_count)) {
                 if ($num%2 == 0) echo ' class="Ranklist_Background">'; else echo ">";
 
                 if ($schedule_sports == 'longjump' || $schedule_sports == 'triplejump') {
-                    for ($t = 0; $t <= 6; $t++) {
-                        $wind = $db->query("SELECT record_wind FROM list_record
-                                    INNER JOIN list_athlete ON record_athlete_id=" .
-                            $row["athlete_id"] .
-                            " AND athlete_id= record_athlete_id
-                                    and record_sports='$sports' 
-                                        and record_round='$round' and record_gender='$gender' and record_group=".$row['record_group']."
-                                    ORDER BY record_live_record ASC limit 6 ");
+                    $wind = $db->query("SELECT record_wind FROM list_record
+                                INNER JOIN list_athlete ON record_athlete_id=" .
+                        $row["athlete_id"] .
+                        " AND athlete_id= record_athlete_id
+                                and record_sports='$sports' 
+                                    and record_round='$round' and record_gender='$gender' and record_group=".$row['record_group']."
+                                ORDER BY record_trial ASC limit 6 ");
+                    for ($t = 0; $t <= $z; $t++) {
                         $windrow = mysqli_fetch_array($wind);
-                        if ($t % 7 == 6) {
+                        if ($t % 7 == $z) {
                             echo "<td>";
                             echo '<input placeholder="풍속" type="text" name="lastwind[]" class="input_text" value="' .
-                                ($row["wind"] ?? null) .
+                                ($row["record_wind"] ?? null) .
                                 '"
                                                 maxlength="5" required="" onkeyup="windFormat(this)" readonly/>';
                             echo "</td>";
@@ -382,7 +408,7 @@ if (empty($total_count)) {
                             '<button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 formaction="award_ceremony.php">시상식 보기</button>';
                             }?>
-                    <?php if ($sports=='longjump' || $sports=='triplejump'){
+                    <?php if ($schedule_sports=='longjump' || $schedule_sports=='triplejump'){
                                 echo
                             '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_horizontal_result_pdf.php">PDF(한) 출력</button>

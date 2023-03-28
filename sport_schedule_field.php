@@ -170,7 +170,7 @@ if (empty($total_count)) {
                         <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                             formaction="award_ceremony.php">시상식 보기</button>
                         <?php }?>
-                        <?php  if ($sports=='longjump' || $sports=='triplejump'){?>
+                        <?php  if ($schedule_sports=='longjump' || $schedule_sports=='triplejump'){?>
                         <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                             formaction="/record/field_horizontal_result_pdf.php">PDF(한) 출력</button>
                         <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
@@ -408,7 +408,7 @@ if (empty($total_count)) {
                             '<button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
                                 formaction="award_ceremony.php">시상식 보기</button>';
                             }?>
-                    <?php if ($sports=='longjump' || $sports=='triplejump'){
+                    <?php if ($schedule_sports=='longjump' || $schedule_sports=='triplejump'){
                                 echo
                             '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"
                                 formaction="/record/field_horizontal_result_pdf.php">PDF(한) 출력</button>

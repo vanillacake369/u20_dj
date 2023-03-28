@@ -91,7 +91,7 @@ if ($rows['record_status'] == 'o') {
                     on[5].firstElementChild.value = 0
                     on[8].firstElementChild.value = k[0]
                 } else if (k[0] == 'DNF') {
-                    on[6].firstElementChild.value = 'n'
+                    on[6].firstElementChild.value = 'w'
                     on[5].firstElementChild.value = 0
                     on[8].firstElementChild.value = k[0]
                 } else {

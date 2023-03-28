@@ -142,7 +142,7 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                         </colgroup>
                         <thead class="result_table entry_table">
                             <tr>
-                                <th scope="col" colspan="1">순서</th>
+                                <th scope="col" colspan="1">순위</th>
                                 <th scope="col" colspan="1">이름</th>
                                 <th scope="col" colspan="1">총점</th>
                                 <th scope="col" colspan="1">
@@ -188,17 +188,35 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                         <?php
                             $i = 1;
                             $num = 0;
+                           
                             $count = 0; //신기록시 셀렉트 박스 찾는 용도
                             $people = 0;
                             $table_count = 0;
                             while ($row = mysqli_fetch_array($result)) {
+                                 $cnt = 0; //10종 없는 기록 개수 세기
                                 $num++;
+                                $multiscoresql = "SELECT DISTINCT record_multi_record
+                                from list_record AS r 
+                                JOIN list_schedule AS s on r.record_sports=s.schedule_sports AND r.record_gender=s.schedule_gender
+                                JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id AND record_athlete_id='".$row['athlete_id']."'
+                                WHERE schedule_sports='decathlon' and schedule_gender ='m'
+                                ORDER BY " . $order_val . ",record_trial;";
+                                $multiresult=$db->query($multiscoresql);
                                 echo '<tbody class="table_tbody De_tbody entry_table';
                                 if ($num % 2 == 0) echo ' Ranklist_Background">'; else echo "\">";
                                 echo "<tr>";
                                 echo "<td >" . htmlspecialchars($row['record_' . $result_type . '_result']) . "</td>";
                                 echo "<td >" . htmlspecialchars($row['athlete_name']) . "</td>";
                                 echo "<td >" . htmlspecialchars($row['record_' . $result_type . '_record']) . "</td>";
+                                while($multirow=mysqli_fetch_array($multiresult)){
+                                    echo "<td >" . htmlspecialchars(($multirow['record_multi_record']??null)) . "</td>";
+                                    $cnt++;
+                                }
+                                for($k=0;$k<10-$cnt;$k++){
+                                    echo "<td ></td>";
+                                }
+                                echo "<td >" . htmlspecialchars($row['record_memo']) . "</td>";
+                                if ($row['record_' . $result_type . '_record']) world($db, $row['athlete_name'], $row['record_new'], $row['schedule_sports'], $row['record_' . $result_type . '_record']);
                                 echo "</tr>";
                                 // echo "<tr>";
 

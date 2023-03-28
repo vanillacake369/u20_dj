@@ -147,9 +147,6 @@ $judgerow = mysqli_fetch_array($judgeresult);
                                     } else {
                                         echo '<button class="defaultBtn BIG_btn BTN_blue4" type="submit" formaction="/action/record/three_try_after_reverse.php">순서 재정렬</button>';
                                     }
-                                    if ($rows['record_state'] != 'y') {
-                                        echo '<button type="button" onclick="openTextFile()" class="defaultBtn BIG_btn pdf_BTN2">자동 입력</button>';
-                                    }
                                     ?>
                                 </div>
                             </div>

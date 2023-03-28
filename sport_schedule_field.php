@@ -157,6 +157,7 @@ if (empty($total_count)) {
                     $j = 0;
                     $result = $db->query($sql);
                     while ($row = mysqli_fetch_array($result)) {
+                        $i = 1;
                     if ($row['record_group'] != $k) {
                     ?>
                     </tbody>

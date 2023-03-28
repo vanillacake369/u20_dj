@@ -364,7 +364,7 @@ if (empty($total_count)) {
                             " AND athlete_id= record_athlete_id
                                     and record_sports='$sports' 
                                         and record_round='$round' and record_gender='$gender' and record_group=".$row['record_group']."
-                                    ORDER BY record_live_record ASC limit 6 ");
+                                    ORDER BY record_trial ASC limit 6 ");
                         $windrow = mysqli_fetch_array($wind);
                         if ($t % 7 == $z) {
                             echo "<td>";

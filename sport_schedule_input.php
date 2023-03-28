@@ -52,7 +52,7 @@ require_once "security/security.php";
                                             } else if (val == "heptathlon") {
                                                 // 7종 선택에 따른 라운드 셀렉트 박스 변경
                                                 $("#round").html(
-                                                    '<option value="final">결승</option><option value="100mh">100mh</option><option value="longjump">longjump</option><option value="shotput">shotput</option><option value="200m">200m</option><option value="highjump">highjump</option><option value="discusthrow">discusthrow</option><option value="800m">800m</option>'
+                                                    '<option value="final">결승</option><option value="100mh">100mh</option><option value="longjump">longjump</option><option value="shotput">shotput</option><option value="200m">200m</option><option value="highjump">highjump</option><option value="javelinthrow">javelinthrow</option><option value="800m">800m</option>'
                                                 );
                                             } else {
                                                 // 그 밖의 경기 시

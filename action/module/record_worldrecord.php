@@ -3,10 +3,18 @@ require_once __DIR__ . "/../../includes/auth/config.php";
 
 function changeresult($a)
 { //1분이상 경기 기록 변환
-    if (strlen($a) > 6) {
+    // xx:xx.xx
+    if (preg_match("/^\d{2}:\d{2}.\d{2}$/", $a)) {
         $a = explode(':', $a);
         $a = (float)$a[0] * 60 + (float)$a[1];
-    } else {
+    }
+    // xx.xx(xxx)
+    else if (preg_match("/^\d{2}\.\d{2}\(\d{2}\)$/", $a)) {
+        $a = explode('(', $a);
+        $a = (float)$a[0];
+    }
+    // xx.xx
+    else {
         $a = (float)$a;
     }
     return $a;

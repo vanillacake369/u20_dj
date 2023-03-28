@@ -27,7 +27,7 @@ $res1 = $db->query("SELECT * FROM list_schedule
 $row1 = mysqli_fetch_array($res1);
 if ($name === 'decathlon' || $name === 'heptathlon') {
     $check_round = 'y';
-    $totalrow = 'record_sports="' . $row1['schedule_sports'] . '" and record_gender="$gender" and record_round="final"';
+    $totalrow = 'record_sports="' . $row1['schedule_sports'] . '" and record_gender="'.$gender.'" and record_round="final"';
     $trialcnt = 4;
 } else {
     $check_round = 'n';

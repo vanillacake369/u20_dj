@@ -234,16 +234,7 @@ $groupresult = $db->query($groupsql);
                                             echo 'formaction =';
                                             echo '\'/record/mix7_pdf.php\'';
                                             echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(한) 출력</button>';
-                                            echo '</form>';
-                            ?>
-                            <?php
-                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
-                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
-                                            echo 'formaction =';
-                                            echo '\'/record/mix7_pdf_eng.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(영) 출력</button>';
+                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/mix7_pdf_eng.php">PDF(영) 출력</button>';
                                             echo '</form>';
                             ?>
                             <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀

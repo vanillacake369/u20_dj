@@ -8,11 +8,12 @@ function regTrackResult(str) {
   str = String(str);
   if (str.length <= 4) {
     return str.replace(/(\d{2})(\d{2})/g, "$1.$2");
-  } else if (str.length <= 6) {
-    return str.replace(/(\d{2})(\d{2})(\d{2})/g, "$1:$2.$3");
-  } else if (str.length > 6) {
-    return str.replace(/(\d{2})\.?(\d{2})\(?(\d{3})\)?/, "$1.$2($3)");
-  }
+  } else{
+    return str.replace(/(\d{2})(\d{2})(\d{2,})/g, "$1:$2.$3");
+  } 
+//   else if (str.length > 6) {
+//     return str.replace(/(\d{2})\.?(\d{2})\(?(\d{3})\)?/, "$1.$2($3)");
+//   }
 }
 
 // 트랙 Reaction Time 포맷 :: 0.xxx

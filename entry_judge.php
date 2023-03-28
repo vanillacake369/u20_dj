@@ -73,7 +73,7 @@ zend_version()
                                     foreach ($judge_country_dic as $key => $value) {
                                         echo '<option value="' . $value . '" ';
                                         if (isset($isCountrySelected[$key]) && $isCountrySelected[$key] != "")
-                                            echo $isCountrySelected[$key] .'>' . $key . '</option>';
+                                            echo $isCountrySelected[$key] . '>' . $key . '</option>';
                                         else
                                             echo '>' . $key . '</option>';
                                     }
@@ -88,7 +88,7 @@ zend_version()
                                     foreach ($judge_division_dic as $key) {
                                         echo '<option value="' . $key . '" ';
                                         if (isset($isDivisionSelected[$key]) && $isDivisionSelected[$key] != "")
-                                            echo $isDivisionSelected[$key] .'>' . $key . '</option>';
+                                            echo $isDivisionSelected[$key] . '>' . $key . '</option>';
                                         else
                                             echo '>' . $key . '</option>';
                                     }
@@ -104,7 +104,7 @@ zend_version()
                                         $gender = ($key == 'm') ? '남성' : '여성';
                                         echo '<option value="' . $key . '" ';
                                         if (isset($isGenderSelected[$key]) && $isGenderSelected[$key] != "")
-                                            echo $isGenderSelected[$key] .'>' . $gender . '</option>';
+                                            echo $isGenderSelected[$key] . '>' . $gender . '</option>';
                                         else
                                             echo '>' . $gender . '</option>';
                                     }
@@ -162,7 +162,7 @@ zend_version()
                     </colgroup>
                     <thead class="table_head entry_table">
                         <tr>
-                        <th scope="col">
+                            <th scope="col">
                                 <input type="checkbox" name="checkAll" id="checkAll" onclick="toggle(this)">
                             </th>
                             <th scope="col">AD카드</th>
@@ -190,7 +190,7 @@ zend_version()
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
-                    <?php
+                        <?php
                         // 행 번호
                         $num = 0;
                         // if ($result != false && $result->num_rows > 0)
@@ -242,22 +242,19 @@ zend_version()
                             // 참가자 참가 경기
                             echo '<td class="popup_BTN">';
 
-                            if (!isset($row["judge_schedule"]) || $row["judge_schedule"] == "")
-                            {
+                            if (!isset($row["judge_schedule"]) || $row["judge_schedule"] == "") {
                                 $sports = "-";
                                 echo $sports;
                                 echo '<div class="item_popup" style="display: none;">';
                                 echo $sports;
                                 echo "</div>";
-                            }
-                               
-                            else{
+                            } else {
                                 $sports = explode(',', $row["judge_schedule"]);
                                 if (hasSearchedValue($sports)) {
                                     if (count($sports) > 1) {
-                                        echo htmlspecialchars($sport_dic[$sports[0]]) . " 외 " . (count($sports) - 1) . "개";
+                                        echo htmlspecialchars($judge_sport_dic[$sports[0]]) . " 외 " . (count($sports) - 1) . "개";
                                     } else {
-                                        echo htmlspecialchars($sport_dic[$sports[0]]);
+                                        echo htmlspecialchars($judge_sport_dic[$sports[0]]);
                                     }
                                 } else {
                                     echo htmlspecialchars(" - ");
@@ -267,16 +264,16 @@ zend_version()
                                 if (hasSearchedValue($sports)) {
                                     foreach ($sports as $attend) {
                                         if ($attend == end($sports)) {
-                                            echo htmlspecialchars($sport_dic[trim($attend)]);
+                                            echo htmlspecialchars($judge_sport_dic[trim($attend)]);
                                         } else {
-                                            echo htmlspecialchars($sport_dic[trim($attend)]) . '<br>';
+                                            echo htmlspecialchars($judge_sport_dic[trim($attend)]) . '<br>';
                                         }
                                     }
                                 } else {
                                     echo htmlspecialchars(" - ");
                                 }
                             }
-                            
+
                             echo '</div>';
                             echo "</td>";
                             // 참가자 참석 경기
@@ -313,7 +310,7 @@ zend_version()
                             // 참가자 수정
                             echo "<td>";
                             if (authCheck($db, "authEntrysUpdate")) {
-                                echo "<input type='button' onclick=" ."\"createPopupWin('entry_judge_modify.php?id=" . $row["judge_id"] . "'" . ",'수정',1100,900);\"". " value='수정' class='BTN_Blue defaultBtn'>";
+                                echo "<input type='button' onclick=" . "\"createPopupWin('entry_judge_modify.php?id=" . $row["judge_id"] . "'" . ",'수정',1100,900);\"" . " value='수정' class='BTN_Blue defaultBtn'>";
                             }
                             echo "</td>";
                             // 참가자 삭제

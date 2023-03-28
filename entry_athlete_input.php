@@ -197,32 +197,33 @@ if (!authCheck($db, "authEntrysRead")) {
                                         <?php
                                         // sb,pb에는 아래와 같이 "종합(상세종목)" 으로 기입되어야 함
                                         // 10종,7종 선택 옵션
-                                        unset($sport_dic["decathlon"]);
-                                        unset($sport_dic["heptathlon"]);
-                                        $sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
-                                        $sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
-                                        $sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
-                                        $sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
-                                        $sport_dic["decathlon(400m)"] = "Decathlon(400m)";
-                                        $sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
-                                        $sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
-                                        $sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
-                                        $sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
-                                        $sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
-                                        $sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
-                                        $sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
-                                        $sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
-                                        $sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
-                                        $sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
-                                        $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
-                                        // key($sport_dic) : sports_code
-                                        // current($sport_dic) : sports_name
-                                        for ($value = 1; $value <= count($sport_dic); $value++) {
+                                        $sbpb_sport_dic = $sport_dic;
+                                        unset($sbpb_sport_dic["decathlon"]);
+                                        unset($sbpb_sport_dic["heptathlon"]);
+                                        $sbpb_sport_dic["decathlon(100m)"] = "Decathlon(100mh)";
+                                        $sbpb_sport_dic["decathlon(longjump)"] = "Decathlon(longjump)";
+                                        $sbpb_sport_dic["decathlon(shotput)"] = "Decathlon(shotput)";
+                                        $sbpb_sport_dic["decathlon(highjump)"] = "Decathlon(highjump)";
+                                        $sbpb_sport_dic["decathlon(400m)"] = "Decathlon(400m)";
+                                        $sbpb_sport_dic["decathlon(110mh)"] = "Decathlon(110mh)";
+                                        $sbpb_sport_dic["decathlon(discusthrow)"] = "Decathlon(discusthrow)";
+                                        $sbpb_sport_dic["decathlon(polevalut)"] = "Decathlon(polevalut)";
+                                        $sbpb_sport_dic["decathlon(javelinthrow)"] = "Decathlon(javelinthrow)";
+                                        $sbpb_sport_dic["decathlon(1500m)"] = "Decathlon(1500m)";
+                                        $sbpb_sport_dic["heptathlon(100mh)"] = "Heptathlon(100mh)";
+                                        $sbpb_sport_dic["heptathlon(highjump)"] = "Heptathlon(highjump)";
+                                        $sbpb_sport_dic["heptathlon(shotput)"] = "Heptathlon(shotput)";
+                                        $sbpb_sport_dic["heptathlon(longjump)"] = "Heptathlon(longjump)";
+                                        $sbpb_sport_dic["heptathlon(javelinthrow)"] = "Heptathlon(javelinthrow)";
+                                        $sbpb_sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
+                                        // key($sbpb_sport_dic) : sports_code
+                                        // current($sbpb_sport_dic) : sports_name
+                                        for ($value = 1; $value <= count($sbpb_sport_dic); $value++) {
                                             echo '<option value=\'\' selected disabled hidden>종목 선택</option>';
-                                            echo '<option value="' . key($sport_dic) . '">' . current($sport_dic) . '</option>';
-                                            next($sport_dic);
+                                            echo '<option value="' . key($sbpb_sport_dic) . '">' . current($sbpb_sport_dic) . '</option>';
+                                            next($sbpb_sport_dic);
                                         }
-                                        reset($sport_dic);
+                                        reset($sbpb_sport_dic);
                                         ?>
                                     </select>
                                     <input type="text" name="athlete_sb[]" id="athlete_sb" value="" placeholder="SB를 입력해 주세요" onkeyup="heightFormat(this)" />
@@ -239,14 +240,14 @@ if (!authCheck($db, "authEntrysRead")) {
                                 <ul class="modify_checkList" id="pb-input">
                                     <select name="athlete_pb_sports[]" id="pb-sports-select">
                                         <?php
-                                        // key($sport_dic) : sports_code
-                                        // current($sport_dic) : sports_name
-                                        for ($value = 1; $value <= count($sport_dic); $value++) {
+                                        // key($sbpb_sport_dic) : sports_code
+                                        // current($sbpb_sport_dic) : sports_name
+                                        for ($value = 1; $value <= count($sbpb_sport_dic); $value++) {
                                             echo '<option value=\'\' selected disabled hidden>종목 선택</option>';
-                                            echo '<option value="' . key($sport_dic) . '">' . current($sport_dic) . '</option>';
-                                            next($sport_dic);
+                                            echo '<option value="' . key($sbpb_sport_dic) . '">' . current($sbpb_sport_dic) . '</option>';
+                                            next($sbpb_sport_dic);
                                         }
-                                        reset($sport_dic);
+                                        reset($sbpb_sport_dic);
                                         ?>
                                     </select>
                                     <input type="text" name="athlete_pb[]" id="athlete_pb" value="" placeholder="PB를 입력해 주세요" onkeyup="heightFormat(this)" />

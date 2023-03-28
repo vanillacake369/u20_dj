@@ -166,11 +166,11 @@ function fieldFinal2(obj) {
   let top = "0";
   let wind = "";
   let a = obj.parentElement.parentElement;
-  for (i = 3; i < a.children.length - 3; i++) {
+  for (i = 4; i < a.children.length - 3; i++) {
     if (parseFloat(top) < parseFloat(a.children[i].firstElementChild.value)) {
       top = a.children[i].firstElementChild.value;
 
-      wind = a.nextElementSibling.children[i - 3].firstElementChild.value;
+      wind = a.nextElementSibling.children[i - 4].firstElementChild.value;
     }
   }
   a.children[a.children.length - 3].firstElementChild.value = top;
@@ -183,12 +183,13 @@ function fieldFinal3(obj) {
   let top = "0";
   let wind = "";
   let a = obj.parentElement.parentElement.previousElementSibling;
-
-  for (i = 3; i < a.children.length - 3; i++) {
+  console.log(a.nextElementSibling.children);
+  console.log(a.children);
+  for (i = 4; i < a.children.length - 3; i++) {
     if (parseFloat(top) < parseFloat(a.children[i].firstElementChild.value)) {
       top = a.children[i].firstElementChild.value;
-
-      wind = a.nextElementSibling.children[i - 3].firstElementChild.value;
+      console.log(i+" "+top)
+      wind = a.nextElementSibling.children[i - 4].firstElementChild.value;
     }
   }
   a.children[a.children.length - 3].firstElementChild.value = top;

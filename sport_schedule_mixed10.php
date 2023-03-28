@@ -240,10 +240,12 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                     </table>
                     <div class="filed_BTN">
                         <div>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
+                                formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
                                 보기</button>
                             <?php if ($schedule_round == 'final') { ?>
-                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN"
+                                formaction="award_ceremony.php">시상식 보기</button>
                             <?php } ?>
                             <?php
                             echo '<form action="" method="post">';
@@ -252,12 +254,23 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                             echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
                                             echo 'formaction =';
                                             echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(한) 출력</button>';
                                             echo '</form>';
                             ?>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="">PDF(영) 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀 출력</button>
-                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드 출력</button>
+                            <?php
+                            echo '<form action="" method="post">';
+                                            echo '<input name="sports" value="' . $sports . '" hidden>';
+                                            echo '<input name="gender" value="' . $gender . '" hidden>';                                    
+                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
+                                            echo 'formaction =';
+                                            echo '\'/record/mix10_pdf_eng.php\'';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(영) 출력</button>';
+                                            echo '</form>';
+                            ?>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="">엑셀
+                                출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="">워드
+                                출력</button>
                         </div>
                     </div>
             </div>

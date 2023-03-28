@@ -18,22 +18,31 @@ if (
 	(!isset($_POST["athlete_age"]) || $_POST["athlete_age"] == "")||
     (!isset($_POST["athlete_birth_year"]) || $_POST["athlete_birth_year"] == "")||
     (!isset($_POST["athlete_birth_month"]) || $_POST["athlete_birth_month"] == "")||
-    (!isset($_POST["athlete_birth_day"]) || $_POST["athlete_birth_day"] == "")||
-    (!isset($_POST["athlete_schedules"]) || $_POST["athlete_schedules"] == "")||
-    (!isset($_POST["attendance_sports"]) || $_POST["attendance_sports"] == "")||
-    (!isset($_POST["athlete_sector"]) || $_POST["athlete_sector"]== "")||
-    (!isset($_POST["athlete_village"]) || $_POST["athlete_village"]== "")||
-    (!isset($_POST["athlete_seats"]) || $_POST["athlete_seats"]== "")||
-    (!isset($_POST["athlete_venue_access"]) || $_POST["athlete_venue_access"]== "") ||
-	(!isset($_POST["athlete_bib"]) || $_POST["athlete_bib"]== "")
+    (!isset($_POST["athlete_birth_day"]) || $_POST["athlete_birth_day"] == "")
+	// ||
+    // (!isset($_POST["athlete_schedules"]) || $_POST["athlete_schedules"] == "")||
+    // (!isset($_POST["attendance_sports"]) || $_POST["attendance_sports"] == "")
+	// ||
+    // (!isset($_POST["athlete_sector"]) || $_POST["athlete_sector"]== "")||
+    // (!isset($_POST["athlete_village"]) || $_POST["athlete_village"]== "")||
+    // (!isset($_POST["athlete_seats"]) || $_POST["athlete_seats"]== "")||
+    // (!isset($_POST["athlete_venue_access"]) || $_POST["athlete_venue_access"]== "") ||
+	// (!isset($_POST["athlete_bib"]) || $_POST["athlete_bib"]== "")
 ) {
 	echo "<script>alert('기입하지 않은 정보가 있습니다.');history.back();</script>";
 	exit;
 }
 
+if (isset($_POST["athlete_schedules"]) &&  $_POST["athlete_schedules"] != "")
+	$schedule = implode(',', $_POST["athlete_schedules"]);
+else 
+	$schedule = "";
 
-$schedule = implode(',', $_POST["athlete_schedules"]);
-$attendance_id = implode(',', $_POST["attendance_sports"]);
+if (isset($_POST["attendance_sports"]) &&  $_POST["attendance_sports"] != "")
+	$attendance_id = implode(',', $_POST["attendance_sports"]);
+else
+	$attendance_id = "";
+
 $birth_day = $_POST["athlete_birth_year"] . "-" . $_POST["athlete_birth_month"] . "-" . $_POST["athlete_birth_day"];
 $name = strtolower($_POST["athlete_second_name"]) . " " . strtoupper($_POST["athlete_first_name"]);
 $profile = strtolower($_POST["athlete_second_name"]) . $birth_day . "_profile";
@@ -64,28 +73,19 @@ if (isset($_POST["athlete_eat"]) && $_POST["athlete_eat"] != "")
 else
 	$athlete_eat = "n";
 if (isset($_POST["athlete_transport"]) &&  $_POST["athlete_transport"] != "")
-	$athlete_transport = trim($_POST["athlete_transport"]);
+	$athlete_transport = trim($_POST["athlete_transport"] ?? NULL);
 else
 	$athlete_transport = "";
-$athlete_seats = trim($_POST["athlete_seats"]);
-$athlete_village = trim($_POST["athlete_village"]);
-$athlete_sector = implode(',', $_POST["athlete_sector"]);
-$athlete_venue_access = trim($_POST["athlete_venue_access"]);
-$athlete_bib = trim($_POST["athlete_bib"] ?? NULL);
+$athlete_seats = trim($_POST["athlete_seats"] ?? NULL);
+$athlete_village = trim($_POST["athlete_village"] ?? NULL);
+if (isset($_POST["athlete_sector"]) && $_POST["athlete_sector"] != "")
+	$athlete_sector = implode(',', $_POST["athlete_sector"]);
+else
+	$athlete_sector = "";
+$athlete_venue_access = trim($_POST["athlete_venue_access"] ?? NULL);
+$athlete_bib = ""; 
 $athlete_iamge = "";
 
-$sql = "SELECT COUNT(*) as cnt FROM list_athlete WHERE athlete_bib = ?";
-
-$stmt = $db->prepare($sql);
-$stmt->bind_param("i", $athlete_bib);
-$stmt->execute();
-$result = $stmt->get_result();
-$row = mysqli_fetch_array($result);
-if ($row['cnt'] > 0)
-{
-	echo "<script>alert('중복되는 BIB가 있습니다.');history.back();</script>";
-	exit;
-}
 if ((isset($_POST["athlete_sb_sports"]) &&  $_POST["athlete_sb_sports"] != "")&&(isset($_POST["athlete_sb"]) &&  $_POST["athlete_sb"] != "")){
 	$athlete_sb_sports = $_POST["athlete_sb_sports"];
 	$athlete_sb = $_POST["athlete_sb"];
@@ -160,12 +160,11 @@ $sql = "INSERT INTO list_athlete
 			athlete_age, athlete_sector, athlete_schedule, 
 			athlete_profile,athlete_attendance,athlete_sb,
 			athlete_pb,athlete_eat,athlete_transport,
-			athlete_venue_access,athlete_seats,athlete_village,
-			athlete_bib)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			athlete_venue_access,athlete_seats,athlete_village)
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 $stmt = $db->prepare($sql);
 $stmt->bind_param(
-	"ssssssssssssssssssi",
+	"sssssssssssssssssi",
 	$athlete_name,
 	$athlete_country,
 	$athlete_region,
@@ -183,13 +182,41 @@ $stmt->bind_param(
 	$athlete_transport,
 	$athlete_venue_access,
 	$athlete_seats,
-	$athlete_village,
-	$athlete_bib
+	$athlete_village
 );
 
 // $athlete_profile (x) => $athlete_image(o)
 $stmt->execute();
+$athlete_id = $db->insert_id;
+if (isset($_POST["athlete_bib"]) && $_POST["athlete_bib"] != "")
+{
+	$stmt = $db->prepare($sql);
+	$stmt->bind_param("i", $athlete_bib);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = mysqli_fetch_array($result);
+	if ($row['cnt'] > 0)
+	{
+		echo "<script>alert('중복되는 BIB가 있습니다.');history.back();</script>";
+		exit;
+	}
+	else
+	{
+		$athlete_bib = trim($_POST["athlete_bib"]);
+	}
+	
+}
+else
+	$athlete_bib = $athlete_id;
 
+	$sql = "UPDATE list_athlete SET athlete_bib = ? WHERE athlete_id= ?";
+	$stmt = $db->prepare($sql);
+	$stmt->bind_param("ss",
+	$athlete_bib,
+	$athlete_id
+	);
+
+	$stmt->execute();
 // 로그 생성
 logInsert($db, $_SESSION['Id'], '선수 생성', $athlete_name . "-" . $athlete_country . "-" . $athlete_schedule);
 

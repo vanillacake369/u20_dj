@@ -100,6 +100,7 @@ try {
                                     (`record_id`,`record_athlete_id`, `record_order`, `record_group`, `record_sports`, `record_round`, `record_gender`, `record_medal`) 
                                     VALUES (?,?,?,?,?,?,?,?)
                                     ON DUPLICATE KEY UPDATE `record_order` = ?, `record_group` = ?;";
+                                    
                 $stmt = $db->prepare($update_record_query);
                 $stmt->bind_param("iiiisssiii", ...$athlete_data);
                 $stmt->execute();

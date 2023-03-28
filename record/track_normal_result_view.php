@@ -39,7 +39,7 @@ if ($rows['record_status'] == 'o') {
     <title>u20 관리자 페이지</title>
     <!--Data Tables-->
     <link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
-    <script type="text/javascript" src="/assets/js/onlynumber.js"></script>
+    <script type="text/javascript" src="/assets/js/onlynumber.js?v=3"></script>
     <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="/assets/js/change_athletics.js"></script>
     <script type="text/javascript" src="/action/record/result_track_single_execute_excel.js"></script>
@@ -288,8 +288,8 @@ if ($rows['record_status'] == 'o') {
                                 value="' . $row['athlete_name'] . '" maxlength="30" required="" readonly /></td>';
                                 echo '<td><input placeholder="국가" type="text" name="country" 
                                 value="' . $row['athlete_country'] . '" maxlength="30" required="" readonly /></td>';
-                                echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="9"
-                                required="" onkeyup="trackResultForm(this)" style="float: left; width: auto; padding-right: 5px" />';
+                                echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="15"
+                                required="" onkeyup="result_check(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 // 경기 통과 여부 셀렉션
                                 echo '<td><select class="input_class" name="gamepass[]"><option value="p">통과</option><option value="l">탈락</option><option value="d">실격</option><option value="w">기권</option><option value="n">시작안함</option></select></td>';
                                 echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="9"
@@ -375,6 +375,17 @@ if ($rows['record_status'] == 'o') {
     </div>
     </div>
     <script src="assets/js/main.js?ver=7"></script>
+    <script>
+        
+        funtion result_check(obj) {
+            const regExp = /[0-9:.]/g;
+
+            if( regExp.test(obj.value) ){
+                alert("특수문자는 입력하실수 없습니다.");
+                obj.value = obj.value.substring( 0 , obj.value.length - 1 ); // 입력한 특수문자 한자리 지움
+                }
+            }
+    </script>
 </body>
 
 </html>

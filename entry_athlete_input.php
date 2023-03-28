@@ -104,7 +104,7 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 </li>
                                 <li class="row input_row row_item input_width">
                                     <span>대회접근시설</span>
-                                    <select name="athlete_venue_access" required>
+                                    <select name="athlete_venue_access">
                                         <option value='' selected disabled hidden>접근시설선택</option>
                                         <option value="Y">전 구역</option>
                                         <option value="HQ">본부호텔</option>
@@ -112,7 +112,7 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 </li>
                                 <li class="row input_row row_item input_width">
                                     <span>경기장 내 좌석</span>
-                                    <select name="athlete_seats" required>
+                                    <select name="athlete_seats">
                                         <option value='' selected disabled hidden>좌석선택</option>
                                         <option value="RS">VIP석</option>
                                         <option value="US">자유석</option>
@@ -134,7 +134,7 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 </li>
                                 <li class="row input_row row_item input_width">
                                     <span>선수촌</span>
-                                    <select name="athlete_village" required>
+                                    <select name="athlete_village">
                                         <option value='' selected disabled hidden>접근시설선택</option>
                                         <option value="AV">선수촌 거주 허용</option>
                                         <option value="VA">선수촌 전구역(거주 불허)</option>
@@ -158,7 +158,7 @@ $sport_dic["heptathlon(800m)"] = "Heptathlon(800m)";
                                 </li>
                                 <li class="row input_row row_item full_width">
                                     <span class="full_span">등번호</span>
-                                    <input type="number" class="full_width2" name="athlete_bib" id="athlete_bib" value="" placeholder="등번호를 입력해 주세요" required maxlength="5" oninput="maxLengthCheck(this)" />
+                                    <input type="number" class="full_width2" name="athlete_bib" id="athlete_bib" value="" placeholder="등번호를 입력해 주세요" maxlength="5" oninput="maxLengthCheck(this)" />
                                 </li>
                             </ul>
                         </div>

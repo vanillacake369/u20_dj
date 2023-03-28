@@ -136,7 +136,7 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
 <script>
     $("select[name=athlete]").select2();
 </script>
-<script src="assets/js/main.js?ver=15"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="./assets/css/style.css">
 <link rel="stylesheet" href="./assets/css/style_dh.css">
@@ -282,16 +282,16 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
                     });
                     // @author 임지훈 @vanillacake369
                     // 각 행의 -버튼을 누르게 되면 AJAX를 통해 테이블의 마지막 행을 "가상"삭제
-                    $(document).ready(function() {
-                        $("button[name='delete_each_row']").click(function() {
-                            // SQL NULL값 INSERT : 해당 선수 record의 group과 order => NULL
-                            $(this).closest("tr").find("input[name='group[]']").val('');
-                            $(this).closest("tr").find("input[name='order[]']").val('');
-                            // 가상 삭제(뷰)
-                            $(this).closest("tr").find("input[name='lane[]']").val('');
-                            $(this).closest("tr").find("input[name='name[]']").val('');
-                        });
-                    });
+                    // $(document).ready(function() {
+                    //     $("button[name='delete_each_row']").click(function() {
+                    //         // SQL NULL값 INSERT : 해당 선수 record의 group과 order => NULL
+                    //         $(this).closest("tr").find("input[name='group[]']").val('');
+                    //         $(this).closest("tr").find("input[name='order[]']").val('');
+                    //         // 가상 삭제(뷰)
+                    //         $(this).closest("tr").find("input[name='lane[]']").val('');
+                    //         $(this).closest("tr").find("input[name='name[]']").val('');
+                    //     });
+                    // });
                 </script>
             <?php
             }
@@ -306,6 +306,7 @@ echo "<script type='text/javascript'>const ORIGIN_LABEL_JSON = '" . json_encode(
         </div>
     </form>
 </div>
+<script src="assets/js/main.js?ver=18"></script>
 </body>
 
 </html>

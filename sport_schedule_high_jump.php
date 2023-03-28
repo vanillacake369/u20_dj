@@ -56,14 +56,15 @@ if ($rows['record_status'] == 'o') {
             </div>
         </div>
         <div class="schedule schedule_flex">
-            <div class="schedule_filed filed_list_item">
-                <div class="schedule_filed_tit">
-                    <p class="tit_left_yellow">1조</p>
-                    <?php echo '<span class="defaultBtn';
-        echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
-        ?>
-                </div>
-                <form action="" method="post">
+                <form action="" method="post" class="form schedule_filed filed_list_item">
+                
+                <div>
+                    <div class="schedule_filed_tit">
+                        <p class="tit_left_yellow">1조</p>
+                        <?php echo '<span class="defaultBtn';
+            echo $schedule_result == 'o' ? ' BTN_green">Official Result</span>' : ($schedule_result == 'l' ? ' BTN_yellow">Live Result</span>' : ' BTN_green">Start List</span>');
+            ?>
+                    </div>
                     <input name="round" value="<?=$round?>" hidden>
                     <input name="sports" value="<?=$sports?>" hidden>
                     <input name="gender" value="<?=$gender?>" hidden>

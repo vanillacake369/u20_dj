@@ -148,7 +148,15 @@ if ($sports == 'decathlon' || $sports == 'heptathlon') {
     }else{
         $group=$count;
     }
-    $groupcount = ceil($count / $group);
+    if ($count <= 0)
+    {
+        echo '<script>alert("참가 선수 목록이 비었습니다."); history.back();</script>';
+        exit;
+    }
+    else{
+        $groupcount = ceil($count / $group);
+    }
+    
 }
 ?>
     <script src="/assets/js/restrict.js"></script>

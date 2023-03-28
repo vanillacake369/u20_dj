@@ -189,11 +189,11 @@
                                 case 'u':
                                     echo "<td>UWR</td>";
                                     break;
-                                case 's':
+                                case 'a':
                                     echo "<td>AR</td>";
                                     break;
-                                case 'a':
-                                    echo "<td>UWR</td>";
+                                case 's':
+                                    echo "<td>UAR</td>";
                                     break;
                                 case 'c':
                                     echo "<td>CR</td>";
@@ -218,10 +218,10 @@
                                         case 'u':
                                             echo "<td>UWR</td>";
                                             break;
-                                        case 's':
+                                        case 'a':
                                             echo "<td>AR</td>";
                                             break;
-                                        case 'a':
+                                        case 's':
                                             echo "<td>UAR</td>";
                                             break;
                                         case 'c':

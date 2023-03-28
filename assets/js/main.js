@@ -433,13 +433,15 @@ if (document.querySelector(".AD_front_name") !== null) {
 }
 
 // 필드 1개 있을 때 width 100%
-const filed_item = document.querySelectorAll(".filed_list_item ");
-
-for (let i = 0; i < filed_item.length; i++) {
-  if (filed_item.length == 1) {
-    filed_item[i].classList.add("decathlon_container");
-  } else {
-    filed_item[i].classList.remove("decathlon_container");
+const schedule = document.querySelectorAll(".schedule");
+for (let i = 0; i < schedule.length; i++) {
+  const filed_item = schedule[i].querySelectorAll(".filed_list_item ");
+  for (let j = 0; j < filed_item.length; j++) {
+    if (filed_item.length == 1) {
+      filed_item[j].classList.add('decathlon_container');
+    } else {
+      filed_item[j].classList.remove('decathlon_container');
+    }
   }
 }
 

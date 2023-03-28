@@ -116,7 +116,7 @@ $groupresult = $db->query($groupsql);
                                     for ($i = 0; $i < 7; $i++) {
                                         echo '<th rowspan="2" >';
                                         $grouprow = mysqli_fetch_assoc($groupresult);
-                                        for($t=1;$t<=$grouprow['cnt'];$t++){
+                                        for($t=1;$t<=($grouprow['cnt'] ?? 0);$t++){
                                             echo '<form action="" method="post">';
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
                                             echo '<input name="gender" value="' . $gender . '" hidden>';
@@ -149,7 +149,7 @@ $groupresult = $db->query($groupsql);
                             <tr class="filed2_bottom">
                             </tr>
                         </thead>
-                        <tbody class="table_tbody De_tbody entry_table" id='body'>
+                        
                             <?php
                             $i = 1;
                             $count = 0; //신기록시 셀렉트 박스 찾는 용도
@@ -158,6 +158,7 @@ $groupresult = $db->query($groupsql);
                             $table_count = 0;
                             while ($row = mysqli_fetch_array($result)) {
                                 $num++;
+                                echo '<tbody class="table_tbody De_tbody entry_table">';
                                 echo "<tr";
                                 if ($num % 2 == 0) echo ' class="Ranklist_Background">';
                                 else echo ">";
@@ -210,17 +211,19 @@ $groupresult = $db->query($groupsql);
                                     echo "<td></td>";
                                 }
                                 echo "</tr>";
+                                echo "</tbody>";
                                 $table_count = 0;
                                 $people++;
                             } ?>
-                        </tbody>
+                        
                     </table>
                     <div class="filed_BTN">
                         <div>
-                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                                보기</button>
+                            <?php if ($schedule_round == 'final') { ?>
+                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
+                            <?php } ?>
                             <?php
                             echo '<form action="" method="post">';
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
@@ -228,10 +231,12 @@ $groupresult = $db->query($groupsql);
                                             echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
                                             echo 'formaction =';
                                             echo '\'/record/mix7_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(한) 출력</button>';
+                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/mix7_pdf_eng.php">PDF(영) 출력</button>';
                                             echo '</form>';
                             ?>
-                            <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="/action/record/mix7_excel.php">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/mix7_word.php">워드 출력</button>
                         </div>
                     </div>
             </div>

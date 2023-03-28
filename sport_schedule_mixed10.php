@@ -19,7 +19,6 @@ $statussql = "SELECT distinct record_round, schedule_sports,record_status, sched
 where schedule_sports='$sports' and schedule_gender ='$gender' AND record_sports=schedule_sports AND record_gender=schedule_gender
 ORDER BY FIELD(record_round,'final','100m','longjump','shotput','highjump','400m','100mh','discusthrow','polevault','javelinthrow','1500m'),FIELD(record_status,'o','l','n')";
 $statusresult = $db->query($statussql);
-echo $statussql;
 $statusrow = mysqli_fetch_array($statusresult);
 $schedule_result = $statusrow['record_status'];
 $schedule_round = $statusrow['record_round'];
@@ -63,16 +62,14 @@ $total_count = mysqli_num_rows($result);
 $groupsql="SELECT distinct record_round AS r,(select count(distinct record_group) FROM list_record WHERE record_sports='decathlon' and record_gender ='m' AND record_round= r)AS cnt FROM list_record WHERE record_sports='decathlon' and record_gender ='m' 
 AND record_sports=record_sports AND record_gender=record_gender AND record_round!='final'
 ORDER BY FIELD(record_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m')";
+
 $groupresult = $db->query($groupsql);
 
 $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70px', '60px', '30px');
 
 ?>
 <!--Data Tables-->
-<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
 <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/assets/DataTables/datatables.min.js"></script>
-<script type="text/javascript" src="/assets/js/useDataTables.js"></script>
 </head>
 
 <body>
@@ -89,9 +86,21 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                 BTN_Blue">진행중</p>' : ' BTN_yellow ">대기중</p>'); ?>
             </div>
         </div>
-
-        <div class="schedule schedule_flex filed_high_flex decathlon_flex">
-            <div class="schedule_filed filed_list_item decathlon_container">
+        <ul class="changeTableList">
+                    <li class="changeTableItem"><button class="changeBtn_color changeTableBtn" type="button">10종</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('100m', '/sport_schedule_track.php')">100m</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('longjump', '/sport_schedule_field.php')">멀리뛰기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('shotput', '/sport_schedule_field.php')">포환 던지기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('highjump', '/sport_schedule_high_jump.php')">높이뛰기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('400m', '/sport_schedule_track.php')">400m</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('100mh', '/sport_schedule_track.php')">110mh</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('discusthrow', '/sport_schedule_field.php')">원반 던지기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('polejump', '/sport_schedule_field.php')">장대 높이뛰기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('javelinthrow', '/sport_schedule_field.php')">창던지기</button></li>
+                    <li class="changeTableItem"><button class="changeTableBtn" type="button" onclick="result_ajax('1500m', '/sport_schedule_track.php')">1500m</button></li>
+                </ul>
+                <div class="schedule schedule_flex filed_high_flex  TableList">
+                <div class="schedule_filed filed_list_item decathlon_container">
                 <div class="schedule_filed_tit">
                     <p class="tit_left_yellow">1조</p>
                     <?php echo '<span class="defaultBtn';
@@ -106,66 +115,62 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                     <input name="schedule_sports" value="<?=$schedule_sports?>" hidden>
                     <table class="box_table">
                         <colgroup>
-                            <col style="width: 3%" />
-                            <col style="width: 13%" />
-                            <col style="width: 5%" />
-                            <col style="width: 5%" />
-                            <col style="width: 5%" />
-                            <col style="width: 6%" />
-                            <col style="width: 6%" />
-                            <col style="width: 5%" />
-                            <col style="width: 5%" />
-                            <col style="width: 7%" />
-                            <col style="width: 8%" />
-                            <col style="width: 6%" />
-                            <col style="width: 5%" />
-                            <col style="width: 5%" />
+                            <col width="5%">
+                            <col width="7%">
+                            <col width="5%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="9%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="12%">
                         </colgroup>
                         <thead class="result_table entry_table">
                             <tr>
-                                <th rowspan="2">순위</th>
-                                <th rowspan="2">이름</th>
-                                <th rowspan="2">총점</th>
-                                <?php
-                                //@Potatoeunbi
-                                //기록입력 버튼
-                                // 수정 권한, 생성 권한 둘 다 있는 경우에만 접근 가능
-                                if (authCheck($db, "authSchedulesUpdate") && authCheck($db, "authSchedulesCreate")) {
-                                    for ($i = 0; $i < 10; $i++) {
-                                        echo '<th rowspan="2" >';
-                                        $grouprow = mysqli_fetch_assoc($groupresult);
-                                        for($t=1;$t<=$grouprow['cnt'];$t++){
-                                            echo '<form action="" method="post">';
-                                            echo '<input name="sports" value="' . $sports . '" hidden>';
-                                            echo '<input name="gender" value="' . $gender . '" hidden>';
-                                            echo '<input name="round" value="' . $round[$i] . '" hidden>';
-                                            echo '<input name="group" value="'.$t.'" hidden>';
-                                            echo $t.'조';
-                                            echo '<button type="submit" formaction="';
-                                            if ($round[$i] == "100m" || $round[$i] == "100mh" || $round[$i] == "110mh" || $round[$i] == "200m" || $round[$i] == "400m" || $round[$i] == "800m" || $round[$i] == "1500m") {
-                                                echo "/record/track_normal_result_view.php";
-                                            } else if ($round[$i] == "discusthrow" || $round[$i] == "javelinthrow" || $round[$i] == "shotput") {
-                                                echo "/record/field_normal_result_view.php";
-                                            } else if ($round[$i] == "polevault" || $round[$i] == "highjump") {
-                                                echo "/record/field_vertical_result_view.php";
-                                            } else if ($round[$i] == "longjump") {
-                                                echo "/record/field_horizontal_result_view.php";
-                                            }
-                                            echo '"class="result_tableBTN BTN_DarkBlue">기록 입력</button>';
-                                            echo '</br>';
-                                            echo '<button type="submit" ';
-                                            echo 'formaction =';
-                                            echo '\'/record_change_type.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">기록전환</button>';
-                                            echo '</form>';
-                                        }
-                                        echo '<br>' . $round[$i] . '</th>';
-                                    }
-                                } ?>
-                                <th>비고</th>
-                            </tr>
-                            <tr>
-                                <th rowspan="4">신기록</th>
+                                <th scope="col" colspan="1">순서</th>
+                                <th scope="col" colspan="1">이름</th>
+                                <th scope="col" colspan="1">총점</th>
+                                <th scope="col" colspan="1">
+                                    <p>100m</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>멀리뛰기</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>포환 던지기</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>높이뛰기</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>400m</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>110mh</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>원반 던지기</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>장대 높이뛰기</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>창 던지기</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <p>1500m</p>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <div>비고</div>
+                                </th>
+                                <th scope="col" colspan="1">
+                                    <div>신기록</div>
+                                </th>
                             </tr>
                             <tr class="filed2_bottom">
                             </tr>
@@ -181,89 +186,139 @@ $margin_left = array('10px', '20px', '35px', '42px', '35px', '23px', '40px', '70
                                 echo '<tbody class="table_tbody De_tbody entry_table';
                                 if ($num % 2 == 0) echo ' Ranklist_Background">'; else echo "\">";
                                 echo "<tr>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['record_' . $result_type . '_result']) . "</td>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['athlete_name']) . "</td>";
-                                echo "<td rowspan='4'>" . htmlspecialchars($row['record_' . $result_type . '_record']) . "</td>";
+                                echo "<td >" . htmlspecialchars($row['record_' . $result_type . '_result']) . "</td>";
+                                echo "<td >" . htmlspecialchars($row['athlete_name']) . "</td>";
+                                echo "<td >" . htmlspecialchars($row['record_' . $result_type . '_record']) . "</td>";
                                 echo "</tr>";
-                                echo "<tr>";
+                                // echo "<tr>";
 
-                                //@Potatoeunbi
-                                //해당 경기의 모든 종목들 record 가져오는 sql문
-                                $multi = "SELECT distinct r.record_multi_record, r.record_" . $result_type . "_record, r.record_wind from list_record AS r 
-                                            join list_schedule AS s
-                                            JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id 
-                                            WHERE schedule_sports='$sports' and schedule_gender ='$gender' AND record_sports=schedule_sports AND record_gender=schedule_gender
-                                            AND r.record_multi_record is not NULL AND record_live_result>0
-                                            and athlete_id = '" . $row['athlete_id'] . "' 
-                                            ORDER BY FIELD(schedule_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m'), athlete_name;";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_multi_record']) . "</td>";
-                                    $table_count++;
-                                }
-                                for ($i = 0; $i < (10-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
+                                // //@Potatoeunbi
+                                // //해당 경기의 모든 종목들 record 가져오는 sql문
+                                // $multi = "SELECT distinct r.record_multi_record, r.record_" . $result_type . "_record, r.record_wind from list_record AS r 
+                                //             join list_schedule AS s
+                                //             JOIN list_athlete AS a ON r.record_athlete_id=a.athlete_id 
+                                //             WHERE schedule_sports='$sports' and schedule_gender ='$gender' AND record_sports=schedule_sports AND record_gender=schedule_gender
+                                //             AND r.record_multi_record is not NULL AND record_live_result>0
+                                //             and athlete_id = '" . $row['athlete_id'] . "' 
+                                //             ORDER BY FIELD(schedule_round, '100m', 'longjump', 'shotput','highjump','400m','110mh','discusthrow','polevault','javelinthrow','1500m'), athlete_name;";
+                                // $answer = $db->query($multi);
+                                // while ($sub = mysqli_fetch_array($answer)) {
+                                //     echo "<td>" . htmlspecialchars($sub['record_multi_record']) . "</td>";
+                                //     $table_count++;
+                                // }
+                                // for ($i = 0; $i < (10-$table_count); $i++)
+                                // {
+                                //     echo "<td></td>";
+                                // }
 
-                                echo "<td>" . htmlspecialchars($row['record_memo']) . "</td>";
+                                // echo "<td>" . htmlspecialchars($row['record_memo']) . "</td>";
                                 
-                                echo "</tr>";
-                                echo "<tr>";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_' . $result_type . '_record']) . "</td>";
-                                }
-                                for ($i = 0; $i < (10-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
+                                // echo "</tr>";
+                                // echo "<tr>";
+                                // $answer = $db->query($multi);
+                                // while ($sub = mysqli_fetch_array($answer)) {
+                                //     echo "<td>" . htmlspecialchars($sub['record_' . $result_type . '_record']) . "</td>";
+                                // }
+                                // for ($i = 0; $i < (10-$table_count); $i++)
+                                // {
+                                //     echo "<td></td>";
+                                // }
                                 //@Potatoeunbi
                                 //include_once(__DIR__ . '/action/module/schedule_worldrecord.php');에 들어있는 함수.
                                 //신기록 출력하는 함수, @gwonsan 학생 신기록 출력 방식 그대로임.
-                                if ($row['record_' . $result_type . '_record']) world($db, $row['athlete_name'], $row['record_new'], $row['schedule_sports'], $row['record_' . $result_type . '_record']);
+                                // if ($row['record_' . $result_type . '_record']) world($db, $row['athlete_name'], $row['record_new'], $row['schedule_sports'], $row['record_' . $result_type . '_record']);
 
+                                // echo "</tr>";
+                                // echo "<tr>";
+                                // $answer = $db->query($multi);
+                                // while ($sub = mysqli_fetch_array($answer)) {
+                                //     echo "<td>" . htmlspecialchars($sub['record_wind'] == null ? ' ' : $sub['record_wind']) . "</td>";
+                                // }
+                                // for ($i = 0; $i < (10-$table_count); $i++)
+                                // {
+                                //     echo "<td></td>";
+                                // }
+                                
                                 echo "</tr>";
-                                echo "<tr>";
-                                $answer = $db->query($multi);
-                                while ($sub = mysqli_fetch_array($answer)) {
-                                    echo "<td>" . htmlspecialchars($sub['record_wind'] == null ? ' ' : $sub['record_wind']) . "</td>";
-                                }
-                                for ($i = 0; $i < (10-$table_count); $i++)
-                                {
-                                    echo "<td></td>";
-                                }
-                                echo "</tr></tbody>";
+                                echo "</tbody>";
                                 $table_count = 0;
                                 $people++;
                             } ?>
                     </table>
                     <div class="filed_BTN">
                         <div>
-                            <button type="button" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN"
-                                onclick="window.open('/award_ceremony.html')">전광판 보기</button>
-                            <button type="button" class="defaultBtn BIG_btn BTN_purple filedBTN"
-                                onclick="window.open('/electronic_display.html')">시상식 보기</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_DarkBlue filedBTN" formaction="electronic_display<?php echo $schedule_result == 'o' ? '_official' : ''; ?>.php">전광판
+                                보기</button>
+                            <?php if ($schedule_round == 'final') { ?>
+                                <button type="submit" class="defaultBtn BIG_btn BTN_purple filedBTN" formaction="award_ceremony.php">시상식 보기</button>
+                            <?php } ?>
                             <?php
-                            echo '<form action="" method="post">';
                                             echo '<input name="sports" value="' . $sports . '" hidden>';
                                             echo '<input name="gender" value="' . $gender . '" hidden>';                                    
                                             echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN"';
                                             echo 'formaction =';
                                             echo '\'/record/mix10_pdf.php\'';
-                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF 출력</button>';
+                                            echo '}" class="result_tableBTN BTN_Blue" value="기록 전환">PDF(한) 출력</button>';
+                                            echo '<button type="submit" class="defaultBtn BIG_btn BTN_Red filedBTN" formaction="/record/mix10_pdf_eng.php">PDF(영) 출력</button>';
                                             echo '</form>';
                             ?>
-                            <button type="button" class="defaultBtn BIG_btn excel_Print filedBTN">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn excel_Print filedBTN" formaction="/action/record/mix10_excel.php">엑셀 출력</button>
+                            <button type="submit" class="defaultBtn BIG_btn BTN_Blue filedBTN" formaction="/record/mix10_word.php">워드 출력</button>
                         </div>
-                    </div>
+                            </div>
+                            </div>
+                </form>
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="100m_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="longjump_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="shotput_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="highjump_target">
+                   
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="400m_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="100mh_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="discusthrow_target">
+                   
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="polejump_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="javelinthrow_target">
+                    
+                </div>
+                <div class="schedule schedule_flex filed_high_flex  TableList" id="1500m_target">
+                    
+                </div>
             </div>
-        </div>
-        </form>
+            </div>
         <button type="button" class="changePwBtn defaultBtn">확인</button>
     </div>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js?ver=10"></script>
     <script src="assets/js/restrict.js"></script>
+    <script>
+        function result_ajax(data, url){
+            $.ajax({
+                url: url,
+                type:"GET",
+                data:{"sports" : "decathlon", "gender" : "m", "round" : data},
+                success: function(result) {
+                    let regex = /<form[^>]*>((.|[\n\r])*)<\/form>/i;
+                    let match = regex.exec(result);
+                    $("#"+ data + "_target").html(match[0]);
+                },
+            })
+        }
+    </script>
 </body>
 
 </html>

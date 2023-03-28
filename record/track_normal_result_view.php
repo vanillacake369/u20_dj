@@ -39,91 +39,91 @@ if ($rows['record_status'] == 'o') {
     <title>u20 관리자 페이지</title>
     <!--Data Tables-->
     <link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
-    <script type="text/javascript" src="/assets/js/onlynumber.js"></script>
+    <script type="text/javascript" src="/assets/js/onlynumber.js?v=3"></script>
     <script type="text/javascript" src="/assets/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="/assets/js/change_athletics.js"></script>
     <script type="text/javascript" src="/action/record/result_track_single_execute_excel.js"></script>
     <script>
-    function openTextFile() {
-        var input = document.createElement("input");
-        input.type = "file";
-        input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
-        input.onchange = function(event) {
-            processFile(event.target.files[0]);
-        };
-        input.click();
-    }
+        function openTextFile() {
+            var input = document.createElement("input");
+            input.type = "file";
+            input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
+            input.onchange = function(event) {
+                processFile(event.target.files[0]);
+            };
+            input.click();
+        }
 
-    function processFile(file) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            let ddd = reader.result.split("\r\n");
-            let wind = document.querySelector('[name=\"wind\"]')
-            // let check = document.getElementsByTagName('th')[1].textContent;
-            let val = ddd[0].split(',')[4];
-            if (val != '') {
-                wind.value = val;
-            } else {
-                wind.value = '0'
-            }
-            console.log(ddd.length)
-            for (i = 1; i < ddd.length; i++) {
-                let k = ddd[i].split(",")
-                let on;
-                console.log("k1: " + k[2])
-                if (!document.querySelector("#id" + k[1]) && !document.querySelector(
-                        "#rane" + k[2])) {
-                    console.log("없는 레인")
-                    continue;
-                }
-                if (!document.querySelector("#id" + k[1])) {
-                    if (!k[1]) continue;
-                    on = document.querySelector("#rane" + k[2]).children
+        function processFile(file) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                let ddd = reader.result.split("\r\n");
+                let wind = document.querySelector('[name=\"wind\"]')
+                // let check = document.getElementsByTagName('th')[1].textContent;
+                let val = ddd[0].split(',')[4];
+                if (val != '') {
+                    wind.value = val;
                 } else {
-                    if (!k[1]) continue;
-                    on = document.querySelector("#id" + k[1]).children
+                    wind.value = '0'
                 }
-                if (k[6]) {
-                    on[6].firstElementChild.value = 'p'
-                    on[5].firstElementChild.value = k[6]
-                } else if (k[0] == 'DNS') {
-                    on[6].firstElementChild.value = 'n'
-                    on[5].firstElementChild.value = 0
-                    on[8].firstElementChild.value = k[0]
-                } else if (k[0] == 'DNF') {
-                    on[6].firstElementChild.value = 'n'
-                    on[5].firstElementChild.value = 0
-                    on[8].firstElementChild.value = k[0]
-                } else {
-                    on[6].firstElementChild.value = 'd'
-                    on[5].firstElementChild.value = 0
-                    on[8].firstElementChild.value = 'DQ'
+                console.log(ddd.length)
+                for (i = 1; i < ddd.length; i++) {
+                    let k = ddd[i].split(",")
+                    let on;
+                    console.log("k1: " + k[2])
+                    if (!document.querySelector("#id" + k[1]) && !document.querySelector(
+                            "#rane" + k[2])) {
+                        console.log("없는 레인")
+                        continue;
+                    }
+                    if (!document.querySelector("#id" + k[1])) {
+                        if (!k[1]) continue;
+                        on = document.querySelector("#rane" + k[2]).children
+                    } else {
+                        if (!k[1]) continue;
+                        on = document.querySelector("#id" + k[1]).children
+                    }
+                    if (k[6]) {
+                        on[6].firstElementChild.value = 'p'
+                        on[5].firstElementChild.value = k[6]
+                    } else if (k[0] == 'DNS') {
+                        on[6].firstElementChild.value = 'n'
+                        on[5].firstElementChild.value = 0
+                        on[8].firstElementChild.value = k[0]
+                    } else if (k[0] == 'DNF') {
+                        on[6].firstElementChild.value = 'n'
+                        on[5].firstElementChild.value = 0
+                        on[8].firstElementChild.value = k[0]
+                    } else {
+                        on[6].firstElementChild.value = 'd'
+                        on[5].firstElementChild.value = 0
+                        on[8].firstElementChild.value = 'DQ'
+                    }
+                    // if (k[3]) {
+                    //     on[7].firstElementChild.value = k[3]
+                    // } else {
+                    //     on[7].firstElementChild.value = '';
+                    // }
                 }
-                // if (k[3]) {
-                //     on[7].firstElementChild.value = k[3]
-                // } else {
-                //     on[7].firstElementChild.value = '';
-                // }
-            }
-            rankcal1()
-        };
-        reader.readAsText(file, /* optional */ "utf-8");
-    }
+                rankcal1()
+            };
+            reader.readAsText(file, /* optional */ "utf-8");
+        }
 
-    function input_time() {
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = ('0' + (today.getMonth() + 1)).slice(-2);
-        var day = ('0' + today.getDate()).slice(-2);
-        var dateString = year + '-' + month + '-' + day;
-        var hours = ('0' + today.getHours()).slice(-2);
-        var minutes = ('0' + today.getMinutes()).slice(-2);
-        var seconds = ('0' + today.getSeconds()).slice(-2);
-        var timeString = hours + ':' + minutes + ':' + seconds;
-        let total = dateString + " " + timeString;
-        let intime = document.querySelector("input[name='starttime']")
-        intime.value = total
-    }
+        function input_time() {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+            var dateString = year + '-' + month + '-' + day;
+            var hours = ('0' + today.getHours()).slice(-2);
+            var minutes = ('0' + today.getMinutes()).slice(-2);
+            var seconds = ('0' + today.getSeconds()).slice(-2);
+            var timeString = hours + ':' + minutes + ':' + seconds;
+            let total = dateString + " " + timeString;
+            let intime = document.querySelector("input[name='starttime']")
+            intime.value = total
+        }
     </script>
 </head>
 
@@ -148,8 +148,7 @@ if ($rows['record_status'] == 'o') {
                             <ul class="UserDesc throwDesc">
                                 <li class="row input_row throw_row">
                                     <span>경기 이름</span>
-                                    <input placeholder="경기 이름" type="text" name="gamename"
-                                        value="<?= $rows['record_sports'] ?>" maxlength="16" required="" readonly />
+                                    <input placeholder="경기 이름" type="text" name="gamename" value="<?= $rows['record_sports'] ?>" maxlength="16" required="" readonly />
                                 </li>
                                 <li class="row input_row throw_row">
                                     <span>라운드</span>
@@ -269,6 +268,7 @@ if ($rows['record_status'] == 'o') {
                             $count = 0;
                             $result = $db->query($sql);
                             while ($row = mysqli_fetch_array($result)) {
+                                // 장거리경기에 따라 경기 결과 입력 형식 바꾸기
                                 if (in_array($rows['schedule_sports'], $longname)) {
                                     echo '<tr id="id' . $row['athlete_bib'] . '"';
                                 } else {
@@ -288,8 +288,8 @@ if ($rows['record_status'] == 'o') {
                                 value="' . $row['athlete_name'] . '" maxlength="30" required="" readonly /></td>';
                                 echo '<td><input placeholder="국가" type="text" name="country" 
                                 value="' . $row['athlete_country'] . '" maxlength="30" required="" readonly /></td>';
-                                echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="9"
-                                required="" onkeyup="trackResultForm(this)" style="float: left; width: auto; padding-right: 5px" />';
+                                echo '<td><input placeholder="경기 결과를 입력해주세요" type="text" name="gameresult[]" id="result" value="' . $row['record_' . $result_type . '_record'] . '" maxlength="15"
+                                required="" onkeyup="result_check(this)" style="float: left; width: auto; padding-right: 5px" />';
                                 // 경기 통과 여부 셀렉션
                                 echo '<td><select class="input_class" name="gamepass[]"><option value="p">통과</option><option value="l">탈락</option><option value="d">실격</option><option value="w">기권</option><option value="n">시작안함</option></select></td>';
                                 echo '<td><input placeholder="Reaction Time" type="text" name="reactiontime[]" id="reactiontime" value="' . $row['record_reaction_time'] . '" maxlength="9"
@@ -338,8 +338,7 @@ if ($rows['record_status'] == 'o') {
                     </table>
             </div>
             <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-            <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
-                value="<?= ($rows['schedule_memo'] ?? null) ?>" maxlength=" 100" />
+            <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text" value="<?= ($rows['schedule_memo'] ?? null) ?>" maxlength=" 100" />
 
             <div class="modify_Btn input_Btn result_Btn">
                 <?php
@@ -352,19 +351,17 @@ if ($rows['record_status'] == 'o') {
                               </div>';
                 } else {
                     if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                <div class="modify_Btn input_Btn result_Btn">
-                    <button type="submit" class="BTN_Blue full_width" name="addresult"
-                        formaction="../action/record/track_normal_result_insert.php">
-                        <span>확인</span>
-                    </button>
-                </div>
-                <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                <div class="modify_Btn input_Btn result_Btn">
-                    <button type="submit" class="BTN_Blue full_width" name="addresult"
-                        formaction="../action/record/track_normal_result_insert.php">
-                        <span>확인</span>
-                    </button>
-                </div>
+                        <div class="modify_Btn input_Btn result_Btn">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/track_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
+                    <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                        <div class="modify_Btn input_Btn result_Btn">
+                            <button type="submit" class="BTN_Blue full_width" name="addresult" formaction="../action/record/track_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
                 <?php }
                 }
                 ?>
@@ -378,6 +375,17 @@ if ($rows['record_status'] == 'o') {
     </div>
     </div>
     <script src="assets/js/main.js?ver=7"></script>
+    <script>
+        
+        funtion result_check(obj) {
+            const regExp = /[0-9:.]/g;
+
+            if( regExp.test(obj.value) ){
+                alert("특수문자는 입력하실수 없습니다.");
+                obj.value = obj.value.substring( 0 , obj.value.length - 1 ); // 입력한 특수문자 한자리 지움
+                }
+            }
+    </script>
 </body>
 
 </html>

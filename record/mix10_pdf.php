@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="../assets/css/print.css" />
     <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css" />
     <script src="../assets/fontawesome/js/all.min.js"></script>
-    <!-- <script>
+    <script>
     window.print()
-    </script> -->
+    </script>
     <title>U20</title>
 </head>
 

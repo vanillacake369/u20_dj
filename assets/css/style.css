@@ -143,7 +143,7 @@
 
 /* color */
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .tit_padding {
@@ -1333,7 +1333,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .schedule_flex {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  gap: 20px;
 }
 
 .schedule_filed {
@@ -2081,7 +2081,7 @@ input::-webkit-inner-spin-button {
 }
 
 .decathlon_container {
-  width: 100%;
+  width: 100% !important;
 }
 
 
@@ -2427,6 +2427,10 @@ input::-webkit-inner-spin-button {
   display: block !important;
 }
 
+.grouping_table {
+  width: calc(100% / 3.1);
+}
+
 .filed2_form {
   display: flex;
   flex-direction: column;
@@ -2514,6 +2518,10 @@ input::-webkit-inner-spin-button {
 }
 
 /* 결과지 10종 경기 */
+.decathlonList {
+  width: 100%;
+}
+
 .result_table {
   background: var(--colorBackground);
   position: relative;
@@ -2607,9 +2615,7 @@ input::-webkit-inner-spin-button {
   color: rgb(0, 0, 0);
 }
 
-.De_tbody>tr:hover td {
-  border: 0;
-}
+
 
 .De_tbody>tr:hover td>input {
   color: rgb(0, 0, 0);
@@ -2955,6 +2961,104 @@ input::-webkit-inner-spin-button {
   background: white;
 }
 
+/* 조편성 목록 등록하기 수동  */
+.groupSelect_tit {
+  margin: 4rem 0;
+  border: 1px solid var(--colorBorder);
+}
+
+.groupSelect_tit>ul {
+  display: flex;
+  text-align: center;
+}
+
+.groupSelect_tit>ul>li {
+  width: calc(100% / 3);
+}
+
+.groupSelect_tit>ul:nth-child(1) {
+  background: var(--colorBackground);
+}
+
+.groupSelect_tit>ul>li>p {
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--colorDarkBlack);
+}
+
+
+.groupSelect_tit>ul:nth-child(2)>li>input {
+  width: 100%;
+  outline: 0;
+  border: 0;
+  padding: 1rem 0;
+  text-align: center;
+  border-right: 1px solid var(--colorBorder);
+  cursor: pointer;
+}
+
+
+.groupSelect_tit>ul:nth-child(2)>li>input:focus {
+  background: var(--colorLogo);
+  color: white;
+}
+
+.grouptSelectList {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 768px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.grouptSelectList>div {
+  width: 50%;
+  padding: 0.5rem 0;
+}
+
+.grouptSelectList>div>label {
+  cursor: pointer;
+}
+
+/* 10종 경기 수정 */
+.changeTableList {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 4rem;
+}
+
+.changeTableList .changeTableItem {
+  width: calc(100% / 11);
+
+}
+
+.changeTableList .changeTableItem2 {
+  width: calc(100% / 7);
+
+}
+
+.changeTableBtn {
+  width: 100%;
+  line-height: 1em;
+  padding: 16px;
+  height: auto;
+  border: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 300;
+}
+
+.changeTableBtn:hover {
+  background: var(--colorLogo);
+  color: white;
+}
+
+.changeBtn_color {
+  background: var(--colorLogo);
+  color: white;
+}
+
 @media (max-width: 1440px) {
   .gnb>.gnbList {
     font-size: 12px;
@@ -3037,7 +3141,25 @@ input::-webkit-inner-spin-button {
     font-size: 12px;
   }
 
+  .changeTableList {
+    flex-wrap: wrap;
+  }
 
+  .changeTableList .changeTableItem {
+    width: calc(100% / 7.5);
+  }
+
+  .changeTableList .changeTableItem2 {
+    width: calc(100% / 4.2);
+  }
+
+  .changeTableBtn {
+    font-size: 10px;
+  }
+
+  .grouping_table {
+    width: 49%;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -3335,6 +3457,10 @@ input::-webkit-inner-spin-button {
 
   .field3_hover>tr>td>input {
     font-size: 10px;
+  }
+
+  .changeTableList .changeTableItem {
+    width: calc(100% / 6.5);
   }
 }
 

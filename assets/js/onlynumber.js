@@ -8,9 +8,12 @@ function regTrackResult(str) {
   str = String(str);
   if (str.length <= 4) {
     return str.replace(/(\d{2})(\d{2})/g, "$1.$2");
-  } else {
-    return str.replace(/(\d{2})\.?(\d{2})\(?(\d{3})\)?/, "$1.$2($3)");
-  }
+  } else{
+    return str.replace(/(\d{2})(\d{2})(\d{2,})/g, "$1:$2.$3");
+  } 
+//   else if (str.length > 6) {
+//     return str.replace(/(\d{2})\.?(\d{2})\(?(\d{3})\)?/, "$1.$2($3)");
+//   }
 }
 
 // 트랙 Reaction Time 포맷 :: 0.xxx
@@ -574,7 +577,7 @@ function get_participants_information() {
     const trial2 = document.querySelectorAll(".col2_" + i)[0].children;
     let count = 0;
     // 참가자 위 시도 컬럼
-    for (let j = 4; j < trial1.length - 3; j++) {
+    for (let j = 3; j < trial1.length - 3; j++) {
       let trial_result = trial1[j].children[0].value;
       const failed_regx = new RegExp("X", "g");
       const success_regx = new RegExp("O", "g");

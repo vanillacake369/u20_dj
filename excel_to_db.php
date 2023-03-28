@@ -88,6 +88,12 @@ function CSVtoMember(string $file_path, string $role)
                     $bind_result = $stmt->bind_param("ssssssiss", $name, $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9] );
                     if ($bind_result) {
                         $stmt->execute();
+                        $athlete_id = $db->insert_id;
+
+                        $sql = "UPDATE list_athlete SET athlete_bib = ? WHERE athlete_id = ?";
+                        $stmt = $db->prepare($sql);
+                        $bind_result = $stmt->bind_param("ss", $athlete_id, $athlete_id);
+                        $stmt->execute();
                     } else {
                         $no_insert_data[] = '(' . implode(', ', $data) . ')\n';
                     }

@@ -95,14 +95,16 @@ $date2=explode('-',$date);
                                     <span>경기날짜</span>
                                     <div>
                                         <input placeholder="(YYYY)" type="number" name="date_year" maxlength="4"
-                                            required="" oninput="maxLengthCheck(this)" value="<?php echo $date2[0]?>"
-                                            required="" />
+                                            required="" oninput="maxLengthCheck(this)"
+                                            value="<?= date("Y", strtotime($row["schedule_date"])) ?>" required />
                                         <span>:</span>
-                                        <input placeholder="(mm)" type="number" name="date_month" maxlength="2"
-                                            oninput="maxLengthCheck(this)" value="<?php echo $date2[1]?>" required="" />
+                                        <input placeholder="(mm)" type="number" name="date_month"
+                                            maxlength="2" oninput="maxLengthCheck(this)"
+                                            value="<?= date("M", strtotime($row["schedule_date"])) ?>" required />
                                         <span>:</span>
-                                        <input placeholder="(dd)" type="number" name="date_day" maxlength="2"
-                                            oninput="maxLengthCheck(this)" value="<?php echo $date2[2]?>" required="" />
+                                        <input placeholder="(dd)" type="number" name="date_day"
+                                            maxlength="2" oninput="maxLengthCheck(this)"
+                                            value="<?= date("D", strtotime($row["schedule_date"])) ?>" required/>
                                     </div>
                                 </li>
                             </ul>

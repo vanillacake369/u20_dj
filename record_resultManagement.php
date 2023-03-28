@@ -433,8 +433,8 @@ function changetype() {
                         } else { //혼합경기 switch
                             switch ($row["schedule_round"]) { //세부 종목별 분류 
                             case "100m" : 
-                            case "100mH" : 
-                            case "110mH" :
+                            case "100mh" : 
+                            case "110mh" :
                             case "200m" : 
                             case "400m" : 
                             case "800m" : 

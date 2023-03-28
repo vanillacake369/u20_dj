@@ -241,28 +241,42 @@ zend_version()
                             echo "<td>" . htmlspecialchars($row["judge_duty"]) . "</td>";
                             // 참가자 참가 경기
                             echo '<td class="popup_BTN">';
-                            $sports = explode(',', $row["judge_schedule"]);
-                            if (count($sports) > 1) {
-                                echo htmlspecialchars($judge_sport_dic[$sports[0]]) . " 외 " . (count($sports) - 1) . "개";
-                            } else if (isset($sports[0]) && $sports[0] != ""){
-                                echo htmlspecialchars($judge_sport_dic[$sports[0]]);
-                            }
-                            else
-                                echo "-";
-                            echo '<div class="item_popup" style="display: none;">';
-                            if (isset($sports[0]) && $sports[0] != "")
+
+                            if (!isset($row["judge_schedule"]) || $row["judge_schedule"] == "")
                             {
-                                foreach ($sports as $id) {
-                                    if ($id == end($sports)) {
-                                        echo htmlspecialchars($judge_sport_dic[trim($id)]);
+                                $sports = "-";
+                                echo $sports;
+                                echo '<div class="item_popup" style="display: none;">';
+                                echo $sports;
+                                echo "</div>";
+                            }
+                               
+                            else{
+                                $sports = explode(',', $row["judge_schedule"]);
+                                if (hasSearchedValue($sports)) {
+                                    if (count($sports) > 1) {
+                                        echo htmlspecialchars($sport_dic[$sports[0]]) . " 외 " . (count($sports) - 1) . "개";
                                     } else {
-                                        echo htmlspecialchars($judge_sport_dic[trim($id)]) . '<br>';
+                                        echo htmlspecialchars($sport_dic[$sports[0]]);
                                     }
+                                } else {
+                                    echo htmlspecialchars(" - ");
+                                }
+
+                                echo '<div class="item_popup" style="display: none;">';
+                                if (hasSearchedValue($sports)) {
+                                    foreach ($sports as $attend) {
+                                        if ($attend == end($sports)) {
+                                            echo htmlspecialchars($sport_dic[trim($attend)]);
+                                        } else {
+                                            echo htmlspecialchars($sport_dic[trim($attend)]) . '<br>';
+                                        }
+                                    }
+                                } else {
+                                    echo htmlspecialchars(" - ");
                                 }
                             }
-                            else
-                                echo "-";
-                                
+                            
                             echo '</div>';
                             echo "</td>";
                             // 참가자 참석 경기

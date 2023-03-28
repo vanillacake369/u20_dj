@@ -27,90 +27,90 @@ function removeClassList(target, className) {
 }
 
 // 메뉴 이벤트
-if(document.querySelector(".Area")){
-const Wrapper = document.querySelector(".Area");
-const gnbMask_right = document.querySelector(".gnbMask_right");
-const gnbMask = document.querySelector(".gnbMask");
-const gnbItem = document.querySelectorAll(".gnbItem");
+if (document.querySelector(".Area")) {
+  const Wrapper = document.querySelector(".Area");
+  const gnbMask_right = document.querySelector(".gnbMask_right");
+  const gnbMask = document.querySelector(".gnbMask");
+  const gnbItem = document.querySelectorAll(".gnbItem");
 
-for (let i = 0; i < gnbItem.length; i++) {
-  Wrapper.addEventListener("click", () => {
-    gnbItem[i].classList.remove("gnbBack");
-  });
-  gnbMask_right.addEventListener("click", () => {
-    gnbItem[i].classList.remove("gnbBack");
-    gnbMask.classList.add("menuhide");
-  });
-}
-// 메뉴 클릭 이벤트
-
-for (let i = 0; i < gnbItem.length; i++) {
-  gnbItem[i].addEventListener("click", () => {
-    for (let j = 0; j < gnbItem.length; j++) {
-      if (j !== i) {
-        gnbItem[j].classList.remove("gnbBack");
-      }
-    }
-    gnbItem[i].classList.add("gnbBack");
-  });
-}
-
-let menu = document.querySelectorAll(".gnbList>li");
-
-for (let i = 0; i < menu.length; i++) {
-  let currentMenu;
-
-  function inactivate(elem) {
-    elem.classList.remove("gnbBack");
-  }
-
-  function activate(elem) {
-    elem.classList.add("gnbBack");
-    currentMenu = elem;
-  }
-  function clickHandler() {
-    // 보통 이벤트 handler 안에 길게 쓰기 보다 함수를 쓴다.
-    if (currentMenu) {
-      inactivate(currentMenu);
-    }
-    activate(menu[i]);
-  }
-
-  menu[i].addEventListener("click", clickHandler);
-}
-// 메뉴 햄버거 버튼 이벤트
-
-popupToggle("menuBtn", "gnbMask");
-const body = document.querySelector("body");
-
-function popupToggle(toggleBtn, area, closeBtnClass) {
-  if (document.querySelector(`.${toggleBtn}`) !== null) {
-    const BTN = document.querySelector(`.${toggleBtn}`);
-    const AREA = document.querySelector(`.${area}`);
-
-    BTN.addEventListener("click", () => {
-      toggleClassList(AREA, "menuhide");
+  for (let i = 0; i < gnbItem.length; i++) {
+    Wrapper.addEventListener("click", () => {
+      gnbItem[i].classList.remove("gnbBack");
     });
+    gnbMask_right.addEventListener("click", () => {
+      gnbItem[i].classList.remove("gnbBack");
+      gnbMask.classList.add("menuhide");
+    });
+  }
+  // 메뉴 클릭 이벤트
 
-    AREA.addEventListener("click", (e) => {
-      if (
-        e.target.className === AREA.className ||
-        e.target.className === closeBtnClass
-      ) {
+  for (let i = 0; i < gnbItem.length; i++) {
+    gnbItem[i].addEventListener("click", () => {
+      for (let j = 0; j < gnbItem.length; j++) {
+        if (j !== i) {
+          gnbItem[j].classList.remove("gnbBack");
+        }
+      }
+      gnbItem[i].classList.add("gnbBack");
+    });
+  }
+
+  let menu = document.querySelectorAll(".gnbList>li");
+
+  for (let i = 0; i < menu.length; i++) {
+    let currentMenu;
+
+    function inactivate(elem) {
+      elem.classList.remove("gnbBack");
+    }
+
+    function activate(elem) {
+      elem.classList.add("gnbBack");
+      currentMenu = elem;
+    }
+    function clickHandler() {
+      // 보통 이벤트 handler 안에 길게 쓰기 보다 함수를 쓴다.
+      if (currentMenu) {
+        inactivate(currentMenu);
+      }
+      activate(menu[i]);
+    }
+
+    menu[i].addEventListener("click", clickHandler);
+  }
+  // 메뉴 햄버거 버튼 이벤트
+
+  popupToggle("menuBtn", "gnbMask");
+  const body = document.querySelector("body");
+
+  function popupToggle(toggleBtn, area, closeBtnClass) {
+    if (document.querySelector(`.${toggleBtn}`) !== null) {
+      const BTN = document.querySelector(`.${toggleBtn}`);
+      const AREA = document.querySelector(`.${area}`);
+
+      BTN.addEventListener("click", () => {
         toggleClassList(AREA, "menuhide");
-      }
+      });
+
+      AREA.addEventListener("click", (e) => {
+        if (
+          e.target.className === AREA.className ||
+          e.target.className === closeBtnClass
+        ) {
+          toggleClassList(AREA, "menuhide");
+        }
+      });
+    }
+  }
+  const menuBtn = document.querySelector(".menuBtn");
+  if (document.querySelector(".menuBtn") !== null) {
+    menuBtn.addEventListener("click", () => {
+      addClassList(body, "prevent");
+    });
+    gnbMask_right.addEventListener("click", () => {
+      removeClassList(body, "prevent");
     });
   }
-}
-const menuBtn = document.querySelector(".menuBtn");
-if (document.querySelector(".menuBtn") !== null) {
-  menuBtn.addEventListener("click", () => {
-    addClassList(body, "prevent");
-  });
-  gnbMask_right.addEventListener("click", () => {
-    removeClassList(body, "prevent");
-  });
-}
 }
 // 페이지 네이션 js
 
@@ -367,54 +367,54 @@ function select_change_listener() {
   }
 }
 // 조 편성하기 추가 버튼
-if(document.querySelector(document.querySelector(".filed2_Table"))){
-const addColumnBtns = document.querySelectorAll(".add-column-btn");
+if (document.querySelector(".filed2_Table")) {
+  const addColumnBtns = document.querySelectorAll(".add-column-btn");
 
-for (let i = 0; i < addColumnBtns.length; i++) {
-  addColumnBtns[i].addEventListener("click", () => {
-    const filedTables = document.querySelectorAll(".filed2_Table");
-    const currentTable = filedTables[i];
-    const rowsCount = currentTable.rows.length - 1;
-    const groupCount = i + 1;
+  for (let i = 0; i < addColumnBtns.length; i++) {
+    addColumnBtns[i].addEventListener("click", () => {
+      const filedTables = document.querySelectorAll(".filed2_Table");
+      const currentTable = filedTables[i];
+      const rowsCount = currentTable.rows.length - 1;
+      const groupCount = i + 1;
 
-    const newRow = currentTable.insertRow();
-    const Cell1 = newRow.insertCell(0);
-    const Cell2 = newRow.insertCell(1);
+      const newRow = currentTable.insertRow();
+      const Cell1 = newRow.insertCell(0);
+      const Cell2 = newRow.insertCell(1);
 
-    Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]"><input type="hidden" class="number" value="${groupCount}" name="group[]"></td>`;
-    Cell2.innerHTML =
-      '<td><div class="copy-value"><select class="select-box select2-hidden-accessible" name="athlete" onchange="select_change_listener()"></select></div></td><input type="hidden" class="hidden-input" id="player_id" name="player_id[]" value="">';
-    // option 복제
-    const options = $("#copy-value select option").clone();
-    const select = $(Cell2).find("select");
-    options.appendTo(select);
+      Cell1.innerHTML = `<td><input type="text" class="number" value="${rowsCount}" name="lane[]"><input type="hidden" class="number" value="${groupCount}" name="group[]"></td>`;
+      Cell2.innerHTML =
+        '<td><div class="copy-value"><select class="select-box select2-hidden-accessible" name="athlete" onchange="select_change_listener()"></select></div></td><input type="hidden" class="hidden-input" id="player_id" name="player_id[]" value="">';
+      // option 복제
+      const options = $("#copy-value select option").clone();
+      const select = $(Cell2).find("select");
+      options.appendTo(select);
 
-    // select2 적용
-    select.select2({
-      dropdownParent: $(Cell2).find(".copy-value"),
+      // select2 적용
+      select.select2({
+        dropdownParent: $(Cell2).find(".copy-value"),
+      });
     });
-  });
-}
-
-// 조 편성하기 삭제 버튼
-function deleteColumn(index) {
-  const filedTables = document.querySelectorAll(".filed2_Table");
-  const currentTable = filedTables[index];
-
-  const tableRows = currentTable.querySelectorAll("tbody tr");
-  if (tableRows.length === 1) {
-    return; // 행이 1개일 때는 삭제하지 않음
   }
 
-  currentTable.deleteRow(currentTable.rows.length - 1); // 마지막 행 삭제
-}
+  // 조 편성하기 삭제 버튼
+  function deleteColumn(index) {
+    const filedTables = document.querySelectorAll(".filed2_Table");
+    const currentTable = filedTables[index];
 
-const deleteColumnBtns = document.querySelectorAll(".delete-column-btn");
-for (let i = 0; i < deleteColumnBtns.length; i++) {
-  deleteColumnBtns[i].addEventListener("click", () => {
-    deleteColumn(i);
-  });
-}
+    const tableRows = currentTable.querySelectorAll("tbody tr");
+    if (tableRows.length === 1) {
+      return; // 행이 1개일 때는 삭제하지 않음
+    }
+
+    currentTable.deleteRow(currentTable.rows.length - 1); // 마지막 행 삭제
+  }
+
+  const deleteColumnBtns = document.querySelectorAll(".delete-column-btn");
+  for (let i = 0; i < deleteColumnBtns.length; i++) {
+    deleteColumnBtns[i].addEventListener("click", () => {
+      deleteColumn(i);
+    });
+  }
 }
 // ad카드 부분
 if (document.querySelector(".AD_front_name") !== null) {
@@ -444,16 +444,13 @@ for (let i = 0; i < filed_item.length; i++) {
 }
 
 // 조 편성 수정 > 클릭클릭으로 선수 SWAP 기능
-if (
-  document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
-) {
+if (document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')) {
   let clickedInput = null;
-  const inputs = document.querySelectorAll(
-    '.filed2_swap>tbody>tr>td>input[name="name[]"]'
-  );
+  const inputs = document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]');
   const athlete = document.querySelectorAll('input[name="athlete_id[]"]');
   for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener("click", () => {
+    inputs[i].addEventListener('click', () => {
+      console.log(inputs[i]);
       if (!clickedInput) {
         clickedInput = inputs[i];
         athleteInput = athlete[i];
@@ -464,22 +461,23 @@ if (
         athleteInput.value = athlete[i].value;
         inputs[i].value = tempValue;
         athlete[i].value = athleteValue;
-        clickedInput.setAttribute("value", clickedInput.value);
-        inputs[i].setAttribute("value", inputs[i].value);
-        athleteInput.setAttribute("value", athleteInput.value);
-        athlete[i].setAttribute("value", athlete[i].value);
+        clickedInput.setAttribute('value', clickedInput.value);
+        inputs[i].setAttribute('value', inputs[i].value);
+        athleteInput.setAttribute('value', athleteInput.value);
+        athlete[i].setAttribute('value', athlete[i].value);
         clickedInput = null;
         athleteInput = null;
       }
     });
   }
-  document.addEventListener("click", (event) => {
+  document.addEventListener('click', (event) => {
     // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
     // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
-    if (event.target.name !== "name[]") {
+    if (event.target.name !== 'name[]') {
       clickedInput = null;
       athleteInput = null;
     }
+
   });
 }
 
@@ -562,9 +560,7 @@ function issueId(pageURL, entry_who) {
   }
   if (checkedCount === 0) {
     alert("하나 이상 선택해주세요");
-  }
-  else
-  {
+  } else {
     checkedId.forEach((entry) => updatePop(entry, entry_who, pageURL));
   }
 }
@@ -735,12 +731,9 @@ function issueId(pageURL, entry_who) {
   }
   if (checkedCount === 0) {
     alert("하나를 선택해주세요");
-  }
-  else
-  {
+  } else {
     pdfPop(entry_who, checkedId, pageURL);
   }
-  
 }
 
 function pdfPop(entry_who, checkedId, openURL) {
@@ -980,53 +973,6 @@ function confirmDelete(account, table) {
   }
 }
 
-if (
-  document.querySelectorAll('.filed2_swap>tbody>tr>td>input[name="name[]"]')
-) {
-  let clickedInput = null;
-  const inputs = document.querySelectorAll(
-    '.filed2_swap>tbody>tr>td>input[name="name[]"]'
-  );
-  const athlete = document.querySelectorAll('input[name="athlete_id[]"]');
-  for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener("click", () => {
-      if (!clickedInput) {
-        clickedInput = inputs[i];
-        athleteInput = athlete[i];
-        console.log(clickedInput);
-        console.log(athleteInput);
-      } else {
-        const tempValue = clickedInput.value;
-        const tempId = clickedInput.id;
-        const athleteValue = athleteInput.value;
-        clickedInput.value = inputs[i].value;
-        clickedInput.id = inputs[i].id;
-        athleteInput.value = athlete[i].value;
-        inputs[i].value = tempValue;
-        inputs[i].id = tempId;
-        athlete[i].value = athleteValue;
-        athlete[i].id = athletepId;
-        clickedInput.setAttribute("value", clickedInput.value);
-        clickedInput.setAttribute("id", clickedInput.id);
-        inputs[i].setAttribute("value", inputs[i].value);
-        inputs[i].setAttribute("id", inputs[i].id);
-        athleteInput.setAttribute("value", athleteInput.value);
-        athlete[i].setAttribute("value", athlete[i].value);
-        clickedInput = null;
-        athleteInput = null;
-      }
-    });
-  }
-  document.addEventListener("click", (event) => {
-    // 이전에 클릭된 input 요소가 없는 경우에는 실행하지 않음
-    // 현재 클릭된 요소가 input 요소가 아닌 경우에 clickedInput 초기화
-    if (event.target.name !== "name[]") {
-      clickedInput = null;
-      athleteInput = null;
-    }
-  });
-}
-
 //일정 상세정보 접근할 수 없게 하는 함수
 //@potatoeunbi
 function resultCheck() {
@@ -1057,3 +1003,29 @@ function reloadWhenVisibilityChange() {
   });
 }
 
+const deleteBTN = document.querySelectorAll('button[name="delete_each_row"]');
+for (let i = 0; i < deleteBTN.length; i++) {
+
+  deleteBTN[i].addEventListener("click", function () {
+    var row = this.closest("tr");
+    row.querySelector("input[name='group[]']").value = null;
+    row.querySelector("input[name='order[]']").value = null;
+    row.querySelector("input[name='lane[]']").value = "";
+    row.querySelector("input[name='name[]']").value = "";
+  });
+};
+
+const filed_list_item = document.querySelectorAll(".decathlonList");
+const changeTable = document.querySelectorAll(".changeTableBtn");
+const TableList = document.querySelectorAll(".TableList");
+for (let i = 0; i < changeTable.length; i++) {
+  changeTable[i].addEventListener('click', () => {
+    for (let j = 0; j < changeTable.length; j++) {
+      TableList[j].classList.add('hide');
+      changeTable[j].classList.remove('changeBtn_color');
+    }
+    TableList[i].classList.remove('hide');
+    changeTable[i].classList.add('changeBtn_color');
+
+  });
+}

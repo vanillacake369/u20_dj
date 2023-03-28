@@ -43,35 +43,35 @@ $judgerow = mysqli_fetch_array($judgeresult);
 <script type="text/javascript" src="../action/record/result_field_horizontal_execute_excel(exclude_wind).js"></script>
 
 <script type="text/javascript">
-    window.onload = function() {
-        for (k = 0; k < document.querySelectorAll('#name').length; k++) {
-            let a = document.querySelectorAll('#name')[k];
-            fieldFinal(a);
-            console.log(k)
-        }
-        rankcal()
+window.onload = function() {
+    for (k = 0; k < document.querySelectorAll('#name').length; k++) {
+        let a = document.querySelectorAll('#name')[k];
+        fieldFinal(a);
+        console.log(k)
     }
-    $(document).on("click", "button[name='addtempresult']", function() {
-        $("#submit_div_gwoan_san").append("<input type='hidden' name=tempstore value='1'>");
-    });
-    $(document).on("click", "button[name='addresult']", function() {
-        $("#submit_div_gwoan_san").append("<input type='hidden' name=tempstore value='0'>");
-    });
+    rankcal()
+}
+$(document).on("click", "button[name='addtempresult']", function() {
+    $("#submit_div_gwoan_san").append("<input type='hidden' name=tempstore value='1'>");
+});
+$(document).on("click", "button[name='addresult']", function() {
+    $("#submit_div_gwoan_san").append("<input type='hidden' name=tempstore value='0'>");
+});
 
-    function input_time() {
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = ('0' + (today.getMonth() + 1)).slice(-2);
-        var day = ('0' + today.getDate()).slice(-2);
-        var dateString = year + '-' + month + '-' + day;
-        var hours = ('0' + today.getHours()).slice(-2);
-        var minutes = ('0' + today.getMinutes()).slice(-2);
-        var seconds = ('0' + today.getSeconds()).slice(-2);
-        var timeString = hours + ':' + minutes + ':' + seconds;
-        let total = dateString + " " + timeString;
-        let intime = document.querySelector("input[name='starttime']")
-        intime.value = total
-    }
+function input_time() {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = ('0' + (today.getMonth() + 1)).slice(-2);
+    var day = ('0' + today.getDate()).slice(-2);
+    var dateString = year + '-' + month + '-' + day;
+    var hours = ('0' + today.getHours()).slice(-2);
+    var minutes = ('0' + today.getMinutes()).slice(-2);
+    var seconds = ('0' + today.getSeconds()).slice(-2);
+    var timeString = hours + ':' + minutes + ':' + seconds;
+    let total = dateString + " " + timeString;
+    let intime = document.querySelector("input[name='starttime']")
+    intime.value = total
+}
 </script>
 </head>
 
@@ -94,7 +94,8 @@ $judgerow = mysqli_fetch_array($judgeresult);
                         <ul class="UserDesc throwDesc">
                             <li class="row input_row throw_row">
                                 <span>경기 이름</span>
-                                <input placeholder="경기 이름" type="text" name="gamename" value="<?= $rows['schedule_name'] ?>" maxlength="16" required="" readonly />
+                                <input placeholder="경기 이름" type="text" name="gamename"
+                                    value="<?= $rows['schedule_name'] ?>" maxlength="16" required="" readonly />
                             </li>
                             <li class="row input_row throw_row">
                                 <span>라운드</span>
@@ -229,7 +230,7 @@ $judgerow = mysqli_fetch_array($judgeresult);
                                     if ($num % 2 == 0) echo ' class="Ranklist_Background">';
                                     else echo ">";
                                     echo '<td><input type="number" name="rank[]" class="input_text" id="rank" value="' . ($id['record_' . $result_type . '_result'] ?? null) . '" min="1" required="" /></td>';
-                                    echo '<td><input type="number" name="rain[]" class="input_text" value="';
+                                    echo '<td><input type="text" name="rain[]" class="input_text" value="';
                                     if ($id['record_order'] >= 9 && ($_POST["check"] ?? null) >= 3) {
                                         echo '-';
                                     } else {
@@ -312,7 +313,8 @@ $judgerow = mysqli_fetch_array($judgeresult);
                         </table>
                     </div>
                     <h3 class="UserProfile_tit tit_left_red tit_padding">경기 비고</h3>
-                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text" value="<?= ($rows['schedule_memo'] ?? null) ?>" maxlength=" 100" />
+                    <input placeholder="비고를 입력해주세요." type="text" name="bibigo" class="note_text"
+                        value="<?= ($rows['schedule_memo'] ?? null) ?>" maxlength=" 100" />
                     <div class="modify_Btn input_Btn result_Btn">
                         <?php
                         if ($rows["record_state"] != "y") {
@@ -330,17 +332,19 @@ $judgerow = mysqli_fetch_array($judgeresult);
             </div>';
                         } else {
                             if (authCheck($db, "authSchedulesUpdate")) {  ?>
-                                <div class="signup_submit" id="submit_div_gwoan_san" style="width:100%;">
-                                    <button type="submit" class="BTN_Blue " name="addresult" formaction="../action/record/field_normal_result_insert.php">
-                                        <span>확인</span>
-                                    </button>
-                                </div>
-                            <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
-                                <div class="signup_submit" id="submit_div_gwoan_san" style="width:100%;">
-                                    <button type="submit" class="BTN_Blue " name="addresult" formaction="../action/record/field_normal_result_insert.php">
-                                        <span>확인</span>
-                                    </button>
-                                </div>
+                        <div class="signup_submit" id="submit_div_gwoan_san" style="width:100%;">
+                            <button type="submit" class="BTN_Blue " name="addresult"
+                                formaction="../action/record/field_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
+                        <?php } elseif (authCheck($db, "authSchedulesDelete")) {  ?>
+                        <div class="signup_submit" id="submit_div_gwoan_san" style="width:100%;">
+                            <button type="submit" class="BTN_Blue " name="addresult"
+                                formaction="../action/record/field_normal_result_insert.php">
+                                <span>확인</span>
+                            </button>
+                        </div>
                         <?php }
                         } ?>
                     </div>

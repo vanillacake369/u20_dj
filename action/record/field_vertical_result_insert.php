@@ -28,7 +28,7 @@ where record_sports= '$name' AND record_round= '$round' AND record_gender='$gend
 $row1 = mysqli_fetch_array($res1);
 if($name==='decathlon' || $name ==='heptathlon'){
   $sports_code=$row1['sports_code'];
-  $totalrow='record_sports="'.$row1['schedule_sports'].'" and record_gender="$gender" and record_round="final"';
+  $totalrow='record_sports="'.$row1['schedule_sports'].'" and record_gender="'.$gender.'" and record_round="final"';
   $check_round='y';
 }else{
   $sports_code=$row1['schedule_sports'];

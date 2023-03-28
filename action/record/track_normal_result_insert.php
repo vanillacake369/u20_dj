@@ -19,13 +19,13 @@ $record = $_POST['gameresult'];
 $comprecord = $_POST['compresult'];
 $reactiontime = $_POST['reactiontime'];
 $memo = $_POST['bigo'];
-// $judge_name = $_POST['refereename'];
+$judge_name = $_POST['refereename'];
 $newrecord = $_POST['newrecord'];
 //echo $gender." ".$round." ".$heat." ".$name.'<br>';
 $starttime = $_POST['starttime'];
 $db->query("update list_record set record_start ='" . $starttime . "' where record_sports='$name' and record_gender='$gender' and record_round='$round' and record_group='$heat'");
-$judgeresult = $db->query("select * from list_judge where judge_id=1"); //아이디 = 1인 심판으로 고정
-// $judgeresult = $db->query("select judge_id from list_judge where judge_name='$judge_name'"); //심판 이름에 의한 아이디 쿼리
+// $judgeresult = $db->query("select * from list_judge where judge_id=1"); //아이디 = 1인 심판으로 고정
+$judgeresult = $db->query("select judge_id from list_judge where judge_name='$judge_name'"); //심판 이름에 의한 아이디 쿼리
 $judge = mysqli_fetch_array($judgeresult);
 $new = 'n';
 $res1 = $db->query("SELECT * FROM list_schedule 
@@ -33,7 +33,7 @@ join list_record
 where record_sports= '$sport' AND record_round= '$round' AND record_gender='$gender' AND record_group = '$heat' AND schedule_sports=record_sports AND schedule_gender=record_gender AND schedule_round =record_round");
 $row1 = mysqli_fetch_array($res1);
 if ($sport === 'decathlon' || $sport === 'heptathlon') {
-    $totalrow = 'record_sports="' . $row1['schedule_sports'] . '" and record_gender="$gender" and record_round="final"';
+    $totalrow = 'record_sports="' . $row1['schedule_sports'] . '" and record_gender="'.$gender.'" and record_round="final"';
     $check_round = 'y';
 } else {
     $check_round = 'n';
@@ -106,7 +106,11 @@ for ($i = 0; $i < count($athlete_name); $i++) {
     }
     $plus = ''; //10종,7종 경기시 사용할 쿼리 준비
     if ($round === '100m') {
-        $point = (int)(25.4347 * pow((18 - (float)$record[$i]), 1.81)); //100m
+        if($record[$i]!='0'){
+            $point = (int)(25.4347 * pow((18 - (float)$record[$i]), 1.81)); //100m
+        }else{
+            $point=0;
+        }
         $plus = ",record_multi_record='" . $point . "'";
         if ($row1['record_state'] != 'y') {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
@@ -114,7 +118,11 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record-$rerow[1]+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
         }
     } else if ($round === '100mh') {
+        if($record[$i]!='0'){
         $point = (int)(9.23076 * pow((26.7 - (float)$record[$i]), 1.835)); //100mH
+        }else{
+            $point=0;
+        }
         $plus = ",record_multi_record='" . $point . "'";
         if ($row1['record_state'] != 'y') {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
@@ -122,7 +130,11 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record-$rerow[1]+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
         }
     } else if ($round === '200m') {
+        if($record[$i]!='0'){
         $point = (int)(4.99087 * pow((42.5 - (float)$record[$i]), 1.81)); //200m
+        }else{
+            $point=0;
+        }
         $plus = ",record_multi_record='" . $point . "'";
         if ($row1['record_state'] != 'y') {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
@@ -130,7 +142,11 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record-$rerow[1]+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
         }
     } else if ($round === '400m') {
+        if($record[$i]!='0'){
         $point = (int)(1.53775 * pow((82 - (float)$record[$i]), 1.81)); //400m
+        }else{
+            $point=0;
+        }
         $plus = ",record_multi_record='" . $point . "'";
         if ($row1['record_state'] != 'y') {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
@@ -138,8 +154,12 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record-$rerow[1]+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
         }
     } else if ($round === '800m') {
+        if($record[$i]!='0'){
         $temp = explode(":", $record[$i]);
         $point = (int)(0.11193 * pow((254 - ((int)$temp[0]) * 60 - $temp[1]), 1.88)); //1500m
+        }else{
+            $point=0;
+        }
         $plus = ",record_multi_record='" . $point . "'";
         if ($row1['record_state'] != 'y') {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
@@ -147,7 +167,11 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record-$rerow[1]+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
         }
     } else if ($round === '110mh') {
+        if($record[$i]!='0'){
         $point = (int)(5.74352 * pow((28.5 - (float)$record[$i]), 1.92)); //110mH
+        }else{
+            $point=0;
+        }
         $plus = ",record_multi_record='" . $point . "'";
         if ($row1['record_state'] != 'y') {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
@@ -155,8 +179,12 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record-$rerow[1]+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
         }
     } else if ($round === '1500m') {
+        if($record[$i]!='0'){
         $temp = explode(":", $record[$i]);
         $point = (int)(0.03768 * pow((480 - ((int)$temp[0]) * 60 - $temp[1]), 1.85)); //1500m
+        }else{
+            $point=0;
+        }
         $plus = ",record_multi_record='" . $point . "'";
         if ($row1['record_state'] != 'y') {
             $db->query("UPDATE list_record set record_" . $result_type1 . "_record=record_" . $result_type1 . "_record+$point where record_athlete_id ='" . $row['athlete_id'] . "' AND $totalrow");
@@ -172,9 +200,9 @@ for ($i = 0; $i < count($athlete_name); $i++) {
             $memo[$i] = $tempmemo;
         }
     }
-    $savequery = "UPDATE list_record SET record_pass='$pass[$i]', record_" . $result_type1 . "_result='$result[$i]',
-            record_" . $result_type1 . "_record='$record[$i]', record_new='$new',record_memo='" . $memo[$i] . "',record_medal=" . $medal . ",record_reaction_time='$reactiontime[$i]'
-            ,record_wind='$wind',record_status='" . $result_type2 . "'" . $plus . " WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'";
+    // $savequery = "UPDATE list_record SET record_pass='$pass[$i]', record_" . $result_type1 . "_result='$result[$i]',
+    //         record_" . $result_type1 . "_record='$record[$i]', record_new='$new',record_memo='" . $memo[$i] . "',record_medal=" . $medal . ",record_reaction_time='$reactiontime[$i]'
+    //         ,record_wind='$wind',record_status='" . $result_type2 . "'" . $plus . " WHERE record_athlete_id ='" . $row['athlete_id'] . "' AND record_sports= '$sport' AND record_round= '$round' AND record_group='$heat' AND record_gender='$gender'";
     // UPDATE INCLUDING JUDGE        
     $savequery = "UPDATE list_record SET record_pass='$pass[$i]', record_" . $result_type1 . "_result='$result[$i]', record_judge='$judge[0]',
             record_" . $result_type1 . "_record='$record[$i]', record_new='$new',record_memo='" . $memo[$i] . "',record_medal=" . $medal . ",record_reaction_time='$reactiontime[$i]'

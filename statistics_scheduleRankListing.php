@@ -1,4 +1,4 @@
- <?php
+<?php
     require_once "head.php";
 
     // 데이터베이스 연결
@@ -19,15 +19,15 @@
 
     // SQL 조건문
     $sql = "SELECT DISTINCT
-                record_official_result,
+                record_live_result,
                 sports_code,
                 sports_name,
                 GROUP_CONCAT(CONCAT(athlete_name))  AS athlete_name,
-        		GROUP_CONCAT(CONCAT(record_official_record))  AS record,
+        		GROUP_CONCAT(CONCAT(record_live_record))  AS record,
                 athlete_country,
                 country_name,
                 schedule_gender,
-                record_official_record,                
+                record_live_record,                
                 record_wind,                
                 record_weight,
                 record_memo
@@ -38,10 +38,10 @@
             INNER JOIN list_country ON country_code = athlete_country
             INNER JOIN list_sports ON sports_code = schedule_sports";
 
-    $sql_where = " WHERE record_official_result>0 AND schedule_gender = record_gender and schedule_round = 'final'";
-    $sql_order = " ORDER BY record_official_result, sports_code, schedule_gender ";
+    $sql_where = " WHERE record_live_result>0 AND schedule_gender = record_gender and schedule_round = 'final'";
+    $sql_order = " ORDER BY record_live_result, sports_code, schedule_gender ";
     $sql_like = "";
-    $sql_group = "GROUP BY record_official_result, sports_code";
+    $sql_group = "GROUP BY record_live_result, sports_code";
 
     // GET METHOD로 넘어온 값을 가져옴
     $searchValue = [];
@@ -130,28 +130,29 @@
         $sql = $sql . $sql_order;
     }
     ?>
- <!--Data Tables-->
- <script src="assets/js/jquery-1.12.4.min.js"></script>
- <link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
+<!--Data Tables-->
+<script src="assets/js/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/DataTables/datatables.min.css" />
 
- </head>
+</head>
 
- <body>
-     <!-- header -->
-     <?php require_once 'header.php' ?>
+<body>
+    <!-- header -->
+    <?php require_once 'header.php' ?>
 
-     <div class="Area">
-         <div class="Wrapper TopWrapper">
-             <div class="MainRank coachList defaultList">
-                 <div class="MainRank_tit">
-                     <h1>경기별 순위보기<i class="xi-equalizer-thin chart"></i></h1>
-                 </div>
-                 <div class="searchArea">
-                     <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
-                         <div class="page_size">
-                             <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
-                                 <option value="non" hidden="">페이지</option>
-                                 <?php
+    <div class="Area">
+        <div class="Wrapper TopWrapper">
+            <div class="MainRank coachList defaultList">
+                <div class="MainRank_tit">
+                    <h1>경기별 순위보기<i class="xi-equalizer-thin chart"></i></h1>
+                </div>
+                <div class="searchArea">
+                    <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
+                        <div class="page_size">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
+                                <option value="non" hidden="">페이지</option>
+                                <?php
                                     echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
                                     echo '<option value="15"' . ($pagesizeValue == 15 ? 'selected' : '') . '>15개씩</option>';
                                     echo '<option value="20"' . ($pagesizeValue == 20 ? 'selected' : '') . '>20개씩</option>';
@@ -160,15 +161,15 @@
                                         echo '<option value="' . $total_count . "\">모두</option>\"";
                                     }
                                 ?>
-                             </select>
-                         </div>
-                         <div class="selectArea float_r">
-                             <div class="selectArea defaultSelectArea">
-                                 <div class="defaultSelectBox">
-                                     <select title="성별" name="schedule_gender">
-                                         <option value="non" hidden="">성별</option>
-                                         <option value="non">전체</option>
-                                         <?php
+                            </select>
+                        </div>
+                        <div class="selectArea float_r">
+                            <div class="selectArea defaultSelectArea">
+                                <div class="defaultSelectBox">
+                                    <select title="성별" name="schedule_gender">
+                                        <option value="non" hidden="">성별</option>
+                                        <option value="non">전체</option>
+                                        <?php
                                             foreach ($schedule_gender_dic as $key) {
                                                 if ($key == 'm') {
                                                     $gender = '남성';
@@ -180,13 +181,13 @@
                                                 echo '<option value="' . $key . '"' . ($isGenderSelected[$key] ?? NULL) . ">$gender</option>\"";
                                             }
                                             ?>
-                                     </select>
-                                 </div>
-                                 <div class="defaultSelectBox">
-                                     <select title="종목" name="sports_code">
-                                         <option value='non' hidden="">종목</option>
-                                         <option value="non">전체</option>
-                                         <?php
+                                    </select>
+                                </div>
+                                <div class="defaultSelectBox">
+                                    <select title="종목" name="sports_code">
+                                        <option value='non' hidden="">종목</option>
+                                        <option value="non">전체</option>
+                                        <?php
                                             $events = array_unique($categoryOfSports_dic);
                                             foreach ($events as $e) {
                                                 echo "<optgroup label=\"$e\">";
@@ -197,47 +198,50 @@
                                                 echo "</optgroup>";
                                             }
                                             ?>
-                                     </select>
-                                 </div>
-                                 <div class="search">
-                                     <button name="search" value=search class="SearchBtn" type="submit" title="검색"><i class="xi-search"></i></button>
-                                 </div>
-                             </div>
-                     </form>
-                 </div>
-                 <table class="box_table">
-                     <colgroup>
-                         <col style="width: auto" />
-                         <col style="width: 15%" />
-                         <col style="width: 15%" />
-                         <col style="width: auto" />
-                         <col style="width: auto" />
-                         <col style="width: 10%" />
-                         <col style="width: 8%" />
-                         <col style="width: auto" />
-                     </colgroup>
-                     <thead class="table_head entry_table">
-                         <tr>
-                             <th onclick="sortTable(0)"><a href="<?= Get_Sort_Link("record_live_result", $pageValue, $link, $orderValue) ?>">등수</a>
-                             </th>
-                             <th onclick="sortTable(1)">종목</th>
-                             <th onclick="sortTable(2)">이름</th>
-                             <th onclick="sortTable(3)">성별</th>
-                             <th onclick="sortTable(4)">국가</th>
-                             <th onclick="sortTable(5)"><a href="<?= Get_Sort_Link("record_live_record", $pageValue, $link, $orderValue) ?>">결과</a>
-                             </th>
-                             <th onclick="sortTable(6)">풍속/용기구</th>
-                             <th onclick="sortTable(7)">비고</th>
-                         </tr>
-                     </thead>
-                     <tbody class="table_tbody entry_table">
-                     <?php
+                                    </select>
+                                </div>
+                                <div class="search">
+                                    <button name="search" value=search class="SearchBtn" type="submit" title="검색"><i
+                                            class="xi-search"></i></button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+                <table class="box_table">
+                    <colgroup>
+                        <col style="width: auto" />
+                        <col style="width: 15%" />
+                        <col style="width: 15%" />
+                        <col style="width: auto" />
+                        <col style="width: auto" />
+                        <col style="width: 10%" />
+                        <col style="width: 8%" />
+                        <col style="width: auto" />
+                    </colgroup>
+                    <thead class="table_head entry_table">
+                        <tr>
+                            <th onclick="sortTable(0)"><a
+                                    href="<?= Get_Sort_Link("record_live_result", $pageValue, $link, $orderValue) ?>">등수</a>
+                            </th>
+                            <th onclick="sortTable(1)">종목</th>
+                            <th onclick="sortTable(2)">이름</th>
+                            <th onclick="sortTable(3)">성별</th>
+                            <th onclick="sortTable(4)">국가</th>
+                            <th onclick="sortTable(5)"><a
+                                    href="<?= Get_Sort_Link("record_live_record", $pageValue, $link, $orderValue) ?>">결과</a>
+                            </th>
+                            <th onclick="sortTable(6)">풍속/용기구</th>
+                            <th onclick="sortTable(7)">비고</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table_tbody entry_table">
+                        <?php
                             $num = 0;
                             while ($row = mysqli_fetch_array($result)) {
                                 $num++;
-                                $record_result = $row["record_official_result"];
+                                $record_result = $row["record_live_result"];
                                 $athlete_country = $row["athlete_country"];
-                                $record_record = $row["record_official_record"];
+                                $record_record = $row["record_live_record"];
                                 $record_wind = $row["record_wind"];
                                 $record_weight = $row["record_weight"];
                                 $record_memo = $row["record_memo"];
@@ -287,9 +291,9 @@
                                 echo '</tr>';
                             }
                             ?>
-                     </tbody>
-                 </table>
-                 <div class="playerRegistrationBtnArea">
+                    </tbody>
+                </table>
+                <div class="playerRegistrationBtnArea">
                     <div class="ExcelBtn IDBtn">
                         <form action="./execute_excel.php" method="post" enctype="multipart/form-data">
                             <input type="submit" name="query" id="execute_excel" value="<?php echo $sql ?>" hidden />
@@ -303,14 +307,14 @@
                         </form>
                     </div>
                 </div>
-                 <div class="page">
-                     <?= Get_Pagenation($page_list_size, $pagesizeValue, $pageValue, $total_count, $link) ?>
-                 </div>
-             </div>
-         </div>
-     </div>
+                <div class="page">
+                    <?= Get_Pagenation($page_list_size, $pagesizeValue, $pageValue, $total_count, $link) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
-     <script src="/assets/js/main.js?ver=4"></script>
- </body>
+    <script src="/assets/js/main.js?ver=4"></script>
+</body>
 
- </html>
+</html>

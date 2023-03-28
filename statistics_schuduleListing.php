@@ -20,17 +20,13 @@ $page_list_count = ($pageValue - 1) * $pagesizeValue;
 // pageSizeOption : 한 페이지 내의 행 수
 
 // SQL 조건문
-$sql = "SELECT
-        sports_name,
-        sports_code,  
-        schedule_sports,  
-        schedule_gender,
-        GROUP_CONCAT(CONCAT(IF(record_medal=10000,athlete_name,null))ORDER BY record_medal DESC)  AS gold_medal,
-        GROUP_CONCAT(CONCAT(IF(record_medal=10000,record_official_result,NULL))ORDER BY record_medal DESC)  AS gold_record,
-        GROUP_CONCAT(CONCAT(IF(record_medal=100,athlete_name,null))ORDER BY record_medal DESC)  AS silver_medal,
-        GROUP_CONCAT(CONCAT(IF(record_medal=100,record_official_result,null))ORDER BY record_medal DESC)  AS silver_record,
-        GROUP_CONCAT(CONCAT(IF(record_medal=1,athlete_name,null))ORDER BY record_medal DESC)  AS bronze_medal,
-        GROUP_CONCAT(CONCAT(IF(record_medal=1,record_official_result,null))ORDER BY record_medal DESC)  AS bronze_record
+$sql = "SELECT sports_name, sports_code, schedule_sports, schedule_gender, 
+        GROUP_CONCAT(CONCAT(IF(record_medal=10000,athlete_name,null))ORDER BY record_medal DESC) AS gold_medal, 
+        GROUP_CONCAT(CONCAT(IF(record_medal=10000,if(record_status='o',record_official_result,record_live_result),NULL))ORDER BY record_medal DESC) AS gold_record, 
+        GROUP_CONCAT(CONCAT(IF(record_medal=100,athlete_name,null))ORDER BY record_medal DESC) AS silver_medal, 
+        GROUP_CONCAT(CONCAT(IF(record_medal=100,if(record_status='o',record_official_result,record_live_result),null))ORDER BY record_medal DESC) AS silver_record, 
+        GROUP_CONCAT(CONCAT(IF(record_medal=1,athlete_name,null))ORDER BY record_medal DESC) AS bronze_medal, 
+        GROUP_CONCAT(CONCAT(IF(record_medal=1,if(record_status='o',record_official_result,record_live_result),null))ORDER BY record_medal DESC) AS bronze_record 
     FROM list_athlete 
     INNER JOIN list_record  ON record_athlete_id = athlete_id AND record_medal >=1
     INNER JOIN list_schedule ON schedule_sports = record_sports
@@ -152,7 +148,6 @@ $total_count = mysqli_num_rows($count);
 $isPageSizeChecked = maintainSelected($_GET["page_size"] ?? null);
 $isGenderSelected = maintainSelected($_GET["schedule_gender"] ?? null);
 $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
-
 ?>
 
 <!--Data Tables-->
@@ -172,7 +167,8 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                 <div class="searchArea">
                     <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
                         <div class="page_size">
-                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
                                     echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
@@ -222,7 +218,8 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                                 </select>
                             </div>
                             <div class="search">
-                                <button name="search" value=search class="SearchBtn" type="submit"><i class="xi-search"></i></button>
+                                <button name="search" value=search class="SearchBtn" type="submit"><i
+                                        class="xi-search"></i></button>
                             </div>
                         </div>
                     </form>
@@ -251,7 +248,7 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
-                    <?php
+                        <?php
                         $num = 0;
                         while ($row = mysqli_fetch_array($result)) {
                             $num++;

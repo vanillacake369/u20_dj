@@ -35,7 +35,7 @@ $sql = "SELECT
         INNER JOIN
             list_sports ON worldrecord_sports =sports_code
         INNER JOIN
-            list_country ON worldrecord_country_code=country_code AND worldrecord_datetime >= '2015-01-01' "; //기록일자는 임시로 지정
+            list_country ON worldrecord_country_code=country_code AND worldrecord_datetime >= '2001-01-01' "; //기록일자는 임시로 지정
 $sql_order = "ORDER BY sports_code, worldrecord_athletics, worldrecord_gender ";
 $sql_like = "";
 $sql_where = "";
@@ -146,7 +146,8 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                 <div class="searchArea">
                     <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
                         <div class="page_size">
-                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
                                     echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
@@ -219,7 +220,8 @@ $isSportsSelected = maintainSelected($_GET["sports_code"] ?? NULL);
                                     </select>
                                 </div>
                                 <div class="search">
-                                    <button class="SearchBtn" type="submit" name="search" value=search><i class="xi-search"></i></button>
+                                    <button class="SearchBtn" type="submit" name="search" value=search><i
+                                            class="xi-search"></i></button>
                                 </div>
                             </div>
                     </form>

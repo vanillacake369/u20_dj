@@ -58,7 +58,11 @@ if ($sports == 'decathlon' || $sports == 'heptathlon') {
         }
         $sports_result = $db->query("SELECT sports_category from list_sports where sports_code='$round'");
         $sports_row = mysqli_fetch_assoc($sports_result);
-        $round_condition="AND record_athlete_id=athlete_id AND record_memo NOT IN ('DNS', 'DQ');";
+        $round_condition="and record_round='final' AND athlete_id not IN (
+            SELECT record_athlete_id 
+            FROM list_record 
+            WHERE record_memo LIKE '%DNS%' OR record_memo LIKE '%DQ%' OR record_memo LIKE '%DNF%'
+          )";
         $join_condition='join list_record';
     }
 }
@@ -94,7 +98,7 @@ if ($round == 'final') {
     }
     $round_condition = "AND athlete_id = (SELECT record_athlete_id from list_record where record_sports = '$sports' and record_gender='$gender' AND (record_memo like '%Q%') or (record_memo like '%q%') AND record_round='" . $check_round_row['schedule_round'] . "')";
 }
-$sql = "select athlete_id,athlete_name,athlete_country,athlete_schedule from list_athlete ".$join_condition." where (athlete_schedule  like '%$sports%')" . $gender_condition . $round_condition;
+$sql = "select distinct athlete_id,athlete_name,athlete_country,athlete_schedule from list_athlete ".$join_condition." where (athlete_schedule  like '%$sports%')" . $gender_condition . $round_condition;
 $result = $db->query($sql);
 $count=0;
 while($row=mysqli_fetch_array($result)){

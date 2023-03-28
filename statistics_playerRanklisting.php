@@ -31,10 +31,10 @@ $sql = "SELECT
             COUNT(IF(record_medal=10000,1,null)) AS gold, 
             COUNT(IF(record_medal=100,1,null)) AS silver, 
             COUNT(IF(record_medal=1,1,null)) AS bronze
-        FROM list_record R 
-        INNER JOIN list_athlete A ON (R.record_athlete_id = A.athlete_id)
-        INNER JOIN list_country C ON (C.country_code = A.athlete_country)
-        INNER JOIN list_schedule S ON (S.schedule_sports = R.record_sports)";
+            FROM list_country C  
+        LEFT JOIN list_athlete A ON (C.country_code = A.athlete_country) 
+        LEFT JOIN list_record R ON (R.record_athlete_id = A.athlete_id) 
+        LEFT JOIN list_schedule S ON (S.schedule_sports = R.record_sports) AND (S.schedule_round = R.record_round) AND (S.schedule_gender = R.record_gender)";
 $sql_where = "WHERE record_medal >=1 AND schedule_sports IS NOT null AND schedule_gender = record_gender AND record_round ='final'";
 $sql_order = "ORDER BY medal desc";
 $sql_like = "";
@@ -116,10 +116,10 @@ $isAthleteNameSelected = maintainSelected($_GET["athlete_name"] ?? null);
 $rank_result = $db->query("SELECT  
             athlete_name,
             sum(record_medal) as medal
-            FROM list_record R 
-            INNER JOIN list_athlete A ON (R.record_athlete_id = A.athlete_id) 
-            INNER JOIN list_country C ON (C.country_code = A.athlete_country)
-            INNER JOIN list_schedule S ON (S.schedule_sports = R.record_sports)
+            FROM list_country C  
+            LEFT JOIN list_athlete A ON (C.country_code = A.athlete_country) 
+            LEFT JOIN list_record R ON (R.record_athlete_id = A.athlete_id) 
+            LEFT JOIN list_schedule S ON (S.schedule_sports = R.record_sports) AND (S.schedule_round = R.record_round) AND (S.schedule_gender = R.record_gender)
             WHERE record_medal >=1 AND schedule_sports IS NOT null AND schedule_gender = record_gender AND record_round ='final' 
             GROUP BY athlete_name
             ORDER BY medal desc ");
@@ -158,7 +158,8 @@ while ($rank_row = mysqli_fetch_array($rank_result)) {
                 <div class="searchArea">
                     <form action="" name="judge_searchForm" method="get" class="searchForm pageArea">
                         <div class="page_size">
-                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize" class="changePageSize">
+                            <select name="entry_size" onchange="changeTableSize(this);" id="changePageSize"
+                                class="changePageSize">
                                 <option value="non" hidden="">페이지</option>
                                 <?php
                                     echo '<option value="10"' . ($pagesizeValue == 10 ? 'selected' : '') . '>10개씩</option>';
@@ -176,8 +177,11 @@ while ($rank_row = mysqli_fetch_array($rank_result)) {
                                 <div class="search">
                                     <input type="hidden" name="page_size" value="<?php echo $pagesizeValue; ?>">
                                     <!-- +)검색할 때도 페이지 사이즈 유지하기 위해서 위에 추가해야 됨. -->
-                                    <input type="text" id="search" class="defaultSearchInput" name="athlete_name" placeholder="  이름을 입력해주세요" maxlength="30" value="<?php echo isset($searchValue["athlete_name"]) ? $searchValue["athlete_name"] : ''; ?>">
-                                    <button class="defaultSearchBth" name="search" type="submit" value=search title="검색"><i class="xi-search"></i></button>
+                                    <input type="text" id="search" class="defaultSearchInput" name="athlete_name"
+                                        placeholder="  이름을 입력해주세요" maxlength="30"
+                                        value="<?php echo isset($searchValue["athlete_name"]) ? $searchValue["athlete_name"] : ''; ?>">
+                                    <button class="defaultSearchBth" name="search" type="submit" value=search
+                                        title="검색"><i class="xi-search"></i></button>
                                 </div>
                             </div>
                     </form>
@@ -193,20 +197,24 @@ while ($rank_row = mysqli_fetch_array($rank_result)) {
                     </colgroup>
                     <thead class="table_head entry_table">
                         <tr>
-                            <th onclick="sortTable(0)"><a href="<?= Get_Sort_Link("medal", $pageValue, $link, $orderValue) ?>">순위</a>
+                            <th onclick="sortTable(0)"><a
+                                    href="<?= Get_Sort_Link("medal", $pageValue, $link, $orderValue) ?>">순위</a>
                             </th>
                             <th onclick="sortTable(1)">이름</th>
                             <th onclick="sortTable(2)">국가</th>
-                            <th onclick="sortTable(2)"><a href="<?= Get_Sort_Link("gold", $pageValue, $link, $orderValue) ?>">금</a>
+                            <th onclick="sortTable(2)"><a
+                                    href="<?= Get_Sort_Link("gold", $pageValue, $link, $orderValue) ?>">금</a>
                             </th>
-                            <th onclick="sortTable(3)"><a href="<?= Get_Sort_Link("silver", $pageValue, $link, $orderValue) ?>">은</a>
+                            <th onclick="sortTable(3)"><a
+                                    href="<?= Get_Sort_Link("silver", $pageValue, $link, $orderValue) ?>">은</a>
                             </th>
-                            <th onclick="sortTable(4)"><a href="<?= Get_Sort_Link("bronze", $pageValue, $link, $orderValue) ?>">동</a>
+                            <th onclick="sortTable(4)"><a
+                                    href="<?= Get_Sort_Link("bronze", $pageValue, $link, $orderValue) ?>">동</a>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="table_tbody entry_table">
-                    <?php
+                        <?php
                         $num = 0;
                         while ($row = mysqli_fetch_array($result)) {
                             $sports = explode(',', $row["result_medal"]);

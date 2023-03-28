@@ -34,7 +34,8 @@
             $sql = "select 
                             *,athlete_bib, athlete_country, athlete_birth, record_end, record_wind
                             from list_schedule JOIN list_athlete  JOIN list_record
-                            where record_gender = schedule_gender AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
+                            where schedule_sports=record_sports and schedule_round=record_round and schedule_gender=record_gender
+                             AND schedule_sports = '$sports' AND schedule_round = '$round' AND schedule_gender = '$gender'";
 
             $result = $db->query($sql);
             $row = mysqli_fetch_assoc($result);

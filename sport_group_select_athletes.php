@@ -190,7 +190,13 @@ if ($sports == 'decathlon' || $sports == 'heptathlon') {
         <div class="result_list2">
           <p class="tit_left_blue ">참가 선수 목록</p>
         </div>
-        <form action="./sport_group_manual_group_org.php" method="post" class="form">
+          <form action="<?php if ($name == '4x100mR' || $name == '4x400mR' || $name == '4x400mR(Mixed)') {
+              // 릴레이 경기 조 편성 페이지
+              echo './sport_group_manual_relay_org.php';
+          } else {
+              // 릴레이 경기 이외의 조 편성 페이지
+              echo './sport_group_manual_group_org.php';
+          } ?>" method="post" class="form">
           <div class="groupSelect_tit">
             <ul class="headerBody">
               <li>

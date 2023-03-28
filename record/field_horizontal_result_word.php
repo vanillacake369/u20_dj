@@ -32,11 +32,22 @@
         $gender = $_POST['gender'];
         $group = $_POST['group'];
         $schedule_result = $_POST['result'];
+        switch ($schedule_result) {
+            case 'l':
+                $schedule_result = "Live Result";
+                break;
+            case 'o':
+                $schedule_result = "Official Result";
+                break;
+            case 'n':
+                $schedule_result = "Not Start";
+                break;
+        }
 
         $FILE_NAME = $sports . '_' . $gender . '_' . $round . '_' . $group . 'group(' . $schedule_result . ').doc';
         /* word 다운을 위한 해더 */
         header("Content-type: application/vnd.ms-word;charset=UTF-8");
-        header("Content-Disposition: attachment; filename=word_download_test.doc");
+        header("Content-Disposition: attachment; filename=". $FILE_NAME);
         header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
         header("Pragma: no-cache");
         header("Expires: 0");
